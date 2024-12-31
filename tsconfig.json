@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "allowJs": true,
+    "baseUrl": ".",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
@@ -8,14 +9,18 @@
     "lib": [ "DOM", "DOM.Iterable", "ESNext" ],
     "moduleResolution": "Node",
     "noEmit": true,
+    "paths": {
+      "@/*": ["*"]
+    },
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
     "types": ["@testing-library/jest-dom"]
   },
   "include": [
-      "./src",
-      "tests/unit/vitest.setup.ts"
+      "src/**/*",
+      "tests/**/*",
+      "vite.config.ts"
   ],
   "exclude": [
       "./node_modules"
