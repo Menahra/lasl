@@ -1,0 +1,9 @@
+# npm modules
+node_modules
+
+# build stuff
+dist
+
+# VS-Code stuff
+.editorconfig
+.DS_Store
