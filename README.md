@@ -1,4 +1,4 @@
-# Lughat Al-Asl (لُغَةُ الْعَصْل)
+# Lughat Al-Asl (لُغَةُ الْأَصْل)
 
 This project is meant to provide a way to learn the classic arabic language by studying the most important aspects, such as
 
