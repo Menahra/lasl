@@ -1,4 +1,8 @@
-name: Development
+name: Frontend Development
+
+defaults:
+  run:
+    working-directory: frontend
 
 on:
   push:
