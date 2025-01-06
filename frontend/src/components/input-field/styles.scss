@@ -1,0 +1,29 @@
+@use '@styles/variables' as *;
+
+.InputField {
+  display: flex;
+  align-items: center;
+  gap: $spacing-8;
+}
+
+.InputFieldInput {
+  all: unset;
+  font-size: 0.875rem;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  padding: 0 10px;
+  height: 32px;
+  border: 1px solid var(--border-color);
+  line-height: 1;
+}
+
+.InputFieldInput:hover {
+  border-color: var(--border-color-hover);
+}
+
+.InputFieldInput:focus {
+  border-color: var(--border-color-focus);
+}

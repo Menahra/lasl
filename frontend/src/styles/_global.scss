@@ -1,0 +1,47 @@
+@use 'variables';
+
+:root {
+  --background-color: #{variables.$light-background-color-light};
+  --text-color-primary: #{variables.$light-text-color-primary};
+  --text-color-secondary: #{variables.$light-text-color-secondary};
+  --primary-color: #{variables.$light-primary-color};
+  --primary-color-light: #{variables.$light-primary-color-light};
+  --primary-color-lighter: #{variables.$light-primary-color-lighter};
+  --primary-color-dark: #{variables.$light-primary-color-dark};
+  --accent-color: #{variables.$light-accent-color};
+  --border-color: #{variables.$light-border-color};
+  --border-color-hover: #{variables.$light-border-color-hover};
+  --border-color-focus: #{variables.$light-border-color-focus};
+}
+
+/* override for dark mode */
+[data-theme="dark"] {
+  --background-color: #{variables.$dark-background-color-light};
+  --text-color-primary: #{variables.$dark-text-color-primary};
+  --text-color-secondary: #{variables.$dark-text-color-secondary};
+  --primary-color: #{variables.$dark-primary-color};
+  --primary-color-light: #{variables.$dark-primary-color-light};
+  --primary-color-lighter: #{variables.$dark-primary-color-lighter};
+  --primary-color-dark: #{variables.$dark-primary-color-dark};
+  --accent-color: #{variables.$dark-accent-color};
+  --border-color: #{variables.$dark-border-color};
+  --border-color-hover: #{variables.$dark-border-color-hover};
+  --border-color-focus: #{variables.$dark-border-color-focus};
+}
+
+html {
+  width: 100%;
+  height: 100%;
+  font-family: #{variables.$font-family};
+  font-size: #{variables.$font-size-base};
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  background-color: var(--background-color);
+  color: var(--text-color-primary);
+}
