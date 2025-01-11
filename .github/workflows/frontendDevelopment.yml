@@ -74,7 +74,7 @@ jobs:
           key: ${{ github.sha }}
 
       - name: "🔍 lint code"
-        run: npm run lint --if-present
+        run: npm run check:ci
 
   test:
     name: Code reliability

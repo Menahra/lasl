@@ -1,0 +1,23 @@
+@use '@styles/variables' as *;
+
+.applicationHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-16 $spacing-24;
+  border-bottom: 1px solid green;
+}
+
+.applicationHeaderActions {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: $spacing-16;
+}
+
+.apllicationHeaderActionsButtons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: $spacing-8;
+}

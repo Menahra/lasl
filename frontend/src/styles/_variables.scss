@@ -10,7 +10,7 @@ $light-background-color-dark: rgb(255, 255, 255); // content cards
 $light-text-color-primary: rgb(35, 35, 35); // body text, headings, important text
 $light-text-color-secondary: rgb(200, 200, 200); // secondary text (CHECK CONTRAST ON BACKGROUND!)
 $light-border-color: rgba(0, 0, 0, 0.2);
-$light-border-color-hover: #e0e0e0;
+$light-border-color-hover: rgba(0, 0, 0, 0.4);
 $light-border-color-focus: $light-primary-color;
 // Dark mode
 $dark-primary-color: rgb(0, 170, 170); // cta buttons, key elements, links(?)
@@ -23,7 +23,7 @@ $dark-background-color-dark: rgb(30, 30, 30); // content cards
 $dark-text-color-primary: rgb(220, 220, 220); // body text, headings, important text
 $dark-text-color-secondary: rgb(180, 180, 180); // secondary text (CHECK CONTRAST ON BACKGROUND!)
 $dark-border-color: rgba(255, 255, 255, 0.3);
-$dark-border-color-hover: #e0e0e0;
+$dark-border-color-hover: rgba(255, 255, 255, 0.5);
 $dark-border-color-focus: $dark-primary-color;
 
 // Typography
@@ -31,7 +31,8 @@ $font-family: 'Rubik', 'Nunito', sans-serif;
 $font-size-base: 18px;
 
 // Spacing
-$spacing-8: 8px;  // default
 $spacing-4: 4px;
-$spacing-16: 16px;
+$spacing-8: 8px;  // default
 $spacing-12: 12px;
+$spacing-16: 16px;
+$spacing-24: 24px;

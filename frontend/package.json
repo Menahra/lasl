@@ -4,14 +4,21 @@
   "scripts": {
     "build": "tsc && vite build",
     "dev": "vite",
-    "lint": "biome format ./src ./tests",
-    "lint:fix": "biome format --write ./src ./tests",
+    "lint": "biome lint ./src ./tests",
+    "lint:fix": "biome lint --write ./src ./tests",
+    "format": "biome lint ./src ./tests",
+    "format:fix": "biome format --write ./src ./tests",
+    "check:ci": "biome check ./src ./tests",
     "test": "vitest",
     "types:check": "tsc --noEmit"
   },
   "dependencies": {
+    "@radix-ui/react-icons": "^1.3.2",
+    "i18next": "^24.2.1",
+    "i18next-http-backend": "^3.0.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-i18next": "^15.4.0",
     "uuid": "^11.0.3"
   },
   "devDependencies": {
