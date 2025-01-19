@@ -101,16 +101,7 @@ jobs:
           key: ${{ github.sha }}
 
       - name: "🧪 test code"
-        run: npm run test -- --coverage.enabled true
-      - name: "Report Coverage"
-        # Set if: always() to also generate the report if tests are failing
-        # Only works if you set `reportOnFailure: true` in your vite config as specified above
-        if: always()
-        uses: davelosert/vitest-coverage-report-action@v2
-        with:
-          pr-number: auto
-          comment-on: pr
-          vite-config-path: frontend
+        run: npm run test:cov
 
   build:
     name: Build

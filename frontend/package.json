@@ -10,6 +10,7 @@
     "format:fix": "biome format --write ./src ./tests",
     "check:ci": "biome check ./src ./tests",
     "test": "vitest",
+    "test:cov": "vitest run --coverage",
     "types:check": "tsc --noEmit"
   },
   "dependencies": {
