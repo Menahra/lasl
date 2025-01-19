@@ -1,21 +1,25 @@
 @use '@styles/variables' as *;
 
-.applicationHeader {
+.ApplicationHeader {
   display: flex;
   justify-content: space-between;
+  gap: $spacing-24;
   align-items: center;
   padding: $spacing-16 $spacing-24;
-  border-bottom: 1px solid green;
+  border-bottom: 1px solid var(--primary-color-dark);
+  box-shadow: 0 4px 6px rgba(var(--primary-color-dark), 0.3);
 }
 
-.applicationHeaderActions {
+.ApplicationHeaderActions {
   display: flex;
   align-items: center;
   flex-direction: row;
   gap: $spacing-16;
+  flex-grow: 1;
+  max-width: 450px;
 }
 
-.apllicationHeaderActionsButtons {
+.ApplicationHeaderActionsButtons {
   display: flex;
   flex-direction: row;
   align-items: center;

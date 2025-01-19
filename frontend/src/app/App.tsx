@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import "../styles/_global.scss";
-import { Header } from "./Header";
+import { Header } from "./header/Header";
 
 export const App = () => {
 	return (

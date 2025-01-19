@@ -2,19 +2,22 @@
 
 .InputField {
   display: flex;
+  flex-grow: 1;
   align-items: center;
   gap: $spacing-8;
 }
 
 .InputFieldInputIconWrapper {
   position: relative;
+  display: flex;
+  flex: 1;
 }
 
 .InputFieldInput {
   all: unset;
   font-size: 0.875rem;
-  width: 200px;
   display: flex;
+  flex-grow: 1;
   align-items: center;
   justify-content: center;
   border-radius: 4px;

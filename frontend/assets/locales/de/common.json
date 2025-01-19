@@ -1,5 +1,10 @@
 {
   "header": {
-    "search_description": "Suche in allen Seiten"
+    "ko-fi_donate_description": "Besuchen Sie Ko-Fi um dieses Projekt mit einer Spende zu unterstützen",
+    "search_description": "Suche in allen Seiten",
+    "search_placeholder": "Suche...",
+    "switch_to_darkmode": "Wechsel zum Dark mode",
+    "switch_to_lightmode": "Wechsel zum Light mode",
+    "visit_github_repository": "Öffne das GitHub repository in einem neuen browser Tab"
   }
 }
