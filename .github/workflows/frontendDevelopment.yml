@@ -103,6 +103,11 @@ jobs:
       - name: "🧪 test code"
         run: npm run test:cov
 
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage/lcov-report/index.html
+
   build:
     name: Build
     runs-on: ubuntu-latest

@@ -7,3 +7,6 @@ dist
 # VS-Code stuff
 .editorconfig
 .DS_Store
+
+# testing stuff
+coverage
