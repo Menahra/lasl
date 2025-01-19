@@ -1,9 +1,10 @@
+/// <reference types="vitest" />
+/// <reference types="vite-plugin-svgr/client" />
+
 import path from "node:path";
 import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
 import tsconfigPaths from "vite-tsconfig-paths";
-/// <reference types="vitest" />
-/// <reference types="vite-plugin-svgr/client" />
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
