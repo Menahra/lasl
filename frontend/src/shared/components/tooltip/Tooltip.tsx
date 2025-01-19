@@ -1,5 +1,6 @@
-import type { PropsWithChildren } from "react";
 import * as RadixTooltip from "@radix-ui/react-tooltip";
+import type { PropsWithChildren } from "react";
+
 import "./styles.scss";
 
 export type TooltipProps = {

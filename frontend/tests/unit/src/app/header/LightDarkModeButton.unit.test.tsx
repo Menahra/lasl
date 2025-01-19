@@ -1,8 +1,10 @@
-import { LightDarkModeButton } from "@/src/app/header/LightDarkModeButton";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
+
 import * as hooks from "@/src/shared/hooks/useDarkMode";
 import userEvent from "@testing-library/user-event";
+
+import { LightDarkModeButton } from "@/src/app/header/LightDarkModeButton";
 
 describe("LightDarkModeButton", () => {
 	const toDarkModeText = "header.switch_to_darkmode";

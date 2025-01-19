@@ -1,11 +1,12 @@
-import { useTranslation } from "react-i18next";
-import { InputField } from "../../shared/components/input-field/InputField";
-import "./styles.scss";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
-import { LightDarkModeButton } from "./LightDarkModeButton";
-import { GitHubButton } from "./GitHubButton";
+import { useTranslation } from "react-i18next";
+
+import { InputField } from "@/src/shared/components/input-field/InputField";
+import "./styles.scss";
 import { DonateButton } from "./DonateButton";
+import { GitHubButton } from "./GitHubButton";
+import { LightDarkModeButton } from "./LightDarkModeButton";
 
 export const Header = () => {
 	const { t } = useTranslation();
