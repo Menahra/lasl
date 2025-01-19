@@ -1,10 +1,10 @@
+import path from "node:path";
+import react from "@vitejs/plugin-react";
+import svgr from "vite-plugin-svgr";
+import tsconfigPaths from "vite-tsconfig-paths";
 /// <reference types="vitest" />
 /// <reference types="vite-plugin-svgr/client" />
 import { defineConfig } from "vitest/config";
-import react from "@vitejs/plugin-react";
-import tsconfigPaths from "vite-tsconfig-paths";
-import path from "node:path";
-import svgr from "vite-plugin-svgr";
 
 export default defineConfig({
 	plugins: [react(), tsconfigPaths(), svgr()],
@@ -30,5 +30,11 @@ export default defineConfig({
 		environment: "happy-dom",
 		globals: false,
 		setupFiles: "./tests/unit/vitest.setup.ts",
+		coverage: {
+			// you can include other reporters, but 'json-summary' is required, json is recommended
+			reporter: ["text", "json-summary", "json"],
+			// If you want a coverage reports even if your tests are failing, include the reportOnFailure option
+			reportOnFailure: true,
+		},
 	},
 });
