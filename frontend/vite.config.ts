@@ -1,10 +1,11 @@
 /// <reference types="vitest" />
 /// <reference types="vite-plugin-svgr/client" />
-import { defineConfig } from "vitest/config";
-import react from "@vitejs/plugin-react";
-import tsconfigPaths from "vite-tsconfig-paths";
+
 import path from "node:path";
+import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
+import tsconfigPaths from "vite-tsconfig-paths";
+import { defineConfig } from "vitest/config";
 
 export default defineConfig({
 	plugins: [react(), tsconfigPaths(), svgr()],
@@ -30,5 +31,9 @@ export default defineConfig({
 		environment: "happy-dom",
 		globals: false,
 		setupFiles: "./tests/unit/vitest.setup.ts",
+		coverage: {
+			provider: "v8",
+			reporter: ["text", "lcov"],
+		},
 	},
 });

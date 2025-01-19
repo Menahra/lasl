@@ -50,6 +50,29 @@ describe("InputField", () => {
 		expect(screen.getByRole("textbox")).toHaveValue("");
 	});
 
+	it("renders the value that is given", () => {
+		const testValue = "some testing value";
+		render(
+			<InputField
+				onInputValueChange={testOnChangeFn}
+				label={testLabel}
+				value={testValue}
+			/>,
+		);
+		expect(screen.getByRole("textbox")).toHaveValue(testValue);
+	});
+
+	it("renders a label if prop is set", () => {
+		render(
+			<InputField
+				onInputValueChange={testOnChangeFn}
+				label={testLabel}
+				showLabel
+			/>,
+		);
+		expect(screen.getByLabelText(testLabel)).toBeVisible();
+	});
+
 	it("changes value according to what user does", async () => {
 		render(
 			<InputField onInputValueChange={testOnChangeFn} label={testLabel} />,

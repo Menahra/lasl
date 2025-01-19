@@ -97,7 +97,12 @@ jobs:
           key: ${{ github.sha }}
 
       - name: "🧪 test code"
-        run: npm run test
+        run: npm run test:cov
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   build:
     name: Build

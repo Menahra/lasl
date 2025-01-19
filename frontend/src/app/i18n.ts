@@ -28,5 +28,3 @@ i18next
 			escapeValue: false, // not needed for react as it escapes by default
 		},
 	});
-
-// add ci pipeline checking no unused, missing translations
