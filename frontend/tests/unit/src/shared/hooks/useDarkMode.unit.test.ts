@@ -74,5 +74,8 @@ describe("useDarkMode", () => {
 		const { result } = renderHook(() => useDarkMode());
 		act(() => result.current.updateDarkModeSetting());
 		await waitFor(() => expect(result.current.isDarkMode).toEqual(true));
+
+		act(() => result.current.updateDarkModeSetting());
+		await waitFor(() => expect(result.current.isDarkMode).toEqual(false));
 	});
 });
