@@ -136,7 +136,7 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    needs: [install, types-check, lint, test]
+    needs: [install, types-check, lint, test, e2etest]
 
     steps:
       - name: "☁️ checkout repository"
