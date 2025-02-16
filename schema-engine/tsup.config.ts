@@ -1,7 +1,7 @@
 import { defineConfig } from "tsup";
 
 export default defineConfig({
-	entry: ["src/index.ts"],
+	entry: ["src/validator.ts"],
 	splitting: false,
 	minify: true,
 	sourcemap: true,
