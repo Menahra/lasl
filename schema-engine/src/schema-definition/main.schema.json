@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "meta": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "searchKeywords": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "documentTitle": {
+          "type": "string"
+        }
+      },
+      "required": ["path", "searchKeywords", "documentTitle"]
+    },
+    "content": {
+      "oneOf": [
+        { "$ref": "sectionContainer.schema.json" }
+      ]
+    }
+  },
+  "required": ["meta", "content"],
+  "additionalProperties": false
+}

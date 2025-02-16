@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "sectionTitle": {
+        "type": "string"
+      },
+      "sectionContent": {
+        "type": "array",
+        "items": {
+          "oneOf": [
+            { "$ref": "text mit styling" },
+            { "$ref": "tabelle mit styling wobei jede header/ zelle text mit styling ist" },
+            { "$ref": "weitere sections usw" }
+          ]
+        }
+      }
+    },
+    "required": ["sectionTitle", "sectionContent"]
+  }
+}
