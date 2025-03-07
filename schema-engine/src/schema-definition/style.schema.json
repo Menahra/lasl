@@ -1,64 +1,64 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "type": "object",
-  "definitions": {
-    "marginPaddingShorthandValue": {
-      "type": "string",
-      "pattern": "^(\\d+(\\.\\d+)?(px|em|rem|%|vw|vh|cm|mm|in|pt|pc))(\\s+(\\d+(\\.\\d+)?(px|em|rem|%|vw|vh|cm|mm|in|pt|pc))){0,3}$"
-    },
-    "spacingValue": {
-      "type": "string",
-      "pattern": "^(\\d+(\\.\\d+)?(px|em|rem|%|vw|vh|cm|mm|in|pt|pc))$"
-    }
-  },
-  "properties": {
-    "color": {
-      "type": "string",
-      "pattern": "^(#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})|rgb\\(\\s*(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\\s*,\\s*(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\\s*,\\s*(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\\s*\\)|rgba\\(\\s*(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\\s*,\\s*(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\\s*,\\s*(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\\s*,\\s*(0?\\.[0-9]*|1(\\.0*)?)\\s*\\))"
-    },
-    "font-size": {
-      "type": "string",
-      "pattern": "^(\\d+(\\.\\d+)?(px|em|rem|%|vw|vh|ch|cm|mm|in|pt|pc)|small|medium|large|x-large|xx-large|larger|smaller)$"
-    },
-    "font-style": {
-      "type": "string",
-      "pattern": "^(normal|italic)$"
-    },
-    "font-weight": {
-      "type": "string",
-      "pattern": "^(normal|bold|lighter|bolder|[1-9]00)$"
-    },
-    "margin": {
-      "$ref": "#/definitions/marginPaddingShorthandValue"
-    },
-    "margin-bottom": {
-      "$ref": "#/definitions/spacingValue"
-    },
-    "margin-left": {
-      "$ref": "#/definitions/spacingValue"
-    },
-    "margin-right": {
-      "$ref": "#/definitions/spacingValue"
-    },
-    "margin-top": {
-      "$ref": "#/definitions/spacingValue"
-    },
-    "padding": {
-      "$ref": "#/definitions/marginPaddingShorthandValue"
-    },
-    "padding-bottom": {
-      "$ref": "#/definitions/spacingValue"
-    },
-    "padding-left": {
-      "$ref": "#/definitions/spacingValue"
-    },
-    "padding-right": {
-      "$ref": "#/definitions/spacingValue"
-    },
-    "padding-top": {
-      "$ref": "#/definitions/spacingValue"
-    }
-  },
-  "required": [],
-  "additionalProperties": false
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"type": "object",
+	"definitions": {
+		"marginPaddingShorthandValue": {
+			"type": "string",
+			"pattern": "^(\\d+(\\.\\d+)?(px|em|rem|%|vw|vh|cm|mm|in|pt|pc))(\\s+(\\d+(\\.\\d+)?(px|em|rem|%|vw|vh|cm|mm|in|pt|pc))){0,3}$"
+		},
+		"spacingValue": {
+			"type": "string",
+			"pattern": "^(\\d+(\\.\\d+)?(px|em|rem|%|vw|vh|cm|mm|in|pt|pc))$"
+		}
+	},
+	"properties": {
+		"color": {
+			"type": "string",
+			"pattern": "^(#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})|rgb\\(\\s*(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\\s*,\\s*(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\\s*,\\s*(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\\s*\\)|rgba\\(\\s*(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\\s*,\\s*(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\\s*,\\s*(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\\s*,\\s*(0?\\.[0-9]*|1(\\.0*)?)\\s*\\))"
+		},
+		"font-size": {
+			"type": "string",
+			"pattern": "^(\\d+(\\.\\d+)?(px|em|rem|%|vw|vh|ch|cm|mm|in|pt|pc)|small|medium|large|x-large|xx-large|larger|smaller)$"
+		},
+		"font-style": {
+			"type": "string",
+			"pattern": "^(normal|italic)$"
+		},
+		"font-weight": {
+			"type": "string",
+			"pattern": "^(normal|bold|lighter|bolder|[1-9]00)$"
+		},
+		"margin": {
+			"$ref": "#/definitions/marginPaddingShorthandValue"
+		},
+		"margin-bottom": {
+			"$ref": "#/definitions/spacingValue"
+		},
+		"margin-left": {
+			"$ref": "#/definitions/spacingValue"
+		},
+		"margin-right": {
+			"$ref": "#/definitions/spacingValue"
+		},
+		"margin-top": {
+			"$ref": "#/definitions/spacingValue"
+		},
+		"padding": {
+			"$ref": "#/definitions/marginPaddingShorthandValue"
+		},
+		"padding-bottom": {
+			"$ref": "#/definitions/spacingValue"
+		},
+		"padding-left": {
+			"$ref": "#/definitions/spacingValue"
+		},
+		"padding-right": {
+			"$ref": "#/definitions/spacingValue"
+		},
+		"padding-top": {
+			"$ref": "#/definitions/spacingValue"
+		}
+	},
+	"required": [],
+	"additionalProperties": false
 }
