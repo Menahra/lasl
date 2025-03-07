@@ -28,7 +28,7 @@ jobs:
         id: restore-build
         with:
           path: ./*
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('schema-engine/package-lock.json') }}
 
   types-check:
     name: Correct typing
@@ -48,7 +48,7 @@ jobs:
         id: restore-build
         with:
           path: ./*
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('schema-engine/package-lock.json') }}
 
       - name: "🔍 check types"
         run: npm run types:check
@@ -71,7 +71,7 @@ jobs:
         id: restore-build
         with:
           path: ./*
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('schema-engine/package-lock.json') }}
 
       - name: "🔍 lint code"
         run: npm run check:ci
@@ -94,7 +94,7 @@ jobs:
         id: restore-build
         with:
           path: ./*
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('schema-engine/package-lock.json') }}
 
       - name: "🧪 test code"
         run: npm run test:cov
@@ -122,7 +122,7 @@ jobs:
         id: restore-build
         with:
           path: ./*
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('schema-engine/package-lock.json') }}
 
       - name: "🔧 build code"
         run: npm run build
