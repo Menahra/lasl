@@ -26,7 +26,7 @@ test("ko-fi link", async ({ context, page }) => {
 
 	const koFiPage = await pagePromise;
 	await koFiPage.waitForLoadState();
-	await expect(koFiPage).toHaveTitle(/Ko-fi/);
+	await expect(koFiPage).toHaveTitle(/Zioui/);
 });
 
 test.describe("light/ dark mode", () => {
