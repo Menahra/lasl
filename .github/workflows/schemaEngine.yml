@@ -2,7 +2,7 @@ name: Schema-Engine
 
 defaults:
   run:
-    working-directory: schema-engine
+    working-directory: packages/schema-engine
 
 on:
   push:
