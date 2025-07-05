@@ -1,4 +1,4 @@
-import Ajv, { type JSONSchemaType } from "ajv";
+import Ajv from "ajv";
 import {
 	mainSchema,
 	sectionContainerSchema,
