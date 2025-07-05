@@ -1,4 +1,3 @@
-import type { JSONSchemaType } from "ajv";
 import {
 	type MockInstance,
 	afterEach,
@@ -8,7 +7,6 @@ import {
 	it,
 	vi,
 } from "vitest";
-import styleSchema from "../src/schema-definition/style.schema.json";
 import { validateSchema } from "../src/validator";
 import {
 	marginPaddingShorthandValueRegExp,
@@ -19,23 +17,6 @@ import {
 	generateRandomStringNotMatchingPattern,
 	getRandomInteger,
 } from "./util";
-
-type StyleSchemaType = {
-	color: string;
-	"font-size": string;
-	"font-style": string;
-	"font-weight": string;
-	margin?: string;
-	"margin-bottom"?: string;
-	"margin-left"?: string;
-	"margin-right"?: string;
-	"margin-top"?: string;
-	padding?: string;
-	"padding-bottom"?: string;
-	"padding-left"?: string;
-	"padding-right"?: string;
-	"padding-top"?: string;
-};
 
 describe("style json schema", () => {
 	let consoleErrorSpy: MockInstance;
@@ -184,9 +165,12 @@ describe("style json schema", () => {
 			];
 			for (const { color, valid } of testData) {
 				expect(
-					validateSchema(styleSchema as JSONSchemaType<StyleSchemaType>, {
-						color,
-					}),
+					validateSchema(
+						{
+							color,
+						},
+						"http://example.com/style.schema.json",
+					),
 				).toEqual(valid);
 			}
 		});
@@ -203,9 +187,12 @@ describe("style json schema", () => {
 					[hexRegExp, rgbRegExp, rgbaRegExp],
 				);
 				expect(
-					validateSchema(styleSchema as JSONSchemaType<StyleSchemaType>, {
-						color: randomString,
-					}),
+					validateSchema(
+						{
+							color: randomString,
+						},
+						"http://example.com/style.schema.json",
+					),
 				).toBeFalsy();
 			});
 		});
@@ -300,9 +287,12 @@ describe("style json schema", () => {
 
 			for (const { fontSize, valid } of testData) {
 				expect(
-					validateSchema(styleSchema as JSONSchemaType<StyleSchemaType>, {
-						"font-size": fontSize,
-					}),
+					validateSchema(
+						{
+							"font-size": fontSize,
+						},
+						"http://example.com/style.schema.json",
+					),
 				).toEqual(valid);
 			}
 		});
@@ -318,9 +308,12 @@ describe("style json schema", () => {
 					[spacingValueRegExp, specialStringsRegExp],
 				);
 				expect(
-					validateSchema(styleSchema as JSONSchemaType<StyleSchemaType>, {
-						"font-size": randomString,
-					}),
+					validateSchema(
+						{
+							"font-size": randomString,
+						},
+						"http://example.com/style.schema.json",
+					),
 				).toBeFalsy();
 			});
 		});
@@ -353,9 +346,12 @@ describe("style json schema", () => {
 
 			for (const { fontStyle, valid } of testData) {
 				expect(
-					validateSchema(styleSchema as JSONSchemaType<StyleSchemaType>, {
-						"font-style": fontStyle,
-					}),
+					validateSchema(
+						{
+							"font-style": fontStyle,
+						},
+						"http://example.com/style.schema.json",
+					),
 				).toEqual(valid);
 			}
 		});
@@ -429,9 +425,12 @@ describe("style json schema", () => {
 
 			for (const { fontWeight, valid } of testData) {
 				expect(
-					validateSchema(styleSchema as JSONSchemaType<StyleSchemaType>, {
-						"font-weight": fontWeight,
-					}),
+					validateSchema(
+						{
+							"font-weight": fontWeight,
+						},
+						"http://example.com/style.schema.json",
+					),
 				).toEqual(valid);
 			}
 		});
@@ -496,9 +495,12 @@ describe("style json schema", () => {
 				for (const { value, valid } of testData) {
 					const isValid = valid(propertyToTest);
 					expect(
-						validateSchema(styleSchema as JSONSchemaType<StyleSchemaType>, {
-							[propertyToTest]: value,
-						}),
+						validateSchema(
+							{
+								[propertyToTest]: value,
+							},
+							"http://example.com/style.schema.json",
+						),
 					).toEqual(isValid);
 				}
 			}
@@ -507,10 +509,7 @@ describe("style json schema", () => {
 
 	it("properly validates schema with multiple properties", () => {
 		expect(
-			validateSchema(
-				styleSchema as JSONSchemaType<StyleSchemaType>,
-				styleSchemaMock,
-			),
+			validateSchema(styleSchemaMock, "http://example.com/style.schema.json"),
 		).toBeTruthy();
 	});
 
@@ -526,9 +525,12 @@ describe("style json schema", () => {
 
 		for (const testProperty of testProperties) {
 			expect(
-				validateSchema(styleSchema as JSONSchemaType<StyleSchemaType>, {
-					[testProperty]: Math.random(),
-				}),
+				validateSchema(
+					{
+						[testProperty]: Math.random(),
+					},
+					"http://example.com/style.schema.json",
+				),
 			).toBeFalsy();
 
 			expect(consoleErrorSpy).toHaveBeenCalledWith([
