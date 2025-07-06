@@ -3,10 +3,6 @@ name: Frontend
 env:
   FRONTEND_DIR: apps/frontend
 
-defaults:
-  run:
-    working-directory: ${{ env.FRONTEND_DIR }}
-
 on:
   push:
     branches:
@@ -16,6 +12,9 @@ jobs:
   install:
     name: Install dependencies
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.FRONTEND_DIR }}
     steps:
       - name: "☁️ checkout repository"
         uses: actions/checkout@v4
@@ -44,6 +43,9 @@ jobs:
   types-check:
     name: Correct typing
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.FRONTEND_DIR }}
     needs: [install]
 
     steps:
@@ -67,6 +69,9 @@ jobs:
   lint:
     name: Code standards
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.FRONTEND_DIR }}
     needs: [install]
 
     steps:
@@ -90,6 +95,9 @@ jobs:
   test:
     name: Code reliability
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.FRONTEND_DIR }}
     needs: [install]
 
     steps:
@@ -119,6 +127,9 @@ jobs:
     name: Code reliability (E2E Tests)
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.FRONTEND_DIR }}
     needs: [install]
     steps:
       - uses: actions/checkout@v4
@@ -147,6 +158,9 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.FRONTEND_DIR }}
     needs: [install, types-check, lint, test, e2etest]
 
     steps:
