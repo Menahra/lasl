@@ -18,9 +18,9 @@ jobs:
       run:
         working-directory: ${{ env.FRONTEND_DIR }} # Apply working directory for commands in this job
     steps:
-      - name: "☁️ checkout repository" # Add checkout here too
+      - name: "☁️ checkout repository"
         uses: actions/checkout@v4
-      - uses: ./.github/actions/frontend-setup@v1 # Path to your composite action
+      - uses: ./.github/actions/frontend-setup
         with:
           node-version: ${{ env.NODE_VERSION }}
           frontend-dir: ${{ env.FRONTEND_DIR }}
@@ -34,9 +34,9 @@ jobs:
       run:
         working-directory: ${{ env.FRONTEND_DIR }}
     steps:
-      - name: "☁️ checkout repository" # Add checkout here too
+      - name: "☁️ checkout repository"
         uses: actions/checkout@v4
-      - uses: ./.github/actions/frontend-setup@v1
+      - uses: ./.github/actions/frontend-setup
         with:
           node-version: ${{ env.NODE_VERSION }}
           frontend-dir: ${{ env.FRONTEND_DIR }}
@@ -51,9 +51,9 @@ jobs:
       run:
         working-directory: ${{ env.FRONTEND_DIR }}
     steps:
-      - name: "☁️ checkout repository" # Add checkout here too
+      - name: "☁️ checkout repository"
         uses: actions/checkout@v4
-      - uses: ./.github/actions/frontend-setup@v1
+      - uses: ./.github/actions/frontend-setup
         with:
           node-version: ${{ env.NODE_VERSION }}
           frontend-dir: ${{ env.FRONTEND_DIR }}
@@ -68,9 +68,9 @@ jobs:
       run:
         working-directory: ${{ env.FRONTEND_DIR }}
     steps:
-      - name: "☁️ checkout repository" # Add checkout here too
+      - name: "☁️ checkout repository"
         uses: actions/checkout@v4
-      - uses: ./.github/actions/frontend-setup@v1
+      - uses: ./.github/actions/frontend-setup
         with:
           node-version: ${{ env.NODE_VERSION }}
           frontend-dir: ${{ env.FRONTEND_DIR }}
@@ -92,9 +92,9 @@ jobs:
       run:
         working-directory: ${{ env.FRONTEND_DIR }}
     steps:
-      - name: "☁️ checkout repository" # Add checkout here too
+      - name: "☁️ checkout repository"
         uses: actions/checkout@v4
-      - uses: ./.github/actions/frontend-setup@v1
+      - uses: ./.github/actions/frontend-setup
         with:
           node-version: ${{ env.NODE_VERSION }}
           frontend-dir: ${{ env.FRONTEND_DIR }}
@@ -109,7 +109,7 @@ jobs:
         if: ${{ !cancelled() }}
         with:
           name: playwright-report
-          path: playwright-report/ # This path is relative to ${{ env.FRONTEND_DIR }}
+          path: playwright-report/
           retention-days: 30
 
   build:
@@ -120,9 +120,9 @@ jobs:
       run:
         working-directory: ${{ env.FRONTEND_DIR }}
     steps:
-      - name: "☁️ checkout repository" # Add checkout here too
+      - name: "☁️ checkout repository"
         uses: actions/checkout@v4
-      - uses: ./.github/actions/frontend-setup@v1
+      - uses: ./.github/actions/frontend-setup
         with:
           node-version: ${{ env.NODE_VERSION }}
           frontend-dir: ${{ env.FRONTEND_DIR }}
