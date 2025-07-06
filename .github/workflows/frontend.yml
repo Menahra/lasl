@@ -1,8 +1,11 @@
 name: Frontend
 
+env:
+  FRONTEND_DIR: apps/frontend
+
 defaults:
   run:
-    working-directory: apps/frontend
+    working-directory: ${{ env.FRONTEND_DIR }}
 
 on:
   push:
@@ -22,13 +25,21 @@ jobs:
         with:
           node-version: lts/Hydrogen
 
-      - name: "🔧 install according to package-lock"
-        run: npm ci
-      - uses: actions/cache@v4
-        id: restore-build
+      - name: "♻️ restore node_modules cache"
+        id: restore-node-modules
+        uses: actions/cache@v4
         with:
-          path: ./*
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('apps/frontend/package-lock.json') }}
+          path: ${{ env.FRONTEND_DIR }}/node_modules
+          # The key should be based on the package-lock.json to ensure cache invalidation when dependencies change.
+          key: ${{ runner.os }}-node-modules-${{ hashFiles(format('{0}/package-lock.json', env.FRONTEND_DIR)) }}
+          # Restore keys can be used to find a cache when the primary key doesn't hit.
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
+
+      - name: "🔧 install according to package-lock"
+        # Only run npm ci if the cache was not a hit
+        if: steps.restore-node-modules.outputs.cache-hit != 'true'
+        run: npm ci
 
   types-check:
     name: Correct typing
@@ -48,7 +59,7 @@ jobs:
         id: restore-build
         with:
           path: ./*
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('apps/frontend/package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-${{ hashFiles(format('{0}/package-lock.json', env.FRONTEND_DIR)) }}
 
       - name: "🔍 check types"
         run: npm run types:check
@@ -71,7 +82,7 @@ jobs:
         id: restore-build
         with:
           path: ./*
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('apps/frontend/package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-${{ hashFiles(format('{0}/package-lock.json', env.FRONTEND_DIR)) }}
 
       - name: "🔍 lint code"
         run: npm run check:ci
@@ -94,7 +105,7 @@ jobs:
         id: restore-build
         with:
           path: ./*
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('apps/frontend/package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-${{ hashFiles(format('{0}/package-lock.json', env.FRONTEND_DIR)) }}
 
       - name: "🧪 test code"
         run: npm run test:cov
@@ -118,7 +129,7 @@ jobs:
         id: restore-build
         with:
           path: ./*
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('apps/frontend/package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-${{ hashFiles(format('{0}/package-lock.json', env.FRONTEND_DIR)) }}
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
@@ -151,7 +162,7 @@ jobs:
         id: restore-build
         with:
           path: ./*
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('apps/frontend/package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-${{ hashFiles(format('{0}/package-lock.json', env.FRONTEND_DIR)) }}
 
       - name: "🔧 build code"
         run: npm run build
