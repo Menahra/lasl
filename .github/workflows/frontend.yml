@@ -18,7 +18,8 @@ jobs:
       run:
         working-directory: ${{ env.FRONTEND_DIR }} # Apply working directory for commands in this job
     steps:
-      # Use the custom composite action for common setup
+      - name: "☁️ checkout repository" # Add checkout here too
+        uses: actions/checkout@v4
       - uses: ./.github/actions/frontend-setup@v1 # Path to your composite action
         with:
           node-version: ${{ env.NODE_VERSION }}
@@ -33,7 +34,8 @@ jobs:
       run:
         working-directory: ${{ env.FRONTEND_DIR }}
     steps:
-      # Use the custom composite action for common setup
+      - name: "☁️ checkout repository" # Add checkout here too
+        uses: actions/checkout@v4
       - uses: ./.github/actions/frontend-setup@v1
         with:
           node-version: ${{ env.NODE_VERSION }}
@@ -49,7 +51,8 @@ jobs:
       run:
         working-directory: ${{ env.FRONTEND_DIR }}
     steps:
-      # Use the custom composite action for common setup
+      - name: "☁️ checkout repository" # Add checkout here too
+        uses: actions/checkout@v4
       - uses: ./.github/actions/frontend-setup@v1
         with:
           node-version: ${{ env.NODE_VERSION }}
@@ -65,7 +68,8 @@ jobs:
       run:
         working-directory: ${{ env.FRONTEND_DIR }}
     steps:
-      # Use the custom composite action for common setup
+      - name: "☁️ checkout repository" # Add checkout here too
+        uses: actions/checkout@v4
       - uses: ./.github/actions/frontend-setup@v1
         with:
           node-version: ${{ env.NODE_VERSION }}
@@ -88,7 +92,8 @@ jobs:
       run:
         working-directory: ${{ env.FRONTEND_DIR }}
     steps:
-      # Use the custom composite action for common setup
+      - name: "☁️ checkout repository" # Add checkout here too
+        uses: actions/checkout@v4
       - uses: ./.github/actions/frontend-setup@v1
         with:
           node-version: ${{ env.NODE_VERSION }}
@@ -115,7 +120,8 @@ jobs:
       run:
         working-directory: ${{ env.FRONTEND_DIR }}
     steps:
-      # Use the custom composite action for common setup
+      - name: "☁️ checkout repository" # Add checkout here too
+        uses: actions/checkout@v4
       - uses: ./.github/actions/frontend-setup@v1
         with:
           node-version: ${{ env.NODE_VERSION }}
