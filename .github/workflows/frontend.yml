@@ -1,12 +1,14 @@
+# .github/workflows/frontend.yml
 name: Frontend
 
 env:
   FRONTEND_DIR: apps/frontend
+  NODE_VERSION: lts/*
 
 on:
   push:
     branches:
-      - "**"
+      - "**" # Consider refining this to specific branches if needed
 
 jobs:
   install:
@@ -14,107 +16,60 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ${{ env.FRONTEND_DIR }}
+        working-directory: ${{ env.FRONTEND_DIR }} # Apply working directory for commands in this job
     steps:
-      - name: "☁️ checkout repository"
-        uses: actions/checkout@v4
-
-      - name: "🔧 setup node"
-        uses: actions/setup-node@v4
+      # Use the custom composite action for common setup
+      - uses: ./.github/actions/frontend-setup@v1 # Path to your composite action
         with:
-          node-version: lts/Hydrogen
-
-      - name: "♻️ restore node_modules cache"
-        id: restore-node-modules
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.FRONTEND_DIR }}/node_modules
-          # The key should be based on the package-lock.json to ensure cache invalidation when dependencies change.
-          key: ${{ runner.os }}-node-modules-${{ hashFiles(format('{0}/package-lock.json', env.FRONTEND_DIR)) }}
-          # Restore keys can be used to find a cache when the primary key doesn't hit.
-          restore-keys: |
-            ${{ runner.os }}-node-modules-
-
-      - name: "🔧 install according to package-lock"
-        # Only run npm ci if the cache was not a hit
-        if: steps.restore-node-modules.outputs.cache-hit != 'true'
-        run: npm ci
+          node-version: ${{ env.NODE_VERSION }}
+          frontend-dir: ${{ env.FRONTEND_DIR }}
+      # No separate npm ci step here; it's handled by the composite action if cache misses.
 
   types-check:
     name: Correct typing
     runs-on: ubuntu-latest
+    needs: [install] # Ensure install job (and thus npm ci if needed) completes first
     defaults:
       run:
         working-directory: ${{ env.FRONTEND_DIR }}
-    needs: [install]
-
     steps:
-      - name: "☁️ checkout repository"
-        uses: actions/checkout@v4
-
-      - name: "🔧 setup node"
-        uses: actions/setup-node@v4
+      # Use the custom composite action for common setup
+      - uses: ./.github/actions/frontend-setup@v1
         with:
-          node-version: lts/Hydrogen
-
-      - uses: actions/cache@v4
-        id: restore-build
-        with:
-          path: ./*
-          key: ${{ runner.os }}-node-modules-${{ hashFiles(format('{0}/package-lock.json', env.FRONTEND_DIR)) }}
-
+          node-version: ${{ env.NODE_VERSION }}
+          frontend-dir: ${{ env.FRONTEND_DIR }}
       - name: "🔍 check types"
         run: npm run types:check
 
   lint:
     name: Code standards
     runs-on: ubuntu-latest
+    needs: [install]
     defaults:
       run:
         working-directory: ${{ env.FRONTEND_DIR }}
-    needs: [install]
-
     steps:
-      - name: "☁️ checkout repository"
-        uses: actions/checkout@v4
-
-      - name: "🔧 setup node"
-        uses: actions/setup-node@v4
+      # Use the custom composite action for common setup
+      - uses: ./.github/actions/frontend-setup@v1
         with:
-          node-version: lts/Hydrogen
-
-      - uses: actions/cache@v4
-        id: restore-build
-        with:
-          path: ./*
-          key: ${{ runner.os }}-node-modules-${{ hashFiles(format('{0}/package-lock.json', env.FRONTEND_DIR)) }}
-
+          node-version: ${{ env.NODE_VERSION }}
+          frontend-dir: ${{ env.FRONTEND_DIR }}
       - name: "🔍 lint code"
         run: npm run check:ci
 
   test:
     name: Code reliability
     runs-on: ubuntu-latest
+    needs: [install]
     defaults:
       run:
         working-directory: ${{ env.FRONTEND_DIR }}
-    needs: [install]
-
     steps:
-      - name: "☁️ checkout repository"
-        uses: actions/checkout@v4
-
-      - name: "🔧 setup node"
-        uses: actions/setup-node@v4
+      # Use the custom composite action for common setup
+      - uses: ./.github/actions/frontend-setup@v1
         with:
-          node-version: lts/Hydrogen
-
-      - uses: actions/cache@v4
-        id: restore-build
-        with:
-          path: ./*
-          key: ${{ runner.os }}-node-modules-${{ hashFiles(format('{0}/package-lock.json', env.FRONTEND_DIR)) }}
-
+          node-version: ${{ env.NODE_VERSION }}
+          frontend-dir: ${{ env.FRONTEND_DIR }}
       - name: "🧪 test code"
         run: npm run test:cov
 
@@ -122,25 +77,22 @@ jobs:
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage/lcov.info # Example path, adjust as needed
 
   e2etest:
     name: Code reliability (E2E Tests)
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    needs: [install]
     defaults:
       run:
         working-directory: ${{ env.FRONTEND_DIR }}
-    needs: [install]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      # Use the custom composite action for common setup
+      - uses: ./.github/actions/frontend-setup@v1
         with:
-          node-version: lts/*
-      - uses: actions/cache@v4
-        id: restore-build
-        with:
-          path: ./*
-          key: ${{ runner.os }}-node-modules-${{ hashFiles(format('{0}/package-lock.json', env.FRONTEND_DIR)) }}
+          node-version: ${{ env.NODE_VERSION }}
+          frontend-dir: ${{ env.FRONTEND_DIR }}
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
@@ -152,31 +104,21 @@ jobs:
         if: ${{ !cancelled() }}
         with:
           name: playwright-report
-          path: playwright-report/
+          path: playwright-report/ # This path is relative to ${{ env.FRONTEND_DIR }}
           retention-days: 30
 
   build:
     name: Build
     runs-on: ubuntu-latest
+    needs: [install, types-check, lint, test, e2etest]
     defaults:
       run:
         working-directory: ${{ env.FRONTEND_DIR }}
-    needs: [install, types-check, lint, test, e2etest]
-
     steps:
-      - name: "☁️ checkout repository"
-        uses: actions/checkout@v4
-
-      - name: "🔧 setup node"
-        uses: actions/setup-node@v4
+      # Use the custom composite action for common setup
+      - uses: ./.github/actions/frontend-setup@v1
         with:
-          node-version: lts/Hydrogen
-
-      - uses: actions/cache@v4
-        id: restore-build
-        with:
-          path: ./*
-          key: ${{ runner.os }}-node-modules-${{ hashFiles(format('{0}/package-lock.json', env.FRONTEND_DIR)) }}
-
+          node-version: ${{ env.NODE_VERSION }}
+          frontend-dir: ${{ env.FRONTEND_DIR }}
       - name: "🔧 build code"
         run: npm run build

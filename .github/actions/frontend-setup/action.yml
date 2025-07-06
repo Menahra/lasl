@@ -1,0 +1,45 @@
+name: "Frontend Setup"
+description: "Checks out repository, sets up Node.js and restores node_modules cache for the frontend application."
+
+inputs:
+  node-version:
+    description: "Node.js version to use (e.g., 20.x, lts/*)"
+    required: true
+    default: "lts/*"
+  frontend-dir:
+    description: "Path to the frontend directory relative to the repository root"
+    required: true
+    default: "apps/frontend"
+
+outputs:
+  cache-hit:
+    description: "Indicates if the node_modules cache was a hit (true/false)"
+    value: ${{ steps.restore-node-modules.outputs.cache-hit }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: "☁️ checkout repository"
+      uses: actions/checkout@v4
+
+    - name: "🔧 setup node"
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: "♻️ restore node_modules cache"
+      id: restore-node-modules
+      uses: actions/cache@v4
+      with:
+        # Path is relative to the repository root here because the working-directory
+        # is not yet applied by this composite action.
+        path: ${{ inputs.frontend-dir }}/node_modules
+        key: ${{ runner.os }}-node-modules-${{ hashFiles(format('{0}/package-lock.json', inputs.frontend-dir)) }}
+        restore-keys: |
+          ${{ runner.os }}-node-modules-
+
+    - name: "🔧 install according to package-lock (if cache miss)"
+      shell: bash
+      working-directory: ${{ inputs.frontend-dir }} # Apply working directory for this step
+      if: steps.restore-node-modules.outputs.cache-hit != 'true'
+      run: npm ci
