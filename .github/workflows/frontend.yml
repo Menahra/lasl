@@ -28,7 +28,7 @@ jobs:
         id: restore-build
         with:
           path: ./*
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('frontend/package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('apps/frontend/package-lock.json') }}
 
   types-check:
     name: Correct typing
@@ -48,7 +48,7 @@ jobs:
         id: restore-build
         with:
           path: ./*
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('frontend/package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('apps/frontend/package-lock.json') }}
 
       - name: "🔍 check types"
         run: npm run types:check
@@ -71,7 +71,7 @@ jobs:
         id: restore-build
         with:
           path: ./*
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('frontend/package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('apps/frontend/package-lock.json') }}
 
       - name: "🔍 lint code"
         run: npm run check:ci
@@ -94,7 +94,7 @@ jobs:
         id: restore-build
         with:
           path: ./*
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('frontend/package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('apps/frontend/package-lock.json') }}
 
       - name: "🧪 test code"
         run: npm run test:cov
@@ -118,7 +118,7 @@ jobs:
         id: restore-build
         with:
           path: ./*
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('frontend/package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('apps/frontend/package-lock.json') }}
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
@@ -151,7 +151,7 @@ jobs:
         id: restore-build
         with:
           path: ./*
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('frontend/package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('apps/frontend/package-lock.json') }}
 
       - name: "🔧 build code"
         run: npm run build
