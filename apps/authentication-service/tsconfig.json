@@ -1,0 +1,57 @@
+{
+    "include": ["src/**/*", "test/**/*"],
+    "exclude": ["node_modules"],
+    "compilerOptions": {
+        "rootDir": "src",
+        "outDir": "dist",
+
+        //========== Target and module ==========
+        "target": "ES2023",
+        /**
+         * supports both CommonJS and ESM
+         * although its a moving target, its fine to use since generally only functionality is added
+         */
+        "module": "NodeNext",
+        // do not check .d.ts files
+        "skipLibCheck": true,
+        // do not allow importing empty ts files that do not exist
+        "noUncheckedSideEffectImports": true,
+        // allow importing json files
+        "resolveJsonModule": true,
+
+        //========== Type checking ==========
+        // Essential: activates several useful options
+        "strict": true,
+        // beyond strict
+        // differentiate between optional property and undefined value of a prop
+        "exactOptionalPropertyTypes": true, 
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitOverride": true,
+        "noImplicitReturns": true,
+        "noPropertyAccessFromIndexSignature": true,
+
+        //========== Only JS at non-type level (enables type stripping) ==========
+        // Forbid non-JavaScript language constructs such as:
+        // JSX, enums, constructor parameter properties, namespaces
+        "erasableSyntaxOnly": true,
+        // Enforce keyword `type` for type imports etc.
+        "verbatimModuleSyntax": true, // implies "isolatedModules"
+        
+        //========== Emitted files ==========
+        // tsc only type-checks, doesn’t emit any files
+        "noEmit": true,
+        //----- Output: .js -----
+        "sourceMap": true, // .js.map files
+        //----- Output: .d.ts -----
+        "declaration": true, // .d.ts files
+        // “Go to definition” jumps to TS source etc.
+        "declarationMap": true, // .d.ts.map files
+
+        //========== Disallow files ==========
+        "allowJs": false,
+        "checkJs": false,
+
+        //========== Miscellaneous ==========
+        "incremental": true
+    }
+}

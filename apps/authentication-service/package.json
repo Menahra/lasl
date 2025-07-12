@@ -1,0 +1,29 @@
+{
+  "name": "auth-service",
+  "version": "1.0.0",
+  "main": "app.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "node --experimental-strip-types --watch src/app.ts",
+    "start": "node --experimental-strip-types src/app.ts",
+    "lint": "biome lint ./src",
+    "lint:fix": "biome lint --write ./src",
+    "format": "biome lint ./src",
+    "format:fix": "biome format --write ./src",
+    "check:ci": "biome check ./src"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@biomejs/biome": "^2.0.6",
+    "@types/config": "^3.3.5",
+    "@types/node": "^24.0.10",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "fastify": "^5.4.0",
+    "mongoose": "^8.16.1"
+  }
+}

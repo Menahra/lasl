@@ -1,0 +1,33 @@
+services:
+  authentication-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: authentication_service
+    ports:
+      - "${APPLICATION_HOST_PORT:-8080}:3000"
+    environment:
+      PORT: 3000
+      APPLICATION_HOST_PORT: ${APPLICATION_HOST_PORT}
+      MONGO_URI: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongodb:27017/${MONGO_DB_NAME}?authSource=admin
+      JWT_SECRET: ${JWT_SECRET}
+
+    depends_on:
+      - authentication-service-mongodb
+
+  authentication-service-mongodb:
+    image: mongo:latest
+    container_name: authentication_service_mongodb_instance
+    ports:
+      # Map host port for direct access (e.g., via MongoDB Compass)
+      - "${DB_HOST_PORT:-27017}:27017"
+    environment:
+      # These must be set for the MongoDB container to initialize
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_DB_NAME:-auth_service_db}
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
