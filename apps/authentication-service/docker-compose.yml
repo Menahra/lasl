@@ -9,7 +9,7 @@ services:
     environment:
       PORT: 3000
       APPLICATION_HOST_PORT: ${APPLICATION_HOST_PORT}
-      MONGO_URI: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongodb:27017/${MONGO_DB_NAME}?authSource=admin
+      MONGO_URI: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@authentication-service-mongodb:27017/${MONGO_DB_NAME}?authSource=admin
       JWT_SECRET: ${JWT_SECRET}
 
     depends_on:

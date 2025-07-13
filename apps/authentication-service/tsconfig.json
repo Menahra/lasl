@@ -16,6 +16,7 @@
         "skipLibCheck": true,
         // do not allow importing empty ts files that do not exist
         "noUncheckedSideEffectImports": true,
+        "allowImportingTsExtensions": true,
         // allow importing json files
         "resolveJsonModule": true,
 
