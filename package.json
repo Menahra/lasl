@@ -2,14 +2,6 @@
   "name": "lasl",
   "version": "1.0.0",
   "description": "",
-  "scripts": {
-    "lint": "biome lint .",
-    "lint:fix": "biome lint --apply .",
-    "format": "biome format .",
-    "format:write": "biome format --write .",
-    "check": "biome check .",
-    "check:fix": "biome check --apply ."
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
