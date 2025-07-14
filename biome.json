@@ -121,7 +121,7 @@
         "noNonNullAssertion": "error",
         "noParameterAssign": "error",
         "noParameterProperties": "error",
-        "noProcessEnv": "error",
+        "noProcessEnv": "off",
         "noRestrictedGlobals": "error",
         "noRestrictedImports": "error",
         "noShoutyConstants": "error",
