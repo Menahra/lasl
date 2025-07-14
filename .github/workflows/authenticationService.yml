@@ -1,0 +1,108 @@
+name: CI for Authentication Service
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "apps/authentication-service/**"
+      - "packages/**"
+      - "pnpm-lock.yaml"
+      - "biome.json"
+      - "package.json"
+      - ".github/workflows/authenticationService.yml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "apps/authentication-service/**"
+      - "packages/**"
+      - "pnpm-lock.yaml"
+      - "biome.json"
+      - "package.json"
+      - ".github/workflows/authenticationService.yml"
+
+jobs:
+  install:
+    name: Install dependencies
+    runs-on: ubuntu-latest
+    outputs:
+      # Expose the pnpm-lock.yaml hash to dependent jobs for artifact naming
+      pnpm_lock_hash: ${{ steps.cache-key-gen.outputs.pnpm_lock_hash }}
+    steps:
+      - name: "☁️ Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: "🔧 Setup Node.js and PNPM"
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Generate pnpm-lock.yaml hash for artifact key
+        id: cache-key-gen
+        run: |
+          # Hash the root pnpm-lock.yaml for a unique artifact name
+          echo "pnpm_lock_hash=$(pnpm hash --file pnpm-lock.yaml)" >> "$GITHUB_OUTPUT"
+        working-directory: . # Ensure this command runs at the repo root
+
+      - name: "🔧 Install dependencies for monorepo"
+        run: pnpm install --frozen-lockfile
+        working-directory: .
+
+      - name: "📦 Upload node_modules artifact"
+        uses: actions/upload-artifact@v4
+        with:
+          name: node-modules-${{ runner.os }}-${{ steps.cache-key-gen.outputs.pnpm_lock_hash }}
+          path: node_modules # Upload the entire root node_modules directory
+          retention-days: 5
+
+  types-check:
+    name: Correct typing
+    runs-on: ubuntu-latest
+    needs: [install]
+    defaults:
+      run:
+        working-directory: packages/schema-engine
+    steps:
+      - name: "☁️ Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: "🔧 Setup Node.js"
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: "📥 Download node_modules artifact"
+        uses: actions/download-artifact@v4
+        with:
+          name: node-modules-${{ runner.os }}-${{ needs.install.outputs.pnpm_lock_hash }}
+          path: node_modules # Download into the root 'node_modules' directory
+
+      - name: "🔍 Check types"
+        run: pnpm run types:check
+
+  lint:
+    name: Code standards
+    runs-on: ubuntu-latest
+    needs: [install]
+    defaults:
+      run:
+        working-directory: packages/schema-engine
+    steps:
+      - name: "☁️ Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: "🔧 Setup Node.js"
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: "📥 Download node_modules artifact"
+        uses: actions/download-artifact@v4
+        with:
+          name: node-modules-${{ runner.os }}-${{ needs.install.outputs.pnpm_lock_hash }}
+          path: node_modules
+
+      - name: "🔍 Lint code"
+        run: pnpm run check:ci

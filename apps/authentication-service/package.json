@@ -10,7 +10,8 @@
     "lint:fix": "biome lint --write ./src",
     "format": "biome lint ./src",
     "format:fix": "biome format --write ./src",
-    "check:ci": "biome check ./src"
+    "check:ci": "biome check ./src",
+    "types:check": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",
