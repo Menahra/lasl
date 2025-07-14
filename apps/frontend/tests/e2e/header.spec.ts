@@ -1,119 +1,122 @@
 import { expect, test } from "@playwright/test";
-import { navigateAndWaitForPageLoad } from "./utils/pageLoad";
+import { navigateAndWaitForPageLoad } from "./utils/pageLoad.ts";
 
 test("has title", async ({ page }) => {
-	await navigateAndWaitForPageLoad(page);
+  await navigateAndWaitForPageLoad(page);
 
-	await expect(page).toHaveTitle(/Lasl/);
+  // biome-ignore lint/performance/useTopLevelRegex: ok in a test
+  await expect(page).toHaveTitle(/Lasl/);
 });
 
 test("github link", async ({ context, page }) => {
-	await navigateAndWaitForPageLoad(page);
+  await navigateAndWaitForPageLoad(page);
 
-	const pagePromise = context.waitForEvent("page");
-	await page.getByRole("link", { name: "GitHub" }).click();
+  const pagePromise = context.waitForEvent("page");
+  await page.getByRole("link", { name: "GitHub" }).click();
 
-	const gitHubPage = await pagePromise;
-	await gitHubPage.waitForLoadState();
-	await expect(gitHubPage).toHaveTitle(/GitHub/);
+  const gitHubPage = await pagePromise;
+  await gitHubPage.waitForLoadState();
+  // biome-ignore lint/performance/useTopLevelRegex: ok in a test
+  await expect(gitHubPage).toHaveTitle(/GitHub/);
 });
 
 test("ko-fi link", async ({ context, page }) => {
-	await navigateAndWaitForPageLoad(page);
+  await navigateAndWaitForPageLoad(page);
 
-	const pagePromise = context.waitForEvent("page");
-	await page.getByRole("link", { name: "Ko-Fi" }).click();
+  const pagePromise = context.waitForEvent("page");
+  await page.getByRole("link", { name: "Ko-Fi" }).click();
 
-	const koFiPage = await pagePromise;
-	await koFiPage.waitForLoadState();
-	await expect(koFiPage).toHaveTitle(/Zioui/);
+  const koFiPage = await pagePromise;
+  await koFiPage.waitForLoadState();
+  // biome-ignore lint/performance/useTopLevelRegex: ok in a test
+  await expect(koFiPage).toHaveTitle(/Zioui/);
 });
 
 test.describe("light/ dark mode", () => {
-	const lightBackgroundColor = "rgb(240, 240, 240)";
-	const darkBackgroundColor = "rgb(15, 15, 15)";
-	test("without os setting it should be light per default", async ({
-		page,
-	}) => {
-		await page.emulateMedia({ colorScheme: "no-preference" });
-		await navigateAndWaitForPageLoad(page);
+  const lightBackgroundColor = "rgb(240, 240, 240)";
+  const darkBackgroundColor = "rgb(15, 15, 15)";
+  test("without os setting it should be light per default", async ({
+    page,
+  }) => {
+    await page.emulateMedia({ colorScheme: "no-preference" });
+    await navigateAndWaitForPageLoad(page);
 
-		const body = await page.$("body");
-		const backgroundColor = await body?.evaluate(
-			(el) => window.getComputedStyle(el).backgroundColor,
-		);
-		expect(backgroundColor).toBe(lightBackgroundColor);
-	});
+    const body = await page.$("body");
+    const backgroundColor = await body?.evaluate(
+      (el) => window.getComputedStyle(el).backgroundColor,
+    );
+    expect(backgroundColor).toBe(lightBackgroundColor);
+  });
 
-	test("with light setting the app should be in light mode", async ({
-		page,
-	}) => {
-		await page.emulateMedia({ colorScheme: "light" });
-		await navigateAndWaitForPageLoad(page);
+  test("with light setting the app should be in light mode", async ({
+    page,
+  }) => {
+    await page.emulateMedia({ colorScheme: "light" });
+    await navigateAndWaitForPageLoad(page);
 
-		const body = await page.$("body");
-		const backgroundColor = await body?.evaluate(
-			(el) => window.getComputedStyle(el).backgroundColor,
-		);
-		expect(backgroundColor).toBe(lightBackgroundColor);
-	});
+    const body = await page.$("body");
+    const backgroundColor = await body?.evaluate(
+      (el) => window.getComputedStyle(el).backgroundColor,
+    );
+    expect(backgroundColor).toBe(lightBackgroundColor);
+  });
 
-	test("with dark setting the app should be in light mode", async ({
-		page,
-	}) => {
-		await page.emulateMedia({ colorScheme: "dark" });
-		await navigateAndWaitForPageLoad(page);
+  test("with dark setting the app should be in light mode", async ({
+    page,
+  }) => {
+    await page.emulateMedia({ colorScheme: "dark" });
+    await navigateAndWaitForPageLoad(page);
 
-		const body = await page.$("body");
-		const backgroundColor = await body?.evaluate(
-			(el) => window.getComputedStyle(el).backgroundColor,
-		);
-		expect(backgroundColor).toBe(darkBackgroundColor);
-	});
+    const body = await page.$("body");
+    const backgroundColor = await body?.evaluate(
+      (el) => window.getComputedStyle(el).backgroundColor,
+    );
+    expect(backgroundColor).toBe(darkBackgroundColor);
+  });
 
-	test("Can change the setting via button", async ({ page }) => {
-		await page.emulateMedia({ colorScheme: "light" });
-		await navigateAndWaitForPageLoad(page);
+  test("Can change the setting via button", async ({ page }) => {
+    await page.emulateMedia({ colorScheme: "light" });
+    await navigateAndWaitForPageLoad(page);
 
-		const body = await page.$("body");
-		const backgroundColor = await body?.evaluate(
-			(el) => window.getComputedStyle(el).backgroundColor,
-		);
+    const body = await page.$("body");
+    const backgroundColor = await body?.evaluate(
+      (el) => window.getComputedStyle(el).backgroundColor,
+    );
 
-		expect(backgroundColor).toBe(lightBackgroundColor);
+    expect(backgroundColor).toBe(lightBackgroundColor);
 
-		await page.getByRole("button", { name: "to dark mode" }).click();
+    await page.getByRole("button", { name: "to dark mode" }).click();
 
-		const updatedBackgroundColor = await body?.evaluate(
-			(el) => window.getComputedStyle(el).backgroundColor,
-		);
-		expect(updatedBackgroundColor).toBe(darkBackgroundColor);
-	});
+    const updatedBackgroundColor = await body?.evaluate(
+      (el) => window.getComputedStyle(el).backgroundColor,
+    );
+    expect(updatedBackgroundColor).toBe(darkBackgroundColor);
+  });
 
-	test("remembers theme setting if manually changed", async ({ page }) => {
-		await page.emulateMedia({ colorScheme: "dark" });
-		await navigateAndWaitForPageLoad(page);
+  test("remembers theme setting if manually changed", async ({ page }) => {
+    await page.emulateMedia({ colorScheme: "dark" });
+    await navigateAndWaitForPageLoad(page);
 
-		const body = await page.$("body");
-		const backgroundColor = await body?.evaluate(
-			(el) => window.getComputedStyle(el).backgroundColor,
-		);
+    const body = await page.$("body");
+    const backgroundColor = await body?.evaluate(
+      (el) => window.getComputedStyle(el).backgroundColor,
+    );
 
-		expect(backgroundColor).toBe(darkBackgroundColor);
+    expect(backgroundColor).toBe(darkBackgroundColor);
 
-		await page.getByRole("button", { name: "to light mode" }).click();
+    await page.getByRole("button", { name: "to light mode" }).click();
 
-		const updatedBackgroundColor = await body?.evaluate(
-			(el) => window.getComputedStyle(el).backgroundColor,
-		);
-		expect(updatedBackgroundColor).toBe(lightBackgroundColor);
+    const updatedBackgroundColor = await body?.evaluate(
+      (el) => window.getComputedStyle(el).backgroundColor,
+    );
+    expect(updatedBackgroundColor).toBe(lightBackgroundColor);
 
-		await page.reload();
-		const bodyAfterReload = await page.$("body");
+    await page.reload();
+    const bodyAfterReload = await page.$("body");
 
-		const backgroundColorAfterPageReload = await bodyAfterReload?.evaluate(
-			(el) => window.getComputedStyle(el).backgroundColor,
-		);
-		expect(backgroundColorAfterPageReload).toBe(lightBackgroundColor);
-	});
+    const backgroundColorAfterPageReload = await bodyAfterReload?.evaluate(
+      (el) => window.getComputedStyle(el).backgroundColor,
+    );
+    expect(backgroundColorAfterPageReload).toBe(lightBackgroundColor);
+  });
 });

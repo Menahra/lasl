@@ -1,49 +1,59 @@
-import * as RadixTooltip from "@radix-ui/react-tooltip";
+import type {
+  TooltipContentProps as RadixTooltipContentProps,
+  TooltipProps as RadixTooltipProps,
+  TooltipTriggerProps as RadixTooltipTriggerProps,
+} from "@radix-ui/react-tooltip";
+import {
+  Arrow as RadixArrow,
+  Content as RadixContent,
+  Portal as RadixPortal,
+  Provider as RadixProvider,
+  Root as RadixRoot,
+  Trigger as RadixTrigger,
+} from "@radix-ui/react-tooltip";
 import type { PropsWithChildren } from "react";
 
 import "./styles.scss";
 
 export type TooltipProps = {
-	children: PropsWithChildren["children"];
-	delayDuration?: RadixTooltip.TooltipProps["delayDuration"];
-	asChild?: RadixTooltip.TooltipTriggerProps["asChild"];
-	sideOffset?: RadixTooltip.TooltipContentProps["sideOffset"];
-	collisionPadding?: RadixTooltip.TooltipContentProps["collisionPadding"];
+  children: PropsWithChildren["children"];
+  delayDuration?: RadixTooltipProps["delayDuration"];
+  asChild?: RadixTooltipTriggerProps["asChild"];
+  sideOffset?: RadixTooltipContentProps["sideOffset"];
+  collisionPadding?: RadixTooltipContentProps["collisionPadding"];
 
-	/**
-	 * this is the text that will be shown in the tooltip
-	 * if it is not defined the tooltip will not be rendered
-	 */
-	title?: string;
+  /**
+   * this is the text that will be shown in the tooltip
+   * if it is not defined the tooltip will not be rendered
+   */
+  title?: string;
 };
 
 export const Tooltip = ({
-	children,
-	delayDuration = 550,
-	asChild = true,
-	sideOffset = 8,
-	collisionPadding = 8,
-	title,
+  children,
+  delayDuration = 550,
+  asChild = true,
+  sideOffset = 8,
+  collisionPadding = 8,
+  title,
 }: TooltipProps) => {
-	return (
-		<RadixTooltip.Provider delayDuration={delayDuration}>
-			<RadixTooltip.Root>
-				<RadixTooltip.Trigger asChild={asChild}>
-					{children}
-				</RadixTooltip.Trigger>
-				<RadixTooltip.Portal>
-					{title ? (
-						<RadixTooltip.Content
-							className="TooltipContent"
-							sideOffset={sideOffset}
-							collisionPadding={collisionPadding}
-						>
-							{title}
-							<RadixTooltip.Arrow className="TooltipArrow" />
-						</RadixTooltip.Content>
-					) : undefined}
-				</RadixTooltip.Portal>
-			</RadixTooltip.Root>
-		</RadixTooltip.Provider>
-	);
+  return (
+    <RadixProvider delayDuration={delayDuration}>
+      <RadixRoot>
+        <RadixTrigger asChild={asChild}>{children}</RadixTrigger>
+        <RadixPortal>
+          {title ? (
+            <RadixContent
+              className="TooltipContent"
+              sideOffset={sideOffset}
+              collisionPadding={collisionPadding}
+            >
+              {title}
+              <RadixArrow className="TooltipArrow" />
+            </RadixContent>
+          ) : undefined}
+        </RadixPortal>
+      </RadixRoot>
+    </RadixProvider>
+  );
 };

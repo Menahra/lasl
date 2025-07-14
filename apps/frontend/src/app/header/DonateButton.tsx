@@ -4,16 +4,16 @@ import KoFiLogo from "@/assets/icons/ko-fi.svg?react";
 import { IconLink } from "@/src/shared/components/icon-link/IconLink";
 
 export const DonateButton = () => {
-	const { t } = useTranslation();
+  const { t } = useTranslation();
 
-	return (
-		<IconLink
-			icon={<KoFiLogo />}
-			href="https://ko-fi.com/zioui"
-			target="_blank"
-			rel="noopener noreferrer"
-			aria-label={t("header.ko-fi_donate_description")}
-			title={t("header.ko-fi_donate_description")}
-		/>
-	);
+  return (
+    <IconLink
+      icon={<KoFiLogo />}
+      href="https://ko-fi.com/zioui"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={t("header.ko-fi_donate_description")}
+      title={t("header.ko-fi_donate_description")}
+    />
+  );
 };

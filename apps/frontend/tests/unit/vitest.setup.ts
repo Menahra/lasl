@@ -1,3 +1,4 @@
+// biome-ignore lint/performance/noNamespaceImport: needed here
 import * as matchers from "@testing-library/jest-dom/matchers";
 import { cleanup } from "@testing-library/react";
 import { afterEach, expect } from "vitest";
@@ -7,5 +8,5 @@ expect.extend(matchers);
 
 // clear environment after each test case
 afterEach(() => {
-	cleanup();
+  cleanup();
 });

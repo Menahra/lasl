@@ -4,34 +4,34 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
 describe("GitHubButton", () => {
-	it("renders a link", () => {
-		render(<GitHubButton />);
+  it("renders a link", () => {
+    render(<GitHubButton />);
 
-		expect(screen.getByRole("link")).toBeVisible();
-	});
+    expect(screen.getByRole("link")).toBeVisible();
+  });
 
-	it("link points to ko-fi page", () => {
-		render(<GitHubButton />);
+  it("link points to ko-fi page", () => {
+    render(<GitHubButton />);
 
-		const link = screen.getByRole("link");
-		expect(link).toHaveAttribute("href", "https://github.com/Menahra/lasl");
-	});
+    const link = screen.getByRole("link");
+    expect(link).toHaveAttribute("href", "https://github.com/Menahra/lasl");
+  });
 
-	it("has proper aria label set", () => {
-		render(<GitHubButton />);
+  it("has proper aria label set", () => {
+    render(<GitHubButton />);
 
-		const link = screen.getByRole("link");
-		expect(link).toHaveAccessibleName("header.visit_github_repository");
-	});
+    const link = screen.getByRole("link");
+    expect(link).toHaveAccessibleName("header.visit_github_repository");
+  });
 
-	it("shows proper tooltip on focus/hover", async () => {
-		render(<GitHubButton />);
+  it("shows proper tooltip on focus/hover", async () => {
+    render(<GitHubButton />);
 
-		const user = userEvent.setup();
+    const user = userEvent.setup();
 
-		await user.tab();
-		expect(
-			screen.getByRole("tooltip", { name: "header.visit_github_repository" }),
-		).toBeVisible();
-	});
+    await user.tab();
+    expect(
+      screen.getByRole("tooltip", { name: "header.visit_github_repository" }),
+    ).toBeVisible();
+  });
 });

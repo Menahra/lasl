@@ -5,7 +5,7 @@ import { type Page, expect } from "playwright/test";
  * In future this might be adjusted to wait for a loading screen to disappear
  */
 export const navigateAndWaitForPageLoad = async (page: Page) => {
-	await page.goto("/");
+  await page.goto("/");
 
-	await expect(page.getByText("Logo placeholder")).toBeVisible();
+  await expect(page.getByText("Logo placeholder")).toBeVisible();
 };

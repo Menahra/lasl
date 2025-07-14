@@ -1,36 +1,36 @@
 import type { PropsWithChildren } from "react";
 import "./styles.scss";
-import { Tooltip, type TooltipProps } from "../tooltip/Tooltip";
+import { Tooltip, type TooltipProps } from "../tooltip/Tooltip.tsx";
 
 type IconButtonProps = Omit<TooltipProps, "children"> & {
-	/**
-	 * the accessible description
-	 * it should explain the purpose this button fulfills
-	 */
-	description: string;
-	/** the icon for this button */
-	icon: PropsWithChildren["children"];
+  /**
+   * the accessible description
+   * it should explain the purpose this button fulfills
+   */
+  description: string;
+  /** the icon for this button */
+  icon: PropsWithChildren["children"];
 
-	/** handler will be executed when the button is being pressed */
-	onClick: () => void;
+  /** handler will be executed when the button is being pressed */
+  onClick: () => void;
 };
 
 export const IconButton = ({
-	description,
-	icon,
-	onClick,
-	...tooltipProps
+  description,
+  icon,
+  onClick,
+  ...tooltipProps
 }: IconButtonProps) => {
-	return (
-		<Tooltip {...tooltipProps}>
-			<button
-				type="button"
-				onClick={onClick}
-				className="IconButton"
-				aria-label={description}
-			>
-				{icon}
-			</button>
-		</Tooltip>
-	);
+  return (
+    <Tooltip {...tooltipProps}>
+      <button
+        type="button"
+        onClick={onClick}
+        className="IconButton"
+        aria-label={description}
+      >
+        {icon}
+      </button>
+    </Tooltip>
+  );
 };
