@@ -1,6 +1,6 @@
 export const textSchemaMock = [
-	{
-		content: "Some text here",
-	},
-	{},
+  {
+    content: "Some text here",
+  },
+  {},
 ];

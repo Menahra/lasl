@@ -1,39 +1,38 @@
 import Ajv from "ajv";
 import {
-	mainSchema,
-	sectionContainerSchema,
-	styleSchema,
-	textSchema,
-} from "./schema-definition";
+  mainSchema,
+  sectionContainerSchema,
+  styleSchema,
+  textSchema,
+} from "./schema-definition/index.ts";
 
 export const createSchemaCompiler = (
-	schemaIdentifier = "http://example.com/main.schema.json",
+  schemaIdentifier = "http://example.com/main.schema.json",
 ) => {
-	const ajvInstance = new Ajv({
-		schemas: [mainSchema, sectionContainerSchema, styleSchema, textSchema],
-	});
+  const ajvInstance = new Ajv({
+    schemas: [mainSchema, sectionContainerSchema, styleSchema, textSchema],
+  });
 
-	return ajvInstance.getSchema(schemaIdentifier);
+  return ajvInstance.getSchema(schemaIdentifier);
 };
 
 export const validateSchema = (
-	dataToValidate: unknown,
-	schemaIdentifier = "http://example.com/main.schema.json",
+  dataToValidate: unknown,
+  schemaIdentifier = "http://example.com/main.schema.json",
 ) => {
-	const schemaCompiler = createSchemaCompiler(schemaIdentifier);
+  const schemaCompiler = createSchemaCompiler(schemaIdentifier);
 
-	if (!schemaCompiler) {
-		console.error(
-			`Could not get a schema compiler, did you provide a wrong schema identifier (${schemaIdentifier})?`,
-		);
-		return;
-	}
+  if (!schemaCompiler) {
+    console.error(
+      `Could not get a schema compiler, did you provide a wrong schema identifier (${schemaIdentifier})?`,
+    );
+    return;
+  }
 
-	const valid = schemaCompiler(dataToValidate);
-	console.log(schemaCompiler.errors);
-	if (!valid) {
-		console.error(schemaCompiler.errors);
-	}
+  const valid = schemaCompiler(dataToValidate);
+  if (!valid) {
+    console.error(schemaCompiler.errors);
+  }
 
-	return valid;
+  return valid;
 };
