@@ -1,7 +1,7 @@
-import { IconButton } from "@/src/shared/components/icon-button/IconButton";
-import { useDarkMode } from "@/src/shared/hooks/useDarkMode";
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import { useTranslation } from "react-i18next";
+import { IconButton } from "@/src/shared/components/icon-button/IconButton";
+import { useDarkMode } from "@/src/shared/hooks/useDarkMode";
 
 export const LightDarkModeButton = () => {
   const { t } = useTranslation();

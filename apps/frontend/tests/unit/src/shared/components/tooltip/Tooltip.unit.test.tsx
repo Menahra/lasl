@@ -1,7 +1,7 @@
-import { Tooltip } from "@/src/shared/components/tooltip/Tooltip";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
+import { Tooltip } from "@/src/shared/components/tooltip/Tooltip";
 
 describe("Tooltip", () => {
   const user = userEvent.setup();

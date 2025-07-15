@@ -1,4 +1,4 @@
-import { type Page, expect } from "playwright/test";
+import { expect, type Page } from "playwright/test";
 
 /**
  * Navigates to the specified baseUrl and waits for the logo placeholder to appear.

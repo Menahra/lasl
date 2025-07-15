@@ -1,8 +1,8 @@
-import { IconLink } from "@/src/shared/components/icon-link/IconLink";
 import { PlusIcon } from "@radix-ui/react-icons";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
+import { IconLink } from "@/src/shared/components/icon-link/IconLink";
 
 describe("IconLink", () => {
   const testHref = "test473";

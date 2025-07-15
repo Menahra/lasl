@@ -1,6 +1,6 @@
-import { Header } from "@/src/app/header/Header";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
+import { Header } from "@/src/app/header/Header";
 
 describe("Header", () => {
   it("renders a search field (among other things)", () => {

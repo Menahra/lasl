@@ -3,8 +3,6 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { LightDarkModeButton } from "@/src/app/header/LightDarkModeButton";
 
-// import * as hooks from "@/src/shared/hooks/useDarkMode";
-
 const useDarkModeMock = vi.hoisted(() => vi.fn());
 vi.mock("@/src/shared/hooks/useDarkMode", () => ({
   useDarkMode: useDarkModeMock,

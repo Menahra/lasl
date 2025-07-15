@@ -1,10 +1,10 @@
 import {
-  type MockInstance,
   afterEach,
   beforeEach,
   describe,
   expect,
   it,
+  type MockInstance,
   vi,
 } from "vitest";
 import { validateSchema } from "../src/validator.ts";
