@@ -1,9 +1,5 @@
 name: CI for Authentication Service
 
-env:
-  AUTHENTICATION_SERVICE_DIR: apps/authentication-service
-  NODE_VERSION: lts/*
-
 on:
   push:
     branches:
@@ -15,7 +11,8 @@ on:
       - "biome.json"
       - "package.json"
       - ".github/workflows/authenticationService.yml"
-      - ".github/actions/common-workflow-setup.yml"
+      - ".github/workflows/common-intall-job.yml"
+      - ".github/actions/setup-job-env/action.yml"
   pull_request:
     branches:
       - main
@@ -26,19 +23,19 @@ on:
       - "biome.json"
       - "package.json"
       - ".github/workflows/authenticationService.yml"
-      - ".github/actions/common-workflow-setup.yml"
+      - ".github/workflows/common-intall-job.yml"
+      - ".github/actions/setup-job-env/action.yml"
+
+env:
+  AUTHENTICATION_SERVICE_DIR: apps/authentication-service
+  NODE_VERSION: lts/*
 
 jobs:
   install:
     name: Install dependencies
-    runs-on: ubuntu-latest
-    steps:
-      - name: "☁️ Checkout repository"
-        uses: actions/checkout@v4
-
-      - uses: ./.github/common-workflow-setup.yml
-        with:
-          node-version: ${{ env.NODE_VERSION }}
+    uses: ./.github/workflows/common-install-job.yml
+    with:
+      node_version: ${{ env.NODE_VERSION }}
 
   types-check:
     name: Correct typing
@@ -51,9 +48,10 @@ jobs:
       - name: "☁️ Checkout repository"
         uses: actions/checkout@v4
 
-      - uses: ./.github/common-workflow-setup.yml
+      - uses: ./.github/actions/setup-job-env
         with:
           node-version: ${{ env.NODE_VERSION }}
+          pnpm_lock_hash: ${{ needs.install.outputs.pnpm_lock_hash }}
 
       - name: "🔍 Check types"
         run: pnpm run types:check
@@ -64,14 +62,15 @@ jobs:
     needs: [install]
     defaults:
       run:
-        working-directory: ${{ env.AUTHENTICATION_SERVICE_DIR }}
+        working-directory: packages/schema-engine
     steps:
       - name: "☁️ Checkout repository"
         uses: actions/checkout@v4
 
-      - uses: ./.github/common-workflow-setup.yml
+      - uses: ./.github/actions/setup-job-env
         with:
           node-version: ${{ env.NODE_VERSION }}
+          pnpm_lock_hash: ${{ needs.install.outputs.pnpm_lock_hash }}
 
       - name: "🔍 Lint code"
         run: pnpm run check:ci

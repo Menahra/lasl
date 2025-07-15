@@ -1,5 +1,5 @@
 # .github/workflows/frontend.yml
-name: CI for apps/frontend
+name: CI for Frontend Service
 
 env:
   FRONTEND_DIR: apps/frontend
