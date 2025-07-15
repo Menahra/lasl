@@ -37,11 +37,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: "pnpm"
-          cache-dependency-path: pnpm-lock.yaml
 
-      - name: "Enable corepack"
-        run: corepack enable
+      - name: "Setup pnpm"
+        uses: pnpm/action-setup@v4
 
       - name: Generate pnpm-lock.yaml hash for artifact key
         id: cache-key-gen
