@@ -30,3 +30,8 @@ runs:
         # Construct the artifact name using the pnpm_lock_hash passed as input
         name: node-modules-${{ runner.os }}-${{ inputs.pnpm_lock_hash }}
         path: .
+
+    - name: "♻️ Re-link PNPM dependencies" # re-establish pnpm's internal links
+      run: pnpm install --prefer-frozen-lockfile
+      shell: bash
+      working-directory: ${{ github.workspace }}
