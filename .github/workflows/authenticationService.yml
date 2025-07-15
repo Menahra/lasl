@@ -39,6 +39,9 @@ jobs:
           node-version: "20"
           cache: "pnpm"
 
+      - name: "Install pnpm"
+        run: npm install -g pnpm
+
       - name: Generate pnpm-lock.yaml hash for artifact key
         id: cache-key-gen
         run: |
