@@ -45,7 +45,7 @@ jobs:
         id: cache-key-gen
         run: |
           # Hash the root pnpm-lock.yaml for a unique artifact name
-          echo "pnpm_lock_hash=$(pnpm hash --file pnpm-lock.yaml)" >> "$GITHUB_OUTPUT"
+          echo "pnpm_lock_hash=$(sha256sum pnpm-lock.yaml | awk '{print $1}')" >> "$GITHUB_OUTPUT"
         working-directory: . # Ensure this command runs at the repo root
 
       - name: "🔧 Install dependencies for monorepo"
