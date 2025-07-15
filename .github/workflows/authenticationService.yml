@@ -1,5 +1,9 @@
 name: CI for Authentication Service
 
+env:
+  AUTHENTICATION_SERVICE_DIR: apps/authentication-service
+  NODE_VERSION: lts/*
+
 on:
   push:
     branches:
@@ -11,6 +15,7 @@ on:
       - "biome.json"
       - "package.json"
       - ".github/workflows/authenticationService.yml"
+      - ".github/actions/common-workflow-setup.yml"
   pull_request:
     branches:
       - main
@@ -21,43 +26,19 @@ on:
       - "biome.json"
       - "package.json"
       - ".github/workflows/authenticationService.yml"
+      - ".github/actions/common-workflow-setup.yml"
 
 jobs:
   install:
     name: Install dependencies
     runs-on: ubuntu-latest
-    outputs:
-      # Expose the pnpm-lock.yaml hash to dependent jobs for artifact naming
-      pnpm_lock_hash: ${{ steps.cache-key-gen.outputs.pnpm_lock_hash }}
     steps:
       - name: "☁️ Checkout repository"
         uses: actions/checkout@v4
 
-      - name: "🔧 Setup Node.js and PNPM"
-        uses: actions/setup-node@v4
+      - uses: ./.github/common-workflow-setup.yml
         with:
-          node-version: "20"
-
-      - name: "Setup pnpm"
-        uses: pnpm/action-setup@v4
-
-      - name: Generate pnpm-lock.yaml hash for artifact key
-        id: cache-key-gen
-        run: |
-          # Hash the root pnpm-lock.yaml for a unique artifact name
-          echo "pnpm_lock_hash=$(sha256sum pnpm-lock.yaml | awk '{print $1}')" >> "$GITHUB_OUTPUT"
-        working-directory: . # Ensure this command runs at the repo root
-
-      - name: "🔧 Install dependencies for monorepo"
-        run: pnpm install --frozen-lockfile
-        working-directory: .
-
-      - name: "📦 Upload node_modules artifact"
-        uses: actions/upload-artifact@v4
-        with:
-          name: node-modules-${{ runner.os }}-${{ steps.cache-key-gen.outputs.pnpm_lock_hash }}
-          path: node_modules # Upload the entire root node_modules directory
-          retention-days: 5
+          node-version: ${{ env.NODE_VERSION }}
 
   types-check:
     name: Correct typing
@@ -65,21 +46,14 @@ jobs:
     needs: [install]
     defaults:
       run:
-        working-directory: packages/schema-engine
+        working-directory: ${{ env.AUTHENTICATION_SERVICE_DIR }}
     steps:
       - name: "☁️ Checkout repository"
         uses: actions/checkout@v4
 
-      - name: "🔧 Setup Node.js"
-        uses: actions/setup-node@v4
+      - uses: ./.github/common-workflow-setup.yml
         with:
-          node-version: "20"
-
-      - name: "📥 Download node_modules artifact"
-        uses: actions/download-artifact@v4
-        with:
-          name: node-modules-${{ runner.os }}-${{ needs.install.outputs.pnpm_lock_hash }}
-          path: node_modules # Download into the root 'node_modules' directory
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: "🔍 Check types"
         run: pnpm run types:check
@@ -90,21 +64,14 @@ jobs:
     needs: [install]
     defaults:
       run:
-        working-directory: packages/schema-engine
+        working-directory: ${{ env.AUTHENTICATION_SERVICE_DIR }}
     steps:
       - name: "☁️ Checkout repository"
         uses: actions/checkout@v4
 
-      - name: "🔧 Setup Node.js"
-        uses: actions/setup-node@v4
+      - uses: ./.github/common-workflow-setup.yml
         with:
-          node-version: "20"
-
-      - name: "📥 Download node_modules artifact"
-        uses: actions/download-artifact@v4
-        with:
-          name: node-modules-${{ runner.os }}-${{ needs.install.outputs.pnpm_lock_hash }}
-          path: node_modules
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: "🔍 Lint code"
         run: pnpm run check:ci
