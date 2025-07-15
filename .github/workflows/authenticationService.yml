@@ -35,7 +35,7 @@ jobs:
     name: Install dependencies
     uses: ./.github/workflows/common-install-job.yml
     with:
-      node_version: ${{ env.NODE_VERSION }}
+      node_version: lts/*
 
   types-check:
     name: Correct typing
