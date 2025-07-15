@@ -1,47 +1,61 @@
 # .github/workflows/frontend.yml
 name: CI for Frontend Service
 
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - apps/frontend/**
+      - "packages/**"
+      - "pnpm-lock.yaml"
+      - "biome.json"
+      - "package.json"
+      - ".github/workflows/frontendService.yml"
+      - ".github/workflows/common-intall-job.yml"
+      - ".github/actions/setup-job-env/action.yml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - apps/frontend/**
+      - "packages/**"
+      - "pnpm-lock.yaml"
+      - "biome.json"
+      - "package.json"
+      - ".github/workflows/frontendService.yml"
+      - ".github/workflows/common-intall-job.yml"
+      - ".github/actions/setup-job-env/action.yml"
+
 env:
   FRONTEND_DIR: apps/frontend
   NODE_VERSION: lts/*
 
-on:
-  push:
-    branches:
-      - "**" # Consider refining this to specific branches if needed
-
 jobs:
   install:
     name: Install dependencies
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ${{ env.FRONTEND_DIR }} # Apply working directory for commands in this job
-    steps:
-      - name: "☁️ checkout repository"
-        uses: actions/checkout@v4
-      - uses: ./.github/actions/frontend-setup
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          frontend-dir: ${{ env.FRONTEND_DIR }}
-      # No separate npm ci step here; it's handled by the composite action if cache misses.
+    uses: ./.github/workflows/common-install-job.yml
+    with:
+      node_version: lts/*
 
   types-check:
     name: Correct typing
     runs-on: ubuntu-latest
-    needs: [install] # Ensure install job (and thus npm ci if needed) completes first
+    needs: [install]
     defaults:
       run:
         working-directory: ${{ env.FRONTEND_DIR }}
     steps:
       - name: "☁️ checkout repository"
         uses: actions/checkout@v4
-      - uses: ./.github/actions/frontend-setup
+
+      - uses: ./.github/actions/setup-job-env
         with:
           node-version: ${{ env.NODE_VERSION }}
-          frontend-dir: ${{ env.FRONTEND_DIR }}
+          pnpm_lock_hash: ${{ needs.install.outputs.pnpm_lock_hash }}
+
       - name: "🔍 check types"
-        run: npm run types:check
+        run: pnpm run types:check
 
   lint:
     name: Code standards
@@ -53,12 +67,14 @@ jobs:
     steps:
       - name: "☁️ checkout repository"
         uses: actions/checkout@v4
-      - uses: ./.github/actions/frontend-setup
+
+      - uses: ./.github/actions/setup-job-env
         with:
           node-version: ${{ env.NODE_VERSION }}
-          frontend-dir: ${{ env.FRONTEND_DIR }}
+          pnpm_lock_hash: ${{ needs.install.outputs.pnpm_lock_hash }}
+
       - name: "🔍 lint code"
-        run: npm run check:ci
+        run: pnpm run check:ci
 
   test:
     name: Code reliability
@@ -70,12 +86,14 @@ jobs:
     steps:
       - name: "☁️ checkout repository"
         uses: actions/checkout@v4
-      - uses: ./.github/actions/frontend-setup
+
+      - uses: ./.github/actions/setup-job-env
         with:
           node-version: ${{ env.NODE_VERSION }}
-          frontend-dir: ${{ env.FRONTEND_DIR }}
+          pnpm_lock_hash: ${{ needs.install.outputs.pnpm_lock_hash }}
+
       - name: "🧪 test code"
-        run: npm run test:cov
+        run: pnpm run test:cov
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
@@ -94,16 +112,17 @@ jobs:
     steps:
       - name: "☁️ checkout repository"
         uses: actions/checkout@v4
-      - uses: ./.github/actions/frontend-setup
+
+      - uses: ./.github/actions/setup-job-env
         with:
           node-version: ${{ env.NODE_VERSION }}
-          frontend-dir: ${{ env.FRONTEND_DIR }}
+          pnpm_lock_hash: ${{ needs.install.outputs.pnpm_lock_hash }}
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
       - name: Run Playwright tests
-        run: npm run test:e2e
+        run: pnpm run test:e2e
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
@@ -122,9 +141,11 @@ jobs:
     steps:
       - name: "☁️ checkout repository"
         uses: actions/checkout@v4
-      - uses: ./.github/actions/frontend-setup
+
+      - uses: ./.github/actions/setup-job-env
         with:
           node-version: ${{ env.NODE_VERSION }}
-          frontend-dir: ${{ env.FRONTEND_DIR }}
+          pnpm_lock_hash: ${{ needs.install.outputs.pnpm_lock_hash }}
+
       - name: "🔧 build code"
-        run: npm run build
+        run: pnpm run build

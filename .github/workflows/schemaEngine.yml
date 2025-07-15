@@ -1,103 +1,99 @@
-name: Schema-Engine
-
-defaults:
-  run:
-    working-directory: packages/schema-engine
+name: CI for Schema-Engine Package
 
 on:
   push:
     branches:
-      - "**"
+      - main
+    paths:
+      - "packages/schema-engine/**"
+      - "pnpm-lock.yaml"
+      - "biome.json"
+      - "package.json"
+      - ".github/workflows/schemaEngine.yml"
+      - ".github/workflows/common-intall-job.yml"
+      - ".github/actions/setup-job-env/action.yml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "packages/schema-engine/**"
+      - "pnpm-lock.yaml"
+      - "biome.json"
+      - "package.json"
+      - ".github/workflows/schemaEngine.yml"
+      - ".github/workflows/common-intall-job.yml"
+      - ".github/actions/setup-job-env/action.yml"
+
+env:
+  SCHEMA_ENGINE_PACKAGE_DIR: packages/schema-engine
+  NODE_VERSION: lts/*
 
 jobs:
   install:
     name: Install dependencies
-    runs-on: ubuntu-latest
-    steps:
-      - name: "☁️ checkout repository"
-        uses: actions/checkout@v4
-
-      - name: "🔧 setup node"
-        uses: actions/setup-node@v4
-        with:
-          node-version: lts/Hydrogen
-
-      - name: "🔧 install according to package-lock"
-        run: npm ci
-      - uses: actions/cache@v4
-        id: restore-build
-        with:
-          path: ./*
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('schema-engine/package-lock.json') }}
+    uses: ./.github/workflows/common-install-job.yml
+    with:
+      node_version: lts/*
 
   types-check:
     name: Correct typing
     runs-on: ubuntu-latest
     needs: [install]
+    defaults:
+      run:
+        working-directory: ${{ env.SCHEMA_ENGINE_PACKAGE_DIR }}
 
     steps:
-      - name: "☁️ checkout repository"
+      - name: "☁️ Checkout repository"
         uses: actions/checkout@v4
 
-      - name: "🔧 setup node"
-        uses: actions/setup-node@v4
+      - uses: ./.github/actions/setup-job-env
         with:
-          node-version: lts/Hydrogen
+          node-version: ${{ env.NODE_VERSION }}
+          pnpm_lock_hash: ${{ needs.install.outputs.pnpm_lock_hash }}
 
-      - uses: actions/cache@v4
-        id: restore-build
-        with:
-          path: ./*
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('schema-engine/package-lock.json') }}
-
-      - name: "🔍 check types"
-        run: npm run types:check
+      - name: "🔍 Check types"
+        run: pnpm run types:check
 
   lint:
     name: Code standards
     runs-on: ubuntu-latest
     needs: [install]
+    defaults:
+      run:
+        working-directory: ${{ env.SCHEMA_ENGINE_PACKAGE_DIR }}
 
     steps:
       - name: "☁️ checkout repository"
         uses: actions/checkout@v4
 
-      - name: "🔧 setup node"
-        uses: actions/setup-node@v4
+      - uses: ./.github/actions/setup-job-env
         with:
-          node-version: lts/Hydrogen
-
-      - uses: actions/cache@v4
-        id: restore-build
-        with:
-          path: ./*
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('schema-engine/package-lock.json') }}
+          node-version: ${{ env.NODE_VERSION }}
+          pnpm_lock_hash: ${{ needs.install.outputs.pnpm_lock_hash }}
 
       - name: "🔍 lint code"
-        run: npm run check:ci
+        run: pnpm run check:ci
 
   test:
     name: Code reliability
     runs-on: ubuntu-latest
     needs: [install]
+    defaults:
+      run:
+        working-directory: ${{ env.SCHEMA_ENGINE_PACKAGE_DIR }}
 
     steps:
       - name: "☁️ checkout repository"
         uses: actions/checkout@v4
 
-      - name: "🔧 setup node"
-        uses: actions/setup-node@v4
+      - uses: ./.github/actions/setup-job-env
         with:
-          node-version: lts/Hydrogen
-
-      - uses: actions/cache@v4
-        id: restore-build
-        with:
-          path: ./*
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('schema-engine/package-lock.json') }}
+          node-version: ${{ env.NODE_VERSION }}
+          pnpm_lock_hash: ${{ needs.install.outputs.pnpm_lock_hash }}
 
       - name: "🧪 test code"
-        run: npm run test:cov
+        run: pnpm run test:cov
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
@@ -108,21 +104,18 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     needs: [install, types-check, lint, test]
+    defaults:
+      run:
+        working-directory: ${{ env.SCHEMA_ENGINE_PACKAGE_DIR }}
 
     steps:
       - name: "☁️ checkout repository"
         uses: actions/checkout@v4
 
-      - name: "🔧 setup node"
-        uses: actions/setup-node@v4
+      - uses: ./.github/actions/setup-job-env
         with:
-          node-version: lts/Hydrogen
-
-      - uses: actions/cache@v4
-        id: restore-build
-        with:
-          path: ./*
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('schema-engine/package-lock.json') }}
+          node-version: ${{ env.NODE_VERSION }}
+          pnpm_lock_hash: ${{ needs.install.outputs.pnpm_lock_hash }}
 
       - name: "🔧 build code"
-        run: npm run build
+        run: pnpm run build

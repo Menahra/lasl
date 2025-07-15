@@ -62,7 +62,7 @@ jobs:
     needs: [install]
     defaults:
       run:
-        working-directory: packages/schema-engine
+        working-directory: ${{ env.AUTHENTICATION_SERVICE_DIR }}
     steps:
       - name: "☁️ Checkout repository"
         uses: actions/checkout@v4
