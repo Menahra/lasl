@@ -26,7 +26,7 @@ export type TooltipProps = {
    * this is the text that will be shown in the tooltip
    * if it is not defined the tooltip will not be rendered
    */
-  title?: string;
+  title?: string | undefined;
 };
 
 export const Tooltip = ({

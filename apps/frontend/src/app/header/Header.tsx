@@ -2,7 +2,7 @@ import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { InputField } from "@/src/shared/components/input-field/InputField";
+import { InputField } from "@/src/shared/components/input-field/InputField.tsx";
 import "./styles.scss";
 import { DonateButton } from "./DonateButton.tsx";
 import { GitHubButton } from "./GitHubButton.tsx";
