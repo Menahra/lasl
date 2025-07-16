@@ -1,19 +1,8 @@
 {
-  "compilerOptions": {
-    "target": "ESNext",
-    "moduleResolution": "node",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "declaration": true,
-    "noImplicitAny": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "module": "ESNext",
-    "resolveJsonModule": true,
-    "allowImportingTsExtensions": true,
-    "noEmit": true
-  },
-  "include": ["src/**/*"],
+  "extends": "../../tsconfig.base.json",
+  "include": [
+      "src/**/*",
+      "test/**/*",
+  ],
   "exclude": ["node_modules"]
 }
