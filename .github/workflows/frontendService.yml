@@ -51,7 +51,7 @@ jobs:
 
       - uses: ./.github/actions/setup-job-env
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node_version: ${{ env.NODE_VERSION }}
           pnpm_lock_hash: ${{ needs.install.outputs.pnpm_lock_hash }}
 
       - name: "🔍 check types"
@@ -70,7 +70,7 @@ jobs:
 
       - uses: ./.github/actions/setup-job-env
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node_version: ${{ env.NODE_VERSION }}
           pnpm_lock_hash: ${{ needs.install.outputs.pnpm_lock_hash }}
 
       - name: "🔍 lint code"
@@ -89,7 +89,7 @@ jobs:
 
       - uses: ./.github/actions/setup-job-env
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node_version: ${{ env.NODE_VERSION }}
           pnpm_lock_hash: ${{ needs.install.outputs.pnpm_lock_hash }}
 
       - name: "🧪 test code"
@@ -115,7 +115,7 @@ jobs:
 
       - uses: ./.github/actions/setup-job-env
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node_version: ${{ env.NODE_VERSION }}
           pnpm_lock_hash: ${{ needs.install.outputs.pnpm_lock_hash }}
 
       - name: Install Playwright Browsers
@@ -144,7 +144,7 @@ jobs:
 
       - uses: ./.github/actions/setup-job-env
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node_version: ${{ env.NODE_VERSION }}
           pnpm_lock_hash: ${{ needs.install.outputs.pnpm_lock_hash }}
 
       - name: "🔧 build code"
