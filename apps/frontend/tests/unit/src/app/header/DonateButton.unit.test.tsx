@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
-import { DonateButton } from "@/src/app/header/DonateButton.tsx";
+import { DonateButton } from "@/src/app/header/DonateButton.jsx";
 
 describe("DonateButton", () => {
   it("renders a link", () => {

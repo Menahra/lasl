@@ -2,7 +2,7 @@ import { PlusIcon } from "@radix-ui/react-icons";
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
-import { IconLink } from "@/src/shared/components/icon-link/IconLink.tsx";
+import { IconLink } from "@/src/shared/components/icon-link/IconLink.jsx";
 
 describe("IconLink", () => {
   const testHref = "test473";

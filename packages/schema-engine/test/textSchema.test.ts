@@ -7,8 +7,8 @@ import {
   type MockInstance,
   vi,
 } from "vitest";
-import { validateSchema } from "../src/validator.ts";
-import { styleSchemaMock } from "./__mocks__/style.schema.mock.ts";
+import { validateSchema } from "../src/validator.js";
+import { styleSchemaMock } from "./__mocks__/style.schema.mock.js";
 
 describe("text json schema", () => {
   let consoleErrorSpy: MockInstance;

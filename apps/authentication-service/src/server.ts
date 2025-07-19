@@ -1,4 +1,4 @@
-import { buildApp } from "./app.ts";
+import { buildApp } from "./app.js";
 
 const startAuthenticationServer = async () => {
   const app = await buildApp();

@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from "react";
 import "./styles.scss";
-import { Tooltip, type TooltipProps } from "../tooltip/Tooltip.tsx";
+import { Tooltip, type TooltipProps } from "../tooltip/Tooltip.jsx";
 
 type IconButtonProps = Omit<TooltipProps, "children"> & {
   /**

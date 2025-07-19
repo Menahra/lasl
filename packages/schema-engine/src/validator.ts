@@ -4,7 +4,7 @@ import {
   sectionContainerSchema,
   styleSchema,
   textSchema,
-} from "./schema-definition/index.ts";
+} from "./schema-definition/index.js";
 
 export const createSchemaCompiler = (
   schemaIdentifier = "http://example.com/main.schema.json",

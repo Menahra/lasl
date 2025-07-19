@@ -2,7 +2,7 @@ import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
-import { IconButton } from "@/src/shared/components/icon-button/IconButton.tsx";
+import { IconButton } from "@/src/shared/components/icon-button/IconButton.jsx";
 
 describe("IconButton", () => {
   const testDescription = "some useful aria label";

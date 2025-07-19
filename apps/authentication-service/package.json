@@ -1,11 +1,12 @@
 {
-  "name": "auth-service",
+  "name": "authentication-service",
   "version": "1.0.0",
   "main": "src/server.ts",
   "type": "module",
   "scripts": {
     "dev": "node --experimental-strip-types --watch src/server.ts",
-    "start": "node --experimental-strip-types src/server.ts",
+    "start": "node dist/server.js",
+    "build": "tsc --build --verbose",
     "lint": "biome lint ./src",
     "lint:fix": "biome lint --write ./src",
     "format": "biome lint ./src",
@@ -18,13 +19,13 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@types/config": "^3.3.5",
     "@types/node": "^24.0.10"
   },
   "dependencies": {
     "@fastify/env": "^5.0.2",
     "fastify": "^5.4.0",
     "fastify-plugin": "^5.0.1",
+    "http-status-codes": "^2.3.0",
     "mongoose": "^8.16.3"
   }
 }

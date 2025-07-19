@@ -1,5 +1,5 @@
 import type { AnchorHTMLAttributes, ReactNode } from "react";
-import { Tooltip } from "../tooltip/Tooltip.tsx";
+import { Tooltip } from "../tooltip/Tooltip.jsx";
 import "./styles.scss";
 
 type IconLinkProps = Pick<

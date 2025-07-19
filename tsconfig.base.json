@@ -1,8 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",  
   "compilerOptions": {
-    "outDir": "dist",
-
     //========== Target and module ==========
     "target": "ES2023",
     /**
@@ -12,8 +10,8 @@
     "module": "NodeNext",
     // do not check .d.ts files
     "skipLibCheck": true,
-    // allow importing ts files
-    "allowImportingTsExtensions": true,
+    // allow using cjs in esm
+    "esModuleInterop": true,
     // do not allow importing empty ts files that do not exist
     "noUncheckedSideEffectImports": true,
     // allow importing json files
@@ -38,8 +36,6 @@
     "verbatimModuleSyntax": true, // implies "isolatedModules"
 
     //========== Emitted files ==========
-    // tsc only type-checks, doesn’t emit any files
-    "noEmit": true,
     //----- Output: .js -----
     "sourceMap": true, // .js.map files
     //----- Output: .d.ts -----

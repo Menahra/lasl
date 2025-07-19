@@ -1,7 +1,8 @@
 import process from "node:process";
 import Fastify from "fastify";
-import { connectToMongoDb } from "./database/index.ts";
-import { fastifyEnvironmentPlugin } from "./plugins/environment.ts";
+import { connectToMongoDb } from "./database/index.js";
+import { fastifyEnvironmentPlugin } from "./plugins/environment.js";
+import { healthRoutes } from "./routes/health.routes.js";
 
 export const buildApp = async () => {
   const fastify = Fastify({
@@ -24,12 +25,7 @@ export const buildApp = async () => {
 
   // fastify.register(authRoutes, { prefix: '/api/v1/auth' });
 
-  fastify.get("/status", async (_request, reply) => {
-    await reply.send({
-      status: "ok",
-      message: "Authentication service is running and healthy!",
-    });
-  });
+  fastify.register(healthRoutes);
 
   return fastify;
 };

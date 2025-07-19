@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { InputField } from "@/src/shared/components/input-field/InputField.tsx";
+import { InputField } from "@/src/shared/components/input-field/InputField.jsx";
 
 describe("InputField", () => {
   const testOnChangeFn = vi.fn();

@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { navigateAndWaitForPageLoad } from "./utils/pageLoad.ts";
+import { navigateAndWaitForPageLoad } from "./utils/pageLoad.js";
 
 test("has title", async ({ page }) => {
   await navigateAndWaitForPageLoad(page);

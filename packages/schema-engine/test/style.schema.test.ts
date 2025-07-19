@@ -7,16 +7,16 @@ import {
   type MockInstance,
   vi,
 } from "vitest";
-import { validateSchema } from "../src/validator.ts";
+import { validateSchema } from "../src/validator.js";
 import {
   marginPaddingShorthandValueRegExp,
   spacingValueRegExp,
   styleSchemaMock,
-} from "./__mocks__/style.schema.mock.ts";
+} from "./__mocks__/style.schema.mock.js";
 import {
   generateRandomStringNotMatchingPattern,
   getRandomInteger,
-} from "./util.ts";
+} from "./util.js";
 
 describe("style json schema", () => {
   let consoleErrorSpy: MockInstance;
