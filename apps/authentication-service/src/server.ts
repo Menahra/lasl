@@ -6,7 +6,7 @@ const startAuthenticationServer = async () => {
   const { PORT } = app.config;
 
   try {
-    await app.listen({ port: PORT });
+    await app.listen({ host: "0.0.0.0", port: PORT });
   } catch (err) {
     app.log.error("Error starting server:", err);
     process.exit(1);

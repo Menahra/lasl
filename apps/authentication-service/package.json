@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "src/server.ts",
   "type": "module",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "node --experimental-strip-types --watch src/server.ts",
     "start": "node dist/server.js",
