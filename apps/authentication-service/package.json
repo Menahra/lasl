@@ -9,20 +9,23 @@
   "scripts": {
     "dev": "node --experimental-strip-types --watch src/server.ts",
     "start": "node dist/server.js",
-    "build": "tsc --build --verbose",
+    "build": "tsc --project tsconfig.build.json --build --verbose",
     "lint": "biome lint ./src",
     "lint:fix": "biome lint --write ./src",
     "format": "biome lint ./src",
     "format:fix": "biome format --write ./src",
     "check:ci": "biome check ./src",
-    "types:check": "tsc --noEmit"
+    "types:check": "tsc --noEmit",
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@types/node": "^24.0.10"
+    "@types/node": "^24.0.10",
+    "mongodb-memory-server": "^10.1.4",
+    "vitest": "^3.2.4"
   },
   "dependencies": {
     "@fastify/env": "^5.0.2",

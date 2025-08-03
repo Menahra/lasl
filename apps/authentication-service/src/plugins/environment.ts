@@ -1,27 +1,24 @@
 import fastifyEnv from "@fastify/env";
 import fastifyPlugin from "fastify-plugin";
+import { ENVIRONMENT } from "@/src/config/constants.ts";
 
 export interface EnvironmentSchema {
-  /* biome-ignore-start lint/style/useNamingConvention: using upper case names for env constants */
-  PORT: number;
-  MONGO_URI: string;
-  JWT_SECRET: string;
-  APPLICATION_HOST_PORT: number;
-  /* biome-ignore-end lint/style/useNamingConvention: using upper case names for env constants */
+  [ENVIRONMENT.port]: number;
+  [ENVIRONMENT.mongoUri]: string;
+  [ENVIRONMENT.jwtSecret]: string;
+  [ENVIRONMENT.applicationHostPort]: number;
 }
 
 export const fastifyEnvironmentPlugin = fastifyPlugin(
   async (fastifyInstance) => {
     const schema = {
       type: "object",
-      required: ["PORT", "MONGO_URI", "JWT_SECRET", "APPLICATION_HOST_PORT"],
+      required: Object.values(ENVIRONMENT),
       properties: {
-        /* biome-ignore-start lint/style/useNamingConvention: using upper case names for env constants */
-        PORT: { type: "number", default: 3000 },
-        MONGO_URI: { type: "string" },
-        JWT_SECRET: { type: "string" },
-        APPLICATION_HOST_PORT: { type: "number", default: 8080 },
-        /* biome-ignore-end lint/style/useNamingConvention: using upper case names for env constants */
+        [ENVIRONMENT.port]: { type: "number", default: 3000 },
+        [ENVIRONMENT.mongoUri]: { type: "string" },
+        [ENVIRONMENT.jwtSecret]: { type: "string" },
+        [ENVIRONMENT.applicationHostPort]: { type: "number", default: 8080 },
       },
     };
 

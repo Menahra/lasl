@@ -7,7 +7,8 @@
      * supports both CommonJS and ESM
      * although its a moving target, its fine to use since generally only functionality is added
      */
-    "module": "NodeNext",
+    "module": "nodenext",
+    "allowImportingTsExtensions": true,
     // do not check .d.ts files
     "skipLibCheck": true,
     // allow using cjs in esm
