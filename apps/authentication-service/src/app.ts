@@ -1,8 +1,8 @@
 import process from "node:process";
 import Fastify from "fastify";
-import { connectToMongoDb } from "./database/index.js";
-import { fastifyEnvironmentPlugin } from "./plugins/environment.js";
-import { healthRoutes } from "./routes/health.routes.js";
+import { connectToMongoDb } from "./database/index.ts";
+import { fastifyEnvironmentPlugin } from "./plugins/environment.ts";
+import { healthRoutes } from "./routes/health.routes.ts";
 
 export const buildApp = async () => {
   const fastify = Fastify({

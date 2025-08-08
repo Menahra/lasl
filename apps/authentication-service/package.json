@@ -7,15 +7,15 @@
     "dist"
   ],
   "scripts": {
-    "dev": "node --experimental-strip-types --watch src/server.ts",
+    "dev": "tsup --watch",
+    "build": "tsup",
     "start": "node dist/server.js",
-    "build": "tsc --project tsconfig.build.json --build --verbose",
     "lint": "biome lint ./src",
     "lint:fix": "biome lint --write ./src",
     "format": "biome lint ./src",
     "format:fix": "biome format --write ./src",
     "check:ci": "biome check ./src",
-    "types:check": "tsc --noEmit",
+    "types:check": "tsc",
     "test": "vitest"
   },
   "keywords": [],
@@ -25,6 +25,7 @@
   "devDependencies": {
     "@types/node": "^24.0.10",
     "mongodb-memory-server": "^10.1.4",
+    "tsup": "^8.5.0",
     "vitest": "^3.2.4"
   },
   "dependencies": {

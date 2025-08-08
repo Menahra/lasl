@@ -37,6 +37,16 @@ jobs:
     with:
       node_version: lts/*
 
+  docker-image-build:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+    steps:
+      - name: "☁️ Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: Trigger docker build
+        run: docker build . --no-cache --target authentication-service --tag authentication-service:latest
+
   types-check:
     name: Correct typing
     runs-on: ubuntu-latest
