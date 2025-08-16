@@ -8,4 +8,10 @@ export default defineConfig({
   splitting: false,
   sourcemap: true,
   clean: true,
+  external: [
+    // this is needed since fastify plugin uses dynamic require and we want to compile to esm
+    "@fastify/swagger",
+    "@fastify/swagger-ui",
+    "fastify-plugin",
+  ],
 });

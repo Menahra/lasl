@@ -8,6 +8,6 @@
             "@/src/*": ["./src/*"],
             "@/test/*": ["./test/*"],
         },
-        "incremental": false
+        "incremental": false,
     }
 }

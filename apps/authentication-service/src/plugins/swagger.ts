@@ -4,9 +4,11 @@ import fastifySwagger, {
 import fastifySwaggerUi, {
   type FastifySwaggerUiOptions,
 } from "@fastify/swagger-ui";
-import fastifyPlugin from "fastify-plugin";
+import { fastifyPlugin } from "fastify-plugin";
+import { ENVIRONMENT } from "../config/constants.ts";
 
 export const fastifySwaggerPlugin = fastifyPlugin(async (fastifyInstance) => {
+  const { [ENVIRONMENT.applicationHostPort]: port } = fastifyInstance.config;
   const swaggerConfig: FastifyDynamicSwaggerOptions = {
     openapi: {
       info: {
@@ -14,7 +16,7 @@ export const fastifySwaggerPlugin = fastifyPlugin(async (fastifyInstance) => {
         description: "API documentation for the authentication service.",
         version: "1.0.0",
       },
-      servers: [{ url: "http://localhost:3000" }],
+      servers: [{ url: `http://localhost:${port}` }],
     },
   };
   await fastifyInstance.register(fastifySwagger, swaggerConfig);
