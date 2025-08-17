@@ -39,7 +39,7 @@ jobs:
           sleep 10
 
       - name: Show docker logs
-        run: docker logs
+        run: docker compose logs
 
       - name: Verify authentication service started
         run: |
