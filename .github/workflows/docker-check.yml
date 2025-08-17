@@ -26,14 +26,15 @@ jobs:
           push: false
           tags: lasl:test
 
-      - name: Set up Doppler CLI
-        uses: dopplerhq/cli-action@v3
+      - name: Fetch Doppler Secrets
+        uses: dopplerhq/secrets-fetch-action@v1.3.0
         with:
-          token: ${{ secrets.DOPPLER_TOKEN }}
+          doppler-token: ${{ secrets.DOPPLER_TOKEN }}
+          inject-env-vars: true
 
       - name: Start services with Docker Compose & Doppler
         run: |
-          doppler run -- docker compose up -d
+          docker compose up -d
           echo "Waiting for containers to start..."
           sleep 10
 
