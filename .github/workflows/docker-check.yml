@@ -38,8 +38,10 @@ jobs:
           echo "Waiting for containers to start..."
           sleep 10
 
-      - name: Show docker logs
-        run: docker compose logs
+      - name: Show docker status
+        run: |
+          docker compose logs
+          docker ps -a
 
       - name: Verify authentication service started
         run: |
