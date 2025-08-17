@@ -1,0 +1,58 @@
+name: Docker Build and Start Check
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Validate build configuration
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: false
+          tags: lasl:test
+
+      - name: Set up Doppler CLI
+        uses: dopplerhq/cli-action@v3
+        with:
+          token: ${{ secrets.DOPPLER_TOKEN }}
+
+      - name: Start services with Docker Compose & Doppler
+        run: |
+          doppler run -- docker compose up -d
+          echo "Waiting for containers to start..."
+          sleep 10
+
+      - name: Show docker logs
+        run: docker logs
+
+      - name: Verify authentication service started
+        run: |
+          for i in {1..10}; do
+            if curl -sf http://localhost:3000/healthcheck; then
+              echo "Authentication Service is healthy"
+              exit 0
+            fi
+            echo "Waiting for Authentication service..."
+            sleep 3
+          done
+          echo "Authentication Service failed health check"
+          exit 1
+
+      - name: Cleanup
+        if: always()
+        run: docker compose down
