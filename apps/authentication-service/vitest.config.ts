@@ -3,7 +3,7 @@ import { defineConfig } from "vitest/config";
 // biome-ignore lint/style/noDefaultExport: needed for vitest
 export default defineConfig({
   test: {
-    globalSetup: ["./test/utils/mongodb.setup.ts"],
+    globalSetup: ["./test/__utils__/mongodb.setup.ts"],
   },
   resolve: {
     alias: {

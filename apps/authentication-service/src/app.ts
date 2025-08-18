@@ -4,6 +4,7 @@ import { connectToMongoDb } from "./database/index.ts";
 import { fastifyEnvironmentPlugin } from "./plugins/environment.ts";
 import { fastifySwaggerPlugin } from "./plugins/swagger.ts";
 import { healthRoutes } from "./routes/health.routes.ts";
+import { getApiVersionPathPrefix } from "./util/api.path.util.ts";
 
 export const buildApp = async () => {
   const fastify = Fastify({
@@ -28,7 +29,9 @@ export const buildApp = async () => {
 
   // fastify.register(authRoutes, { prefix: '/api/v1/auth' });
 
-  fastify.register(healthRoutes);
+  fastify.register(healthRoutes, {
+    prefix: getApiVersionPathPrefix(1),
+  });
 
   return fastify;
 };

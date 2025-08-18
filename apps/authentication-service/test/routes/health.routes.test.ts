@@ -1,15 +1,19 @@
 import type { FastifyInstance } from "fastify";
 import mongoose from "mongoose";
 import { afterAll, beforeAll, describe, expect, inject, it } from "vitest";
+import { getApiVersionPathPrefix } from "@/src/util/api.path.util.ts";
 import {
   setupFastifyTestEnvironment,
   teardownFastifyTestEnvironment,
-} from "@/test/utils/setup.utils.ts";
-import { checkSwaggerDoc } from "@/test/utils/swaggerDoc.util.ts";
+} from "@/test/__utils__/setup.utils.ts";
+import { checkSwaggerDoc } from "@/test/__utils__/swaggerDoc.util.ts";
 
 describe("health routes", () => {
   let app: FastifyInstance;
   const mongoDbUri = inject("MONGO_DB_URI");
+
+  const apiPathPrefix = getApiVersionPathPrefix(1);
+  const healthEndpointPath = `${apiPathPrefix}/healthcheck`;
 
   beforeAll(async () => {
     app = await setupFastifyTestEnvironment();
@@ -26,7 +30,7 @@ describe("health routes", () => {
   it('GET /healthcheck should return status "ok"', async () => {
     const response = await app.inject({
       method: "GET",
-      url: "/healthcheck",
+      url: healthEndpointPath,
     });
 
     expect(response.statusCode).toBe(200);
@@ -41,7 +45,7 @@ describe("health routes", () => {
     checkSwaggerDoc({
       fastifyInstance: app,
       endpointMethod: "get",
-      endpointPath: "/healthcheck",
+      endpointPath: healthEndpointPath,
       endpointStatusCode: 200,
       endpointContentType: "application/json",
       endpointResponseType: {
