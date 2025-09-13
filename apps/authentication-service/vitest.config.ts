@@ -1,3 +1,4 @@
+import swc from "unplugin-swc";
 import { defineConfig } from "vitest/config";
 
 // biome-ignore lint/style/noDefaultExport: needed for vitest
@@ -11,4 +12,5 @@ export default defineConfig({
       "@/test": new URL("./test/", import.meta.url).pathname,
     },
   },
+  plugins: [swc.vite()],
 });

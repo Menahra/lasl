@@ -9,5 +9,7 @@
             "@/test/*": ["./test/*"],
         },
         "incremental": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
     }
 }

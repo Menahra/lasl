@@ -4,6 +4,11 @@ import { connectToMongoDb } from "./database/index.ts";
 import { fastifyEnvironmentPlugin } from "./plugins/environment.ts";
 import { fastifySwaggerPlugin } from "./plugins/swagger.ts";
 import { healthRoutes } from "./routes/health.routes.ts";
+import { userRoutes } from "./routes/user.routes.ts";
+import {
+  ZodFormattedErrorSchema,
+  ZodFormattedErrorSchemaId,
+} from "./schema/zodFormattedError.schema.ts";
 import { getApiVersionPathPrefix } from "./util/api.path.util.ts";
 
 export const buildApp = async () => {
@@ -31,6 +36,14 @@ export const buildApp = async () => {
 
   fastify.register(healthRoutes, {
     prefix: getApiVersionPathPrefix(1),
+  });
+  fastify.register(userRoutes, {
+    prefix: getApiVersionPathPrefix(1),
+  });
+
+  fastify.addSchema({
+    $id: ZodFormattedErrorSchemaId,
+    ...ZodFormattedErrorSchema,
   });
 
   return fastify;

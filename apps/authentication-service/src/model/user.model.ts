@@ -1,0 +1,49 @@
+import {
+  getModelForClass,
+  modelOptions,
+  pre,
+  prop,
+} from "@typegoose/typegoose";
+import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses.js";
+import argon2 from "argon2";
+import { nanoid } from "nanoid";
+
+@pre<User>("save", async function () {
+  if (!this.isModified("password")) {
+    return;
+  }
+
+  const hashedPassword = await argon2.hash(this.password);
+  this.password = hashedPassword;
+
+  return;
+})
+@modelOptions({
+  schemaOptions: {
+    timestamps: true,
+  },
+})
+export class User extends TimeStamps {
+  @prop({ lowercase: true, required: true, unique: true })
+  email!: string;
+
+  @prop({ required: true })
+  firstName!: string;
+
+  @prop({ required: true })
+  lastName!: string;
+
+  @prop({ required: true })
+  password!: string;
+
+  @prop({ required: true, default: () => nanoid() })
+  verificationCode!: string;
+
+  @prop({ default: null })
+  passwordResetCode!: string | null;
+
+  @prop({ default: false })
+  verified!: boolean;
+}
+
+export const UserModel = getModelForClass(User);
