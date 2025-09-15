@@ -15,6 +15,7 @@
     "format": "biome lint src test",
     "format:fix": "biome format --write src test",
     "check:ci": "biome check src test",
+    "check:fix": "biome check --write src test",
     "types:check": "tsc",
     "test": "vitest"
   },

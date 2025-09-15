@@ -1,7 +1,7 @@
 import type { StatusCodes } from "http-status-codes";
+import type { JSONSchema7 } from "json-schema";
 import { expect } from "vitest";
 import type { buildApp } from "@/src/app.ts";
-import type { JSONSchema7 } from "json-schema";
 
 export const checkSwaggerDoc = ({
   fastifyInstance,
@@ -16,10 +16,7 @@ export const checkSwaggerDoc = ({
   endpointMethod: "get" | "patch" | "put" | "delete" | "post";
   endpointStatusCode: StatusCodes;
   endpointContentType: string;
-  endpointResponseType: Record<
-    string,
-    JSONSchema7
-  >;
+  endpointResponseType: Record<string, JSONSchema7>;
 }) => {
   const swaggerDocs = fastifyInstance.swagger();
   const response =

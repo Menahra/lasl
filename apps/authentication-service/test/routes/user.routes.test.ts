@@ -1,4 +1,5 @@
 import type { FastifyInstance } from "fastify";
+import { StatusCodes } from "http-status-codes";
 import mongoose from "mongoose";
 import { afterAll, beforeAll, describe, expect, inject, it, vi } from "vitest";
 // biome-ignore lint/performance/noNamespaceImport: okay in tests
@@ -10,7 +11,6 @@ import {
 } from "@/test/__utils__/setup.utils.ts";
 import { checkSwaggerDoc } from "@/test/__utils__/swaggerDoc.util.ts";
 import { mockUserInputData } from "../__mocks__/user.mock.ts";
-import { StatusCodes } from "http-status-codes";
 
 describe("user routes", () => {
   let app: FastifyInstance;

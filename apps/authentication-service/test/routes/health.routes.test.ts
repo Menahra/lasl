@@ -1,4 +1,5 @@
 import type { FastifyInstance } from "fastify";
+import { StatusCodes } from "http-status-codes";
 import mongoose from "mongoose";
 import { afterAll, beforeAll, describe, expect, inject, it } from "vitest";
 import { getApiVersionPathPrefix } from "@/src/util/api.path.util.ts";
@@ -7,7 +8,6 @@ import {
   teardownFastifyTestEnvironment,
 } from "@/test/__utils__/setup.utils.ts";
 import { checkSwaggerDoc } from "@/test/__utils__/swaggerDoc.util.ts";
-import { StatusCodes } from "http-status-codes";
 
 describe("health routes", () => {
   let app: FastifyInstance;
