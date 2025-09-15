@@ -27,4 +27,9 @@ export const createUserInputSchema = z.object({
     }),
 });
 
+export const createUserInputJsonSchema = z.toJSONSchema(
+  createUserInputSchema.shape.body,
+  { target: "draft-7" },
+);
+
 export type CreateUserInput = z.infer<typeof createUserInputSchema>;

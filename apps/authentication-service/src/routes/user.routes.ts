@@ -1,7 +1,7 @@
 import type { FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import { createUserHandler } from "../controller/user.controller.ts";
-import { createUserInputSchema } from "../schema/user.schema.ts";
+import { createUserInputJsonSchema } from "../schema/user.schema.ts";
 import { ZodFormattedErrorSchemaId } from "../schema/zodFormattedError.schema.ts";
 
 export const userRoutes = (fastifyInstance: FastifyInstance) => {
@@ -10,7 +10,7 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
     {
       schema: {
         summary: "Create New Users",
-        body: createUserInputSchema.shape.body,
+        body: createUserInputJsonSchema,
         description:
           "This endpoint is used to create new users via the post method.",
         tags: ["User", "Creation"],
@@ -18,9 +18,7 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
           [StatusCodes.OK]: {
             type: "object",
             properties: {
-              status: { type: "string" },
               message: { type: "string" },
-              uptime: { type: "number" },
             },
           },
           [StatusCodes.BAD_REQUEST]: {

@@ -10,6 +10,6 @@ export const ZodFormattedErrorSchema = {
   },
   additionalProperties: {
     // Recursive reference to the schema itself
-    $ref: `#/components/schemas/${ZodFormattedErrorSchemaId}`,
+    $ref: ZodFormattedErrorSchemaId,
   },
 };

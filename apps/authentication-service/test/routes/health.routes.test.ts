@@ -7,6 +7,7 @@ import {
   teardownFastifyTestEnvironment,
 } from "@/test/__utils__/setup.utils.ts";
 import { checkSwaggerDoc } from "@/test/__utils__/swaggerDoc.util.ts";
+import { StatusCodes } from "http-status-codes";
 
 describe("health routes", () => {
   let app: FastifyInstance;
@@ -46,7 +47,7 @@ describe("health routes", () => {
       fastifyInstance: app,
       endpointMethod: "get",
       endpointPath: healthEndpointPath,
-      endpointStatusCode: 200,
+      endpointStatusCode: StatusCodes.OK,
       endpointContentType: "application/json",
       endpointResponseType: {
         message: { type: "string" },

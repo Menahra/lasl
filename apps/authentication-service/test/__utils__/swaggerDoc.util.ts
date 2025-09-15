@@ -1,6 +1,7 @@
 import type { StatusCodes } from "http-status-codes";
 import { expect } from "vitest";
 import type { buildApp } from "@/src/app.ts";
+import type { JSONSchema7 } from "json-schema";
 
 export const checkSwaggerDoc = ({
   fastifyInstance,
@@ -17,7 +18,7 @@ export const checkSwaggerDoc = ({
   endpointContentType: string;
   endpointResponseType: Record<
     string,
-    { type: "string" | "number" | "boolean" }
+    JSONSchema7
   >;
 }) => {
   const swaggerDocs = fastifyInstance.swagger();
