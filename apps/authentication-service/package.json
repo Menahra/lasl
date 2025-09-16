@@ -28,6 +28,7 @@
     "@types/node": "^24.0.10",
     "json-schema": "^0.4.0",
     "mongodb-memory-server": "^10.1.4",
+    "resend": "^6.1.0",
     "tsup": "^8.5.0",
     "unplugin-swc": "^1.5.7",
     "vitest": "^3.2.4"
