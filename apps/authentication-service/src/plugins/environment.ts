@@ -7,6 +7,7 @@ export interface EnvironmentSchema {
   [ENVIRONMENT.mongoUri]: string;
   [ENVIRONMENT.jwtSecret]: string;
   [ENVIRONMENT.applicationHostPort]: number;
+  [ENVIRONMENT.resendApiKey]: string;
 }
 
 export const fastifyEnvironmentPlugin = fastifyPlugin(
@@ -19,6 +20,7 @@ export const fastifyEnvironmentPlugin = fastifyPlugin(
         [ENVIRONMENT.mongoUri]: { type: "string" },
         [ENVIRONMENT.jwtSecret]: { type: "string" },
         [ENVIRONMENT.applicationHostPort]: { type: "number", default: 8080 },
+        [ENVIRONMENT.resendApiKey]: { type: "string" },
       },
     };
 

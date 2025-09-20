@@ -1,20 +1,29 @@
-import type { FastifyBaseLogger } from 'fastify';
-import { Resend, type CreateEmailOptions } from 'resend';
+import fastifyPlugin from "fastify-plugin";
+import { type CreateEmailOptions, Resend } from "resend";
 
-// move to doppler
-const resend = new Resend('re_29y76kd1_N4PGKMVoWDzrNkuMyFQLuT64');
+export const fastifyMailerPlugin = fastifyPlugin((fastifyInstance) => {
+  const { RESEND_API_KEY } = fastifyInstance.config;
 
-export const sendMail = async (mailOptions: CreateEmailOptions, logger: FastifyBaseLogger) => {
-    const { data, error } = await resend.emails.send({
+  const resend = new Resend(RESEND_API_KEY);
+
+  fastifyInstance.decorate(
+    "sendMail",
+    async (mailOptions: CreateEmailOptions) => {
+      const { data, error } = await resend.emails.send({
         ...mailOptions,
-        from: 'onboarding@resend.dev',
-    });
+        from: "onboarding@resend.dev",
+      });
 
-    if (error) {
-        logger.error({ error }, `failed to send email with subject ${mailOptions.subject}`);
+      if (error) {
+        fastifyInstance.log.error(
+          { error },
+          `failed to send email with subject ${mailOptions.subject}`,
+        );
         return { success: false, error };
-    }
-    
-    logger.info({ data }, 'Email sent successfully');
-    return { success: true, data };
-};
+      }
+
+      fastifyInstance.log.info({ data }, "Email sent successfully");
+      return { success: true, data };
+    },
+  );
+});
