@@ -33,7 +33,11 @@ describe("user routes", () => {
 
   it("should create a user and return 200", async () => {
     // @ts-expect-error correct that ts complains here
-    vi.spyOn(userService, "createUser").mockResolvedValueOnce(undefined);
+    vi.spyOn(userService, "createUser").mockResolvedValueOnce({
+      firstName: mockUserInputData.firstName,
+      email: mockUserInputData.email,
+      verificationCode: "Test1234",
+    });
 
     const response = await app.inject({
       method: "POST",

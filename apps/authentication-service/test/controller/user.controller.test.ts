@@ -1,4 +1,4 @@
-import type { FastifyReply, FastifyRequest } from "fastify";
+import type { FastifyReply } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import mongoose, { Error as MongooseError } from "mongoose";
 import {
@@ -12,9 +12,8 @@ import {
   vi,
 } from "vitest";
 import { createUserHandler } from "@/src/controller/user.controller.ts";
-import type { CreateUserInput } from "@/src/schema/user.schema.ts";
 import { createUser } from "@/src/service/user.service.ts";
-import { mockUserData } from "../__mocks__/user.mock.ts";
+import { mockUserData, mockUserInputData } from "../__mocks__/user.mock.ts";
 import {
   setupFastifyTestEnvironment,
   teardownFastifyTestEnvironment,
@@ -39,11 +38,10 @@ describe("User service", () => {
 
   const req = {
     body: mockUserData,
-  } as Partial<
-    // biome-ignore-start lint/style/useNamingConvention: needed for fastify
-    FastifyRequest<{ Body: CreateUserInput["body"] }>
-  > as FastifyRequest<{ Body: CreateUserInput["body"] }>;
-  // biome-ignore-end lint/style/useNamingConvention: needed for fastify
+    server: {
+      sendMail: vi.fn(),
+    },
+  };
 
   beforeAll(async () => {
     await setupFastifyTestEnvironment();
@@ -63,10 +61,15 @@ describe("User service", () => {
   });
 
   it("should create a user and return 200", async () => {
-    (createUser as ReturnType<typeof vi.fn>).mockResolvedValueOnce(undefined);
+    (createUser as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+      firstName: mockUserInputData.firstName,
+      email: mockUserInputData.email,
+      verificationCode: "Test245",
+    });
 
     const reply = mockReply();
 
+    // @ts-expect-error ok in test
     await createUserHandler(req, reply);
 
     expect(createUser).toHaveBeenCalledWith(mockUserData);
@@ -83,6 +86,7 @@ describe("User service", () => {
     (createUser as ReturnType<typeof vi.fn>).mockRejectedValueOnce(error);
     const reply = mockReply();
 
+    // @ts-expect-error ok in test
     await createUserHandler(req, reply);
 
     expect(reply.status).toHaveBeenCalledWith(StatusCodes.UNPROCESSABLE_ENTITY);
@@ -104,6 +108,7 @@ describe("User service", () => {
 
     const reply = mockReply();
 
+    // @ts-expect-error ok in test
     await createUserHandler(req, reply);
 
     expect(reply.status).toHaveBeenCalledWith(StatusCodes.CONFLICT);
@@ -121,6 +126,7 @@ describe("User service", () => {
 
     const reply = mockReply();
 
+    // @ts-expect-error ok in test
     await createUserHandler(req, reply);
 
     expect(reply.status).toHaveBeenCalledWith(
