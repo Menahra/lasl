@@ -10,6 +10,7 @@ import {
   ZodFormattedErrorSchemaId,
 } from "./schema/zodFormattedError.schema.ts";
 import { getApiVersionPathPrefix } from "./util/api.path.util.ts";
+import { fastifyMailerPlugin } from "./util/mailer.util.ts";
 
 export const buildApp = async () => {
   const fastify = Fastify({
@@ -30,6 +31,7 @@ export const buildApp = async () => {
     process.exit(1);
   }
 
+  await fastify.register(fastifyMailerPlugin);
   await fastify.register(fastifySwaggerPlugin);
 
   // fastify.register(authRoutes, { prefix: '/api/v1/auth' });

@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import { Error as MongooseError } from "mongoose";
 import type { CreateUserInput } from "../schema/user.schema.ts";
 import { createUser } from "../service/user.service.ts";
+import { loadHtmlTemplate } from "../util/html.template.loader.util.ts";
 
 export const createUserHandler = async (
   // biome-ignore lint/style/useNamingConvention: property name comes from fastify
@@ -12,7 +13,20 @@ export const createUserHandler = async (
   const { body } = req;
 
   try {
-    await createUser(body);
+    const user = await createUser(body);
+
+    const emailHtml = await loadHtmlTemplate("verification-email", {
+      userName: user.firstName,
+      verificationCode: user.verificationCode,
+    });
+
+    req.server.sendMail({
+      to: user.email,
+      subject: "Verify your account",
+      html: emailHtml,
+      text: `Hi ${user.firstName}, your verification code is ${user.verificationCode}`,
+      from: "onboarding@resend.dev",
+    });
 
     return reply.status(StatusCodes.OK).send({
       message: "User successfully created",

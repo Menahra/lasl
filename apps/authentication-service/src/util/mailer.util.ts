@@ -9,10 +9,7 @@ export const fastifyMailerPlugin = fastifyPlugin((fastifyInstance) => {
   fastifyInstance.decorate(
     "sendMail",
     async (mailOptions: CreateEmailOptions) => {
-      const { data, error } = await resend.emails.send({
-        ...mailOptions,
-        from: "onboarding@resend.dev",
-      });
+      const { data, error } = await resend.emails.send(mailOptions);
 
       if (error) {
         fastifyInstance.log.error(
