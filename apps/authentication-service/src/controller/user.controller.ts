@@ -18,6 +18,7 @@ export const createUserHandler = async (
     const emailHtml = await loadHtmlTemplate("verification-email", {
       userName: user.firstName,
       verificationCode: user.verificationCode,
+      currentYear: new Date().getFullYear().toString(),
     });
 
     req.server.sendMail({

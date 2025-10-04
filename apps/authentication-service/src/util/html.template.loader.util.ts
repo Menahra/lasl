@@ -4,6 +4,12 @@ import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const isRunningFromDist = path.basename(__dirname) === "dist";
+
+const templatesPath = path.resolve(
+  __dirname,
+  isRunningFromDist ? "./templates" : "../templates",
+);
 
 type AvailableHtmlTemplates = "verification-email";
 
@@ -11,12 +17,7 @@ export const loadHtmlTemplate = async (
   templateName: AvailableHtmlTemplates,
   variables: Record<string, string>,
 ) => {
-  const templatePath = path.join(
-    __dirname,
-    "..",
-    "templates",
-    `${templateName}.html`,
-  );
+  const templatePath = path.join(templatesPath, `${templateName}.html`);
 
   let html = await readFile(templatePath, "utf-8");
 

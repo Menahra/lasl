@@ -14,4 +14,5 @@ export default defineConfig({
     "@fastify/swagger-ui",
     "fastify-plugin",
   ],
+  onSuccess: "cpx 'src/templates/**/*' dist/templates",
 });
