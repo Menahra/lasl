@@ -33,17 +33,28 @@
         line-height: 1.6;
       }
 
-      .code-box {
-        margin: 24px 0;
-        font-size: 28px;
-        font-weight: bold;
-        letter-spacing: 4px;
-        text-align: center;
-        background-color: #f5f5f5;
-        padding: 16px;
+      /* New button styles */
+      .verify-button {
+        display: inline-block;
+        background-color: #4f46e5; /* Indigo-600 */
+        color: #fff !important;
+        text-decoration: none;
+        padding: 12px 24px;
         border-radius: 6px;
-        color: #111827;
-        font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+        font-weight: 600;
+        font-size: 16px;
+        margin: 24px 0;
+        text-align: center;
+      }
+
+      /* Plain URL fallback */
+      .verify-plain-url {
+        word-break: break-all;
+        font-size: 12px;
+        color: #555;
+        margin-top: 12px;
+        text-align: center;
+        font-family: monospace, monospace;
       }
 
       .footer {
@@ -65,13 +76,17 @@
           box-shadow: none !important;
         }
 
-        h1,
-        .code-box {
+        h1 {
           color: #ffffff !important;
         }
 
-        .code-box {
-          background-color: #3a3a3a !important;
+        .verify-button {
+          background-color: #6366f1 !important; /* Indigo-400 */
+          color: #fff !important;
+        }
+
+        .verify-plain-url {
+          color: #aaa !important;
         }
 
         .footer {
@@ -83,12 +98,27 @@
   <body>
     <div class="container">
       <h1>Hey {{userName}} 👋</h1>
-      <p>Here's your verification code — use it to complete your login/signup process.</p>
-      <div class="code-box">{{verificationCode}}</div>
-      <p>This is a one-time code and it expires in 10 minutes.</p>
+      <p>Click the button below to verify your account:</p>
+
+      <!-- Verification button -->
+      <a
+        href="{{verifyUrl}}"
+        class="verify-button"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Verify My Account
+      </a>
+
+      <!-- Plain URL fallback -->
+      <p class="verify-plain-url">
+        If the button above doesn’t work, copy and paste this link into your browser:<br />
+        {{verifyUrl}}
+      </p>
+
       <p>If you didn't request this, feel free to ignore this email — no action needed.</p>
       <div class="footer">
-        © {{currentYear}} Your Company.
+        © {{currentYear}} - Your Company.
       </div>
     </div>
   </body>

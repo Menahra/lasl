@@ -1,7 +1,11 @@
 import type { FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
-import { createUserHandler } from "../controller/user.controller.ts";
-import { createUserInputJsonSchema } from "../schema/user.schema.ts";
+import { createUserHandler } from "../controller/create.user.controller.ts";
+import { verifyUserHandler } from "../controller/verify.user.controller.ts";
+import {
+  createUserInputJsonSchema,
+  verifyUserInputJsonSchema,
+} from "../schema/user.schema.ts";
 import { ZodFormattedErrorSchemaId } from "../schema/zodFormattedError.schema.ts";
 
 export const userRoutes = (fastifyInstance: FastifyInstance) => {
@@ -56,5 +60,51 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
       },
     },
     createUserHandler,
+  );
+
+  fastifyInstance.get(
+    "/users/verify/:id/:verificationCode",
+    {
+      schema: {
+        summary: "Verify a specific user",
+        params: verifyUserInputJsonSchema,
+        description:
+          "After a user was created a verification code is sent to the given mail. This then needs to passed via this endpoint to fully verify the user.",
+        tags: ["User", "Verification"],
+        response: {
+          [StatusCodes.OK]: {
+            type: "object",
+            properties: {
+              message: { type: "string" },
+            },
+          },
+          [StatusCodes.BAD_REQUEST]: {
+            type: "object",
+            properties: {
+              message: { type: "string" },
+            },
+          },
+          [StatusCodes.NOT_FOUND]: {
+            type: "object",
+            properties: {
+              message: { type: "string" },
+            },
+          },
+          [StatusCodes.CONFLICT]: {
+            type: "object",
+            properties: {
+              message: { type: "string" },
+            },
+          },
+          [StatusCodes.INTERNAL_SERVER_ERROR]: {
+            type: "object",
+            properties: {
+              message: { type: "string" },
+            },
+          },
+        },
+      },
+    },
+    verifyUserHandler,
   );
 };

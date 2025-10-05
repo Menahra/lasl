@@ -11,7 +11,7 @@ import {
   it,
   vi,
 } from "vitest";
-import { createUserHandler } from "@/src/controller/user.controller.ts";
+import { createUserHandler } from "@/src/controller/create.user.controller.ts";
 import { createUser } from "@/src/service/user.service.ts";
 import { mockUserData, mockUserInputData } from "../__mocks__/user.mock.ts";
 import {
@@ -41,6 +41,7 @@ describe("User service", () => {
     server: {
       sendMail: vi.fn(),
     },
+    headers: {},
   };
 
   beforeAll(async () => {

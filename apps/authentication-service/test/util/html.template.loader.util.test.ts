@@ -15,6 +15,7 @@ describe("html template loader util", () => {
   it("should properly read and return the html if no replacements are given", async () => {
     const html = await readFile(templatePath, "utf-8");
 
+    // @ts-expect-error okay in test and also on purpose here
     const htmlTemplateLoaderResult = await loadHtmlTemplate(templateName, {});
     expect(htmlTemplateLoaderResult).toStrictEqual(html);
   });
@@ -25,7 +26,7 @@ describe("html template loader util", () => {
     const replacements = {
       userName: "John Doe Test1234590",
       currentYear: new Date().getFullYear().toString(),
-      verificationCode: "SomeVerificationCode",
+      verifyUrl: "https://blab.com/api/v1/users/id/SomeVerificationCode",
     };
 
     const htmlTemplateLoaderResult = await loadHtmlTemplate(

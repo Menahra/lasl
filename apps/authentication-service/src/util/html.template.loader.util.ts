@@ -11,11 +11,19 @@ const templatesPath = path.resolve(
   isRunningFromDist ? "./templates" : "../templates",
 );
 
-type AvailableHtmlTemplates = "verification-email";
+type AvailableHtmlTemplateDataMap = {
+  "verification-email": {
+    userName: string;
+    currentYear: string;
+    verifyUrl: string;
+  };
+};
 
-export const loadHtmlTemplate = async (
-  templateName: AvailableHtmlTemplates,
-  variables: Record<string, string>,
+export const loadHtmlTemplate = async <
+  T extends keyof AvailableHtmlTemplateDataMap,
+>(
+  templateName: T,
+  variables: AvailableHtmlTemplateDataMap[T],
 ) => {
   const templatePath = path.join(templatesPath, `${templateName}.html`);
 

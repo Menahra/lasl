@@ -15,6 +15,8 @@ import { fastifyMailerPlugin } from "./util/mailer.util.ts";
 export const buildApp = async () => {
   const fastify = Fastify({
     logger: true,
+    // if we are using nginx or similar proxy in future ensure to uncomment following
+    // trustProxy: true,
   });
 
   await fastify.register(fastifyEnvironmentPlugin);
@@ -33,8 +35,6 @@ export const buildApp = async () => {
 
   await fastify.register(fastifyMailerPlugin);
   await fastify.register(fastifySwaggerPlugin);
-
-  // fastify.register(authRoutes, { prefix: '/api/v1/auth' });
 
   fastify.register(healthRoutes, {
     prefix: getApiVersionPathPrefix(1),

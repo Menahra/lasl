@@ -27,9 +27,23 @@ export const createUserInputSchema = z.object({
     }),
 });
 
+export const verifyUserInputSchema = z.object({
+  params: z.object({
+    id: z.string(),
+    verificationCode: z.string(),
+  }),
+});
+
 export const createUserInputJsonSchema = z.toJSONSchema(
   createUserInputSchema.shape.body,
   { target: "draft-7" },
 );
 
+export const verifyUserInputJsonSchema = z.toJSONSchema(
+  verifyUserInputSchema.shape.params,
+  { target: "draft-7" },
+);
+
 export type CreateUserInput = z.infer<typeof createUserInputSchema>;
+
+export type VerifyUserInput = z.infer<typeof verifyUserInputSchema>;

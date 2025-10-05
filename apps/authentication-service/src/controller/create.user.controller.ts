@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import { Error as MongooseError } from "mongoose";
 import type { CreateUserInput } from "../schema/user.schema.ts";
 import { createUser } from "../service/user.service.ts";
+import { getApiVersionPathPrefix } from "../util/api.path.util.ts";
 import { loadHtmlTemplate } from "../util/html.template.loader.util.ts";
 
 export const createUserHandler = async (
@@ -15,9 +16,15 @@ export const createUserHandler = async (
   try {
     const user = await createUser(body);
 
+    const host = req.headers.host;
+    const protocol = req.protocol;
+    const origin = `${protocol}://${host}`;
+
+    const verifyUrl = `${origin}${getApiVersionPathPrefix(1)}/users/verify/${user._id}/${user.verificationCode}`;
+
     const emailHtml = await loadHtmlTemplate("verification-email", {
       userName: user.firstName,
-      verificationCode: user.verificationCode,
+      verifyUrl,
       currentYear: new Date().getFullYear().toString(),
     });
 
@@ -33,6 +40,7 @@ export const createUserHandler = async (
       message: "User successfully created",
     });
   } catch (error: unknown) {
+    req.log.error(error, "Error occured during creation of user");
     if (error instanceof MongooseError.ValidationError) {
       return reply.status(StatusCodes.UNPROCESSABLE_ENTITY).send({
         message: `Could not create user due to validation failure: ${error.message}`,
