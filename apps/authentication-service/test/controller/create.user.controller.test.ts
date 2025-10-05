@@ -42,6 +42,7 @@ describe("User service", () => {
       sendMail: vi.fn(),
     },
     headers: {},
+    log: { error: vi.fn() },
   };
 
   beforeAll(async () => {
