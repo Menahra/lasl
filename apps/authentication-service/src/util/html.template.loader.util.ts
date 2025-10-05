@@ -17,6 +17,16 @@ type AvailableHtmlTemplateDataMap = {
     currentYear: string;
     verifyUrl: string;
   };
+  "password-reset-unverified-email": {
+    userName: string;
+    currentYear: string;
+    verifyUrl: string;
+  };
+  "password-reset-email": {
+    userName: string;
+    currentYear: string;
+    resetPasswordUrl: string;
+  };
 };
 
 export const loadHtmlTemplate = async <

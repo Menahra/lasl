@@ -32,7 +32,7 @@ export const createUserHandler = async (
       to: user.email,
       subject: "Verify your account",
       html: emailHtml,
-      text: `Hi ${user.firstName}, your verification code is ${user.verificationCode}`,
+      text: `Hi ${user.firstName}, please use the following link to verify your account ${verifyUrl}`,
       from: "onboarding@resend.dev",
     });
 

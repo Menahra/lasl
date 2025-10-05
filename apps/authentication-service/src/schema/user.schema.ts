@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+const userEmailSchema = z.email("Please enter a valid email address");
+
 export const createUserInputSchema = z.object({
   body: z
     .object({
@@ -19,7 +21,7 @@ export const createUserInputSchema = z.object({
       passwordConfirmation: z.string().nonempty({
         error: "Password confirmation is required",
       }),
-      email: z.email("Please enter a valid email address"),
+      email: userEmailSchema,
     })
     .refine((user) => user.password === user.passwordConfirmation, {
       error: "Passwords do not match",
@@ -34,6 +36,12 @@ export const verifyUserInputSchema = z.object({
   }),
 });
 
+export const forgotPasswordInputSchema = z.object({
+  body: z.object({
+    email: userEmailSchema,
+  }),
+});
+
 export const createUserInputJsonSchema = z.toJSONSchema(
   createUserInputSchema.shape.body,
   { target: "draft-7" },
@@ -44,6 +52,13 @@ export const verifyUserInputJsonSchema = z.toJSONSchema(
   { target: "draft-7" },
 );
 
+export const forgotPasswordInputJsonSchema = z.toJSONSchema(
+  forgotPasswordInputSchema.shape.body,
+  { target: "draft-7" },
+);
+
 export type CreateUserInput = z.infer<typeof createUserInputSchema>;
 
 export type VerifyUserInput = z.infer<typeof verifyUserInputSchema>;
+
+export type ForgotPasswordInput = z.infer<typeof forgotPasswordInputSchema>;

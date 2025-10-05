@@ -1,9 +1,11 @@
 import type { FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import { createUserHandler } from "../controller/create.user.controller.ts";
+import { forgotPasswordHandler } from "../controller/forgot.password.controller.ts";
 import { verifyUserHandler } from "../controller/verify.user.controller.ts";
 import {
   createUserInputJsonSchema,
+  forgotPasswordInputJsonSchema,
   verifyUserInputJsonSchema,
 } from "../schema/user.schema.ts";
 import { ZodFormattedErrorSchemaId } from "../schema/zodFormattedError.schema.ts";
@@ -106,5 +108,27 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
       },
     },
     verifyUserHandler,
+  );
+
+  fastifyInstance.post(
+    "/users/forgotpassword",
+    {
+      schema: {
+        summary: "Reset the password",
+        body: forgotPasswordInputJsonSchema,
+        description:
+          "Users can request a new password if they forgot the current one",
+        tags: ["User", "Password", "Forgot"],
+        response: {
+          [StatusCodes.OK]: {
+            type: "object",
+            properties: {
+              message: { type: "string" },
+            },
+          },
+        },
+      },
+    },
+    forgotPasswordHandler,
   );
 };
