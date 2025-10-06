@@ -2,10 +2,13 @@ import type { FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import { createUserHandler } from "../controller/create.user.controller.ts";
 import { forgotPasswordHandler } from "../controller/forgot.password.controller.ts";
+import { resetPasswordHandler } from "../controller/reset.password.controller.ts";
 import { verifyUserHandler } from "../controller/verify.user.controller.ts";
 import {
   createUserInputJsonSchema,
   forgotPasswordInputJsonSchema,
+  resetPasswordBodyInputJsonSchema,
+  resetPasswordParamsInputJsonSchema,
   verifyUserInputJsonSchema,
 } from "../schema/user.schema.ts";
 import { ZodFormattedErrorSchemaId } from "../schema/zodFormattedError.schema.ts";
@@ -114,7 +117,7 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
     "/users/forgotpassword",
     {
       schema: {
-        summary: "Reset the password",
+        summary: "User forgot the password",
         body: forgotPasswordInputJsonSchema,
         description:
           "Users can request a new password if they forgot the current one",
@@ -130,5 +133,40 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
       },
     },
     forgotPasswordHandler,
+  );
+
+  fastifyInstance.post(
+    "/users/resetpassword/:id/:passwordResetCode",
+    {
+      schema: {
+        summary: "Reset the current password",
+        params: resetPasswordParamsInputJsonSchema,
+        body: resetPasswordBodyInputJsonSchema,
+        description:
+          "User resets the password with the reset code he got via mail and a new password",
+        tags: ["User", "Password", "Reset"],
+        response: {
+          [StatusCodes.OK]: {
+            type: "object",
+            properties: {
+              message: { type: "string" },
+            },
+          },
+          [StatusCodes.BAD_REQUEST]: {
+            type: "object",
+            properties: {
+              message: { type: "string" },
+            },
+          },
+          [StatusCodes.NOT_FOUND]: {
+            type: "object",
+            properties: {
+              message: { type: "string" },
+            },
+          },
+        },
+      },
+    },
+    resetPasswordHandler,
   );
 };

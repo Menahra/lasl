@@ -78,7 +78,6 @@ describe("user routes", () => {
   ])(
     `there there should be a swagger documentation for post ${postUsersEndpointPath} with $statusCode status code`,
     ({ statusCode, responseType }) => {
-      // TODO: find out how to better type responseType
       checkSwaggerDoc({
         fastifyInstance: app,
         endpointMethod: "post",

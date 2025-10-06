@@ -1,18 +1,9 @@
-import type { FastifyReply, FastifyRequest } from "fastify";
+import type { FastifyReply } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import mongoose from "mongoose";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-
 import { verifyUserHandler } from "@/src/controller/verify.user.controller.ts";
 import { findUserById } from "@/src/service/user.service.ts";
-
-type VerifyUserParams = {
-  // biome-ignore lint/style/useNamingConvention: name given by fastify
-  Params: {
-    id: string;
-    verificationCode: string;
-  };
-};
 
 vi.mock("@/src/service/user.service", () => ({
   findUserById: vi.fn(),
@@ -40,7 +31,7 @@ describe("verifyUserHandler", () => {
         verificationCode: "123456",
       },
       log: { error: vi.fn(), warn: vi.fn() },
-    } as unknown as FastifyRequest<VerifyUserParams>;
+    } as unknown as Parameters<typeof verifyUserHandler>[0];
 
     const reply = mockReply();
 
@@ -61,7 +52,7 @@ describe("verifyUserHandler", () => {
         verificationCode: "123456",
       },
       log: { error: vi.fn(), warn: vi.fn() },
-    } as unknown as FastifyRequest<VerifyUserParams>;
+    } as unknown as Parameters<typeof verifyUserHandler>[0];
 
     const reply = mockReply();
 
@@ -86,7 +77,7 @@ describe("verifyUserHandler", () => {
         verificationCode: "123456",
       },
       log: { error: vi.fn(), warn: vi.fn() },
-    } as unknown as FastifyRequest<VerifyUserParams>;
+    } as unknown as Parameters<typeof verifyUserHandler>[0];
 
     const reply = mockReply();
 
@@ -112,7 +103,7 @@ describe("verifyUserHandler", () => {
         verificationCode: "wrong-code",
       },
       log: { error: vi.fn(), warn: vi.fn() },
-    } as unknown as FastifyRequest<VerifyUserParams>;
+    } as unknown as Parameters<typeof verifyUserHandler>[0];
 
     const reply = mockReply();
 
@@ -148,7 +139,7 @@ describe("verifyUserHandler", () => {
         verificationCode: "123456",
       },
       log: { error: vi.fn(), warn: vi.fn() },
-    } as unknown as FastifyRequest<VerifyUserParams>;
+    } as unknown as Parameters<typeof verifyUserHandler>[0];
 
     const reply = mockReply();
 
@@ -173,7 +164,7 @@ describe("verifyUserHandler", () => {
         verificationCode: "123456",
       },
       log: { error: vi.fn(), warn: vi.fn() },
-    } as unknown as FastifyRequest<VerifyUserParams>;
+    } as unknown as Parameters<typeof verifyUserHandler>[0];
 
     const reply = mockReply();
 

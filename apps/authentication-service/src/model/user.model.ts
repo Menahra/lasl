@@ -19,7 +19,6 @@ import { nanoid } from "nanoid";
 
   return;
 })
-@index({ email: 1 })
 @modelOptions({
   schemaOptions: {
     timestamps: true,
