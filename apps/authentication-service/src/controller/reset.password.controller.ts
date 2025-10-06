@@ -17,7 +17,7 @@ export const resetPasswordHandler = async (
 
   try {
     const user = await findUserById(id);
-    console.log(user);
+
     if (!user) {
       return reply.status(StatusCodes.NOT_FOUND).send({
         message: "Could not reset password for user",
