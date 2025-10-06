@@ -53,7 +53,7 @@ export const verifyUserHandler = async (
       error,
       `An Error occured during verification of user with id: ${id}`,
     );
-
+    console.log(error);
     return reply.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
       message: "An unexpected error occurred during verification",
     });

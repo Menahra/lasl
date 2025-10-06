@@ -17,7 +17,7 @@ export const resetPasswordHandler = async (
 
   try {
     const user = await findUserById(id);
-
+    console.log(user);
     if (!user) {
       return reply.status(StatusCodes.NOT_FOUND).send({
         message: "Could not reset password for user",
@@ -47,5 +47,9 @@ export const resetPasswordHandler = async (
       error,
       `An error occured during resetting the password for user with id ${id}`,
     );
+
+    return reply.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+      message: "Could not reset the password due to an internal error",
+    });
   }
 };

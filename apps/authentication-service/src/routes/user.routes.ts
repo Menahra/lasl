@@ -164,6 +164,12 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
               message: { type: "string" },
             },
           },
+          [StatusCodes.INTERNAL_SERVER_ERROR]: {
+            type: "object",
+            properties: {
+              message: { type: "string" },
+            },
+          },
         },
       },
     },

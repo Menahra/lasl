@@ -1,6 +1,5 @@
 import {
   getModelForClass,
-  index,
   modelOptions,
   pre,
   prop,
