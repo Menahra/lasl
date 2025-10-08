@@ -249,4 +249,44 @@ describe("User Model", () => {
       expect(updatedUser.passwordResetCode).toBe("reset123");
     });
   });
+
+  describe("validating password", () => {
+    it("should validate a correct password", async () => {
+      const plainPassword = "SecurePass123";
+
+      const user = new UserModel({
+        ...mockUserData,
+        password: plainPassword,
+      });
+
+      await user.save();
+
+      const foundUser = await UserModel.findOne({ email: "test@example.com" });
+
+      expect(foundUser).toBeTruthy();
+
+      // biome-ignore lint/style/noNonNullAssertion: we checked above that it is not null
+      const isValid = await foundUser!.validatePassword(plainPassword);
+      expect(isValid).toBe(true);
+    });
+
+    it("should reject an incorrect password", async () => {
+      const plainPassword = "SecurePass123";
+
+      const user = new UserModel({
+        ...mockUserData,
+        password: plainPassword,
+      });
+
+      await user.save();
+
+      const foundUser = await UserModel.findOne({ email: "test@example.com" });
+
+      expect(foundUser).toBeTruthy();
+
+      // biome-ignore lint/style/noNonNullAssertion: we checked above that it is not null
+      const isValid = await foundUser!.validatePassword("WrongPassword456");
+      expect(isValid).toBe(false);
+    });
+  });
 });

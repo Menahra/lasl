@@ -1,4 +1,5 @@
 import {
+  type DocumentType,
   getModelForClass,
   modelOptions,
   pre,
@@ -44,6 +45,13 @@ export class User extends TimeStamps {
 
   @prop({ default: false })
   verified!: boolean;
+
+  async validatePassword(
+    this: DocumentType<User>,
+    candidatePassword: User["password"],
+  ) {
+    return await argon2.verify(this.password, candidatePassword);
+  }
 }
 
 export const UserModel = getModelForClass(User);

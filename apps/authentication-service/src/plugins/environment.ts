@@ -1,11 +1,11 @@
 import fastifyPlugin from "fastify-plugin";
 import {
   type EnvironmentSchema,
-  environmentConfig,
+  getEnvironmentConfig,
 } from "@/src/config/environment.ts";
 
 export const fastifyEnvironmentPlugin = fastifyPlugin((fastifyInstance) => {
-  fastifyInstance.decorate("config", environmentConfig);
+  fastifyInstance.decorate("config", getEnvironmentConfig());
   fastifyInstance.log.info("Environment config attached to Fastify instance.");
 });
 

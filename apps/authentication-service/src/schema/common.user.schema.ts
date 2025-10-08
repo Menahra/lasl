@@ -2,10 +2,13 @@ import { z } from "zod";
 
 export const userEmailSchema = z.email("Please enter a valid email address");
 
+export const PASSWORD_MIN_LENGTH = 8;
 export const userPasswordSchema = z
   .string()
   .nonempty({ error: "Password is required" })
-  .min(8, { error: "Password must be at least 8 characters long" })
+  .min(PASSWORD_MIN_LENGTH, {
+    error: "Password must be at least 8 characters long",
+  })
   .regex(/[A-Z]/, {
     message: "Password must contain at least one uppercase letter",
   })

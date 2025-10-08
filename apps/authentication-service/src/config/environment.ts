@@ -23,8 +23,5 @@ const environmentSchema = z.object({
 });
 
 export type EnvironmentSchema = z.infer<typeof environmentSchema>;
-export const environmentConfig: EnvironmentSchema = environmentSchema.parse(
-  process.env,
-);
-// tests anpassen wegen geänderter env
-// jetzt das nutzen im jwt util und im plugin etc replacen
+export const getEnvironmentConfig = (): EnvironmentSchema =>
+  environmentSchema.parse(process.env);

@@ -1,6 +1,6 @@
 import type { FastifyBaseLogger } from "fastify";
 import jsonwebtoken from "jsonwebtoken";
-import { ENVIRONMENT, environmentConfig } from "@/src/config/environment.ts";
+import { ENVIRONMENT, getEnvironmentConfig } from "@/src/config/environment.ts";
 
 export const signJsonWebToken = (
   object: Record<string, unknown>,
@@ -13,7 +13,7 @@ export const signJsonWebToken = (
 ) => {
   try {
     const privateSigningKey = Buffer.from(
-      environmentConfig[ENVIRONMENT[keyName]],
+      getEnvironmentConfig()[ENVIRONMENT[keyName]],
       "base64",
     ).toString("ascii");
 
@@ -37,7 +37,7 @@ export const verifyJsonWebToken = <T>(
   logger: FastifyBaseLogger,
 ) => {
   const publicSigningKey = Buffer.from(
-    environmentConfig[ENVIRONMENT[keyName]],
+    getEnvironmentConfig()[ENVIRONMENT[keyName]],
     "base64",
   ).toString("ascii");
 

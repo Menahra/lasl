@@ -5,6 +5,7 @@ import { defineConfig } from "vitest/config";
 export default defineConfig({
   test: {
     globalSetup: ["./test/__utils__/mongodb.setup.ts"],
+    setupFiles: ["./test/__utils__/environment.setup.ts"],
   },
   resolve: {
     alias: {
