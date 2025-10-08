@@ -1,5 +1,5 @@
 import { buildApp } from "./app.ts";
-import { ENVIRONMENT } from "./config/constants.ts";
+import { ENVIRONMENT } from "./config/environment.ts";
 
 const startAuthenticationServer = async () => {
   const app = await buildApp();

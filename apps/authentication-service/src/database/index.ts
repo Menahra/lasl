@@ -1,6 +1,6 @@
 import type { FastifyInstance } from "fastify";
 import mongoose from "mongoose";
-import { ENVIRONMENT } from "@/src/config/constants.ts";
+import { ENVIRONMENT } from "@/src/config/environment.ts";
 
 export const connectToMongoDb = async (fastifyInstance: FastifyInstance) => {
   const { [ENVIRONMENT.mongoUri]: mongoUri } = fastifyInstance.config;
