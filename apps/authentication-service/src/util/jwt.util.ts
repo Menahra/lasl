@@ -22,6 +22,7 @@ export const signJsonWebToken = (
       algorithm: "RS256",
     });
   } catch (error) {
+    console.error(error);
     logger.error(error, `An error occured during sign of ${keyName} key`);
     return null;
   }
