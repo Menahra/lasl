@@ -13,7 +13,7 @@ import { User } from "./user.model.ts";
   },
 })
 export class Session extends TimeStamps {
-  @prop({ ref: () => User })
+  @prop({ ref: () => User, required: true })
   user!: Ref<User>;
 
   @prop({ default: true })
