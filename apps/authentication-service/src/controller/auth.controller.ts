@@ -4,6 +4,7 @@ import {
   type CreateSessionInput,
   vagueSessionErrorMessage,
 } from "../schema/session.schema.ts";
+import { signAccessToken, signRefreshToken } from "../service/auth.service.ts";
 import { findUserByEmail } from "../service/user.service.ts";
 
 export const createSessionHandler = async (
@@ -33,6 +34,11 @@ export const createSessionHandler = async (
         .status(StatusCodes.FORBIDDEN)
         .send({ message: vagueSessionErrorMessage });
     }
+
+    const accessToken = signAccessToken(user, req.log);
+    const refreshToken = await signRefreshToken(user._id, req.log);
+
+    return reply.status(StatusCodes.OK).send({ accessToken, refreshToken });
   } catch (error) {
     req.log.error(
       error,
@@ -40,6 +46,6 @@ export const createSessionHandler = async (
     );
     return reply
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .send("An error occured, please try again later");
+      .send({ message: "An error occured, please try again later" });
   }
 };

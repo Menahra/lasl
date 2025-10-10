@@ -14,3 +14,8 @@ export const createSessionSchema = z.object({
 });
 
 export type CreateSessionInput = z.infer<typeof createSessionSchema>;
+
+export const createSessionJsonSchema = z.toJSONSchema(
+  createSessionSchema.shape.body,
+  { target: "draft-7" },
+);

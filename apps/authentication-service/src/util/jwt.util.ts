@@ -22,9 +22,8 @@ export const signJsonWebToken = (
       algorithm: "RS256",
     });
   } catch (error) {
-    console.error(error);
     logger.error(error, `An error occured during sign of ${keyName} key`);
-    return null;
+    throw new Error(`JsonWebToken signing failed for ${keyName}`);
   }
 };
 
@@ -48,6 +47,8 @@ export const verifyJsonWebToken = <T>(
       error,
       `An error occured during verification of ${keyName} key`,
     );
-    return null;
+    throw new Error(
+      `JsonWebToken verifying failed for token ${token} and keyName ${keyName}`,
+    );
   }
 };
