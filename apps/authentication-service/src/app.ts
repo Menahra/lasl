@@ -3,6 +3,7 @@ import Fastify from "fastify";
 import { connectToMongoDb } from "./database/index.ts";
 import { fastifyEnvironmentPlugin } from "./plugins/environment.ts";
 import { fastifySwaggerPlugin } from "./plugins/swagger.ts";
+import { authRoutes } from "./routes/auth.routes.ts";
 import { healthRoutes } from "./routes/health.routes.ts";
 import { userRoutes } from "./routes/user.routes.ts";
 import {
@@ -40,6 +41,9 @@ export const buildApp = async () => {
     prefix: getApiVersionPathPrefix(1),
   });
   fastify.register(userRoutes, {
+    prefix: getApiVersionPathPrefix(1),
+  });
+  fastify.register(authRoutes, {
     prefix: getApiVersionPathPrefix(1),
   });
 
