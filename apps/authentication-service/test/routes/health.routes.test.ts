@@ -1,7 +1,6 @@
 import type { FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
-import mongoose from "mongoose";
-import { afterAll, beforeAll, describe, expect, inject, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { getApiVersionPathPrefix } from "@/src/util/api.path.util.ts";
 import {
   setupFastifyTestEnvironment,
@@ -11,21 +10,16 @@ import { checkSwaggerDoc } from "@/test/__utils__/swaggerDoc.util.ts";
 
 describe("health routes", () => {
   let app: FastifyInstance;
-  const mongoDbUri = inject("MONGO_DB_URI");
 
   const apiPathPrefix = getApiVersionPathPrefix(1);
   const healthEndpointPath = `${apiPathPrefix}/healthcheck`;
 
   beforeAll(async () => {
     app = await setupFastifyTestEnvironment();
-
-    await mongoose.connect(mongoDbUri);
   });
 
   afterAll(async () => {
     await teardownFastifyTestEnvironment();
-
-    await mongoose.disconnect();
   });
 
   it('GET /healthcheck should return status "ok"', async () => {

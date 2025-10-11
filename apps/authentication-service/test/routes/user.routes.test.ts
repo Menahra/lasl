@@ -1,7 +1,7 @@
 import type { FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import mongoose from "mongoose";
-import { afterAll, beforeAll, describe, expect, inject, it, vi } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 // biome-ignore lint/performance/noNamespaceImport: okay in tests
 import * as userService from "@/src/service/user.service.ts";
 import { getApiVersionPathPrefix } from "@/src/util/api.path.util.ts";
@@ -14,7 +14,6 @@ import { mockUserInputData } from "../__mocks__/user.mock.ts";
 
 describe("user routes", () => {
   let app: FastifyInstance;
-  const mongoDbUri = inject("MONGO_DB_URI");
   const apiPathPrefix = getApiVersionPathPrefix(1);
 
   const mockDbUser = {
@@ -25,14 +24,10 @@ describe("user routes", () => {
 
   beforeAll(async () => {
     app = await setupFastifyTestEnvironment();
-
-    await mongoose.connect(mongoDbUri);
   });
 
   afterAll(async () => {
     await teardownFastifyTestEnvironment();
-
-    await mongoose.disconnect();
   });
 
   describe("create user route", () => {

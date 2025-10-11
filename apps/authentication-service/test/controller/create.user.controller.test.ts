@@ -7,7 +7,6 @@ import {
   beforeEach,
   describe,
   expect,
-  inject,
   it,
   vi,
 } from "vitest";
@@ -24,8 +23,6 @@ vi.mock("@/src/service/user.service", () => ({
 }));
 
 describe("User service", () => {
-  const mongoDbUri = inject("MONGO_DB_URI");
-
   const mockReply = (): FastifyReply => {
     const reply = {
       status: vi.fn(),
@@ -47,14 +44,10 @@ describe("User service", () => {
 
   beforeAll(async () => {
     await setupFastifyTestEnvironment();
-
-    await mongoose.connect(mongoDbUri);
   });
 
   afterAll(async () => {
     await teardownFastifyTestEnvironment();
-
-    await mongoose.disconnect();
   });
 
   beforeEach(async () => {
