@@ -3,8 +3,11 @@ import { StatusCodes } from "http-status-codes";
 import type { UserJsonWebTokenPayload } from "../model/user.model.ts";
 import { verifyJsonWebToken } from "../util/jwt.util.ts";
 
-// @ts-expect-error ok to not return on all paths because then execution goes on in next func
-export const deserializeUser = (req: FastifyRequest, reply: FastifyReply) => {
+// biome-ignore lint/suspicious/useAwait: needed for preHandler functionality in fastify
+export const deserializeUser = async (
+  req: FastifyRequest,
+  reply: FastifyReply,
+) => {
   const authorizationHeader = req.headers.authorization;
 
   if (!authorizationHeader?.startsWith("Bearer ")) {

@@ -183,7 +183,7 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
   fastifyInstance.get(
     "/users/me",
     {
-      preHandler: [deserializeUser],
+      preHandler: deserializeUser,
       schema: {
         summary: "Get the current authenticated user",
         tags: [UserSwaggerTag],
