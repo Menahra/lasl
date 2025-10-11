@@ -9,6 +9,10 @@ import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses.js";
 import argon2 from "argon2";
 import { nanoid } from "nanoid";
 
+export type UserJsonWebTokenPayload = {
+  id: string;
+} & Pick<User, "email" | "firstName" | "lastName">;
+
 @pre<User>("save", async function () {
   if (!this.isModified("password")) {
     return;
@@ -51,6 +55,15 @@ export class User extends TimeStamps {
     candidatePassword: User["password"],
   ) {
     return await argon2.verify(this.password, candidatePassword);
+  }
+
+  getJsonWebTokenPayload(this: DocumentType<User>): UserJsonWebTokenPayload {
+    return {
+      id: this._id.toString(),
+      email: this.email,
+      firstName: this.firstName,
+      lastName: this.lastName,
+    };
   }
 }
 

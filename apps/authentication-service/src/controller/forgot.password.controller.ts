@@ -26,7 +26,7 @@ export const forgotPasswordHandler = async (
         user.passwordResetCode = passwordResetCode;
         await user.save();
 
-        const resetPasswordUrl = `${origin}${getApiVersionPathPrefix(1)}/users/verify/${user._id}/${user.verificationCode}`;
+        const resetPasswordUrl = `${origin}${getApiVersionPathPrefix(1)}/users/resetpassword/${user._id}/${user.passwordResetCode}`;
 
         const passwordResetEmailHtml = await loadHtmlTemplate(
           "password-reset-email",

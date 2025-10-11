@@ -12,7 +12,7 @@ export const authRoutes = (fastifyInstance: FastifyInstance) => {
         body: createSessionJsonSchema,
         description:
           "Use this endpoint to create a new session for a user. It will return the accessToken and refreshToken",
-        tags: ["User", "Session"],
+        tags: ["Session"],
         response: {
           [StatusCodes.OK]: {
             type: "object",

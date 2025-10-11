@@ -22,7 +22,7 @@ export const signAccessToken = (
   logger: FastifyBaseLogger,
 ) => {
   try {
-    const payload = user.toJSON();
+    const payload = user.getJsonWebTokenPayload();
 
     return signJsonWebToken(payload, "jwtAccessPrivateKey", undefined, logger);
   } catch (error) {

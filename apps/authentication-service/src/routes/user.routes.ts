@@ -2,8 +2,10 @@ import type { FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import { createUserHandler } from "../controller/create.user.controller.ts";
 import { forgotPasswordHandler } from "../controller/forgot.password.controller.ts";
+import { getUserHandler } from "../controller/get.user.controller.ts";
 import { resetPasswordHandler } from "../controller/reset.password.controller.ts";
 import { verifyUserHandler } from "../controller/verify.user.controller.ts";
+import { deserializeUser } from "../middleware/authentication.hook.ts";
 import {
   createUserInputJsonSchema,
   forgotPasswordInputJsonSchema,
@@ -12,6 +14,8 @@ import {
   verifyUserInputJsonSchema,
 } from "../schema/user.schema.ts";
 import { ZodFormattedErrorSchemaId } from "../schema/zodFormattedError.schema.ts";
+
+const UserSwaggerTag = "User";
 
 export const userRoutes = (fastifyInstance: FastifyInstance) => {
   fastifyInstance.post(
@@ -22,7 +26,7 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
         body: createUserInputJsonSchema,
         description:
           "This endpoint is used to create new users via the post method.",
-        tags: ["User", "Creation"],
+        tags: [UserSwaggerTag],
         response: {
           [StatusCodes.OK]: {
             type: "object",
@@ -75,7 +79,7 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
         params: verifyUserInputJsonSchema,
         description:
           "After a user was created a verification code is sent to the given mail. This then needs to passed via this endpoint to fully verify the user.",
-        tags: ["User", "Verification"],
+        tags: [UserSwaggerTag],
         response: {
           [StatusCodes.OK]: {
             type: "object",
@@ -121,7 +125,7 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
         body: forgotPasswordInputJsonSchema,
         description:
           "Users can request a new password if they forgot the current one",
-        tags: ["User", "Password", "Forgot"],
+        tags: [UserSwaggerTag],
         response: {
           [StatusCodes.OK]: {
             type: "object",
@@ -144,7 +148,7 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
         body: resetPasswordBodyInputJsonSchema,
         description:
           "User resets the password with the reset code he got via mail and a new password",
-        tags: ["User", "Password", "Reset"],
+        tags: [UserSwaggerTag],
         response: {
           [StatusCodes.OK]: {
             type: "object",
@@ -174,5 +178,51 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
       },
     },
     resetPasswordHandler,
+  );
+
+  fastifyInstance.get(
+    "/users/me",
+    {
+      preHandler: [deserializeUser],
+      schema: {
+        summary: "Get the current authenticated user",
+        tags: [UserSwaggerTag],
+        description:
+          "Send the authorization header in format 'Bearer {accessToken}' and receive the user information",
+        headers: {
+          type: "object",
+          properties: { authorization: { type: "string" } },
+          required: ["authorization"],
+        },
+        response: {
+          [StatusCodes.OK]: {
+            type: "object",
+            properties: {
+              id: {
+                type: "string",
+              },
+              email: {
+                type: "string",
+              },
+              firstName: {
+                type: "string",
+              },
+              lastName: {
+                type: "string",
+              },
+            },
+          },
+          [StatusCodes.UNAUTHORIZED]: {
+            type: "object",
+            properties: {
+              message: {
+                type: "string",
+              },
+            },
+          },
+        },
+      },
+    },
+    getUserHandler,
   );
 };

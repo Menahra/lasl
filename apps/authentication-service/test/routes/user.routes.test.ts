@@ -209,4 +209,32 @@ describe("user routes", () => {
       });
     });
   });
+
+  describe("GET /users/me", () => {
+    const getUserPath = `${apiPathPrefix}/users/me`;
+
+    it.each([StatusCodes.OK, StatusCodes.UNAUTHORIZED])(
+      "should include %s in Swagger documentation",
+      (statusCode) => {
+        checkSwaggerDoc({
+          fastifyInstance: app,
+          endpointMethod: "get",
+          endpointPath: getUserPath,
+          endpointStatusCode: statusCode,
+          endpointContentType: "application/json",
+          endpointResponseType:
+            statusCode === StatusCodes.OK
+              ? {
+                  id: { type: "string" },
+                  email: { type: "string" },
+                  firstName: { type: "string" },
+                  lastName: { type: "string" },
+                }
+              : {
+                  message: { type: "string" },
+                },
+        });
+      },
+    );
+  });
 });

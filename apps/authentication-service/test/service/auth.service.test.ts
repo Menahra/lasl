@@ -71,8 +71,10 @@ describe("Auth Service", () => {
     const mockUserObjectId = new mongoose.Types.ObjectId();
     const mockUser = {
       _id: mockUserObjectId,
-      // biome-ignore lint/style/useNamingConvention: ok in test
-      toJSON: () => ({ _id: mockUserObjectId, email: "test@example.com" }),
+      getJsonWebTokenPayload: () => ({
+        id: mockUserObjectId.toString(),
+        email: "test@example.com",
+      }),
     } as Partial<DocumentType<User>>;
 
     it("should sign an access token", () => {
@@ -84,7 +86,8 @@ describe("Auth Service", () => {
       );
 
       expect(signJsonWebToken).toHaveBeenCalledWith(
-        mockUser.toJSON?.(),
+        // @ts-expect-error expected here
+        mockUser.getJsonWebTokenPayload?.(),
         "jwtAccessPrivateKey",
         undefined,
         mockLogger,

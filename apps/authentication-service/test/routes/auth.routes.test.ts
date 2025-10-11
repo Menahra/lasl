@@ -33,8 +33,7 @@ describe("auth routes", () => {
       firstName: "Test",
       verified: true,
       validatePassword: () => true,
-      // biome-ignore lint/style/useNamingConvention: naming given by mongoose
-      toJSON: () => ({ id: "something" }),
+      getJsonWebTokenPayload: () => ({ id: "something" }),
     };
 
     const validSessionPayload = {
