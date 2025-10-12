@@ -2,6 +2,7 @@ import type { FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import {
   createSessionHandler,
+  logoutHandler,
   refreshAccessTokenHandler,
 } from "../controller/auth.controller.ts";
 import { deserializeSession } from "../middleware/authentication.hook.ts";
@@ -85,5 +86,33 @@ export const authRoutes = (fastifyInstance: FastifyInstance) => {
       },
     },
     refreshAccessTokenHandler,
+  );
+
+  fastifyInstance.post(
+    "/sessions/logout",
+    {
+      preHandler: deserializeSession,
+      schema: {
+        summary: "Logout the current session",
+        description:
+          "Invalidates the session and clears the refresh token cookie",
+        tags: ["Session"],
+        response: {
+          [StatusCodes.OK]: {
+            type: "object",
+            properties: {
+              message: { type: "string" },
+            },
+          },
+          [StatusCodes.UNAUTHORIZED]: {
+            type: "object",
+            properties: {
+              message: { type: "string" },
+            },
+          },
+        },
+      },
+    },
+    logoutHandler,
   );
 };

@@ -209,7 +209,7 @@ describe("auth routes", () => {
 
       expect(response.statusCode).toBe(StatusCodes.UNAUTHORIZED);
       expect(response.json()).toEqual({
-        message: "Could not refresh access token",
+        message: "Invalid session",
       });
     });
 
@@ -253,7 +253,7 @@ describe("auth routes", () => {
 
       expect(response.statusCode).toBe(StatusCodes.UNAUTHORIZED);
       expect(response.json()).toEqual({
-        message: "Could not refresh access token",
+        message: "Invalid access token",
       });
     });
     it("should include Swagger docs for 200 and 401", () => {
@@ -272,6 +272,147 @@ describe("auth routes", () => {
         fastifyInstance: app,
         endpointMethod: "post",
         endpointPath: refreshEndpoint,
+        endpointStatusCode: StatusCodes.UNAUTHORIZED,
+        endpointContentType: "application/json",
+        endpointResponseType: {
+          message: { type: "string" },
+        },
+      });
+    });
+  });
+
+  describe("POST /sessions/logout", () => {
+    const logoutEndpoint = `${apiPathPrefix}/sessions/logout`;
+
+    const mockSession = {
+      valid: true,
+      save: vi.fn().mockResolvedValue(undefined),
+    };
+
+    it("should invalidate the session, clear the cookie, and return 200", async () => {
+      vi.spyOn(jwtUtil, "verifyJsonWebToken").mockReturnValueOnce({
+        session: "mockSessionId",
+      });
+
+      vi.spyOn(sessionService, "findSessionById").mockResolvedValueOnce(
+        // @ts-expect-error ok for test
+        mockSession,
+      );
+
+      const response = await app.inject({
+        method: "POST",
+        url: logoutEndpoint,
+        cookies: {
+          refreshToken: "valid.refresh.token",
+        },
+      });
+
+      expect(response.statusCode).toBe(StatusCodes.OK);
+      expect(response.json()).toEqual({ message: "Logged out successfully" });
+      expect(mockSession.valid).toBe(false);
+      expect(mockSession.save).toHaveBeenCalled();
+
+      const setCookieHeader = response.headers["set-cookie"];
+      expect(setCookieHeader).toBeDefined();
+
+      const cookie = Array.isArray(setCookieHeader)
+        ? setCookieHeader.find((c) => c.startsWith("refreshToken="))
+        : setCookieHeader;
+
+      // biome-ignore lint/performance/useTopLevelRegex: acceptable in test
+      expect(cookie).toMatch(/^refreshToken=;/); // cleared cookie
+      expect(cookie).toContain("Path=/auth/refresh");
+    });
+
+    it("should return 401 if refresh token is missing", async () => {
+      const response = await app.inject({
+        method: "POST",
+        url: logoutEndpoint,
+      });
+
+      expect(response.statusCode).toBe(StatusCodes.UNAUTHORIZED);
+      expect(response.json()).toEqual({ message: "Missing refresh token" });
+    });
+
+    it("should return 401 if refresh token is invalid", async () => {
+      vi.spyOn(jwtUtil, "verifyJsonWebToken").mockImplementationOnce(() => {
+        throw new Error("Invalid JWT");
+      });
+
+      const response = await app.inject({
+        method: "POST",
+        url: logoutEndpoint,
+        cookies: {
+          refreshToken: "invalid.token",
+        },
+      });
+
+      expect(response.statusCode).toBe(StatusCodes.UNAUTHORIZED);
+      expect(response.json()).toEqual({ message: "Invalid access token" });
+    });
+
+    it("should return 401 if session is not found", async () => {
+      vi.spyOn(jwtUtil, "verifyJsonWebToken").mockReturnValueOnce({
+        session: "mockSessionId",
+      });
+
+      vi.spyOn(sessionService, "findSessionById").mockResolvedValueOnce(null);
+
+      const response = await app.inject({
+        method: "POST",
+        url: logoutEndpoint,
+        cookies: {
+          refreshToken: "valid.token",
+        },
+      });
+
+      expect(response.statusCode).toBe(StatusCodes.UNAUTHORIZED);
+      expect(response.json()).toEqual({ message: "Invalid session" });
+    });
+
+    it("should return 401 if session.save throws an error", async () => {
+      const failingSession = {
+        valid: true,
+        save: vi.fn().mockRejectedValue(new Error("DB error")),
+      };
+
+      vi.spyOn(jwtUtil, "verifyJsonWebToken").mockReturnValueOnce({
+        session: "mockSessionId",
+      });
+
+      vi.spyOn(sessionService, "findSessionById").mockResolvedValueOnce(
+        // @ts-expect-error ok for test
+        failingSession,
+      );
+
+      const response = await app.inject({
+        method: "POST",
+        url: logoutEndpoint,
+        cookies: {
+          refreshToken: "valid.token",
+        },
+      });
+
+      expect(response.statusCode).toBe(StatusCodes.UNAUTHORIZED);
+      expect(response.json()).toEqual({ message: "Logout failed" });
+    });
+
+    it("should include Swagger docs for 200 and 401", () => {
+      checkSwaggerDoc({
+        fastifyInstance: app,
+        endpointMethod: "post",
+        endpointPath: logoutEndpoint,
+        endpointStatusCode: StatusCodes.OK,
+        endpointContentType: "application/json",
+        endpointResponseType: {
+          message: { type: "string" },
+        },
+      });
+
+      checkSwaggerDoc({
+        fastifyInstance: app,
+        endpointMethod: "post",
+        endpointPath: logoutEndpoint,
         endpointStatusCode: StatusCodes.UNAUTHORIZED,
         endpointContentType: "application/json",
         endpointResponseType: {

@@ -1,6 +1,8 @@
+import { StatusCodes } from "http-status-codes";
 import { describe, expect, it, vi } from "vitest";
 import {
   createSessionHandler,
+  logoutHandler,
   refreshAccessTokenHandler,
 } from "@/src/controller/auth.controller.ts";
 /* biome-ignore-start lint/performance/noNamespaceImport: okay in test */
@@ -153,13 +155,13 @@ describe("refreshAccessTokenHandler", () => {
     vi.spyOn(jwtUtil, "verifyJsonWebToken").mockReturnValue({
       session: "session123",
     });
-    vi.spyOn(authService, "findSessionById").mockResolvedValue({
-      // @ts-expect-error okay in test
+    const mockSession = {
       _id: "session123",
-      // @ts-expect-error okay in test
       user: "user123",
       valid: true,
-    });
+    };
+    // @ts-expect-error okay in test
+    vi.spyOn(authService, "findSessionById").mockResolvedValue(mockSession);
     const mockUser = {
       _id: "user123",
       email: "test@example.com",
@@ -175,7 +177,7 @@ describe("refreshAccessTokenHandler", () => {
     );
 
     const req = {
-      cookies: { refreshToken: "valid.refresh.token" },
+      session: mockSession,
       log: mockLog,
     };
     const reply = mockReply();
@@ -201,7 +203,7 @@ describe("refreshAccessTokenHandler", () => {
 
     expect(reply.status).toHaveBeenCalledWith(401);
     expect(reply.send).toHaveBeenCalledWith({
-      message: "Missing refresh token",
+      message: "Could not refresh access token",
     });
   });
 
@@ -274,6 +276,62 @@ describe("refreshAccessTokenHandler", () => {
     expect(reply.status).toHaveBeenCalledWith(401);
     expect(reply.send).toHaveBeenCalledWith({
       message: "Could not refresh access token",
+    });
+  });
+
+  describe("logoutHandler", () => {
+    it("should invalidate session, clear cookie, and return success", async () => {
+      const mockSave = vi.fn();
+      const mockSession = { valid: true, save: mockSave };
+
+      const req = {
+        session: mockSession,
+        log: { error: vi.fn() },
+      };
+
+      const send = vi.fn().mockReturnThis();
+      const clearCookie = vi.fn().mockReturnThis();
+      const status = vi.fn(() => ({ send }));
+      const reply = { status, clearCookie };
+
+      // @ts-expect-error ok in test
+      await logoutHandler(req, reply);
+
+      expect(mockSession.valid).toBe(false);
+      expect(mockSave).toHaveBeenCalled();
+
+      expect(clearCookie).toHaveBeenCalledWith("refreshToken", {
+        path: "/auth/refresh",
+      });
+
+      expect(status).toHaveBeenCalledWith(StatusCodes.OK);
+      expect(send).toHaveBeenCalledWith({ message: "Logged out successfully" });
+    });
+
+    it("should return 401 and log if logout fails", async () => {
+      const req = {
+        session: {
+          valid: true,
+          save: vi.fn().mockRejectedValue(new Error("DB error")),
+        },
+        log: { error: vi.fn() },
+      };
+
+      const send = vi.fn().mockReturnThis();
+      const clearCookie = vi.fn().mockReturnThis();
+      const status = vi.fn(() => ({ send }));
+      const reply = { status, clearCookie };
+
+      // @ts-expect-error ok in test
+      await logoutHandler(req, reply);
+
+      expect(req.log.error).toHaveBeenCalledWith(
+        expect.any(Error),
+        "Unable to logout",
+      );
+
+      expect(status).toHaveBeenCalledWith(StatusCodes.UNAUTHORIZED);
+      expect(send).toHaveBeenCalledWith({ message: "Logout failed" });
     });
   });
 });
