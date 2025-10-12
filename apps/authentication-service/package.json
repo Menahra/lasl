@@ -17,7 +17,8 @@
     "check:ci": "biome check src test",
     "check:fix": "biome check --write src test",
     "types:check": "tsc",
-    "test": "vitest"
+    "test": "vitest",
+    "release": "standard-version"
   },
   "keywords": [],
   "author": "",
@@ -30,6 +31,7 @@
     "cpx": "^1.5.0",
     "json-schema": "^0.4.0",
     "mongodb-memory-server": "^10.1.4",
+    "standard-version": "^9.5.0",
     "tsup": "^8.5.0",
     "unplugin-swc": "^1.5.7",
     "vitest": "^3.2.4"
