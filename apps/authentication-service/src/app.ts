@@ -1,6 +1,7 @@
 import process from "node:process";
 import Fastify from "fastify";
 import { connectToMongoDb } from "./database/index.ts";
+import { fastifyCookiePlugin } from "./plugins/cookie.ts";
 import { fastifyEnvironmentPlugin } from "./plugins/environment.ts";
 import { fastifySwaggerPlugin } from "./plugins/swagger.ts";
 import { authRoutes } from "./routes/auth.routes.ts";
@@ -36,6 +37,7 @@ export const buildApp = async () => {
 
   await fastify.register(fastifyMailerPlugin);
   await fastify.register(fastifySwaggerPlugin);
+  await fastify.register(fastifyCookiePlugin);
 
   fastify.register(healthRoutes, {
     prefix: getApiVersionPathPrefix(1),

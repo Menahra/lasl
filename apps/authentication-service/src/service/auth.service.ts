@@ -17,6 +17,8 @@ export const createSession = async (
   }
 };
 
+export const findSessionById = (id: string) => SessionModel.findById(id);
+
 export const signAccessToken = (
   user: DocumentType<User>,
   logger: FastifyBaseLogger,
@@ -24,7 +26,12 @@ export const signAccessToken = (
   try {
     const payload = user.getJsonWebTokenPayload();
 
-    return signJsonWebToken(payload, "jwtAccessPrivateKey", undefined, logger);
+    return signJsonWebToken(
+      payload,
+      "jwtAccessPrivateKey",
+      { expiresIn: "15m" },
+      logger,
+    );
   } catch (error) {
     logger.error(
       error,
@@ -44,7 +51,9 @@ export const signRefreshToken = async (
     return signJsonWebToken(
       { session: session._id },
       "jwtRefreshPrivateKey",
-      undefined,
+      {
+        expiresIn: "30d",
+      },
       logger,
     );
   } catch (error) {

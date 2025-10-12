@@ -6,6 +6,7 @@ import { SessionModel } from "@/src/model/session.model.ts";
 import type { User } from "@/src/model/user.model.ts";
 import {
   createSession,
+  findSessionById,
   signAccessToken,
   signRefreshToken,
 } from "@/src/service/auth.service.ts";
@@ -15,6 +16,7 @@ vi.mock("@/src/model/session.model.ts", () => ({
   // biome-ignore lint/style/useNamingConvention: ok here
   SessionModel: {
     create: vi.fn(),
+    findById: vi.fn(),
   },
 }));
 
@@ -67,6 +69,27 @@ describe("Auth Service", () => {
     });
   });
 
+  describe("findSessionById", () => {
+    it("should return a session when a valid ID is provided", async () => {
+      const mockFoundSession = { _id: "session123", user: mockUserId };
+      (SessionModel.findById as Mock).mockResolvedValue(mockFoundSession);
+
+      const result = await findSessionById("session123");
+
+      expect(SessionModel.findById).toHaveBeenCalledWith("session123");
+      expect(result).toEqual(mockFoundSession);
+    });
+
+    it("should return null when no session is found", async () => {
+      (SessionModel.findById as Mock).mockResolvedValue(null);
+
+      const result = await findSessionById("nonexistent-session");
+
+      expect(SessionModel.findById).toHaveBeenCalledWith("nonexistent-session");
+      expect(result).toBeNull();
+    });
+  });
+
   describe("signAccessToken", () => {
     const mockUserObjectId = new mongoose.Types.ObjectId();
     const mockUser = {
@@ -89,7 +112,9 @@ describe("Auth Service", () => {
         // @ts-expect-error expected here
         mockUser.getJsonWebTokenPayload?.(),
         "jwtAccessPrivateKey",
-        undefined,
+        {
+          expiresIn: "15m",
+        },
         mockLogger,
       );
 
@@ -125,7 +150,9 @@ describe("Auth Service", () => {
       expect(signJsonWebToken).toHaveBeenCalledWith(
         { session: mockSession._id },
         "jwtRefreshPrivateKey",
-        undefined,
+        {
+          expiresIn: "30d",
+        },
         mockLogger,
       );
 

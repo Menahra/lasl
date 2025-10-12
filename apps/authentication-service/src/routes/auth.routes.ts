@@ -1,6 +1,9 @@
 import type { FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
-import { createSessionHandler } from "../controller/auth.controller.ts";
+import {
+  createSessionHandler,
+  refreshAccessTokenHandler,
+} from "../controller/auth.controller.ts";
 import { createSessionJsonSchema } from "../schema/session.schema.ts";
 
 export const authRoutes = (fastifyInstance: FastifyInstance) => {
@@ -18,7 +21,17 @@ export const authRoutes = (fastifyInstance: FastifyInstance) => {
             type: "object",
             properties: {
               accessToken: { type: "string" },
-              refreshToken: { type: "string" },
+            },
+            headers: {
+              "Set-Cookie": {
+                description:
+                  "HTTP-only cookie named `refreshToken` used for session renewal.",
+                schema: {
+                  type: "string",
+                  example:
+                    "refreshToken=abc123; HttpOnly; Path=/auth/refresh; Max-Age=604800",
+                },
+              },
             },
           },
           [StatusCodes.FORBIDDEN]: {
@@ -43,5 +56,32 @@ export const authRoutes = (fastifyInstance: FastifyInstance) => {
       },
     },
     createSessionHandler,
+  );
+
+  fastifyInstance.post(
+    "/sessions/refresh",
+    {
+      schema: {
+        summary: "Refresh the session",
+        description:
+          "Use this endpoint to refresh the current active session and get a new access token",
+        tags: ["Session"],
+        response: {
+          [StatusCodes.OK]: {
+            type: "object",
+            properties: {
+              accessToken: { type: "string" },
+            },
+          },
+          [StatusCodes.UNAUTHORIZED]: {
+            type: "object",
+            properties: {
+              message: { type: "string" },
+            },
+          },
+        },
+      },
+    },
+    refreshAccessTokenHandler,
   );
 };
