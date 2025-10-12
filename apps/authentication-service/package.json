@@ -18,7 +18,7 @@
     "check:fix": "biome check --write src test",
     "types:check": "tsc",
     "test": "vitest",
-    "release": "standard-version"
+    "release": "standard-version --tag v1.0.0"
   },
   "keywords": [],
   "author": "",
