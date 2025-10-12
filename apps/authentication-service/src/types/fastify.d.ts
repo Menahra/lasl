@@ -1,4 +1,6 @@
+import type { DocumentType } from "@typegoose/typegoose";
 import type { CreateEmailOptions } from "resend";
+import type { Session } from "../model/session.model.ts";
 import type { UserJsonWebTokenPayload } from "../model/user.model.ts";
 
 declare module "fastify" {
@@ -11,5 +13,6 @@ declare module "fastify" {
   }
   interface FastifyRequest {
     user: UserJsonWebTokenPayload;
+    session: DocumentType<Session>;
   }
 }

@@ -1,6 +1,7 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import type { UserJsonWebTokenPayload } from "../model/user.model.ts";
+import { findSessionById } from "../service/auth.service.ts";
 import { verifyJsonWebToken } from "../util/jwt.util.ts";
 
 // biome-ignore lint/suspicious/useAwait: needed for preHandler functionality in fastify
@@ -29,6 +30,45 @@ export const deserializeUser = async (
     req.log.warn(
       error,
       `Could not deserialize user from access Token: ${accessToken}`,
+    );
+    return reply
+      .status(StatusCodes.UNAUTHORIZED)
+      .send({ message: "Invalid access token" });
+  }
+};
+
+export const deserializeSession = async (
+  req: FastifyRequest,
+  reply: FastifyReply,
+) => {
+  // biome-ignore lint/complexity/useLiteralKeys: otherwise ts complains
+  const refreshToken = req.cookies["refreshToken"];
+
+  if (!refreshToken) {
+    return reply
+      .status(StatusCodes.UNAUTHORIZED)
+      .send({ message: "Missing refresh token" });
+  }
+  try {
+    const decoded = verifyJsonWebToken<{ session: string }>(
+      refreshToken,
+      "jwtRefreshPublicKey",
+      req.log,
+    );
+
+    const session = await findSessionById(decoded.session);
+
+    if (!session?.valid) {
+      return reply
+        .status(StatusCodes.UNAUTHORIZED)
+        .send({ message: "Invalid session" });
+    }
+
+    req.session = session;
+  } catch (error) {
+    req.log.warn(
+      error,
+      `Could not deserialize session from refresh Token: ${refreshToken}`,
     );
     return reply
       .status(StatusCodes.UNAUTHORIZED)

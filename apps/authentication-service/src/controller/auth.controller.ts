@@ -4,13 +4,11 @@ import {
   type CreateSessionInput,
   vagueSessionErrorMessage,
 } from "../schema/session.schema.ts";
-import {
-  findSessionById,
-  signAccessToken,
-  signRefreshToken,
-} from "../service/auth.service.ts";
+import { signAccessToken, signRefreshToken } from "../service/auth.service.ts";
 import { findUserByEmail, findUserById } from "../service/user.service.ts";
-import { verifyJsonWebToken } from "../util/jwt.util.ts";
+
+const REFRESH_TOKEN_NAME = "refreshToken";
+const REFRESH_TOKEN_PATH = "/auth/refresh";
 
 export const createSessionHandler = async (
   // biome-ignore lint/style/useNamingConvention: naming from fastify
@@ -44,12 +42,12 @@ export const createSessionHandler = async (
     const refreshToken = await signRefreshToken(user._id, req.log);
 
     return reply
-      .setCookie("refreshToken", refreshToken, {
+      .setCookie(REFRESH_TOKEN_NAME, refreshToken, {
         httpOnly: true,
         // biome-ignore lint/complexity/useLiteralKeys: otherwise ts complains
         secure: process.env["NODE_ENV"] === "production",
         sameSite: "strict",
-        path: "/auth/refresh",
+        path: REFRESH_TOKEN_PATH,
         maxAge: 60 * 60 * 24 * 7,
       })
       .status(StatusCodes.OK)
@@ -70,27 +68,7 @@ export const refreshAccessTokenHandler = async (
   reply: FastifyReply,
 ) => {
   try {
-    // biome-ignore lint/complexity/useLiteralKeys: otherwise ts complains
-    const refreshToken = req.cookies["refreshToken"];
-
-    if (!refreshToken) {
-      return reply
-        .status(StatusCodes.UNAUTHORIZED)
-        .send({ message: "Missing refresh token" });
-    }
-    const decoded = verifyJsonWebToken<{ session: string }>(
-      refreshToken,
-      "jwtRefreshPublicKey",
-      req.log,
-    );
-
-    const session = await findSessionById(decoded.session);
-
-    if (!session?.valid) {
-      return reply
-        .status(StatusCodes.UNAUTHORIZED)
-        .send({ message: "Could not refresh access token" });
-    }
+    const { session } = req;
 
     const user = await findUserById(session.user.toString());
 
@@ -108,5 +86,30 @@ export const refreshAccessTokenHandler = async (
     return reply
       .status(StatusCodes.UNAUTHORIZED)
       .send({ message: "Could not refresh access token" });
+  }
+};
+
+export const logoutHandler = async (
+  req: FastifyRequest,
+  reply: FastifyReply,
+) => {
+  try {
+    const { session } = req;
+
+    session.valid = false;
+    await session.save();
+
+    reply.clearCookie(REFRESH_TOKEN_NAME, {
+      path: REFRESH_TOKEN_PATH,
+    });
+
+    return reply
+      .status(StatusCodes.OK)
+      .send({ message: "Logged out successfully" });
+  } catch (error) {
+    req.log.error(error, "Unable to logout");
+    return reply
+      .status(StatusCodes.UNAUTHORIZED)
+      .send({ message: "Logout failed" });
   }
 };

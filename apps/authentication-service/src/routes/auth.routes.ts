@@ -4,6 +4,7 @@ import {
   createSessionHandler,
   refreshAccessTokenHandler,
 } from "../controller/auth.controller.ts";
+import { deserializeSession } from "../middleware/authentication.hook.ts";
 import { createSessionJsonSchema } from "../schema/session.schema.ts";
 
 export const authRoutes = (fastifyInstance: FastifyInstance) => {
@@ -61,6 +62,7 @@ export const authRoutes = (fastifyInstance: FastifyInstance) => {
   fastifyInstance.post(
     "/sessions/refresh",
     {
+      preHandler: deserializeSession,
       schema: {
         summary: "Refresh the session",
         description:
