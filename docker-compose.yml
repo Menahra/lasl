@@ -2,22 +2,14 @@ services:
   authentication-service:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: apps/authentication-service/Dockerfile
     container_name: authentication_service
     image: authentication-service:latest
-    ports:
-      - "${APPLICATION_HOST_PORT:-8080}:3000"
     environment:
       PORT: 3000
-      APPLICATION_HOST_PORT: ${APPLICATION_HOST_PORT}
-      MONGO_URI: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@authentication-service-mongodb:27017/${MONGO_DB_NAME}?authSource=admin
-      JWT_ACCESS_PRIVATE_KEY: ${JWT_ACCESS_PRIVATE_KEY}
-      JWT_ACCESS_PUBLIC_KEY: ${JWT_ACCESS_PUBLIC_KEY}
-      JWT_REFRESH_PRIVATE_KEY: ${JWT_REFRESH_PRIVATE_KEY}
-      JWT_REFRESH_PUBLIC_KEY: ${JWT_REFRESH_PUBLIC_KEY}
-      NODE_ENV: ${NODE_ENV}
-      RESEND_API_KEY: ${RESEND_API_KEY}
-
+      DOPPLER_TOKEN: ${DOPPLER_TOKEN_AUTHENTICATION_SERVICE_DEV}
+    entrypoint: ["doppler", "run", "--"]
+    command: ["pnpm", "start"]
     depends_on:
       - authentication-service-mongodb
 
@@ -28,12 +20,25 @@ services:
       # Map host port for direct access (e.g., via MongoDB Compass)
       - "${DB_HOST_PORT:-27017}:27017"
     environment:
-      # These must be set for the MongoDB container to initialize
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
-      MONGO_INITDB_DATABASE: ${MONGO_DB_NAME:-auth_service_db}
+      DOPPLER_TOKEN: ${DOPPLER_TOKEN_AUTHENTICATION_SERVICE_DEV}
     volumes:
       - mongo_data:/data/db
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: apps/api-gateway/Dockerfile
+    container_name: api_gateway
+    image: api-gateway:latest
+    environment:
+      PORT: 3000
+      DOPPLER_TOKEN: ${DOPPLER_TOKEN_API_GATEWAY_DEV}
+    entrypoint: ["doppler", "run", "--"]
+    command: ["pnpm", "start"]
+    depends_on:
+      - authentication-service
+    ports:
+      - "8080:3000"
 
 volumes:
   mongo_data:
