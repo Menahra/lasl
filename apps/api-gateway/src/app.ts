@@ -2,6 +2,7 @@ import fastifyHttpProxy from "@fastify/http-proxy";
 import Fastify from "fastify";
 import { ENVIRONMENT } from "@/src/config/environment.config.ts";
 import { fastifyEnvironmentPlugin } from "@/src/plugins/environment.plugin.ts";
+import { healthRoutes } from "@/src/routes/health.routes.ts";
 
 export const buildApiGatewayApp = async () => {
   const fastify = Fastify({
@@ -15,23 +16,15 @@ export const buildApiGatewayApp = async () => {
   const { [ENVIRONMENT.authenticationServiceUrl]: authenticationServiceUrl } =
     fastify.config;
 
+  fastify.register(healthRoutes);
+
   // Proxy /auth/* requests to authentication service
   fastify.register(fastifyHttpProxy, {
     upstream: authenticationServiceUrl,
     prefix: "/auth",
-    rewritePrefix: "/auth", // preserve original path
+    rewritePrefix: "",
     http2: false,
-    replyOptions: {
-      // you could manipulate the response here
-    },
   });
 
   return fastify;
 };
-
-/* app.get("/health", async () => {
-  return { status: "ok" };
-}); */
-
-// health check in route auslagern wie in authentication-service
-// swagger von den anderen services irgendwie hier mit reinziehen?
