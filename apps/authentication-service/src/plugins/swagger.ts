@@ -23,6 +23,7 @@ export const fastifySwaggerPlugin = fastifyPlugin(async (fastifyInstance) => {
 
   const swaggerUiConfig: FastifySwaggerUiOptions = {
     routePrefix: "/documentation",
+    indexPrefix: "/auth",
   };
 
   await fastifyInstance.register(fastifySwaggerUi, swaggerUiConfig);

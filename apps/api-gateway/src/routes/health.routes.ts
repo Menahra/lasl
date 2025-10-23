@@ -7,8 +7,7 @@ export const healthRoutes = (fastifyInstance: FastifyInstance) => {
     {
       schema: {
         summary: "Healthcheck Endpoint",
-        description:
-          "Checks if the authentication service is running and healthy.",
+        description: "Checks if the API Gateway is running and healthy.",
         tags: ["Health"],
         response: {
           [StatusCodes.OK]: {
@@ -25,7 +24,7 @@ export const healthRoutes = (fastifyInstance: FastifyInstance) => {
     (_request, reply) => {
       reply.code(StatusCodes.OK).send({
         status: "ok",
-        message: "Authentication service is running and healthy!",
+        message: "API Gateway is running and healthy!",
         uptime: process.uptime(),
       });
     },

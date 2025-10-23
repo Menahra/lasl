@@ -28,11 +28,9 @@ export const authRoutes = (fastifyInstance: FastifyInstance) => {
               "Set-Cookie": {
                 description:
                   "HTTP-only cookie named `refreshToken` used for session renewal.",
-                schema: {
-                  type: "string",
-                  example:
-                    "refreshToken=abc123; HttpOnly; Path=/auth/refresh; Max-Age=604800",
-                },
+                type: "string",
+                example:
+                  "refreshToken=abc123; HttpOnly; Path=/auth/refresh; Max-Age=604800",
               },
             },
           },
