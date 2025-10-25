@@ -16,7 +16,7 @@ FROM base AS build
 WORKDIR /usr/src/app
 
 # Copy only dependency files first (for caching)
-COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json tsconfig.base.json biome.json ./
 # Copy all workspace package manifests
 COPY apps ./apps
 COPY packages ./packages
