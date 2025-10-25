@@ -40,14 +40,6 @@ jobs:
           push: false
           tags: api-gateway:test
 
-      - name: Debug Doppler env presence
-        run: |
-          echo "Auth token set: ${DOPPLER_TOKEN_AUTHENTICATION_SERVICE_DEV:+yes}"
-          echo "Gateway token set: ${DOPPLER_TOKEN_API_GATEWAY_DEV:+yes}"
-        env:
-          DOPPLER_TOKEN_AUTHENTICATION_SERVICE_DEV: ${{ secrets.DOPPLER_TOKEN_AUTHENTICATION_SERVICE_DEV }}
-          DOPPLER_TOKEN_API_GATEWAY_DEV: ${{ secrets.DOPPLER_TOKEN_API_GATEWAY_DEV }}
-
       - name: Start services with Docker Compose & Doppler
         env:
           DOPPLER_TOKEN_AUTHENTICATION_SERVICE_DEV: ${{ secrets.DOPPLER_TOKEN_AUTHENTICATION_SERVICE_DEV }}
@@ -65,7 +57,7 @@ jobs:
       - name: Verify API Gateway started
         run: |
           for i in {1..10}; do
-            if curl -sf http://localhost:8080/health; then
+            if curl -sf http://localhost:8080/healthcheck; then
               echo "✅ API Gateway is healthy"
               exit 0
             fi
