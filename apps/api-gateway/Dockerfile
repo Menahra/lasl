@@ -11,15 +11,22 @@ RUN apt-get update && apt-get install -y apt-transport-https ca-certificates cur
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# ---------- Build Stage ----------
 FROM base AS build
-COPY . /usr/src/app
 WORKDIR /usr/src/app
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
-RUN pnpm run -r build
+
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json tsconfig.base.json biome.json ./
+COPY apps ./apps
+COPY packages ./packages
+
+RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store pnpm install --frozen-lockfile
+RUN pnpm --filter api-gateway run build
 RUN pnpm deploy --filter=api-gateway --prod /prod/api-gateway
 
+# ---------- Runtime Stage ----------
 FROM base AS api-gateway
-COPY --from=build /prod/api-gateway /prod/api-gateway
 WORKDIR /prod/api-gateway
+
+COPY --from=build /prod/api-gateway ./
 EXPOSE 3000
 CMD [ "pnpm", "start" ]

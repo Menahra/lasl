@@ -41,6 +41,9 @@ jobs:
           tags: api-gateway:test
 
       - name: Start services with Docker Compose & Doppler
+        env:
+          DOPPLER_TOKEN_AUTHENTICATION_SERVICE_DEV: ${{ secrets.DOPPLER_TOKEN_AUTHENTICATION_SERVICE_DEV }}
+          DOPPLER_TOKEN_API_GATEWAY_DEV: ${{ secrets.DOPPLER_TOKEN_API_GATEWAY_DEV }}
         run: |
           docker compose up -d
           echo "Waiting for containers to start..."
