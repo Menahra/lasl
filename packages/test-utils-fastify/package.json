@@ -1,0 +1,50 @@
+{
+  "name": "@lasl/test-utils-fastify",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "files": ["dist"],
+  "exports": {
+    "./setup-utils": {
+      "import": "./dist/setup.utils.js",
+      "types": "./dist/setup.utils.d.ts"
+    },
+    "./swagger-doc-utils": {
+      "import": "./dist/swagger-doc.utils.js",
+      "types": "./dist/swagger-doc.utils.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "lint": "biome lint src test",
+    "lint:fix": "biome lint --write src test",
+    "format": "biome lint src test",
+    "format:fix": "biome format --write src test",
+    "check:ci": "biome check src test",
+    "check:fix": "biome check --write src test",
+    "types:check": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.13.1",
+  "devDependencies": {
+    "@biomejs/biome": "^2.1.2",
+    "@types/json-schema": "^7.0.15",
+    "fastify": "^5.4.0",
+    "http-status-codes": "^2.3.0",
+    "json-schema": "^0.4.0",
+    "mongodb-memory-server": "^10.1.4",
+    "mongoose": "^8.18.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3",
+    "vitest": "^4.0.3"
+  },
+  "peerDependencies": {
+    "fastify": "^5.4.0",
+    "mongodb-memory-server": "^10.1.4",
+    "mongoose": "^8.18.0",
+    "vitest": "^4.0.3"
+  }
+}
