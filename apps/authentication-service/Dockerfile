@@ -11,16 +11,27 @@ RUN apt-get update && apt-get install -y apt-transport-https ca-certificates cur
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# ---------- Build Stage ----------
 FROM base AS build
-COPY . /usr/src/app
 WORKDIR /usr/src/app
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
-RUN pnpm run -r build
+
+# Copy only dependency files first (for caching)
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
+# Copy all workspace package manifests
+COPY apps ./apps
+COPY packages ./packages
+
+# Install dependencies (using cache mount)
+RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store pnpm install --frozen-lockfile
+
+# Build only this service
+RUN pnpm --filter authentication-service run build
+
+# Deploy only production deps + built code
 RUN pnpm deploy --filter=authentication-service --prod /prod/authentication-service
 
+# ---------- Runtime Stage ----------
 FROM base AS authentication-service
-COPY --from=build /prod/authentication-service /prod/authentication-service
 WORKDIR /prod/authentication-service
 
-EXPOSE 3000
-CMD [ "pnpm", "start" ]
+COPY --from=build /prod/authentication-service ./
