@@ -1,0 +1,105 @@
+name: CI for API Gateway
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "apps/api-gateway/**"
+      - "packages/**"
+      - "pnpm-lock.yaml"
+      - "biome.json"
+      - "package.json"
+      - ".github/workflows/apiGateway.yml"
+      - ".github/workflows/common-intall-job.yml"
+      - ".github/actions/setup-job-env/action.yml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "apps/api-gateway/**"
+      - "packages/**"
+      - "pnpm-lock.yaml"
+      - "biome.json"
+      - "package.json"
+      - ".github/workflows/authenticationService.yml"
+      - ".github/workflows/common-intall-job.yml"
+      - ".github/actions/setup-job-env/action.yml"
+
+env:
+  API_GATEWAY_DIR: apps/api-gateway
+  NODE_VERSION: lts/*
+
+jobs:
+  install:
+    name: Install dependencies
+    uses: ./.github/workflows/common-install-job.yml
+    with:
+      node_version: lts/*
+
+  docker-image-build:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+    steps:
+      - name: "☁️ Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: Trigger docker build
+        run: docker build . --no-cache --target api-gateway --tag api-gateway:latest
+
+  types-check:
+    name: Correct typing
+    runs-on: ubuntu-latest
+    needs: [install]
+    defaults:
+      run:
+        working-directory: ${{ env.API_GATEWAY_DIR }}
+    steps:
+      - name: "☁️ Checkout repository"
+        uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup-job-env
+        with:
+          node_version: ${{ env.NODE_VERSION }}
+          pnpm_lock_hash: ${{ needs.install.outputs.pnpm_lock_hash }}
+
+      - name: "🔍 Check types"
+        run: pnpm run types:check
+
+  lint:
+    name: Code standards
+    runs-on: ubuntu-latest
+    needs: [install]
+    defaults:
+      run:
+        working-directory: ${{ env.API_GATEWAY_DIR }}
+    steps:
+      - name: "☁️ Checkout repository"
+        uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup-job-env
+        with:
+          node_version: ${{ env.NODE_VERSION }}
+          pnpm_lock_hash: ${{ needs.install.outputs.pnpm_lock_hash }}
+
+      - name: "🔍 Lint code"
+        run: pnpm run check:ci
+
+  test:
+    name: Code reliability
+    runs-on: ubuntu-latest
+    needs: [install]
+    defaults:
+      run:
+        working-directory: ${{ env.API_GATEWAY_DIR }}
+    steps:
+      - name: "☁️ Checkout repository"
+        uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup-job-env
+        with:
+          node_version: ${{ env.NODE_VERSION }}
+          pnpm_lock_hash: ${{ needs.install.outputs.pnpm_lock_hash }}
+
+      - name: "Test code"
+        run: pnpm run test
