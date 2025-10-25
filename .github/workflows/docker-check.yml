@@ -40,9 +40,6 @@ jobs:
           push: false
           tags: api-gateway:test
 
-      - name: Debug authentication-service env
-        run: docker exec authentication_service printenv | grep -E "MONGO|DB|DOPPLER"
-
       - name: Start services with Docker Compose & Doppler
         env:
           DOPPLER_TOKEN_AUTHENTICATION_SERVICE_DEV: ${{ secrets.DOPPLER_TOKEN_AUTHENTICATION_SERVICE_DEV }}
@@ -56,6 +53,9 @@ jobs:
         run: |
           docker compose logs
           docker ps -a
+
+      - name: Debug authentication-service env
+        run: docker exec authentication_service printenv | grep -E "MONGO|DB|DOPPLER"
 
       - name: Verify API Gateway started
         run: |
