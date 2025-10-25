@@ -27,7 +27,7 @@ jobs:
       - name: Build authentication service
         uses: docker/build-push-action@v5
         with:
-          context: ./apps/authentication-service
+          context: .
           file: ./apps/authentication-service/Dockerfile
           push: false
           tags: authentication-service:test
@@ -35,7 +35,7 @@ jobs:
       - name: Build API Gateway
         uses: docker/build-push-action@v5
         with:
-          context: ./apps/api-gateway
+          context: .
           file: ./apps/api-gateway/Dockerfile
           push: false
           tags: api-gateway:test
