@@ -25,6 +25,7 @@ runs:
       shell: bash
       run: pnpm -r run build
 
+    # Currently needed so that build of other packages is visible
     - name: Install dependencies
       shell: bash
       run: pnpm install
