@@ -1,4 +1,5 @@
 name: CI for Authentication Service
+
 on:
   push:
     branches:
@@ -35,7 +36,7 @@ env:
 
 jobs:
   install:
-    name: Install dependencies and build
+    name: Install dependencies
     uses: ./.github/workflows/common-install-job.yml
     with:
       node_version: lts/*
@@ -64,6 +65,7 @@ jobs:
       - uses: ./.github/actions/setup-job-env
         with:
           node_version: ${{ env.NODE_VERSION }}
+          pnpm_lock_hash: ${{ needs.install.outputs.pnpm_lock_hash }}
 
       - name: "🔍 Check types"
         run: pnpm run types:check
@@ -82,6 +84,7 @@ jobs:
       - uses: ./.github/actions/setup-job-env
         with:
           node_version: ${{ env.NODE_VERSION }}
+          pnpm_lock_hash: ${{ needs.install.outputs.pnpm_lock_hash }}
 
       - name: "🔍 Lint code"
         run: pnpm run check:ci
@@ -100,6 +103,7 @@ jobs:
       - uses: ./.github/actions/setup-job-env
         with:
           node_version: ${{ env.NODE_VERSION }}
+          pnpm_lock_hash: ${{ needs.install.outputs.pnpm_lock_hash }}
 
       - name: "Test code"
         run: pnpm run test

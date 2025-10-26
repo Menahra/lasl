@@ -56,6 +56,7 @@ jobs:
       - uses: ./.github/actions/setup-job-env
         with:
           node_version: ${{ env.NODE_VERSION }}
+          pnpm_lock_hash: ${{ needs.install.outputs.pnpm_lock_hash }}
 
       - name: "🔍 check types"
         run: pnpm run types:check
@@ -74,6 +75,7 @@ jobs:
       - uses: ./.github/actions/setup-job-env
         with:
           node_version: ${{ env.NODE_VERSION }}
+          pnpm_lock_hash: ${{ needs.install.outputs.pnpm_lock_hash }}
 
       - name: "🔍 lint code"
         run: pnpm run check:ci
@@ -92,6 +94,7 @@ jobs:
       - uses: ./.github/actions/setup-job-env
         with:
           node_version: ${{ env.NODE_VERSION }}
+          pnpm_lock_hash: ${{ needs.install.outputs.pnpm_lock_hash }}
 
       - name: "🧪 test code"
         run: pnpm run test:cov
@@ -117,6 +120,7 @@ jobs:
       - uses: ./.github/actions/setup-job-env
         with:
           node_version: ${{ env.NODE_VERSION }}
+          pnpm_lock_hash: ${{ needs.install.outputs.pnpm_lock_hash }}
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
@@ -145,6 +149,7 @@ jobs:
       - uses: ./.github/actions/setup-job-env
         with:
           node_version: ${{ env.NODE_VERSION }}
+          pnpm_lock_hash: ${{ needs.install.outputs.pnpm_lock_hash }}
 
       - name: "🔧 build code"
         run: pnpm run build

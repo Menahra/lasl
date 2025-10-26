@@ -1,42 +1,37 @@
 name: "Setup Job Environment"
-description: "Sets up Node.js, PNPM, installs packages, and restores builds."
+description: "Sets up Node.js, PNPM, and downloads the node_modules artifact for a job to use."
+
 inputs:
   node_version:
     description: 'Node.js version to use (e.g., "20")'
     required: true
     default: "lts/*"
+  pnpm_lock_hash:
+    description: "The pnpm-lock.yaml hash from the initial install job for artifact download."
+    required: true
+
 runs:
-  using: "composite"
+  using: "composite" # This keyword marks it as a composite action
   steps:
-    - name: Install pnpm
-      uses: pnpm/action-setup@v4
-    
-    - name: Use Node.js ${{ inputs.node_version }}
+    # Each job that uses this action will implicitly have checked out the repo already.
+    # No need for actions/checkout here unless this action *must* perform its own independent checkout.
+
+    - name: "🔧 Setup Node.js (in consuming job)"
       uses: actions/setup-node@v4
       with:
         node-version: ${{ inputs.node_version }}
-    
-    - name: Get pnpm store directory
-      id: pnpm-cache
-      shell: bash
-      run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-    
-    - name: Setup pnpm cache
-      uses: actions/cache@v3
-      with:
-        path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-        restore-keys: |
-          ${{ runner.os }}-pnpm-store-
-    
-    - name: Install dependencies
-      run: pnpm install --frozen-lockfile
-      shell: bash
-    
-    # Download build artifacts to the root, preserving the packages/ structure
-    - name: Download build artifacts
-      id: download-artifacts
+
+    - name: "Setup PNPM"
+      uses: pnpm/action-setup@v4
+
+    - name: "📥 Download node_modules artifact"
       uses: actions/download-artifact@v4
       with:
-        name: build-outputs-${{ github.run_id }}
+        # Construct the artifact name using the pnpm_lock_hash passed as input
+        name: node-modules-${{ runner.os }}-${{ inputs.pnpm_lock_hash }}
         path: .
+
+    - name: "♻️ Re-link PNPM dependencies" # re-establish pnpm's internal links
+      run: pnpm install --prefer-frozen-lockfile
+      shell: bash
+      working-directory: ${{ github.workspace }}
