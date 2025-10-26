@@ -24,6 +24,10 @@ on:
       - ".github/workflows/common-install-job.yml"
       - ".github/actions/setup-job-env/action.yml"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   SCHEMA_ENGINE_PACKAGE_DIR: packages/schema-engine
   NODE_VERSION: lts/*

@@ -26,6 +26,10 @@ on:
       - ".github/workflows/common-install-job.yml"
       - ".github/actions/setup-job-env/action.yml"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   AUTHENTICATION_SERVICE_DIR: apps/authentication-service
   NODE_VERSION: lts/*

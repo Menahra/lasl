@@ -27,6 +27,10 @@ on:
       - ".github/workflows/common-install-job.yml"
       - ".github/actions/setup-job-env/action.yml"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   FRONTEND_DIR: apps/frontend
   NODE_VERSION: lts/*

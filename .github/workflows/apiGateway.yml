@@ -26,6 +26,10 @@ on:
       - ".github/workflows/common-install-job.yml"
       - ".github/actions/setup-job-env/action.yml"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   API_GATEWAY_DIR: apps/api-gateway
   NODE_VERSION: lts/*
