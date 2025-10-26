@@ -10,7 +10,7 @@ on:
       - "biome.json"
       - "package.json"
       - ".github/workflows/schemaEngine.yml"
-      - ".github/workflows/common-intall-job.yml"
+      - ".github/workflows/common-install-job.yml"
       - ".github/actions/setup-job-env/action.yml"
   pull_request:
     branches:
@@ -21,7 +21,7 @@ on:
       - "biome.json"
       - "package.json"
       - ".github/workflows/schemaEngine.yml"
-      - ".github/workflows/common-intall-job.yml"
+      - ".github/workflows/common-install-job.yml"
       - ".github/actions/setup-job-env/action.yml"
 
 env:
