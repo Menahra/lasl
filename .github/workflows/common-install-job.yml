@@ -52,3 +52,4 @@ jobs:
           name: node-modules-${{ runner.os }}-${{ steps.hash-lockfile.outputs.pnpm_lock_hash }}
           path: node_modules
           retention-days: 5
+          include-hidden-files: true
