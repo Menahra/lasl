@@ -41,6 +41,10 @@ jobs:
         run: pnpm install --frozen-lockfile
         working-directory: .
 
+      - name: "🏗️ Build all local packages"
+        run: pnpm -r run build
+        working-directory: .
+
       - name: "📦 Upload node_modules as artifact"
         id: upload-node-modules # Add an ID to this step to reference its outputs
         uses: actions/upload-artifact@v4
