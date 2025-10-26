@@ -21,7 +21,19 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ inputs.node_version }}
-          cache: "pnpm"
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -29,12 +41,13 @@ jobs:
       - name: "🏗️ Build all packages"
         run: pnpm -r run build
 
-      # Cache the entire workspace including node_modules and build outputs
-      - name: Cache workspace
-        uses: actions/cache/save@v3
+      # Upload build outputs as artifact for other jobs
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
         with:
+          name: build-outputs-${{ github.run_id }}
           path: |
-            node_modules
-            **/node_modules
-            **/dist
-          key: pnpm-workspace-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ github.sha }}
+            packages/**/dist/
+            apps/**/dist/
+          retention-days: 1
+          if-no-files-found: warn

@@ -1,5 +1,5 @@
-name: "Restore Job Environment"
-description: "Restores Node.js, PNPM, and workspace from cache."
+name: "Setup Job Environment"
+description: "Sets up Node.js, PNPM, installs packages, and restores builds."
 inputs:
   node_version:
     description: 'Node.js version to use (e.g., "20")'
@@ -10,21 +10,32 @@ runs:
   steps:
     - name: Install pnpm
       uses: pnpm/action-setup@v4
+      shell: bash
     
     - name: Use Node.js ${{ inputs.node_version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ inputs.node_version }}
-        cache: "pnpm"
     
-    # Restore the cached workspace
-    - name: Restore workspace cache
-      uses: actions/cache/restore@v3
+    - name: Get pnpm store directory
+      id: pnpm-cache
+      shell: bash
+      run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+    
+    - name: Setup pnpm cache
+      uses: actions/cache@v3
       with:
-        path: |
-          node_modules
-          **/node_modules
-          **/dist
-          **/build
-        key: pnpm-workspace-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ github.sha }}
-        fail-on-cache-miss: true
+        path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-pnpm-store-
+    
+    - name: Install dependencies
+      run: pnpm install --frozen-lockfile
+      shell: bash
+    
+    # Download the build outputs from the install job
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: build-outputs-${{ github.run_id }}
