@@ -25,3 +25,6 @@ runs:
     - name: Install dependencies
       run: pnpm install --prefer-frozen-lockfile
       shell: bash
+    - name: "🏗️ Build all local packages"
+      run: pnpm -r run build
+      shell: bash

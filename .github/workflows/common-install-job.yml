@@ -27,7 +27,3 @@ jobs:
           cache: "pnpm"
       - name: Install dependencies
         run: pnpm install --prefer-frozen-lockfile
-
-      - name: "🏗️ Build all local packages"
-        run: pnpm -r run build
-        working-directory: .
