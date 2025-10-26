@@ -35,4 +35,3 @@ runs:
     - name: "♻️ Re-link PNPM dependencies" # re-establish pnpm's internal links
       run: pnpm install --prefer-frozen-lockfile
       shell: bash
-      working-directory: ${{ github.workspace }}
