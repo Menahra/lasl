@@ -28,4 +28,3 @@ runs:
           **/build
         key: pnpm-workspace-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ github.sha }}
         fail-on-cache-miss: true
-      shell: bash
