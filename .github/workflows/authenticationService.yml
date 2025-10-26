@@ -1,5 +1,4 @@
 name: CI for Authentication Service
-
 on:
   push:
     branches:
@@ -36,7 +35,7 @@ env:
 
 jobs:
   install:
-    name: Install dependencies
+    name: Install dependencies and build
     uses: ./.github/workflows/common-install-job.yml
     with:
       node_version: lts/*
@@ -85,7 +84,7 @@ jobs:
           node_version: ${{ env.NODE_VERSION }}
 
       - name: "🔍 Lint code"
-        run: pnpm run check:ci -- --verbose
+        run: pnpm run check:ci
 
   test:
     name: Code reliability

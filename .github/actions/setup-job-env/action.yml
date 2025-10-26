@@ -1,30 +1,31 @@
-name: "Setup Job Environment"
-description: "Sets up Node.js, PNPM, and installs packages."
-
+name: "Restore Job Environment"
+description: "Restores Node.js, PNPM, and workspace from cache."
 inputs:
   node_version:
     description: 'Node.js version to use (e.g., "20")'
     required: true
     default: "lts/*"
-
 runs:
-  using: "composite" # This keyword marks it as a composite action
+  using: "composite"
   steps:
-    # Each job that uses this action will implicitly have checked out the repo already.
-    # No need for actions/checkout here unless this action *must* perform its own independent checkout.
-
-    - uses: actions/checkout@v4
     - name: Install pnpm
       uses: pnpm/action-setup@v4
-
-    - name: Use Node.js ${{ matrix.node-version }}
+    
+    - name: Use Node.js ${{ inputs.node_version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ inputs.node_version }}
         cache: "pnpm"
-    - name: Install dependencies
-      run: pnpm install --prefer-frozen-lockfile
-      shell: bash
-    - name: "🏗️ Build all local packages"
-      run: pnpm -r run build
+    
+    # Restore the cached workspace
+    - name: Restore workspace cache
+      uses: actions/cache/restore@v3
+      with:
+        path: |
+          node_modules
+          **/node_modules
+          **/dist
+          **/build
+        key: pnpm-workspace-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ github.sha }}
+        fail-on-cache-miss: true
       shell: bash
