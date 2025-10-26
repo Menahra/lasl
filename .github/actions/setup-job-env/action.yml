@@ -6,9 +6,6 @@ inputs:
     description: 'Node.js version to use (e.g., "20")'
     required: true
     default: "lts/*"
-  pnpm_lock_hash:
-    description: "The pnpm-lock.yaml hash from the initial install job for artifact download."
-    required: true
 
 runs:
   using: "composite" # This keyword marks it as a composite action
@@ -16,22 +13,15 @@ runs:
     # Each job that uses this action will implicitly have checked out the repo already.
     # No need for actions/checkout here unless this action *must* perform its own independent checkout.
 
-    - name: "🔧 Setup Node.js (in consuming job)"
+    - uses: actions/checkout@v4
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 10
+    - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ inputs.node_version }}
-
-    - name: "Setup PNPM"
-      uses: pnpm/action-setup@v4
-
-    - name: "💾 Restore pnpm store"
-      uses: actions/cache@v4
-      with:
-        path: ~/.pnpm-store
-        key: pnpm-store-${{ runner.os }}-${{ inputs.pnpm_lock_hash }}
-        restore-keys: |
-          pnpm-store-${{ runner.os }}-
-
-    - name: "♻️ Re-link PNPM dependencies" # re-establish pnpm's internal links
+        cache: "pnpm"
+    - name: Install dependencies
       run: pnpm install --prefer-frozen-lockfile
-      shell: bash

@@ -9,45 +9,25 @@ on:
         type: string
         description: 'Node.js version to use (e.g., "20" or "lts/*")'
         default: "lts/*"
-    outputs:
-      pnpm_lock_hash:
-        description: "SHA256 hash of pnpm-lock.yaml for cache key"
-        value: ${{ jobs.setup.outputs.pnpm_lock_hash }}
 
 jobs:
   setup:
     runs-on: ubuntu-latest
-    outputs:
-      pnpm_lock_hash: ${{ steps.hash-lockfile.outputs.pnpm_lock_hash }}
     steps:
       - name: "☁️ Checkout Repository"
         uses: actions/checkout@v4
 
-      - name: "🔧 Setup Node.js"
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - name: Use Node.js ${{ inputs.node_version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ inputs.node_version }}
-
-      - name: "Setup PNPM"
-        uses: pnpm/action-setup@v4
-
-      - name: "🔍 Hash pnpm-lock.yaml for artifact key"
-        id: hash-lockfile # Add an ID to this step to reference its outputs
-        run: |
-          echo "pnpm_lock_hash=$(sha256sum pnpm-lock.yaml | awk '{print $1}')" >> "$GITHUB_OUTPUT"
-        working-directory: .
-
-      - name: 💾 Cache pnpm store
-        uses: actions/cache@v4
-        with:
-          path: ~/.pnpm-store
-          key: pnpm-store-${{ runner.os }}-${{ steps.hash-lockfile.outputs.pnpm_lock_hash }}
-          restore-keys: |
-            pnpm-store-${{ runner.os }}-
-
-      - name: "🔧 Install Monorepo Dependencies"
-        run: pnpm install --frozen-lockfile
-        working-directory: .
+          cache: "pnpm"
+      - name: Install dependencies
+        run: pnpm install --prefer-frozen-lockfile
 
       - name: "🏗️ Build all local packages"
         run: pnpm -r run build
