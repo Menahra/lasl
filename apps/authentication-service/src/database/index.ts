@@ -8,7 +8,7 @@ export const connectToMongoDb = async (fastifyInstance: FastifyInstance) => {
   try {
     fastifyInstance.log.info(
       // biome-ignore lint/performance/useTopLevelRegex: not called frequently
-      `Attempting to connect to: ${mongoUri.replace(/:[^:]*@/, ":*****@")}`,
+      `Attempting to connect to: ${mongoUri}`,
     );
     await mongoose.connect(mongoUri);
     fastifyInstance.log.info("MongoDB connected successfully!");
