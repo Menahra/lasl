@@ -33,8 +33,10 @@ runs:
       run: pnpm install --frozen-lockfile
       shell: bash
     
-    # Download the build outputs from the install job
+    # Download build artifacts to the root, preserving the packages/ structure
     - name: Download build artifacts
+      id: download-artifacts
       uses: actions/download-artifact@v4
       with:
         name: build-outputs-${{ github.run_id }}
+        path: .

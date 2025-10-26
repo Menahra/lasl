@@ -41,13 +41,13 @@ jobs:
       - name: "🏗️ Build all packages"
         run: pnpm -r run build
 
-      # Upload build outputs as artifact for other jobs
+      # Upload the entire workspace to preserve structure
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: build-outputs-${{ github.run_id }}
           path: |
-            packages/**/dist/
-            apps/**/dist/
+            packages/
+            !packages/**/node_modules/
           retention-days: 1
           if-no-files-found: warn
