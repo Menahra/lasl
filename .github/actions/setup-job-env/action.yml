@@ -1,5 +1,5 @@
 name: "Setup Job Environment"
-description: "Sets up Node.js, PNPM, and downloads the node_modules artifact for a job to use."
+description: "Sets up Node.js, PNPM, and installs packages."
 
 inputs:
   node_version:
@@ -24,3 +24,4 @@ runs:
         cache: "pnpm"
     - name: Install dependencies
       run: pnpm install --prefer-frozen-lockfile
+      shell: bash
