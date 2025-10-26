@@ -1,0 +1,51 @@
+name: "Setup Monorepo"
+description: "Sets up Node.js, pnpm, installs dependencies, and builds all packages"
+inputs:
+  node_version:
+    description: 'Node.js version to use'
+    required: false
+    default: "lts/*"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+    
+    - name: Use Node.js ${{ inputs.node_version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node_version }}
+    
+    - name: Get pnpm store directory
+      shell: bash
+      run: echo "STORE_PATH=$(pnpm store path --global)" >> $GITHUB_OUTPUT
+      id: pnpm-cache
+    
+    - name: Setup pnpm cache
+      uses: actions/cache@v3
+      with:
+        path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-pnpm-store-
+    
+    - name: Install dependencies
+      shell: bash
+      run: pnpm install --frozen-lockfile
+    
+    - name: Cache build outputs
+      uses: actions/cache@v3
+      id: build-cache
+      with:
+        path: |
+          packages/**/dist
+          packages/**/build
+          apps/**/dist
+          apps/**/build
+        key: ${{ runner.os }}-build-${{ hashFiles('packages/**/*', 'apps/**/*', '!**/node_modules/**', '!**/dist/**', '!**/build/**') }}
+    
+    - name: Build all packages
+      shell: bash
+      if: steps.build-cache.outputs.cache-hit != 'true'
+      run: pnpm -r run build
