@@ -24,12 +24,13 @@ runs:
     - name: "Setup PNPM"
       uses: pnpm/action-setup@v4
 
-    - name: "📥 Download node_modules artifact"
-      uses: actions/download-artifact@v4
+    - name: "💾 Restore pnpm store"
+      uses: actions/cache@v4
       with:
-        # Construct the artifact name using the pnpm_lock_hash passed as input
-        name: node-modules-${{ runner.os }}-${{ inputs.pnpm_lock_hash }}
-        path: .
+        path: ~/.pnpm-store
+        key: pnpm-store-${{ runner.os }}-${{ inputs.pnpm_lock_hash }}
+        restore-keys: |
+          pnpm-store-${{ runner.os }}-
 
     - name: "♻️ Re-link PNPM dependencies" # re-establish pnpm's internal links
       run: pnpm install --prefer-frozen-lockfile
