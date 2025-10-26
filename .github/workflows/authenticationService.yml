@@ -23,7 +23,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  NODE_VERSION: "lts/*"
+  AUTHENTICATION_SERVICE_DIR: apps/authentication-service
+  NODE_VERSION: lts/*
 
 jobs:
   docker-build:
@@ -45,6 +46,9 @@ jobs:
   types-check:
     name: Type Check
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.AUTHENTICATION_SERVICE_DIR }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -55,12 +59,14 @@ jobs:
           node_version: ${{ env.NODE_VERSION }}
 
       - name: Check types
-        working-directory: apps/authentication-service
         run: pnpm run types:check
 
   lint:
     name: Lint
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.AUTHENTICATION_SERVICE_DIR }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -71,12 +77,14 @@ jobs:
           node_version: ${{ env.NODE_VERSION }}
 
       - name: Lint code
-        working-directory: apps/authentication-service
         run: pnpm run check:ci
 
   test:
     name: Test
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.AUTHENTICATION_SERVICE_DIR }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -87,5 +95,4 @@ jobs:
           node_version: ${{ env.NODE_VERSION }}
 
       - name: Run tests
-        working-directory: apps/authentication-service
         run: pnpm run test
