@@ -19,7 +19,7 @@ runs:
     
     - name: Get pnpm store directory
       shell: bash
-      run: echo "STORE_PATH=$(pnpm store path --global)" >> $GITHUB_OUTPUT
+      run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
       id: pnpm-cache
     
     - name: Setup pnpm cache
