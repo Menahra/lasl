@@ -7,7 +7,7 @@ services:
     image: authentication-service:latest
     environment:
       PORT: 3000
-      DOPPLER_TOKEN: ${DOPPLER_TOKEN_AUTHENTICATION_SERVICE_DEV}
+      DOPPLER_TOKEN: ${DOPPLER_TOKEN_AUTHENTICATION_SERVICE}
     entrypoint: ["doppler", "run", "--"]
     command: ["pnpm", "start"]
     depends_on:
@@ -20,7 +20,7 @@ services:
       # Map host port for direct access (e.g., via MongoDB Compass)
       - "${DB_HOST_PORT:-27017}:27017"
     environment:
-      DOPPLER_TOKEN: ${DOPPLER_TOKEN_AUTHENTICATION_SERVICE_DEV}
+      DOPPLER_TOKEN: ${DOPPLER_TOKEN_AUTHENTICATION_SERVICE}
     volumes:
       - mongo_data:/data/db
 
@@ -32,7 +32,7 @@ services:
     image: api-gateway:latest
     environment:
       PORT: 3000
-      DOPPLER_TOKEN: ${DOPPLER_TOKEN_API_GATEWAY_DEV}
+      DOPPLER_TOKEN: ${DOPPLER_TOKEN_API_GATEWAY}
     entrypoint: ["doppler", "run", "--"]
     command: ["pnpm", "start"]
     depends_on:

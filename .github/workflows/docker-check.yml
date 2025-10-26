@@ -42,8 +42,8 @@ jobs:
 
       - name: Start services with Docker Compose & Doppler
         env:
-          DOPPLER_TOKEN_AUTHENTICATION_SERVICE_DEV: ${{ secrets.DOPPLER_TOKEN_AUTHENTICATION_SERVICE_DEV }}
-          DOPPLER_TOKEN_API_GATEWAY_DEV: ${{ secrets.DOPPLER_TOKEN_API_GATEWAY_DEV }}
+          DOPPLER_TOKEN_AUTHENTICATION_SERVICE: ${{ secrets.DOPPLER_TOKEN_AUTHENTICATION_SERVICE }}
+          DOPPLER_TOKEN_API_GATEWAY: ${{ secrets.DOPPLER_TOKEN_API_GATEWAY }}
         run: |
           docker compose up -d
           echo "Waiting for containers to start..."
@@ -53,9 +53,6 @@ jobs:
         run: |
           docker compose logs
           docker ps -a
-
-      - name: Debug authentication-service env
-        run: docker exec authentication_service printenv | grep -E "MONGO|DB|DOPPLER"
 
       - name: Verify API Gateway started
         run: |
