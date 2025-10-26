@@ -1,3 +1,7 @@
+import {
+  setupFastifyTestEnvironment,
+  teardownFastifyTestEnvironment,
+} from "@lasl/test-utils-fastify/setup-utils";
 import argon2 from "argon2";
 import mongoose from "mongoose";
 import {
@@ -9,12 +13,9 @@ import {
   it,
   vi,
 } from "vitest";
+import { buildApp } from "@/src/app.ts";
 import { UserModel } from "@/src/model/user.model.ts";
 import { mockUserData } from "../__mocks__/user.mock.ts";
-import {
-  setupFastifyTestEnvironment,
-  teardownFastifyTestEnvironment,
-} from "../__utils__/setup.utils.ts";
 
 vi.mock("nanoid", () => ({
   nanoid: () =>
@@ -23,7 +24,7 @@ vi.mock("nanoid", () => ({
 
 describe("User Model", () => {
   beforeAll(async () => {
-    await setupFastifyTestEnvironment();
+    await setupFastifyTestEnvironment({ buildApp, useMongo: true });
   });
 
   afterAll(async () => {

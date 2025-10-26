@@ -107,6 +107,9 @@ importers:
         specifier: ^4.1.5
         version: 4.1.5
     devDependencies:
+      '@lasl/test-utils-fastify':
+        specifier: workspace:*
+        version: file:packages/test-utils-fastify(fastify@5.4.0)(mongodb-memory-server@10.1.4)(mongoose@8.18.0)(vitest@3.2.4(@types/node@24.0.13)(happy-dom@16.8.1)(sass-embedded@1.89.2))
       '@types/json-schema':
         specifier: ^7.0.15
         version: 7.0.15
@@ -814,6 +817,14 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.29':
     resolution: {integrity: sha512-uw6guiW/gcAGPDhLmd77/6lW8QLeiV5RUTsAX46Db6oLhGaVj4lhnPwb184s1bkc8kdVg/+h988dro8GRDpmYQ==}
+
+  '@lasl/test-utils-fastify@file:packages/test-utils-fastify':
+    resolution: {directory: packages/test-utils-fastify, type: directory}
+    peerDependencies:
+      fastify: ^5.4.0
+      mongodb-memory-server: ^10.1.4
+      mongoose: ^8.18.0
+      vitest: ^4.0.3
 
   '@lukeed/ms@2.0.2':
     resolution: {integrity: sha512-9I2Zn6+NJLfaGoz9jN3lpwDgAYvfGeNYdbAIjJOqzs4Tpc+VU3Jqq4IofSUBKajiDS8k9fZIg18/z13mpk1bsA==}
@@ -4679,6 +4690,13 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.4
+
+  '@lasl/test-utils-fastify@file:packages/test-utils-fastify(fastify@5.4.0)(mongodb-memory-server@10.1.4)(mongoose@8.18.0)(vitest@3.2.4(@types/node@24.0.13)(happy-dom@16.8.1)(sass-embedded@1.89.2))':
+    dependencies:
+      fastify: 5.4.0
+      mongodb-memory-server: 10.1.4
+      mongoose: 8.18.0
+      vitest: 3.2.4(@types/node@24.0.13)(happy-dom@16.8.1)(sass-embedded@1.89.2)
 
   '@lukeed/ms@2.0.2': {}
 

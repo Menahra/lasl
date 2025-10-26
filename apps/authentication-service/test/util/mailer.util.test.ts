@@ -1,9 +1,10 @@
-import type { FastifyInstance } from "fastify";
-import { describe, expect, it, vi } from "vitest";
 import {
   setupFastifyTestEnvironment,
   teardownFastifyTestEnvironment,
-} from "@/test/__utils__/setup.utils.ts";
+} from "@lasl/test-utils-fastify/setup-utils";
+import type { FastifyInstance } from "fastify";
+import { describe, expect, it, vi } from "vitest";
+import { buildApp } from "@/src/app.ts";
 
 const ResendMock = vi.hoisted(() => vi.fn());
 vi.mock("resend", async (importOriginalResendModule) => {
@@ -18,7 +19,7 @@ vi.mock("resend", async (importOriginalResendModule) => {
 
 describe("Resend Mailer util", () => {
   it("should have sendMail decorated", async () => {
-    const app = await setupFastifyTestEnvironment();
+    const app = await setupFastifyTestEnvironment({ buildApp, useMongo: true });
     expect(typeof app.sendMail).toBe("function");
     await teardownFastifyTestEnvironment();
   });
@@ -35,7 +36,7 @@ describe("Resend Mailer util", () => {
       },
     }));
 
-    const app = await setupFastifyTestEnvironment();
+    const app = await setupFastifyTestEnvironment({ buildApp, useMongo: true });
 
     const result = await app.sendMail({
       to: "user@example.com",
@@ -72,7 +73,10 @@ describe("Resend Mailer util", () => {
       },
     }));
 
-    const app: FastifyInstance = await setupFastifyTestEnvironment();
+    const app: FastifyInstance = await setupFastifyTestEnvironment({
+      buildApp,
+      useMongo: true,
+    });
 
     const result = await app.sendMail({
       to: "fail@example.com",

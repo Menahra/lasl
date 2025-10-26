@@ -1,15 +1,16 @@
+import {
+  setupFastifyTestEnvironment,
+  teardownFastifyTestEnvironment,
+} from "@lasl/test-utils-fastify/setup-utils";
+import { checkSwaggerDoc } from "@lasl/test-utils-fastify/swagger-doc-utils";
 import type { FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import mongoose from "mongoose";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
+import { buildApp } from "@/src/app.ts";
 // biome-ignore lint/performance/noNamespaceImport: okay in tests
 import * as userService from "@/src/service/user.service.ts";
 import { getApiVersionPathPrefix } from "@/src/util/api.path.util.ts";
-import {
-  setupFastifyTestEnvironment,
-  teardownFastifyTestEnvironment,
-} from "@/test/__utils__/setup.utils.ts";
-import { checkSwaggerDoc } from "@/test/__utils__/swaggerDoc.util.ts";
 import { mockUserInputData } from "../__mocks__/user.mock.ts";
 
 describe("user routes", () => {
@@ -23,7 +24,7 @@ describe("user routes", () => {
   };
 
   beforeAll(async () => {
-    app = await setupFastifyTestEnvironment();
+    app = await setupFastifyTestEnvironment({ buildApp, useMongo: true });
   });
 
   afterAll(async () => {

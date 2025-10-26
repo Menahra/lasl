@@ -1,17 +1,18 @@
-import { isDocument } from "@typegoose/typegoose";
-import mongoose from "mongoose";
-import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
-import { SessionModel } from "@/src/model/session.model.ts";
-import { UserModel } from "@/src/model/user.model.ts";
-import { mockUserData } from "../__mocks__/user.mock.ts";
 import {
   setupFastifyTestEnvironment,
   teardownFastifyTestEnvironment,
-} from "../__utils__/setup.utils.ts";
+} from "@lasl/test-utils-fastify/setup-utils";
+import { isDocument } from "@typegoose/typegoose";
+import mongoose from "mongoose";
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
+import { buildApp } from "@/src/app.ts";
+import { SessionModel } from "@/src/model/session.model.ts";
+import { UserModel } from "@/src/model/user.model.ts";
+import { mockUserData } from "../__mocks__/user.mock.ts";
 
 describe("Session Model", () => {
   beforeAll(async () => {
-    await setupFastifyTestEnvironment();
+    await setupFastifyTestEnvironment({ buildApp, useMongo: true });
   });
 
   afterAll(async () => {

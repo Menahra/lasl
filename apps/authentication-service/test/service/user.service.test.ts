@@ -1,19 +1,20 @@
+import {
+  setupFastifyTestEnvironment,
+  teardownFastifyTestEnvironment,
+} from "@lasl/test-utils-fastify/setup-utils";
 import mongoose from "mongoose";
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
+import { buildApp } from "@/src/app.ts";
 import {
   createUser,
   findUserByEmail,
   findUserById,
 } from "@/src/service/user.service.ts";
 import { mockUserData } from "../__mocks__/user.mock.ts";
-import {
-  setupFastifyTestEnvironment,
-  teardownFastifyTestEnvironment,
-} from "../__utils__/setup.utils.ts";
 
 describe("User service", () => {
   beforeAll(async () => {
-    await setupFastifyTestEnvironment();
+    await setupFastifyTestEnvironment({ buildApp, useMongo: true });
   });
 
   afterAll(async () => {

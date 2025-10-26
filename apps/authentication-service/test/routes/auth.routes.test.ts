@@ -1,7 +1,13 @@
+import {
+  setupFastifyTestEnvironment,
+  teardownFastifyTestEnvironment,
+} from "@lasl/test-utils-fastify/setup-utils";
+import { checkSwaggerDoc } from "@lasl/test-utils-fastify/swagger-doc-utils";
 import type { FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import mongoose from "mongoose";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
+import { buildApp } from "@/src/app.ts";
 // biome-ignore lint/performance/noNamespaceImport: ok in test
 import * as sessionService from "@/src/service/auth.service.ts";
 // biome-ignore lint/performance/noNamespaceImport: ok in test
@@ -9,11 +15,6 @@ import * as userService from "@/src/service/user.service.ts";
 import { getApiVersionPathPrefix } from "@/src/util/api.path.util.ts";
 // biome-ignore lint/performance/noNamespaceImport: ok in test
 import * as jwtUtil from "@/src/util/jwt.util.ts";
-import {
-  setupFastifyTestEnvironment,
-  teardownFastifyTestEnvironment,
-} from "@/test/__utils__/setup.utils.ts";
-import { checkSwaggerDoc } from "@/test/__utils__/swaggerDoc.util.ts";
 
 describe("auth routes", () => {
   let app: FastifyInstance;
@@ -21,7 +22,7 @@ describe("auth routes", () => {
   const sessionsEndpoint = `${apiPathPrefix}/sessions`;
 
   beforeAll(async () => {
-    app = await setupFastifyTestEnvironment();
+    app = await setupFastifyTestEnvironment({ buildApp, useMongo: true });
   });
 
   afterAll(async () => {

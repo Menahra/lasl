@@ -1,12 +1,13 @@
-import type { FastifyInstance } from "fastify";
-import { StatusCodes } from "http-status-codes";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { getApiVersionPathPrefix } from "@/src/util/api.path.util.ts";
 import {
   setupFastifyTestEnvironment,
   teardownFastifyTestEnvironment,
-} from "@/test/__utils__/setup.utils.ts";
-import { checkSwaggerDoc } from "@/test/__utils__/swaggerDoc.util.ts";
+} from "@lasl/test-utils-fastify/setup-utils";
+import { checkSwaggerDoc } from "@lasl/test-utils-fastify/swagger-doc-utils";
+import type { FastifyInstance } from "fastify";
+import { StatusCodes } from "http-status-codes";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { buildApp } from "@/src/app.ts";
+import { getApiVersionPathPrefix } from "@/src/util/api.path.util.ts";
 
 describe("health routes", () => {
   let app: FastifyInstance;
@@ -15,7 +16,7 @@ describe("health routes", () => {
   const healthEndpointPath = `${apiPathPrefix}/healthcheck`;
 
   beforeAll(async () => {
-    app = await setupFastifyTestEnvironment();
+    app = await setupFastifyTestEnvironment({ buildApp, useMongo: true });
   });
 
   afterAll(async () => {

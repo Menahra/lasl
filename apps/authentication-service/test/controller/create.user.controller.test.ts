@@ -1,3 +1,7 @@
+import {
+  setupFastifyTestEnvironment,
+  teardownFastifyTestEnvironment,
+} from "@lasl/test-utils-fastify/setup-utils";
 import type { FastifyReply } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import mongoose, { Error as MongooseError } from "mongoose";
@@ -10,13 +14,10 @@ import {
   it,
   vi,
 } from "vitest";
+import { buildApp } from "@/src/app.ts";
 import { createUserHandler } from "@/src/controller/create.user.controller.ts";
 import { createUser } from "@/src/service/user.service.ts";
 import { mockUserData, mockUserInputData } from "../__mocks__/user.mock.ts";
-import {
-  setupFastifyTestEnvironment,
-  teardownFastifyTestEnvironment,
-} from "../__utils__/setup.utils.ts";
 
 vi.mock("@/src/service/user.service", () => ({
   createUser: vi.fn(),
@@ -43,7 +44,7 @@ describe("User service", () => {
   };
 
   beforeAll(async () => {
-    await setupFastifyTestEnvironment();
+    await setupFastifyTestEnvironment({ buildApp, useMongo: true });
   });
 
   afterAll(async () => {
