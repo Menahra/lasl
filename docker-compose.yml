@@ -14,7 +14,9 @@ services:
       - authentication-service-mongodb
 
   authentication-service-mongodb:
-    image: mongo:latest
+    build:
+      context: ./apps/authentication-service-mongodb
+      dockerfile: Dockerfile
     container_name: authentication_service_mongodb_instance
     ports:
       # Map host port for direct access (e.g., via MongoDB Compass)
