@@ -51,8 +51,9 @@ jobs:
 
       - name: Show docker status
         run: |
-          docker compose logs -f authentication-service
+          docker compose logs 
           docker ps -a
+          docker compose logs -f authentication-service-mongodb
 
       - name: Verify API Gateway started
         run: |
