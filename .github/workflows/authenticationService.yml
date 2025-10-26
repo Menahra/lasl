@@ -85,7 +85,7 @@ jobs:
           node_version: ${{ env.NODE_VERSION }}
 
       - name: "🔍 Lint code"
-        run: pnpm run check:ci
+        run: pnpm run check:ci -- --verbose
 
   test:
     name: Code reliability
