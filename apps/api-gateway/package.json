@@ -25,11 +25,9 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@biomejs/biome": "^2.1.2",
     "@lasl/test-utils-fastify": "workspace:*",
     "@types/node": "^24.9.1",
-    "tsup": "^8.5.0",
-    "typescript": "^5.8.3"
+    "tsup": "^8.5.0"
   },
   "dependencies": {
     "@fastify/http-proxy": "^11.3.0",

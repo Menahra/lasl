@@ -30,7 +30,6 @@
   "license": "ISC",
   "packageManager": "pnpm@10.13.1",
   "devDependencies": {
-    "@biomejs/biome": "^2.1.2",
     "@types/json-schema": "^7.0.15",
     "fastify": "^5.4.0",
     "http-status-codes": "^2.3.0",
@@ -38,7 +37,6 @@
     "mongodb-memory-server": "^10.1.4",
     "mongoose": "^8.18.0",
     "tsup": "^8.5.0",
-    "typescript": "^5.8.3",
     "vitest": "^4.0.3"
   },
   "peerDependencies": {

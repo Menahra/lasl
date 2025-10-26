@@ -7,6 +7,8 @@ on:
       - "apps/authentication-service/**"
       - "packages/**"
       - "pnpm-lock.yaml"
+      - "biome.json"
+      - "package.json"
       - ".github/workflows/authenticationService.yml"
       - ".github/actions/setup-monorepo/**"
   pull_request:
@@ -15,6 +17,8 @@ on:
       - "apps/authentication-service/**"
       - "packages/**"
       - "pnpm-lock.yaml"
+      - "biome.json"
+      - "package.json"
       - ".github/workflows/authenticationService.yml"
       - ".github/actions/setup-monorepo/**"
 

@@ -1,5 +1,3 @@
 {
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "biome.lspBin": "./frontend/node_modules/@biomejs/cli-darwin-arm64/biome",
-  "biome.searchInPath": true
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
