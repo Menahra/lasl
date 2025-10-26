@@ -37,6 +37,14 @@ jobs:
           echo "pnpm_lock_hash=$(sha256sum pnpm-lock.yaml | awk '{print $1}')" >> "$GITHUB_OUTPUT"
         working-directory: .
 
+      - name: 💾 Cache pnpm store
+        uses: actions/cache@v4
+        with:
+          path: ~/.pnpm-store
+          key: pnpm-store-${{ runner.os }}-${{ steps.hash-lockfile.outputs.pnpm_lock_hash }}
+          restore-keys: |
+            pnpm-store-${{ runner.os }}-
+
       - name: "🔧 Install Monorepo Dependencies"
         run: pnpm install --frozen-lockfile
         working-directory: .
@@ -44,11 +52,3 @@ jobs:
       - name: "🏗️ Build all local packages"
         run: pnpm -r run build
         working-directory: .
-
-      - name: "📦 Upload node_modules as artifact"
-        id: upload-node-modules # Add an ID to this step to reference its outputs
-        uses: actions/upload-artifact@v4
-        with:
-          name: node-modules-${{ runner.os }}-${{ steps.hash-lockfile.outputs.pnpm_lock_hash }}
-          path: node_modules
-          retention-days: 5
