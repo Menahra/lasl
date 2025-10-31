@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/security/noSecrets: just mock data */
 import { vi } from "vitest";
 import { ENVIRONMENT } from "@/src/config/environment.ts";
 

@@ -26,6 +26,7 @@ describe("html template loader util", () => {
     const replacements = {
       userName: "John Doe Test1234590",
       currentYear: new Date().getFullYear().toString(),
+      // biome-ignore lint/security/noSecrets: path and no secret
       verifyUrl: "https://blab.com/api/v1/users/id/SomeVerificationCode",
     };
 

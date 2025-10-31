@@ -1,4 +1,5 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
+import { StatusCodes } from "http-status-codes";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { forgotPasswordHandler } from "@/src/controller/forgot.password.controller.ts";
 import { findUserByEmail } from "@/src/service/user.service.ts";
@@ -39,6 +40,8 @@ const mockReq = (
   } as unknown as Parameters<typeof forgotPasswordHandler>[0];
 };
 
+// biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok in test
+// biome-ignore lint/security/noSecrets: not a secret
 describe("forgotPasswordHandler", () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -57,7 +60,7 @@ describe("forgotPasswordHandler", () => {
       "Password reset requested for unknown email",
     );
 
-    expect(reply.status).toHaveBeenCalledWith(200);
+    expect(reply.status).toHaveBeenCalledWith(StatusCodes.OK);
     expect(reply.send).toHaveBeenCalledWith({
       message:
         "If a user with that email is registered, you will receive a password reset email",
@@ -87,7 +90,7 @@ describe("forgotPasswordHandler", () => {
     );
 
     expect(req.log.debug).toHaveBeenCalled();
-    expect(reply.status).toHaveBeenCalledWith(200);
+    expect(reply.status).toHaveBeenCalledWith(StatusCodes.OK);
   });
 
   it("should send reset email if user is verified", async () => {
@@ -114,7 +117,7 @@ describe("forgotPasswordHandler", () => {
       }),
     );
 
-    expect(reply.status).toHaveBeenCalledWith(200);
+    expect(reply.status).toHaveBeenCalledWith(StatusCodes.OK);
   });
 
   it("should handle and log unexpected errors", async () => {
@@ -130,6 +133,6 @@ describe("forgotPasswordHandler", () => {
       "An error occured during password reset",
     );
 
-    expect(reply.status).toHaveBeenCalledWith(200);
+    expect(reply.status).toHaveBeenCalledWith(StatusCodes.OK);
   });
 });

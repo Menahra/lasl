@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/complexity/noExcessiveLinesPerFunction: acceptable in tests */
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -32,6 +33,7 @@ describe("InputField", () => {
 
     expect(screen.getByPlaceholderText(testPlaceHolder)).toBeVisible();
 
+    // biome-ignore lint/security/noSecrets: this is not a secret
     const anotherPlaceholder = "anotherPlawjefjsdjfholder";
     rerender(
       <InputField

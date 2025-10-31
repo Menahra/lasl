@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { navigateAndWaitForPageLoad } from "./utils/pageLoad.js";
+import { navigateAndWaitForPageLoad } from "./utils/pageLoad.ts";
 
 test("has title", async ({ page }) => {
   await navigateAndWaitForPageLoad(page);
@@ -32,6 +32,7 @@ test("ko-fi link", async ({ context, page }) => {
   await expect(koFiPage).toHaveTitle(/Zioui/);
 });
 
+// biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok here
 test.describe("light/ dark mode", () => {
   const lightBackgroundColor = "rgb(240, 240, 240)";
   const darkBackgroundColor = "rgb(15, 15, 15)";

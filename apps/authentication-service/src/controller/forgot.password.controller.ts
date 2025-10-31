@@ -6,6 +6,7 @@ import { findUserByEmail } from "../service/user.service.ts";
 import { getApiVersionPathPrefix } from "../util/api.path.util.ts";
 import { loadHtmlTemplate } from "../util/html.template.loader.util.ts";
 
+// biome-ignore lint/complexity/noExcessiveLinesPerFunction: acceptable here
 export const forgotPasswordHandler = async (
   // biome-ignore lint/style/useNamingConvention: property name comes from fastify
   req: FastifyRequest<{ Body: ForgotPasswordInput["body"] }>,

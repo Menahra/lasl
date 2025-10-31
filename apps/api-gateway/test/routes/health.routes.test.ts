@@ -26,6 +26,7 @@ describe("health routes", () => {
       url: healthEndpointPath,
     });
 
+    // biome-ignore lint/style/noMagicNumbers: okay in test
     expect(response.statusCode).toBe(200);
     expect(response.json()).toEqual(
       expect.objectContaining({

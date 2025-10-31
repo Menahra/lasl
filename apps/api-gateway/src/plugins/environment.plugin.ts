@@ -4,13 +4,14 @@ import {
   getEnvironmentConfig,
 } from "@/src/config/environment.config.ts";
 
-export const fastifyEnvironmentPlugin = fastifyPlugin((fastifyInstance) => {
-  fastifyInstance.decorate("config", getEnvironmentConfig());
-  fastifyInstance.log.info("Environment config attached to Fastify instance.");
-});
-
 declare module "fastify" {
+  // biome-ignore lint/style/useConsistentTypeDefinitions: needed for augmentation
   interface FastifyInstance {
     config: EnvironmentSchema;
   }
 }
+
+export const fastifyEnvironmentPlugin = fastifyPlugin((fastifyInstance) => {
+  fastifyInstance.decorate("config", getEnvironmentConfig());
+  fastifyInstance.log.info("Environment config attached to Fastify instance.");
+});

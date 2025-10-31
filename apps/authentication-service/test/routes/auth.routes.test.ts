@@ -1,3 +1,5 @@
+/** biome-ignore-all lint/security/noSecrets: there are no secrets here in test */
+/** biome-ignore-all lint/complexity/noExcessiveLinesPerFunction: ok in test */
 import {
   setupFastifyTestEnvironment,
   teardownFastifyTestEnvironment,

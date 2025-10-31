@@ -1,4 +1,5 @@
 import type { FastifyReply } from "fastify";
+import { StatusCodes } from "http-status-codes";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { resetPasswordHandler } from "@/src/controller/reset.password.controller.ts";
 import { findUserById } from "@/src/service/user.service.ts";
@@ -17,6 +18,7 @@ const mockReply = (): FastifyReply => {
   return reply as unknown as FastifyReply;
 };
 
+// biome-ignore lint/security/noSecrets: mock data
 const newPassword = "NewPassword123";
 const mockReq = (overrides = {}) =>
   ({
@@ -35,6 +37,8 @@ const mockReq = (overrides = {}) =>
     ...overrides,
   }) as unknown as Parameters<typeof resetPasswordHandler>[0];
 
+// biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok in test
+// biome-ignore lint/security/noSecrets: not a secret
 describe("resetPasswordHandler", () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -48,7 +52,7 @@ describe("resetPasswordHandler", () => {
 
     await resetPasswordHandler(req, reply);
 
-    expect(reply.status).toHaveBeenCalledWith(404);
+    expect(reply.status).toHaveBeenCalledWith(StatusCodes.NOT_FOUND);
     expect(reply.send).toHaveBeenCalledWith({
       message: "Could not reset password for user",
     });
@@ -64,7 +68,7 @@ describe("resetPasswordHandler", () => {
 
     await resetPasswordHandler(req, reply);
 
-    expect(reply.status).toHaveBeenCalledWith(400);
+    expect(reply.status).toHaveBeenCalledWith(StatusCodes.BAD_REQUEST);
     expect(reply.send).toHaveBeenCalledWith({
       message: "Invalid password reset code",
     });
@@ -92,7 +96,7 @@ describe("resetPasswordHandler", () => {
       { userId: "user-id" },
       "User with id: user-id changed password successfully",
     );
-    expect(reply.status).toHaveBeenCalledWith(200);
+    expect(reply.status).toHaveBeenCalledWith(StatusCodes.OK);
     expect(reply.send).toHaveBeenCalledWith({
       message: "Password successfully changed",
     });

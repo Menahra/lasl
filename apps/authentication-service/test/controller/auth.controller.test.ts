@@ -1,3 +1,5 @@
+/** biome-ignore-all lint/security/noSecrets: there are no secrets here in test */
+/** biome-ignore-all lint/style/noMagicNumbers: ok in test */
 import { StatusCodes } from "http-status-codes";
 import { describe, expect, it, vi } from "vitest";
 import {
@@ -21,6 +23,7 @@ const mockReply = () => {
   return reply;
 };
 
+// biome-ignore lint/complexity/noExcessiveLinesPerFunction: acceptable in test
 describe("createSessionHandler", () => {
   const mockUser = {
     _id: "user123",
@@ -143,6 +146,7 @@ describe("createSessionHandler", () => {
   });
 });
 
+// biome-ignore lint/complexity/noExcessiveLinesPerFunction: acceptable in test
 describe("refreshAccessTokenHandler", () => {
   const mockReply = () => ({
     status: vi.fn().mockReturnThis(),

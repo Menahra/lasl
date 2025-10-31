@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/security/noSecrets: no secrets here and also ok in test */
 import {
   setupFastifyTestEnvironment,
   teardownFastifyTestEnvironment,
@@ -13,6 +14,7 @@ import * as userService from "@/src/service/user.service.ts";
 import { getApiVersionPathPrefix } from "@/src/util/api.path.util.ts";
 import { mockUserInputData } from "../__mocks__/user.mock.ts";
 
+// biome-ignore lint/complexity/noExcessiveLinesPerFunction: test ok
 describe("user routes", () => {
   let app: FastifyInstance;
   const apiPathPrefix = getApiVersionPathPrefix(1);
@@ -44,7 +46,7 @@ describe("user routes", () => {
         payload: mockUserInputData,
       });
 
-      expect(response.statusCode).toBe(200);
+      expect(response.statusCode).toBe(StatusCodes.OK);
       expect(response.json()).toEqual({
         message: "User successfully created",
       });

@@ -29,7 +29,7 @@ describe("health routes", () => {
       url: healthEndpointPath,
     });
 
-    expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(StatusCodes.OK);
     expect(response.json()).toEqual(
       expect.objectContaining({
         status: "ok",

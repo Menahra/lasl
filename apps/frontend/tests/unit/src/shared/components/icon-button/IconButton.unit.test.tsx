@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/complexity/noExcessiveLinesPerFunction: acceptable in tests */
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";

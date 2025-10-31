@@ -71,7 +71,7 @@
         "noInvalidPositionAtImportRule": "error",
         "noInvalidUseBeforeDeclaration": "error",
         "noMissingVarFunction": "error",
-        "noNodejsModules": "error",
+        "noNodejsModules": "off",
         "noNonoctalDecimalEscape": "error",
         "noPrecisionLoss": "error",
         "noPrivateImports": "error",

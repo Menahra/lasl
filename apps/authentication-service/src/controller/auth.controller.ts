@@ -1,3 +1,4 @@
+import process from "node:process";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import {
@@ -7,8 +8,11 @@ import {
 import { signAccessToken, signRefreshToken } from "../service/auth.service.ts";
 import { findUserByEmail, findUserById } from "../service/user.service.ts";
 
+// biome-ignore lint/security/noSecrets: not a secret
 const REFRESH_TOKEN_NAME = "refreshToken";
 const REFRESH_TOKEN_PATH = "/auth/refresh";
+// biome-ignore lint/style/noMagicNumbers: ok in formula
+const REFRESH_TOKEN_VALIDITY = 60 * 60 * 24 * 7;
 
 export const createSessionHandler = async (
   // biome-ignore lint/style/useNamingConvention: naming from fastify
@@ -48,7 +52,7 @@ export const createSessionHandler = async (
         secure: process.env["NODE_ENV"] === "production",
         sameSite: "strict",
         path: REFRESH_TOKEN_PATH,
-        maxAge: 60 * 60 * 24 * 7,
+        maxAge: REFRESH_TOKEN_VALIDITY,
       })
       .status(StatusCodes.OK)
       .send({ accessToken, refreshToken });

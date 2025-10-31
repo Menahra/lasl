@@ -6,6 +6,8 @@ import { createUser } from "../service/user.service.ts";
 import { getApiVersionPathPrefix } from "../util/api.path.util.ts";
 import { loadHtmlTemplate } from "../util/html.template.loader.util.ts";
 
+const typegooseDuplicateErrorCode = 11_000;
+
 export const createUserHandler = async (
   // biome-ignore lint/style/useNamingConvention: property name comes from fastify
   req: FastifyRequest<{ Body: CreateUserInput["body"] }>,
@@ -48,7 +50,11 @@ export const createUserHandler = async (
       });
     }
 
-    if (error instanceof Error && "code" in error && error.code === 11000) {
+    if (
+      error instanceof Error &&
+      "code" in error &&
+      error.code === typegooseDuplicateErrorCode
+    ) {
       return reply.status(StatusCodes.CONFLICT).send({
         message: "Account already exists",
       });

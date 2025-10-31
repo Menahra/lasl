@@ -41,6 +41,7 @@ describe("common user schema > password", () => {
 describe("common user schema > password with confirmation", () => {
   it.each([
     ["matching valid passwords", "ValidPass1", "ValidPass1", true],
+    // biome-ignore lint/security/noSecrets: not a secret
     ["mismatched passwords", "ValidPass1", "InvalidPass1", false],
     ["missing confirmation", "ValidPass1", "", false],
     ["both empty", "", "", false],

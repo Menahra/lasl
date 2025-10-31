@@ -1,14 +1,15 @@
+import process from "node:process";
 import type { FastifyInstance } from "fastify";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
 
-export interface TestEnvironmentOptions {
-  buildApp: () => Promise<FastifyInstance>;
-  useMongo?: boolean;
-}
-
 let app: FastifyInstance;
 let mongoServer: MongoMemoryServer | undefined;
+
+export type TestEnvironmentOptions = {
+  buildApp: () => Promise<FastifyInstance>;
+  useMongo?: boolean;
+};
 
 export const setupFastifyTestEnvironment = async (
   options: TestEnvironmentOptions,

@@ -17,6 +17,7 @@ import { ZodFormattedErrorSchemaId } from "../schema/zodFormattedError.schema.ts
 
 const UserSwaggerTag = "User";
 
+// biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok in controller with schema definition
 export const userRoutes = (fastifyInstance: FastifyInstance) => {
   fastifyInstance.post(
     "/users",
@@ -72,6 +73,7 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
   );
 
   fastifyInstance.get(
+    // biome-ignore lint/security/noSecrets: this is a route, not a secret
     "/users/verify/:id/:verificationCode",
     {
       schema: {
@@ -140,6 +142,7 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
   );
 
   fastifyInstance.post(
+    // biome-ignore lint/security/noSecrets: this is a route, not a secret
     "/users/resetpassword/:id/:passwordResetCode",
     {
       schema: {
@@ -188,6 +191,7 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
         summary: "Get the current authenticated user",
         tags: [UserSwaggerTag],
         description:
+          // biome-ignore lint/security/noSecrets: this is a description, not a secret
           "Send the authorization header in format 'Bearer {accessToken}' and receive the user information",
         headers: {
           type: "object",

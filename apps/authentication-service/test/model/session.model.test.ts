@@ -10,6 +10,7 @@ import { SessionModel } from "@/src/model/session.model.ts";
 import { UserModel } from "@/src/model/user.model.ts";
 import { mockUserData } from "../__mocks__/user.mock.ts";
 
+// biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok here
 describe("Session Model", () => {
   beforeAll(async () => {
     await setupFastifyTestEnvironment({ buildApp, useMongo: true });

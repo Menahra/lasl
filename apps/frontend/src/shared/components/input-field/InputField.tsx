@@ -1,7 +1,7 @@
 import type { ChangeEvent, ReactNode } from "react";
 import { v4 as uuidV4 } from "uuid";
 import "./styles.scss";
-import { SCREENREADER_CLASSNAME } from "../../constants.js";
+import { SCREENREADER_CLASSNAME } from "../../constants.ts";
 
 type InputFieldProps = {
   /**
@@ -52,7 +52,10 @@ export const InputField = ({
       <div className="InputFieldInputIconWrapper">
         <input
           id={inputId}
-          className={`InputFieldInput ${icon ? "InputFieldInputWithIcon" : ""}`}
+          className={`InputFieldInput ${
+            // biome-ignore lint/security/noSecrets: no secret
+            icon ? "InputFieldInputWithIcon" : ""
+          }`}
           onChange={handleInputFieldValueChange}
           placeholder={placeholder}
           {...(value ? { value } : {})}

@@ -3,8 +3,10 @@ import fastifySwaggerUi, {
   type FastifySwaggerUiOptions,
 } from "@fastify/swagger-ui";
 import { fastifyPlugin } from "fastify-plugin";
+import { StatusCodes } from "http-status-codes";
 import { ENVIRONMENT } from "@/src/config/environment.config.ts";
 
+// biome-ignore lint/complexity/noExcessiveLinesPerFunction: mostly configuration so ok here
 export const fastifySwaggerPlugin = fastifyPlugin(async (fastifyInstance) => {
   const {
     [ENVIRONMENT.applicationHostPort]: port,
@@ -29,7 +31,9 @@ export const fastifySwaggerPlugin = fastifyPlugin(async (fastifyInstance) => {
         return reply.send(json);
       } catch (err) {
         req.log.error(err);
-        return reply.code(500).send({ error: "Unable to load service docs" });
+        return reply
+          .code(StatusCodes.INTERNAL_SERVER_ERROR)
+          .send({ error: "Unable to load service docs" });
       }
     },
   );
@@ -60,6 +64,7 @@ export const fastifySwaggerPlugin = fastifyPlugin(async (fastifyInstance) => {
         {
           url: microServiceDocumentationProxyConfig.authenticationService
             .proxyUrl,
+          // biome-ignore lint/security/noSecrets: no secret
           name: "Authentication Service",
         },
       ],

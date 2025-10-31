@@ -1,3 +1,4 @@
+import process from "node:process";
 import { buildApiGatewayApp } from "@/src/app.ts";
 import { ENVIRONMENT } from "@/src/config/environment.config.ts";
 

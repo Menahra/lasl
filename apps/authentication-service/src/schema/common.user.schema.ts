@@ -1,5 +1,9 @@
 import { z } from "zod";
 
+type UserPasswordWithConformationSchema = z.infer<
+  typeof userPasswordWithConfirmationSchema
+>;
+
 export const userEmailSchema = z.email("Please enter a valid email address");
 
 export const PASSWORD_MIN_LENGTH = 8;
@@ -24,10 +28,6 @@ export const userPasswordWithConfirmationSchema = z.object({
   passwordConfirmation: userPasswordConfirmationSchema,
 });
 
-type UserPasswordWithConformationSchema = z.infer<
-  typeof userPasswordWithConfirmationSchema
->;
-
 export const passwordMatchRefinement = <
   T extends UserPasswordWithConformationSchema,
 >(
@@ -36,6 +36,7 @@ export const passwordMatchRefinement = <
 ) => {
   if (data.password !== data.passwordConfirmation) {
     ctx.addIssue({
+      // biome-ignore lint/security/noSecrets: property name
       path: ["passwordConfirmation"],
       code: "custom",
       message: "Passwords do not match",

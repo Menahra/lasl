@@ -8,6 +8,7 @@ import {
 import { deserializeSession } from "../middleware/authentication.hook.ts";
 import { createSessionJsonSchema } from "../schema/session.schema.ts";
 
+// biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok in controller with schema definition
 export const authRoutes = (fastifyInstance: FastifyInstance) => {
   fastifyInstance.post(
     "/sessions",
@@ -27,9 +28,11 @@ export const authRoutes = (fastifyInstance: FastifyInstance) => {
             headers: {
               "Set-Cookie": {
                 description:
+                  // biome-ignore lint/security/noSecrets: not a secret
                   "HTTP-only cookie named `refreshToken` used for session renewal.",
                 type: "string",
                 example:
+                  // biome-ignore lint/security/noSecrets: not a secret
                   "refreshToken=abc123; HttpOnly; Path=/auth/refresh; Max-Age=604800",
               },
             },

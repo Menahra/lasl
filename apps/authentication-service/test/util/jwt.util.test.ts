@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/security/noSecrets: there are no secrets here in test */
 import type { FastifyBaseLogger } from "fastify";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 // biome-ignore lint/performance/noNamespaceImport: okay in test
@@ -41,6 +42,7 @@ const validTestPrivateKeyBase64 =
 const validTestPublicKeyBase64 =
   "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUF6b1ZqUDlVc3FxZTdQL0Z5TnNkWgpPa0QrRDhiYzRPMFFsU1M5ZS84eHF0SEZicTJEbXNCOS9HdlpNTDBuTmVCOUZ4N0VwVjlzNmtxNWw0RzRycFpTCmZDclRYMVRFQlFpdzZoUVcrZlhuMzJnUnlWbEtIY3hnUDhQZ3d3emdFNXZjcVBUcjl0amIrQmNDT1NsK2pjRUkKK2x5eGJTWDhTUVFnZS82b04vaW9XN1ZCSFgxOUZSbUVubktkYjhrVjRIUDFrSXl1M1N3WS9kUDhiMHJEeUUyeQo5M0ZTamgwaGlBWFYvdUQ5K3psdWt0bzhvbFYvYldDV1hyOWJEWC9nK0p4S3VacERGbEduQlRWSzZDL0ZWV0VLCnJEb2RRVWtXNUVuenowZXpPL3g3TW56VnhDblNndm1MOERKTFl5bFVFSWNyZVFsSmgwdjBwSnZNWWNzUTVGSm0KUHdJREFRQUIKLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg==";
 
+// biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok here
 describe("JWT Utility", () => {
   const payload = { userId: "123" };
 

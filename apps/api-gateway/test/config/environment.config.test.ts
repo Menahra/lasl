@@ -1,3 +1,5 @@
+/** biome-ignore-all lint/correctness/noProcessGlobal: ok in test */
+/** biome-ignore-all lint/style/noMagicNumbers: acceptable in tests */
 import { describe, expect, it } from "vitest";
 import {
   ENVIRONMENT,

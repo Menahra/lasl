@@ -6,6 +6,7 @@ import type { FastifyInstance } from "fastify";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { buildApiGatewayApp } from "@/src/app.ts";
 
+// biome-ignore lint/security/noSecrets: test description
 describe("fastifyEnvironmentPlugin", () => {
   let app: FastifyInstance;
 
@@ -19,6 +20,7 @@ describe("fastifyEnvironmentPlugin", () => {
 
   it("should attach config to fastify instance", () => {
     expect(app.config).toBeDefined();
+    // biome-ignore lint/style/noMagicNumbers: ok in test
     expect(app.config.PORT).toBe(3000);
     expect(app.config.AUTHENTICATION_SERVICE_URL).toBe("http://localhost:3001");
   });

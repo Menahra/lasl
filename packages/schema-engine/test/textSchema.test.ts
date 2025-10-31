@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/complexity/noExcessiveLinesPerFunction: okay in test files */
 import {
   afterEach,
   beforeEach,
@@ -7,8 +8,8 @@ import {
   type MockInstance,
   vi,
 } from "vitest";
-import { validateSchema } from "../src/validator.js";
-import { styleSchemaMock } from "./__mocks__/style.schema.mock.js";
+import { validateSchema } from "../src/validator.ts";
+import { styleSchemaMock } from "./__mocks__/style.schema.mock.ts";
 
 describe("text json schema", () => {
   let consoleErrorSpy: MockInstance;
@@ -59,6 +60,7 @@ describe("text json schema", () => {
     {
       content: [
         {
+          // biome-ignore lint/style/noMagicNumbers: okay in test
           content: [12, false, "abc"],
         },
       ],

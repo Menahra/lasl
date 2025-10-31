@@ -1,3 +1,5 @@
+/** biome-ignore-all lint/complexity/noExcessiveLinesPerFunction: okay in test files */
+/** biome-ignore-all lint/style/noMagicNumbers: okay in test files */
 import {
   afterEach,
   beforeEach,
@@ -7,16 +9,16 @@ import {
   type MockInstance,
   vi,
 } from "vitest";
-import { validateSchema } from "../src/validator.js";
+import { validateSchema } from "../src/validator.ts";
 import {
   marginPaddingShorthandValueRegExp,
   spacingValueRegExp,
   styleSchemaMock,
-} from "./__mocks__/style.schema.mock.js";
+} from "./__mocks__/style.schema.mock.ts";
 import {
   generateRandomStringNotMatchingPattern,
   getRandomInteger,
-} from "./util.js";
+} from "./util.ts";
 
 describe("style json schema", () => {
   let consoleErrorSpy: MockInstance;
@@ -182,6 +184,7 @@ describe("style json schema", () => {
       const rgbaRegExp =
         /^rgba\(\d{1,3},\s?\d{1,3},\s?\d{1,3},\s?(0|1|0?\.\d+)\)$/;
       // biome-ignore-end lint/performance/useTopLevelRegex: okay in tests
+      // biome-ignore lint/suspicious/useIterableCallbackReturn: not in case of test
       Array.from({ length: 20 }, () => {
         const randomLength = getRandomInteger(1, 20);
         const randomString = generateRandomStringNotMatchingPattern(
@@ -304,6 +307,7 @@ describe("style json schema", () => {
         // biome-ignore lint/performance/useTopLevelRegex: okay in tests
         /^small|medium|large|x-large|xx-large|larger|smaller$/;
 
+      // biome-ignore lint/suspicious/useIterableCallbackReturn: not in case of test
       Array.from({ length: 20 }, () => {
         const randomLength = getRandomInteger(1, 20);
         const randomString = generateRandomStringNotMatchingPattern(
@@ -540,6 +544,7 @@ describe("style json schema", () => {
 
       expect(consoleErrorSpy).toHaveBeenCalledWith([
         expect.objectContaining({
+          // biome-ignore lint/security/noSecrets: this is not a secret
           keyword: "additionalProperties",
           message: "must NOT have additional properties",
         }),

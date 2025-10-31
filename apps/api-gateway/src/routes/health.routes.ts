@@ -1,3 +1,4 @@
+import process from "node:process";
 import type { FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
 

@@ -28,6 +28,7 @@ export const signAccessToken = (
 
     return signJsonWebToken(
       payload,
+      // biome-ignore lint/security/noSecrets: key name is no secret
       "jwtAccessPrivateKey",
       { expiresIn: "15m" },
       logger,
@@ -50,6 +51,7 @@ export const signRefreshToken = async (
 
     return signJsonWebToken(
       { session: session._id },
+      // biome-ignore lint/security/noSecrets: key name is no secret
       "jwtRefreshPrivateKey",
       {
         expiresIn: "30d",

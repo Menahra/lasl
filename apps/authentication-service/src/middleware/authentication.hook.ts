@@ -4,6 +4,12 @@ import type { UserJsonWebTokenPayload } from "../model/user.model.ts";
 import { findSessionById } from "../service/auth.service.ts";
 import { verifyJsonWebToken } from "../util/jwt.util.ts";
 
+// biome-ignore-start lint/security/noSecrets: these are no secrets
+const accessKeyName = "jwtAccessPublicKey";
+const refreshKeyName = "jwtRefreshPublicKey";
+const refreshCookieName = "refreshToken";
+// biome-ignore-end lint/security/noSecrets: these are no secrets
+
 // biome-ignore lint/suspicious/useAwait: needed for preHandler functionality in fastify
 export const deserializeUser = async (
   req: FastifyRequest,
@@ -22,7 +28,7 @@ export const deserializeUser = async (
   try {
     const decoded = verifyJsonWebToken<UserJsonWebTokenPayload>(
       accessToken,
-      "jwtAccessPublicKey",
+      accessKeyName,
       req.log,
     );
     req.user = decoded;
@@ -41,8 +47,7 @@ export const deserializeSession = async (
   req: FastifyRequest,
   reply: FastifyReply,
 ) => {
-  // biome-ignore lint/complexity/useLiteralKeys: otherwise ts complains
-  const refreshToken = req.cookies["refreshToken"];
+  const refreshToken = req.cookies[refreshCookieName];
 
   if (!refreshToken) {
     return reply
@@ -52,7 +57,7 @@ export const deserializeSession = async (
   try {
     const decoded = verifyJsonWebToken<{ session: string }>(
       refreshToken,
-      "jwtRefreshPublicKey",
+      refreshKeyName,
       req.log,
     );
 

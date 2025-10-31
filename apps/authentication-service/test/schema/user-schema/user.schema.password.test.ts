@@ -1,7 +1,9 @@
+/** biome-ignore-all lint/security/noSecrets: mock data */
 import { describe, expect, it } from "vitest";
 import { createUserInputSchema } from "@/src/schema/user.schema.ts";
 import { validUserInput } from "./validInput.ts";
 
+// biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok in test
 describe("createUserInputSchema password validation", () => {
   const passwordMustContainUppercaseLetterMessage =
     "Password must contain at least one uppercase letter";

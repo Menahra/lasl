@@ -8,6 +8,7 @@ vi.mock("@/src/shared/hooks/useDarkMode", () => ({
   useDarkMode: useDarkModeMock,
 }));
 
+// biome-ignore lint/security/noSecrets: no secret
 describe("LightDarkModeButton", () => {
   const toDarkModeText = "header.switch_to_darkmode";
   const toLightModeText = "header.switch_to_lightmode";

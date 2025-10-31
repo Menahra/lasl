@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/security/noSecrets: just mock data */
 export const mockUserData = {
   email: "test@example.com",
   firstName: "Test",

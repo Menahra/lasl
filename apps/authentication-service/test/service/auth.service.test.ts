@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/security/noSecrets: there are no secrets here in test */
 import type { DocumentType } from "@typegoose/typegoose";
 import type { FastifyBaseLogger } from "fastify";
 import mongoose from "mongoose";
@@ -36,6 +37,7 @@ const mockLogger: FastifyBaseLogger = {
   child: vi.fn(() => mockLogger),
 };
 
+// biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok here
 describe("Auth Service", () => {
   const mockUserId = new mongoose.Types.ObjectId();
   const mockSession = { _id: "session123" };

@@ -1,3 +1,4 @@
+// biome-ignore lint/security/noSecrets: just a name no secret
 export const ZodFormattedErrorSchemaId = "ZodFormattedError";
 export const ZodFormattedErrorSchema = {
   type: "object",

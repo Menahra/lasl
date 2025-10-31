@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import { createUserInputSchema } from "@/src/schema/user.schema.ts";
 import { validUserInput } from "./validInput.ts";
 
+// biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok in test
+// biome-ignore lint/security/noSecrets: not a secret
 describe("validation of createUserInputSchema", () => {
   it("fails when firstName is missing", () => {
     const { firstName: _firstName, ...schemaWithoutFirstName } =
@@ -44,6 +46,7 @@ describe("validation of createUserInputSchema", () => {
     });
 
     expect(result.success).toBeFalsy();
+    // biome-ignore lint/style/noMagicNumbers: ok here
     expect(result.error?.issues).toHaveLength(6);
     expect(result.error?.issues[0].message).toEqual("Password is required");
   });

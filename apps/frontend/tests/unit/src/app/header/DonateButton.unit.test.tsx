@@ -3,6 +3,7 @@ import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import { DonateButton } from "@/src/app/header/DonateButton.jsx";
 
+// biome-ignore lint/security/noSecrets: no secret
 describe("DonateButton", () => {
   it("renders a link", () => {
     render(<DonateButton />);

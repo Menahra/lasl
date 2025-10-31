@@ -9,5 +9,15 @@
   "devDependencies": {
     "@biomejs/biome": "^2.3.1",
     "typescript": "^5.9.3"
+  },
+  "scripts": {
+    "lint": "pnpm -r lint",
+    "lint:fix": "pnpm -r lint:fix",
+    "format": "pnpm -r format",
+    "format:fix": "pnpm -r format:fix",
+    "check:ci": "pnpm -r check:ci",
+    "check:fix": "pnpm -r check:fix",
+    "types:check": "pnpm -r types:check",
+    "test": "pnpm -r test"
   }
 }

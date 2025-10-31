@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { createUserInputSchema } from "@/src/schema/user.schema.ts";
 import { validUserInput } from "./validInput.ts";
 
+// biome-ignore lint/security/noSecrets: not a secret
 describe("createUserInputSchema password confirmation validation", () => {
   it("fails when password and password confirmation do not match", () => {
     const result = createUserInputSchema.safeParse({
