@@ -1,0 +1,65 @@
+:root {
+  /* Base units */
+  --size-unit: 0.25rem;
+  --space-unit: var(--size-unit);
+
+  --size-0: 0;
+  --size-1: calc(var(--size-unit) * 1); /* 4px */
+  --size-2: calc(var(--size-unit) * 2); /* 8px */
+  --size-3: calc(var(--size-unit) * 3); /* 12px */
+  --size-4: calc(var(--size-unit) * 4); /* 16px */
+  --size-5: calc(var(--size-unit) * 5); /* 20px */
+  --size-6: calc(var(--size-unit) * 6); /* 24px */
+  --size-8: calc(var(--size-unit) * 8); /* 32px */
+  --size-10: calc(var(--size-unit) * 10); /* 40px */
+  --size-12: calc(var(--size-unit) * 12); /* 48px */
+  --size-16: calc(var(--size-unit) * 16); /* 64px */
+  --size-20: calc(var(--size-unit) * 20); /* 80px */
+  --size-24: calc(var(--size-unit) * 24); /* 96px */
+
+  /* Spacing scale */
+  --space-0: 0;
+  --space-1: calc(var(--space-unit) * 1); /* 4px */
+  --space-2: calc(var(--space-unit) * 2); /* 8px */
+  --space-3: calc(var(--space-unit) * 3); /* 12px */
+  --space-4: calc(var(--space-unit) * 4); /* 16px */
+  --space-5: calc(var(--space-unit) * 5); /* 20px */
+  --space-6: calc(var(--space-unit) * 6); /* 24px */
+  --space-8: calc(var(--space-unit) * 8); /* 32px */
+  --space-10: calc(var(--space-unit) * 10); /* 40px */
+  --space-12: calc(var(--space-unit) * 12); /* 48px */
+  --space-16: calc(var(--space-unit) * 16); /* 64px */
+  --space-20: calc(var(--space-unit) * 20); /* 80px */
+  --space-24: calc(var(--space-unit) * 24); /* 96px */
+
+  /* Semantic sizing aliases */
+  --size-xs: var(--size-1);
+  --size-sm: var(--size-2);
+  --size-md: var(--size-4);
+  --size-lg: var(--size-6);
+  --size-xl: var(--size-8);
+  --size-2xl: var(--size-12);
+  --size-3xl: var(--size-16);
+
+  /* Semantic spacing aliases */
+  --space-xs: var(--space-1);
+  --space-sm: var(--space-2);
+  --space-md: var(--space-4);
+  --space-lg: var(--space-6);
+  --space-xl: var(--space-8);
+  --space-2xl: var(--space-12);
+  --space-3xl: var(--space-16);
+
+  /* Container widths */
+  --container-xs: 20rem; /* 320px */
+  --container-sm: 24rem; /* 384px */
+  --container-md: 28rem; /* 448px */
+  --container-lg: 32rem; /* 512px */
+  --container-xl: 36rem; /* 576px */
+  --container-2xl: 42rem; /* 672px */
+  --container-3xl: 48rem; /* 768px */
+  --container-4xl: 56rem; /* 896px */
+  --container-5xl: 64rem; /* 1024px */
+  --container-6xl: 72rem; /* 1152px */
+  --container-7xl: 80rem; /* 1280px */
+}

@@ -1,0 +1,29 @@
+:root {
+  /* Z-index scale */
+  --z-index-base: 0;
+  --z-index-dropdown: 1000;
+  --z-index-sticky: 1100;
+  --z-index-fixed: 1200;
+  --z-index-modal-backdrop: 1300;
+  --z-index-modal: 1400;
+  --z-index-popover: 1500;
+  --z-index-tooltip: 1600;
+  --z-index-notification: 1700;
+
+  /* Breakpoints (for reference in JS) */
+  --breakpoint-xs: 320px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+
+  /* Max widths for content */
+  --max-width-prose: 65ch;
+  --max-width-reading: 75ch;
+  --max-width-screen-sm: 640px;
+  --max-width-screen-md: 768px;
+  --max-width-screen-lg: 1024px;
+  --max-width-screen-xl: 1280px;
+  --max-width-screen-2xl: 1536px;
+}
