@@ -1,11 +1,11 @@
 /* Design Tokens - Import all token files */
-@import "./colors.css";
-@import "./sizing-spacing.css";
-@import "./typography.css";
-@import "./border.css";
-@import "./effects.css";
-@import "./animation.css";
-@import "./layout.css";
+@import "./tokens/colors.css";
+@import "./tokens/sizing-spacing.css";
+@import "./tokens/typography.css";
+@import "./tokens/border.css";
+@import "./tokens/effects.css";
+@import "./tokens/animation.css";
+@import "./tokens/layout.css";
 
 /* Base styles */
 *,

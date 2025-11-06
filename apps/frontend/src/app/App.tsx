@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import "../styles/_global.scss";
+import "../styles/index.css";
 import { Header } from "./header/Header.jsx";
 
 export const App = () => {
