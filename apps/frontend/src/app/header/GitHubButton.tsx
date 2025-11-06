@@ -1,6 +1,6 @@
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { useTranslation } from "react-i18next";
-import { IconLink } from "@/src/shared/components/icon-link/IconLink.jsx";
+import { IconLink } from "@/src/shared/components/icon-link/IconLink.tsx";
 
 export const GitHubButton = () => {
   const { t } = useTranslation();

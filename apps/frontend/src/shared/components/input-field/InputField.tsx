@@ -1,6 +1,5 @@
 import type { ChangeEvent, ReactNode } from "react";
 import { v4 as uuidV4 } from "uuid";
-import "./styles.scss";
 import { SCREENREADER_CLASSNAME } from "../../constants.ts";
 
 type InputFieldProps = {

@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 import KoFiLogo from "@/assets/icons/ko-fi.svg?react";
-import { IconLink } from "@/src/shared/components/icon-link/IconLink.jsx";
+import { IconLink } from "@/src/shared/components/icon-link/IconLink.tsx";
 
 export const DonateButton = () => {
   const { t } = useTranslation();
