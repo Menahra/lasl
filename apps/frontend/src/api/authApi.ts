@@ -1,28 +1,24 @@
 import axios from "axios";
 import { API_URL } from "@/src/api/apiClient.ts";
-import { tokenManager } from "@/src/utils/tokenManager.ts";
+import { accessTokenManager } from "@/src/utils/accessTokenManager.ts";
 
 type PostRefreshTokenResponse = {
   accessToken: string;
-  refreshToken: string;
 };
 const postRefreshToken = async () => {
   try {
     const response = await axios.post<PostRefreshTokenResponse>(
       `${API_URL}/auth/refresh`,
+      {},
+      { withCredentials: true },
     );
-    const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
-      response.data;
+    const { accessToken: newAccessToken } = response.data;
 
-    tokenManager.setAccessToken(newAccessToken);
-    tokenManager.setRefreshToken(newRefreshToken);
-    return {
-      accessToken: newAccessToken,
-      refreshToken: newRefreshToken,
-    };
+    accessTokenManager.setAccessToken(newAccessToken);
+    return newAccessToken;
   } catch (error) {
     // need to set up proper logging for frontend
-    tokenManager.clearTokens();
+    accessTokenManager.clearAccessToken();
     throw error;
   }
 };

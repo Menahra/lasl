@@ -3,7 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import { postRefreshToken } from "@/src/api/authApi.ts";
 import { ROUTE_LOGIN } from "@/src/routes/routePaths.ts";
 import { AUTHENTICATION_TYPE } from "@/src/shared/constants.ts";
-import { tokenManager } from "@/src/utils/tokenManager.ts";
+import { accessTokenManager } from "@/src/utils/accessTokenManager.ts";
 
 // biome-ignore lint/complexity/useLiteralKeys: needed for typescript
 const API_URL = import.meta.env["VITE_API_URL"];
@@ -14,11 +14,12 @@ const apiClient = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true,
 });
 
 apiClient.interceptors.request.use(
   (config) => {
-    const accessToken = tokenManager.getAccessToken();
+    const accessToken = accessTokenManager.getAccessToken();
     if (accessToken) {
       config.headers.Authorization = `${AUTHENTICATION_TYPE} ${accessToken}`;
     }
@@ -58,13 +59,6 @@ apiClient.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    const refreshToken = tokenManager.getRefreshToken();
-    if (!refreshToken) {
-      tokenManager.clearTokens();
-      window.location.href = ROUTE_LOGIN;
-      return Promise.reject(error);
-    }
-
     if (isRefreshing) {
       return new Promise<string>((resolve, reject) => {
         requestQueue.push({ resolve, reject });
@@ -82,15 +76,15 @@ apiClient.interceptors.response.use(
     isRefreshing = true;
 
     try {
-      const { accessToken } = await postRefreshToken();
+      const newAccessToken = await postRefreshToken();
 
-      apiClient.defaults.headers.common.Authorization = `${AUTHENTICATION_TYPE} ${accessToken}`;
+      apiClient.defaults.headers.common.Authorization = `${AUTHENTICATION_TYPE} ${newAccessToken}`;
 
       if (originalRequest.headers) {
-        originalRequest.headers.Authorization = `${AUTHENTICATION_TYPE} ${accessToken}`;
+        originalRequest.headers.Authorization = `${AUTHENTICATION_TYPE} ${newAccessToken}`;
       }
 
-      resolveRequestQueue(null, accessToken);
+      resolveRequestQueue(null, newAccessToken);
       return apiClient(originalRequest);
     } catch (refreshError: unknown) {
       resolveRequestQueue(refreshError);
