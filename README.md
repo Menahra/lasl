@@ -32,4 +32,4 @@ In order for this service to work locally you have to use doppler.
 
 This service uses a docker container in order to run. Mongodb is being setup in the [docker-compose.yml](./docker-compose.yml). The needed doppler configuration values are entered via the `environment` in docker. Then to run the service please execute
 
-`doppler run -- docker compose up -d --build`
+`docker compose --env-file .env.dev up -d --build`

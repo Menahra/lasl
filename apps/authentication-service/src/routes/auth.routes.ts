@@ -1,5 +1,6 @@
 import type { FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
+import { REFRESH_SESSION_ROUTE } from "@/src/constants/auth.routes.constants.ts";
 import {
   createSessionHandler,
   logoutHandler,
@@ -33,7 +34,7 @@ export const authRoutes = (fastifyInstance: FastifyInstance) => {
                 type: "string",
                 example:
                   // biome-ignore lint/security/noSecrets: not a secret
-                  "refreshToken=abc123; HttpOnly; Path=/auth/refresh; Max-Age=604800",
+                  "refreshToken=abc123; HttpOnly; Path=/api/v1/sessions/refresh; Max-Age=604800",
               },
             },
           },
@@ -62,7 +63,7 @@ export const authRoutes = (fastifyInstance: FastifyInstance) => {
   );
 
   fastifyInstance.post(
-    "/sessions/refresh",
+    REFRESH_SESSION_ROUTE,
     {
       preHandler: deserializeSession,
       schema: {

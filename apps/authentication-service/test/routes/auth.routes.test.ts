@@ -77,7 +77,7 @@ describe("auth routes", () => {
       // biome-ignore lint/performance/useTopLevelRegex: okay in test
       expect(cookie).toMatch(/^refreshToken=refresh\.token\.here/);
       expect(cookie).toContain("HttpOnly");
-      expect(cookie).toContain("Path=/auth/refresh");
+      expect(cookie).toContain("Path=/api/v1/sessions/refresh");
       expect(cookie).toContain("SameSite=Strict");
       // biome-ignore lint/performance/useTopLevelRegex: okay in test
       expect(cookie).toMatch(/Max-Age=\d+/);
@@ -324,7 +324,7 @@ describe("auth routes", () => {
 
       // biome-ignore lint/performance/useTopLevelRegex: acceptable in test
       expect(cookie).toMatch(/^refreshToken=;/); // cleared cookie
-      expect(cookie).toContain("Path=/auth/refresh");
+      expect(cookie).toContain("Path=/api/v1/sessions/refresh");
     });
 
     it("should return 401 if refresh token is missing", async () => {

@@ -66,7 +66,7 @@ describe("createSessionHandler", () => {
       "refresh.token.here",
       expect.objectContaining({
         httpOnly: true,
-        path: "/auth/refresh",
+        path: "/api/v1/sessions/refresh",
         sameSite: "strict",
         maxAge: 60 * 60 * 24 * 7,
       }),
@@ -75,7 +75,6 @@ describe("createSessionHandler", () => {
     expect(reply.status).toHaveBeenCalledWith(200);
     expect(reply.send).toHaveBeenCalledWith({
       accessToken: "access.token.here",
-      refreshToken: "refresh.token.here",
     });
   });
 
@@ -305,7 +304,7 @@ describe("refreshAccessTokenHandler", () => {
       expect(mockSave).toHaveBeenCalled();
 
       expect(clearCookie).toHaveBeenCalledWith("refreshToken", {
-        path: "/auth/refresh",
+        path: "/api/v1/sessions/refresh",
       });
 
       expect(status).toHaveBeenCalledWith(StatusCodes.OK);

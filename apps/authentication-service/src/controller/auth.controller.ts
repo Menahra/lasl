@@ -1,18 +1,23 @@
 import process from "node:process";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { StatusCodes } from "http-status-codes";
+import { REFRESH_SESSION_ROUTE } from "@/src/constants/auth.routes.constants.ts";
+import { REFRESH_COOKIE_NAME } from "@/src/middleware/authentication.hook.ts";
 import {
   type CreateSessionInput,
   vagueSessionErrorMessage,
-} from "../schema/session.schema.ts";
-import { signAccessToken, signRefreshToken } from "../service/auth.service.ts";
-import { findUserByEmail, findUserById } from "../service/user.service.ts";
+} from "@/src/schema/session.schema.ts";
+import {
+  signAccessToken,
+  signRefreshToken,
+} from "@/src/service/auth.service.ts";
+import { findUserByEmail, findUserById } from "@/src/service/user.service.ts";
+import { getApiVersionPathPrefix } from "@/src/util/api.path.util.ts";
 
-// biome-ignore lint/security/noSecrets: not a secret
-const REFRESH_TOKEN_NAME = "refreshToken";
-const REFRESH_TOKEN_PATH = "/auth/refresh";
 // biome-ignore lint/style/noMagicNumbers: ok in formula
 const REFRESH_TOKEN_VALIDITY = 60 * 60 * 24 * 7;
+
+const fullRefreshSessionRoute = `${getApiVersionPathPrefix(1)}${REFRESH_SESSION_ROUTE}`;
 
 export const createSessionHandler = async (
   // biome-ignore lint/style/useNamingConvention: naming from fastify
@@ -46,16 +51,16 @@ export const createSessionHandler = async (
     const refreshToken = await signRefreshToken(user._id, req.log);
 
     return reply
-      .setCookie(REFRESH_TOKEN_NAME, refreshToken, {
+      .setCookie(REFRESH_COOKIE_NAME, refreshToken, {
         httpOnly: true,
         // biome-ignore lint/complexity/useLiteralKeys: otherwise ts complains
         secure: process.env["NODE_ENV"] === "production",
         sameSite: "strict",
-        path: REFRESH_TOKEN_PATH,
+        path: fullRefreshSessionRoute,
         maxAge: REFRESH_TOKEN_VALIDITY,
       })
       .status(StatusCodes.OK)
-      .send({ accessToken, refreshToken });
+      .send({ accessToken });
   } catch (error) {
     req.log.error(
       error,
@@ -103,8 +108,8 @@ export const logoutHandler = async (
     session.valid = false;
     await session.save();
 
-    reply.clearCookie(REFRESH_TOKEN_NAME, {
-      path: REFRESH_TOKEN_PATH,
+    reply.clearCookie(REFRESH_COOKIE_NAME, {
+      path: fullRefreshSessionRoute,
     });
 
     return reply

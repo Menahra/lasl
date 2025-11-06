@@ -26,6 +26,27 @@ export const buildApiGatewayApp = async () => {
     prefix: "/auth",
     rewritePrefix: "",
     http2: false,
+    replyOptions: {
+      rewriteHeaders: (headers, req) => {
+        const newHeaders = { ...headers };
+
+        // rewrite cookie for authentication request (especially refresh token)
+        if (req?.raw.url?.startsWith("/auth") && newHeaders["set-cookie"]) {
+          const cookies = Array.isArray(newHeaders["set-cookie"])
+            ? newHeaders["set-cookie"]
+            : [newHeaders["set-cookie"]];
+
+          newHeaders["set-cookie"] = cookies.map((cookie) => {
+            if (cookie.includes("Path=/api/v1")) {
+              return cookie.replace(/Path=\/api\/v1/gi, "Path=/auth/api/v1");
+            }
+            return cookie;
+          });
+        }
+
+        return newHeaders;
+      },
+    },
   });
 
   return fastify;
