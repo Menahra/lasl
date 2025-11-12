@@ -1,6 +1,17 @@
 import type { FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
+import { z } from "zod";
 import { REFRESH_SESSION_ROUTE } from "@/src/constants/auth.routes.constants.ts";
+import {
+  createSessionConflictResponseSchema,
+  createSessionForbiddenResponseSchema,
+  createSessionInternalServerErrorResponseSchema,
+  createSessionSuccessResponseSchema,
+  logoutSuccessResponseSchema,
+  logoutUnauthorizedResponseSchema,
+  refreshSessionSuccessResponseSchema,
+  refreshSessionUnauthorizedResponseSchema,
+} from "@/src/routes/auth.routes.schema.ts";
 import {
   createSessionHandler,
   logoutHandler,
@@ -18,44 +29,37 @@ export const authRoutes = (fastifyInstance: FastifyInstance) => {
         summary: "Create a new session",
         body: createSessionJsonSchema,
         description:
-          "Use this endpoint to create a new session for a user. It will return the accessToken and refreshToken",
+          "Use this endpoint to create a new session for a user. It will return the accessToken in the body and the refreshToken as cookie",
         tags: ["Session"],
         response: {
           [StatusCodes.OK]: {
-            type: "object",
-            properties: {
-              accessToken: { type: "string" },
-            },
+            description: "Session was created successfully",
             headers: {
               "Set-Cookie": {
+                type: "string",
                 description:
                   // biome-ignore lint/security/noSecrets: not a secret
                   "HTTP-only cookie named `refreshToken` used for session renewal.",
-                type: "string",
                 example:
                   // biome-ignore lint/security/noSecrets: not a secret
                   "refreshToken=abc123; HttpOnly; Path=/api/v1/sessions/refresh; Max-Age=604800",
               },
             },
-          },
-          [StatusCodes.FORBIDDEN]: {
-            type: "object",
-            properties: {
-              message: { type: "string" },
+            content: {
+              "application/json": {
+                schema: z.toJSONSchema(createSessionSuccessResponseSchema),
+              },
             },
           },
-          [StatusCodes.CONFLICT]: {
-            type: "object",
-            properties: {
-              message: { type: "string" },
-            },
-          },
-          [StatusCodes.INTERNAL_SERVER_ERROR]: {
-            type: "object",
-            properties: {
-              message: { type: "string" },
-            },
-          },
+          [StatusCodes.FORBIDDEN]: z.toJSONSchema(
+            createSessionForbiddenResponseSchema,
+          ),
+          [StatusCodes.CONFLICT]: z.toJSONSchema(
+            createSessionConflictResponseSchema,
+          ),
+          [StatusCodes.INTERNAL_SERVER_ERROR]: z.toJSONSchema(
+            createSessionInternalServerErrorResponseSchema,
+          ),
         },
       },
     },
@@ -72,18 +76,10 @@ export const authRoutes = (fastifyInstance: FastifyInstance) => {
           "Use this endpoint to refresh the current active session and get a new access token",
         tags: ["Session"],
         response: {
-          [StatusCodes.OK]: {
-            type: "object",
-            properties: {
-              accessToken: { type: "string" },
-            },
-          },
-          [StatusCodes.UNAUTHORIZED]: {
-            type: "object",
-            properties: {
-              message: { type: "string" },
-            },
-          },
+          [StatusCodes.OK]: z.toJSONSchema(refreshSessionSuccessResponseSchema),
+          [StatusCodes.UNAUTHORIZED]: z.toJSONSchema(
+            refreshSessionUnauthorizedResponseSchema,
+          ),
         },
       },
     },
@@ -100,18 +96,10 @@ export const authRoutes = (fastifyInstance: FastifyInstance) => {
           "Invalidates the session and clears the refresh token cookie",
         tags: ["Session"],
         response: {
-          [StatusCodes.OK]: {
-            type: "object",
-            properties: {
-              message: { type: "string" },
-            },
-          },
-          [StatusCodes.UNAUTHORIZED]: {
-            type: "object",
-            properties: {
-              message: { type: "string" },
-            },
-          },
+          [StatusCodes.OK]: z.toJSONSchema(logoutSuccessResponseSchema),
+          [StatusCodes.UNAUTHORIZED]: z.toJSONSchema(
+            logoutUnauthorizedResponseSchema,
+          ),
         },
       },
     },

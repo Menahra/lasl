@@ -114,7 +114,9 @@ describe("auth routes", () => {
         endpointStatusCode: StatusCodes.OK,
         endpointContentType: "application/json",
         endpointResponseType: {
-          accessToken: { type: "string" },
+          accessToken: {
+            type: "string",
+          },
         },
       });
     });
@@ -131,7 +133,7 @@ describe("auth routes", () => {
         endpointStatusCode: statusCode,
         endpointContentType: "application/json",
         endpointResponseType: {
-          message: { type: "string" },
+          message: { type: "string", minLength: 1 },
         },
       });
     });
@@ -278,7 +280,7 @@ describe("auth routes", () => {
         endpointStatusCode: StatusCodes.UNAUTHORIZED,
         endpointContentType: "application/json",
         endpointResponseType: {
-          message: { type: "string" },
+          message: { type: "string", minLength: 1 },
         },
       });
     });
@@ -408,7 +410,7 @@ describe("auth routes", () => {
         endpointStatusCode: StatusCodes.OK,
         endpointContentType: "application/json",
         endpointResponseType: {
-          message: { type: "string" },
+          message: { type: "string", minLength: 1 },
         },
       });
 
@@ -419,7 +421,7 @@ describe("auth routes", () => {
         endpointStatusCode: StatusCodes.UNAUTHORIZED,
         endpointContentType: "application/json",
         endpointResponseType: {
-          message: { type: "string" },
+          message: { type: "string", minLength: 1 },
         },
       });
     });

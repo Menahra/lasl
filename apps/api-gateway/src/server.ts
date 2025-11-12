@@ -10,7 +10,7 @@ const startApiGatewayApp = async () => {
   try {
     await app.listen({ host: "0.0.0.0", port });
   } catch (err) {
-    app.log.error("Error starting api gateway server:", err);
+    app.log.error(err, "Error starting api gateway server");
     process.exit(1);
   }
 };

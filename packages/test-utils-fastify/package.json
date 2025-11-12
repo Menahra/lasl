@@ -23,7 +23,7 @@
     "format:fix": "biome format --write src test",
     "check:ci": "biome check src test",
     "check:fix": "biome check --write src test",
-    "types:check": "tsc"
+    "check:types": "tsc"
   },
   "keywords": [],
   "author": "",

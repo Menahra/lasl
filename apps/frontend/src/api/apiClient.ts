@@ -1,16 +1,17 @@
 import axios from "axios";
 import { StatusCodes } from "http-status-codes";
-import { postRefreshToken } from "@/src/api/authApi.ts";
+import { authApi } from "@/src/api/authApi.ts";
 import { ROUTE_LOGIN } from "@/src/routes/routePaths.ts";
 import { AUTHENTICATION_TYPE } from "@/src/shared/constants.ts";
 import { accessTokenManager } from "@/src/utils/accessTokenManager.ts";
 
 // biome-ignore lint/complexity/useLiteralKeys: needed for typescript
-const API_URL = import.meta.env["VITE_API_URL"];
+const API_BASE_URL = import.meta.env["VITE_API_URL"];
+const AUTH_API_BASE_URL = `${API_BASE_URL}/auth/api/v1`;
 
 const apiClient = axios.create({
   // biome-ignore lint/style/useNamingConvention: naming from axios
-  baseURL: API_URL,
+  baseURL: AUTH_API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -76,7 +77,7 @@ apiClient.interceptors.response.use(
     isRefreshing = true;
 
     try {
-      const newAccessToken = await postRefreshToken();
+      const newAccessToken = await authApi.postRefreshToken();
 
       apiClient.defaults.headers.common.Authorization = `${AUTHENTICATION_TYPE} ${newAccessToken}`;
 
@@ -96,4 +97,4 @@ apiClient.interceptors.response.use(
   },
 );
 
-export { API_URL, apiClient };
+export { AUTH_API_BASE_URL, apiClient };

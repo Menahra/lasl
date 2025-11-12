@@ -17,7 +17,7 @@
     "format:fix": "pnpm -r format:fix",
     "check:ci": "pnpm -r check:ci",
     "check:fix": "pnpm -r check:fix",
-    "types:check": "pnpm -r types:check",
+    "check:types": "pnpm -r check:types",
     "test": "pnpm -r test"
   }
 }

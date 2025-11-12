@@ -1,5 +1,25 @@
 import type { FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
+import z from "zod";
+import {
+  createUserBadRequestResponseSchema,
+  createUserConflictResponseSchema,
+  createUserInternalServerErrorResponseSchema,
+  createUserSuccessResponseSchema,
+  createUserUnprocessableEntityResponseSchema,
+  forgotPasswordSuccessResponseSchema,
+  getCurrentAuthenticatedUserForbiddenResponseSchema,
+  getCurrentAuthenticatedUserSuccessResponseSchema,
+  resetPasswordBadRequestResponseSchema,
+  resetPasswordInternalServerErrorResponseSchema,
+  resetPasswordNotFoundResponseSchema,
+  resetPasswordSuccessResponseSchema,
+  verifyUserBadRequestResponseSchema,
+  verifyUserConflictResponseSchema,
+  verifyUserInternalServerErrorResponseSchema,
+  verifyUserNotFoundResponseSchema,
+  verifyUserSuccessResponseSchema,
+} from "@/src/routes/user.routes.schema.ts";
 import { createUserHandler } from "../controller/create.user.controller.ts";
 import { forgotPasswordHandler } from "../controller/forgot.password.controller.ts";
 import { getUserHandler } from "../controller/get.user.controller.ts";
@@ -13,7 +33,6 @@ import {
   resetPasswordParamsInputJsonSchema,
   verifyUserInputJsonSchema,
 } from "../schema/user.schema.ts";
-import { ZodFormattedErrorSchemaId } from "../schema/zodFormattedError.schema.ts";
 
 const UserSwaggerTag = "User";
 
@@ -29,43 +48,19 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
           "This endpoint is used to create new users via the post method.",
         tags: [UserSwaggerTag],
         response: {
-          [StatusCodes.OK]: {
-            type: "object",
-            properties: {
-              message: { type: "string" },
-            },
-          },
-          [StatusCodes.BAD_REQUEST]: {
-            type: "object",
-            properties: {
-              message: { type: "string" },
-              error: { $ref: `${ZodFormattedErrorSchemaId}#` },
-            },
-          },
-          [StatusCodes.UNPROCESSABLE_ENTITY]: {
-            type: "object",
-            properties: {
-              message: { type: "string" },
-              errors: {
-                type: "object",
-                properties: {
-                  path: { type: "object" },
-                },
-              },
-            },
-          },
-          [StatusCodes.CONFLICT]: {
-            type: "object",
-            properties: {
-              message: { type: "string" },
-            },
-          },
-          [StatusCodes.INTERNAL_SERVER_ERROR]: {
-            type: "object",
-            properties: {
-              message: { type: "string" },
-            },
-          },
+          [StatusCodes.OK]: z.toJSONSchema(createUserSuccessResponseSchema),
+          [StatusCodes.BAD_REQUEST]: z.toJSONSchema(
+            createUserBadRequestResponseSchema,
+          ),
+          [StatusCodes.UNPROCESSABLE_ENTITY]: z.toJSONSchema(
+            createUserUnprocessableEntityResponseSchema,
+          ),
+          [StatusCodes.CONFLICT]: z.toJSONSchema(
+            createUserConflictResponseSchema,
+          ),
+          [StatusCodes.INTERNAL_SERVER_ERROR]: z.toJSONSchema(
+            createUserInternalServerErrorResponseSchema,
+          ),
         },
       },
     },
@@ -83,36 +78,19 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
           "After a user was created a verification code is sent to the given mail. This then needs to passed via this endpoint to fully verify the user.",
         tags: [UserSwaggerTag],
         response: {
-          [StatusCodes.OK]: {
-            type: "object",
-            properties: {
-              message: { type: "string" },
-            },
-          },
-          [StatusCodes.BAD_REQUEST]: {
-            type: "object",
-            properties: {
-              message: { type: "string" },
-            },
-          },
-          [StatusCodes.NOT_FOUND]: {
-            type: "object",
-            properties: {
-              message: { type: "string" },
-            },
-          },
-          [StatusCodes.CONFLICT]: {
-            type: "object",
-            properties: {
-              message: { type: "string" },
-            },
-          },
-          [StatusCodes.INTERNAL_SERVER_ERROR]: {
-            type: "object",
-            properties: {
-              message: { type: "string" },
-            },
-          },
+          [StatusCodes.OK]: z.toJSONSchema(verifyUserSuccessResponseSchema),
+          [StatusCodes.BAD_REQUEST]: z.toJSONSchema(
+            verifyUserBadRequestResponseSchema,
+          ),
+          [StatusCodes.NOT_FOUND]: z.toJSONSchema(
+            verifyUserNotFoundResponseSchema,
+          ),
+          [StatusCodes.CONFLICT]: z.toJSONSchema(
+            verifyUserConflictResponseSchema,
+          ),
+          [StatusCodes.INTERNAL_SERVER_ERROR]: z.toJSONSchema(
+            verifyUserInternalServerErrorResponseSchema,
+          ),
         },
       },
     },
@@ -129,12 +107,7 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
           "Users can request a new password if they forgot the current one",
         tags: [UserSwaggerTag],
         response: {
-          [StatusCodes.OK]: {
-            type: "object",
-            properties: {
-              message: { type: "string" },
-            },
-          },
+          [StatusCodes.OK]: z.toJSONSchema(forgotPasswordSuccessResponseSchema),
         },
       },
     },
@@ -153,30 +126,16 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
           "User resets the password with the reset code he got via mail and a new password",
         tags: [UserSwaggerTag],
         response: {
-          [StatusCodes.OK]: {
-            type: "object",
-            properties: {
-              message: { type: "string" },
-            },
-          },
-          [StatusCodes.BAD_REQUEST]: {
-            type: "object",
-            properties: {
-              message: { type: "string" },
-            },
-          },
-          [StatusCodes.NOT_FOUND]: {
-            type: "object",
-            properties: {
-              message: { type: "string" },
-            },
-          },
-          [StatusCodes.INTERNAL_SERVER_ERROR]: {
-            type: "object",
-            properties: {
-              message: { type: "string" },
-            },
-          },
+          [StatusCodes.OK]: z.toJSONSchema(resetPasswordSuccessResponseSchema),
+          [StatusCodes.BAD_REQUEST]: z.toJSONSchema(
+            resetPasswordBadRequestResponseSchema,
+          ),
+          [StatusCodes.NOT_FOUND]: z.toJSONSchema(
+            resetPasswordNotFoundResponseSchema,
+          ),
+          [StatusCodes.INTERNAL_SERVER_ERROR]: z.toJSONSchema(
+            resetPasswordInternalServerErrorResponseSchema,
+          ),
         },
       },
     },
@@ -199,31 +158,12 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
           required: ["authorization"],
         },
         response: {
-          [StatusCodes.OK]: {
-            type: "object",
-            properties: {
-              id: {
-                type: "string",
-              },
-              email: {
-                type: "string",
-              },
-              firstName: {
-                type: "string",
-              },
-              lastName: {
-                type: "string",
-              },
-            },
-          },
-          [StatusCodes.UNAUTHORIZED]: {
-            type: "object",
-            properties: {
-              message: {
-                type: "string",
-              },
-            },
-          },
+          [StatusCodes.OK]: z.toJSONSchema(
+            getCurrentAuthenticatedUserSuccessResponseSchema,
+          ),
+          [StatusCodes.UNAUTHORIZED]: z.toJSONSchema(
+            getCurrentAuthenticatedUserForbiddenResponseSchema,
+          ),
         },
       },
     },

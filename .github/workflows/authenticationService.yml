@@ -63,7 +63,7 @@ jobs:
           node_version: ${{ env.NODE_VERSION }}
 
       - name: Check types
-        run: pnpm run types:check
+        run: pnpm run check:types
 
   lint:
     name: Lint

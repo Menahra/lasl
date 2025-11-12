@@ -1,6 +1,8 @@
 import process from "node:process";
 import type { FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
+import { z } from "zod";
+import { healthcheckSuccessResponseSchema } from "@/src/routes/health.routes.schema.ts";
 
 export const healthRoutes = (fastifyInstance: FastifyInstance) => {
   fastifyInstance.get(
@@ -12,14 +14,7 @@ export const healthRoutes = (fastifyInstance: FastifyInstance) => {
           "Checks if the authentication service is running and healthy.",
         tags: ["Health"],
         response: {
-          [StatusCodes.OK]: {
-            type: "object",
-            properties: {
-              status: { type: "string" },
-              message: { type: "string" },
-              uptime: { type: "number" },
-            },
-          },
+          [StatusCodes.OK]: z.toJSONSchema(healthcheckSuccessResponseSchema),
         },
       },
     },

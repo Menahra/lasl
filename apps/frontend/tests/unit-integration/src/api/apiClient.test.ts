@@ -1,7 +1,7 @@
 /** biome-ignore-all lint/security/noSecrets: no secrets here in test */
 import { HttpResponse, http } from "msw";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { API_URL, apiClient } from "@/src/api/apiClient.ts";
+import { AUTH_API_BASE_URL, apiClient } from "@/src/api/apiClient.ts";
 // biome-ignore lint/performance/noNamespaceImport: needed for mocking
 import * as authApi from "@/src/api/authApi.ts";
 import { ACCESS_TOKEN_NAME } from "@/src/shared/constants.ts";
@@ -15,7 +15,7 @@ setupMockServiceWorker();
 
 // biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok in test
 describe("apiClient integration with cookie-based refresh token", () => {
-  const postRefreshTokenSpy = vi.spyOn(authApi, "postRefreshToken");
+  const postRefreshTokenSpy = vi.spyOn(authApi.authApi, "postRefreshToken");
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -34,7 +34,7 @@ describe("apiClient integration with cookie-based refresh token", () => {
     localStorage.setItem(ACCESS_TOKEN_NAME, "expired-token");
 
     server.use(
-      http.get(`${API_URL}/protected`, ({ request }) => {
+      http.get(`${AUTH_API_BASE_URL}/protected`, ({ request }) => {
         const auth = request.headers.get("Authorization");
         if (auth === `Bearer ${mockPostRefreshNewAccessToken}`) {
           return HttpResponse.json({ data: "retried success" });
@@ -54,7 +54,7 @@ describe("apiClient integration with cookie-based refresh token", () => {
     localStorage.setItem(ACCESS_TOKEN_NAME, "expired-token");
 
     server.use(
-      http.post(`${API_URL}/auth/refresh`, () => {
+      http.post(`${AUTH_API_BASE_URL}/sessions/refresh`, () => {
         return HttpResponse.json({ message: "Unauthorized" }, { status: 401 });
       }),
     );
@@ -67,7 +67,7 @@ describe("apiClient integration with cookie-based refresh token", () => {
     localStorage.setItem(ACCESS_TOKEN_NAME, "expired-token");
 
     server.use(
-      http.get(`${API_URL}/protected`, ({ request }) => {
+      http.get(`${AUTH_API_BASE_URL}/protected`, ({ request }) => {
         const auth = request.headers.get("Authorization");
         if (auth === `Bearer ${mockPostRefreshNewAccessToken}`) {
           return HttpResponse.json({ data: "retried" });

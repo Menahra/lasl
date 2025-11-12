@@ -33,6 +33,7 @@ describe("user routes", () => {
     await teardownFastifyTestEnvironment();
   });
 
+  // biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok in test
   describe("create user route", () => {
     const postUsersEndpointPath = `${apiPathPrefix}/users`;
 
@@ -55,23 +56,41 @@ describe("user routes", () => {
     it.each([
       {
         statusCode: StatusCodes.OK,
-        responseType: { message: { type: "string" as const } },
+        responseType: { message: { type: "string" as const, minLength: 1 } },
       },
       {
         statusCode: StatusCodes.BAD_REQUEST,
         responseType: {
-          message: { type: "string" as const },
-          error: { $ref: "#/components/schemas/def-0" },
+          message: { type: "string" as const, minLength: 1 },
+          error: {
+            additionalProperties: false,
+            properties: {
+              _errors: {
+                items: {
+                  type: "string" as const,
+                },
+                type: "array" as const,
+              },
+            },
+            required: ["_errors"],
+            type: "object" as const,
+          },
         },
       },
       {
         statusCode: StatusCodes.UNPROCESSABLE_ENTITY,
         responseType: {
-          message: { type: "string" as const },
+          message: { type: "string" as const, minLength: 1 },
           errors: {
+            additionalProperties: false,
+            required: ["path"],
             type: "object" as const,
             properties: {
-              path: { type: "object" as const },
+              path: {
+                type: "object" as const,
+                additionalProperties: false,
+                properties: {},
+              },
             },
           },
         },
@@ -125,7 +144,7 @@ describe("user routes", () => {
         endpointStatusCode: statusCode,
         endpointContentType: "application/json",
         endpointResponseType: {
-          message: { type: "string" as const },
+          message: { type: "string" as const, minLength: 1 },
         },
       });
     });
@@ -161,7 +180,7 @@ describe("user routes", () => {
         endpointStatusCode: StatusCodes.OK,
         endpointContentType: "application/json",
         endpointResponseType: {
-          message: { type: "string" },
+          message: { type: "string", minLength: 1 },
         },
       });
     });
@@ -207,7 +226,7 @@ describe("user routes", () => {
         endpointStatusCode: statusCode,
         endpointContentType: "application/json",
         endpointResponseType: {
-          message: { type: "string" },
+          message: { type: "string", minLength: 1 },
         },
       });
     });
@@ -228,13 +247,18 @@ describe("user routes", () => {
           endpointResponseType:
             statusCode === StatusCodes.OK
               ? {
-                  id: { type: "string" },
-                  email: { type: "string" },
-                  firstName: { type: "string" },
-                  lastName: { type: "string" },
+                  id: { type: "string", minLength: 1 },
+                  email: {
+                    type: "string",
+                    format: "email",
+                    pattern:
+                      "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$",
+                  },
+                  firstName: { type: "string", minLength: 1 },
+                  lastName: { type: "string", minLength: 1 },
                 }
               : {
-                  message: { type: "string" },
+                  message: { type: "string", minLength: 1 },
                 },
         });
       },
