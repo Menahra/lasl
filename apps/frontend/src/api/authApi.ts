@@ -1,22 +1,17 @@
+import type {
+  CreateSessionSuccessResponse,
+  GetCurrentAuthenticatedUserSuccessResponse,
+  LogoutSuccessResponse,
+  RefreshSessionSuccessResponse,
+} from "@lasl/authentication-service";
 import axios from "axios";
 import { AUTH_API_BASE_URL } from "@/src/api/apiClient.ts";
 import { accessTokenManager } from "@/src/utils/accessTokenManager.ts";
 
-type RefreshTokenResponse = {
-  accessToken: string;
-};
-
-type GetCurrentUserResponse = {
-  id: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-};
-
 export const authApi = {
   createSession: async (email: string, password: string) => {
     try {
-      const response = await axios.post<RefreshTokenResponse>(
+      const response = await axios.post<CreateSessionSuccessResponse>(
         `${AUTH_API_BASE_URL}/sessions`,
         {
           email,
@@ -37,7 +32,7 @@ export const authApi = {
 
   postRefreshToken: async () => {
     try {
-      const response = await axios.post<RefreshTokenResponse>(
+      const response = await axios.post<RefreshSessionSuccessResponse>(
         `${AUTH_API_BASE_URL}/sessions/refresh`,
         {},
         { withCredentials: true },
@@ -54,7 +49,7 @@ export const authApi = {
   },
 
   logout: async () => {
-    return await axios.post(
+    return await axios.post<LogoutSuccessResponse>(
       `${AUTH_API_BASE_URL}/sessions/logout`,
       {},
       { withCredentials: true },
@@ -62,11 +57,12 @@ export const authApi = {
   },
 
   getCurrentUser: async () => {
-    const response = await axios.post<GetCurrentUserResponse>(
-      `${AUTH_API_BASE_URL}/sessions`,
-      {},
-      { withCredentials: true },
-    );
+    const response =
+      await axios.post<GetCurrentAuthenticatedUserSuccessResponse>(
+        `${AUTH_API_BASE_URL}/users/me`,
+        {},
+        { withCredentials: true },
+      );
 
     return response.data;
   },

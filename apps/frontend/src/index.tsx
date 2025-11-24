@@ -1,8 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { App } from "./app/App.tsx";
-
-import "./app/i18n.ts";
+import { App } from "@/src/app/App.tsx";
 
 const root = createRoot(document.getElementById("root") as HTMLElement);
 root.render(

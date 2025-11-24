@@ -1,0 +1,48 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2025-11-23 21:26+0100\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: fr\n"
+
+#: src/pages/login-page/LoginPage.tsx:25
+msgid "By continuing, you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>"
+msgstr ""
+
+#: src/components/login-form/LoginForm.tsx:48
+msgid "Don't have an account yet?"
+msgstr ""
+
+#: src/components/login-form/LoginForm.tsx:22
+msgid "Email"
+msgstr ""
+
+#: src/components/login-form/LoginForm.tsx:33
+msgid "Password"
+msgstr ""
+
+#: src/pages/login-page/LoginPage.tsx:17
+msgid "Project Name"
+msgstr ""
+
+#: src/components/login-form/LoginForm.tsx:43
+msgid "Sign In"
+msgstr ""
+
+#: src/components/login-form/LoginForm.tsx:16
+msgid "Sign in to enhance your learning"
+msgstr ""
+
+#: src/components/login-form/LoginForm.tsx:51
+msgid "Sign Up"
+msgstr ""
+
+#: src/pages/login-page/LoginPage.tsx:20
+msgid "Subtitle"
+msgstr ""
+
+#: src/components/login-form/LoginForm.tsx:13
+msgid "Welcome back"
+msgstr ""

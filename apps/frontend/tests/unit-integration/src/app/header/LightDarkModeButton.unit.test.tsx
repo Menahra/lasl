@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
-import { LightDarkModeButton } from "@/src/app/header/LightDarkModeButton.tsx";
+import { LightDarkModeButton } from "@/src/shared/components/light-dark-mode-button/LightDarkModeButton.tsx";
 
 const useDarkModeMock = vi.hoisted(() => vi.fn());
 vi.mock("@/src/shared/hooks/useDarkMode", () => ({

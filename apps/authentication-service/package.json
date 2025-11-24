@@ -1,5 +1,5 @@
 {
-  "name": "authentication-service",
+  "name": "@lasl/authentication-service",
   "version": "1.0.2",
   "main": "src/server.ts",
   "type": "module",

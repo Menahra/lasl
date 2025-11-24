@@ -2,6 +2,8 @@
 /// <reference types="vite-plugin-svgr/client" />
 
 import process from "node:process";
+import { lingui } from "@lingui/vite-plugin";
+import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react";
 import { loadEnv } from "vite";
 import svgr from "vite-plugin-svgr";
@@ -14,7 +16,20 @@ export default defineConfig(({ mode }) => {
   // biome-ignore lint/complexity/useLiteralKeys: needed for typescript
   const isTestMode = mode === "test" || process.env["VITEST"];
   return {
-    plugins: [react(), tsconfigPaths(), svgr()],
+    plugins: [
+      tanstackRouter({
+        target: "react",
+        autoCodeSplitting: true,
+      }),
+      react({
+        babel: {
+          plugins: ["@lingui/babel-plugin-lingui-macro"],
+        },
+      }),
+      lingui(),
+      tsconfigPaths(),
+      svgr(),
+    ],
     build: {
       sourcemap: true,
       rollupOptions: {

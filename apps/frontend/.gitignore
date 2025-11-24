@@ -1,3 +1,5 @@
+.tanstack
+
 # Playwright
 node_modules/
 /test-results/

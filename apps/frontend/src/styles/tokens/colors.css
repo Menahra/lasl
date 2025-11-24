@@ -35,7 +35,8 @@
   --gray-600: light-dark(#475569, #8d9bab);
   --gray-700: light-dark(#334155, #a8b4c4);
   --gray-800: light-dark(#1e293b, #c5d0dd);
-  --gray-900: light-dark(#0f172a, #e2e8f0);
+  --gray-900-light: #0f172a;
+  --gray-900: light-dark(var(--gray-900-light), #e2e8f0);
 
   /* Semantic Colors */
   --success-50: light-dark(#f0fdf4, #0a2e1a);
@@ -56,6 +57,7 @@
 
   /* Semantic Aliases */
   --color-primary: var(--primary-600);
+  --color-primary-light: var(--primary-400);
   --color-primary-hover: var(--primary-700);
   --color-primary-active: var(--primary-800);
   --color-primary-subtle: var(--primary-50);
@@ -82,7 +84,7 @@
   --color-text-secondary: var(--gray-700);
   --color-text-tertiary: var(--gray-500);
   --color-text-disabled: var(--gray-400);
-  --color-text-inverse: light-dark(#ffffff, var(--gray-900));
+  --color-text-inverse: light-dark(#ffffff, var(--gray-900-light));
   --color-text-link: var(--primary-600);
   --color-text-link-hover: var(--primary-700);
 

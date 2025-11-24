@@ -1,0 +1,86 @@
+.LoginFormCardWrapper {
+  width: 448px;
+  border: 2px solid var(--color-border);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px;;
+}
+
+.LoginFormCardHeader {
+  padding: var(--space-lg);
+}
+
+.LoginFormCardTitle {
+  font-size: var(--font-size-2xl);
+  line-height: var(--line-height-loose);
+  text-align: center;
+}
+
+.LoginFormCardSubTitle {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-tight);
+  text-align: center;
+}
+
+.LoginForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  padding: var(--space-lg);
+  padding-top: 0;
+}
+
+.LoginFormInputFieldWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.LoginFormLabel {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-none);
+}
+
+.LoginFormInput {
+  appearance: auto;
+  border-radius: var(--radius-md);
+  padding: var(--space-md) var(--space-sm);
+  border: 2px solid var(--color-border-light);
+  font-size: var(--font-size-sm);
+}
+.LoginFormInput:hover {
+  border-color: var(--color-border-strong);
+}
+
+.LoginFormSubmitButton {
+  border-radius: var(--radius-md);
+  border-width: 0;
+  padding: var(--space-md) var(--space-sm);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  cursor: pointer;
+}
+
+.LoginFormSubmitButton:hover {
+  background-color: var(--primary-500); 
+}
+
+.LoginFormCardFooter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding-bottom: var(--space-lg);
+}
+
+.LoginFormRegisterLink {
+  color: var(--color-accent);
+  font-weight: var(--font-weight-semibold);
+}
+.LoginFormRegisterLink:hover {
+  color: var(--color-accent-hover);
+}

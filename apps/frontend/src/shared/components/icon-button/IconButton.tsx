@@ -1,7 +1,8 @@
+import clsx from "clsx";
 import type { PropsWithChildren } from "react";
 import { Tooltip, type TooltipProps } from "../tooltip/Tooltip.tsx";
 
-type IconButtonProps = Omit<TooltipProps, "children"> & {
+export type IconButtonProps = Omit<TooltipProps, "children"> & {
   /**
    * the accessible description
    * it should explain the purpose this button fulfills
@@ -9,12 +10,15 @@ type IconButtonProps = Omit<TooltipProps, "children"> & {
   description: string;
   /** the icon for this button */
   icon: PropsWithChildren["children"];
+  /** className of the button */
+  className?: string;
 
   /** handler will be executed when the button is being pressed */
   onClick: () => void;
 };
 
 export const IconButton = ({
+  className,
   description,
   icon,
   onClick,
@@ -25,7 +29,7 @@ export const IconButton = ({
       <button
         type="button"
         onClick={onClick}
-        className="IconButton"
+        className={clsx("IconButton", className)}
         aria-label={description}
       >
         {icon}

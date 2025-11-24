@@ -9,11 +9,11 @@
 }
 
 .IconLink:hover {
-  border-color: var(--border-color-hover);
+  border-color: var(--color-border-light);
 }
 
 .IconLink:focus {
-  outline: 2px solid var(--border-color-focus);
+  outline: 2px solid var(--color-border-focus);
 }
 
 .IconLink > * {

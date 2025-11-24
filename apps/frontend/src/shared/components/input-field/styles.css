@@ -1,10 +1,8 @@
-@use '@styles/variables' as *;
-
 .InputField {
   display: flex;
   flex-grow: 1;
   align-items: center;
-  gap: $spacing-8;
+  gap: var(--space-sm);
 }
 
 .InputFieldInputIconWrapper {
@@ -15,40 +13,39 @@
 
 .InputFieldInput {
   all: unset;
-  font-size: 0.875rem;
+  font-size: var(--font-size-sm);
   display: flex;
   flex-grow: 1;
   align-items: center;
   justify-content: center;
   border-radius: 4px;
   padding: 0 10px;
-  height: 32px;
-  border: 1px solid var(--border-color);
+  height: var(--size-xl);
+  border: 1px solid var(--color-border);
   line-height: 1;
 }
 
 .InputFieldInput:hover {
-  border-color: var(--border-color-hover);
+  border-color: var(--color-border-light);
 }
 
 .InputFieldInput:focus {
-  outline: 2px solid var(--border-color-focus);
+  outline: 2px solid var(--color-border-focus);
 }
 
 .InputFieldInputWithIcon {
-  padding-right: 32px;
+  padding-right: var(--space-32);
 }
 
 .InputFieldIcon {
   position: absolute;
   top: 50%;
-  right: 6px;
+  right: calc(1.5 * var(--space-unit));
   transform: translateY(-50%);
-  width: 22px;
-  height: 22px;
+  width: calc(4.5 * var(--size-unit));
+  height: calc(4.5 * var(--size-unit));
 }
 
-// so that inserted icon takes width, height defined in .InputFieldIcon
 .InputFieldIcon > * {
   width: 100%;
   height: 100%;

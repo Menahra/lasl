@@ -1,9 +1,9 @@
+import { useLingui } from "@lingui/react/macro";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
-import { useTranslation } from "react-i18next";
 import { IconLink } from "@/src/shared/components/icon-link/IconLink.tsx";
 
 export const GitHubButton = () => {
-  const { t } = useTranslation();
+  const { t } = useLingui();
 
   return (
     <IconLink
@@ -11,8 +11,8 @@ export const GitHubButton = () => {
       href="https://github.com/Menahra/lasl"
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={t("header.visit_github_repository")}
-      title={t("header.visit_github_repository")}
+      aria-label={t`Open the GitHub repository in a new browser tab.`}
+      title={t`Open the GitHub repository in a new browser tab.`}
     />
   );
 };

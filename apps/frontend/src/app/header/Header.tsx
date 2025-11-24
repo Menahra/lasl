@@ -1,14 +1,13 @@
+import { useLingui } from "@lingui/react/macro";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
-
 import { InputField } from "@/src/shared/components/input-field/InputField.tsx";
+import { LightDarkModeButton } from "../../shared/components/light-dark-mode-button/LightDarkModeButton.tsx";
 import { DonateButton } from "./DonateButton.tsx";
 import { GitHubButton } from "./GitHubButton.tsx";
-import { LightDarkModeButton } from "./LightDarkModeButton.tsx";
 
 export const Header = () => {
-  const { t } = useTranslation();
+  const { t } = useLingui();
   const [searchValue, setSearchValue] = useState("");
 
   return (
@@ -16,11 +15,11 @@ export const Header = () => {
       Logo placeholder
       <div className="ApplicationHeaderActions">
         <InputField
-          label={t("header.search_description")}
+          label={t`Search in all pages`}
           icon={<MagnifyingGlassIcon />}
           value={searchValue}
           onInputValueChange={setSearchValue}
-          placeholder={t("header.search_placeholder")}
+          placeholder={t`Search...`}
         />
         <div className="ApplicationHeaderActionsButtons">
           <GitHubButton />

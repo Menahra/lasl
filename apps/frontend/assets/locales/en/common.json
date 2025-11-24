@@ -1,10 +1,10 @@
 {
   "header": {
-    "ko-fi_donate_description": "Visit Ko-Fi to support this project with a donation",
+    "ko-fi_donate_description": "Visit Ko-Fi to support this project with a donation.",
     "search_description": "Search in all pages",
     "search_placeholder": "Search...",
     "switch_to_darkmode": "Switch to dark mode",
     "switch_to_lightmode": "Switch to light mode",
-    "visit_github_repository": "Open the GitHub repository in new browser tab"
+    "visit_github_repository": "Open the GitHub repository in a new browser tab."
   }
 }

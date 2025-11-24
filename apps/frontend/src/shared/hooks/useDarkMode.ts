@@ -1,16 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const LOCAL_STORAGE_DARKMODE_KEY = "dark-mode";
 const HTML_DATA_THEME = "data-theme";
 const DARKMODE_ON_VALUE = "dark";
 const DARKMODE_OFF_VALUE = "light";
 
-type DarkModeValue = typeof DARKMODE_OFF_VALUE | typeof DARKMODE_ON_VALUE;
+type DataThemeModeValue = typeof DARKMODE_OFF_VALUE | typeof DARKMODE_ON_VALUE;
 
-const calculateInitialSetting = (): DarkModeValue => {
+const calculateInitialSetting = (): DataThemeModeValue => {
   const userDarkModeSetting = localStorage.getItem(
     LOCAL_STORAGE_DARKMODE_KEY,
-  ) as DarkModeValue | null;
+  ) as DataThemeModeValue | null;
   if (userDarkModeSetting !== null) {
     return userDarkModeSetting;
   }
@@ -23,28 +23,24 @@ const calculateInitialSetting = (): DarkModeValue => {
 };
 
 export const useDarkMode = () => {
-  const initialDarkModeSetting = calculateInitialSetting();
-  const htmlElement = document.querySelector("html");
-  htmlElement?.setAttribute(HTML_DATA_THEME, initialDarkModeSetting);
-
-  const [isDarkMode, setIsDarkMode] = useState<DarkModeValue>(
-    initialDarkModeSetting,
+  const [themeMode, setThemeMode] = useState<DataThemeModeValue>(() =>
+    calculateInitialSetting(),
   );
+  useEffect(() => {
+    document.documentElement.setAttribute(HTML_DATA_THEME, themeMode);
+    localStorage.setItem(LOCAL_STORAGE_DARKMODE_KEY, themeMode);
+  }, [themeMode]);
 
-  const updateDarkModeSetting = () => {
-    setIsDarkMode((currentDarkModeSetting) => {
-      const newDarkModeValue =
-        currentDarkModeSetting === DARKMODE_OFF_VALUE
-          ? DARKMODE_ON_VALUE
-          : DARKMODE_OFF_VALUE;
-      htmlElement?.setAttribute(HTML_DATA_THEME, newDarkModeValue);
-      localStorage.setItem(LOCAL_STORAGE_DARKMODE_KEY, newDarkModeValue);
-      return newDarkModeValue;
-    });
+  const toggleDataTheme = () => {
+    setThemeMode((currentThemeMode) =>
+      currentThemeMode === DARKMODE_ON_VALUE
+        ? DARKMODE_OFF_VALUE
+        : DARKMODE_ON_VALUE,
+    );
   };
 
   return {
-    isDarkMode: isDarkMode === DARKMODE_ON_VALUE,
-    updateDarkModeSetting,
+    isDarkMode: themeMode === DARKMODE_ON_VALUE,
+    updateDarkModeSetting: toggleDataTheme,
   };
 };
