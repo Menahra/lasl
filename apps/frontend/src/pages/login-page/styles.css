@@ -7,18 +7,6 @@
   justify-content: end;
 }
 
-.LoginPageLightDarkModeButton {
-  cursor: pointer;
-  background-color: transparent;
-  padding: var(--space-sm);
-  border-radius: var(--radius-md);
-  border: 2px solid var(--color-border);
-  transition: background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.LoginPageLightDarkModeButton:hover {
-  background-color: var(--color-accent);
-}
-
 .LoginPageMain {
   display: flex;
   align-items: center;
@@ -27,7 +15,12 @@
   gap: var(--space-xl);
 }
 
-.LoginPageProjectTitleWrapper {
+.LoginPageLogo {
+  height: var(--size-2xl);
+  width: var(--size-2xl);
+}
+
+.LoginPageProjectLogoTitleWrapper {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -36,11 +29,4 @@
 .LoginPageProjectTitle {
   font-size: var(--font-size-4xl);
   line-height: var(--line-height-4xl);
-}
-
-.LoginPageFooterLink {
-  color: var(--color-text-link);
-}
-.LoginPageFooterLink:hover {
-  color: var(--color-text-link-hover);
 }

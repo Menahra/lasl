@@ -1,0 +1,33 @@
+.RegisterFormWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  width: 100%;
+}
+
+.RegisterFormField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.RegisterFormLink {
+  color: var(--color-text-link);
+}
+.RegisterFormLink:hover {
+  color: var(--color-text-link-hover);
+}
+
+.RegisterFormSubmitButton {
+  border-radius: var(--radius-md);
+  border-width: 0;
+  padding: var(--space-md) var(--space-sm);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  cursor: pointer;
+}
+.RegisterFormSubmitButton:hover {
+  background-color: var(--primary-500); 
+}

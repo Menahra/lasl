@@ -1,0 +1,49 @@
+.RegisterPageWrapper {
+  padding: var(--space-md);
+}
+
+.RegisterPage {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.RegisterPageLightDarkModeButton {
+  position: fixed;
+  top: var(--space-md);
+  right: var(--space-md);
+}
+
+.RegisterPageMain {
+  width: 448px;
+  border: 2px solid var(--color-border);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px;
+  padding: var(--space-xl);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.RegisterPageLogo {
+  height: var(--size-2xl);
+  width: var(--size-2xl);
+}
+
+.RegisterPageProjectTitleWrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: var(--space-md);
+}
+
+.RegisterPageProjectTitle {
+  font-size: var(--font-size-4xl);
+  line-height: var(--line-height-4xl);
+}
+
+.RegisterPageFooter {
+  font-size: var(--font-size-sm);
+}

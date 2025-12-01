@@ -1,10 +1,15 @@
-import { Label } from "@radix-ui/react-label";
-import { Link } from "@tanstack/react-router";
+import { Trans, useLingui } from "@lingui/react/macro";
+import type { FormEvent } from "react";
+import { ROUTE_SIGN_UP } from "@/src/routes/register.tsx";
+import { FormInputField } from "@/src/shared/components/form-input-field/FormInputField.tsx";
+import { TextLink } from "@/src/shared/components/text-link/TextLink.tsx";
 import "./styles.css";
-import { Trans } from "@lingui/react/macro";
 
 export const LoginForm = () => {
-  const handleFormSubmit = () => {};
+  const { t: linguiTranslator } = useLingui();
+  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  };
 
   return (
     <div className="LoginFormCardWrapper">
@@ -17,28 +22,18 @@ export const LoginForm = () => {
         </p>
       </div>
       <form onSubmit={handleFormSubmit} className="LoginForm">
-        <div className="LoginFormInputFieldWrapper">
-          <Label htmlFor="email" className="LoginFormLabel">
-            <Trans>Email</Trans>
-          </Label>
-          <input
-            id="email"
-            className="LoginFormInput"
-            type="email"
-            placeholder="student@example.com"
-          />
-        </div>
-        <div className="LoginFormInputFieldWrapper">
-          <Label htmlFor="password" className="LoginFormLabel">
-            <Trans>Password</Trans>
-          </Label>
-          <input
-            id="password"
-            className="LoginFormInput"
-            type="password"
-            placeholder="Enter your password"
-          />
-        </div>
+        <FormInputField
+          id="email"
+          type="email"
+          placeholder="student@example.com"
+          label={linguiTranslator`Email`}
+        />
+        <FormInputField
+          id="password"
+          type="password"
+          placeholder={linguiTranslator`Enter your password`}
+          label={linguiTranslator`Password`}
+        />
         <button className="LoginFormSubmitButton" type="submit">
           <Trans>Sign In</Trans>
         </button>
@@ -47,9 +42,9 @@ export const LoginForm = () => {
         <p>
           <Trans>Don't have an account yet?</Trans>
         </p>
-        <Link className="LoginFormRegisterLink" to="/register">
+        <TextLink to={ROUTE_SIGN_UP} variant="accent">
           <Trans>Sign Up</Trans>
-        </Link>
+        </TextLink>
       </div>
     </div>
   );

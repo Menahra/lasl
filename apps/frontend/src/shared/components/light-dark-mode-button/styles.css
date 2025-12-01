@@ -1,0 +1,11 @@
+.LightDarkModeButton {
+  cursor: pointer;
+  background-color: transparent;
+  padding: var(--space-sm);
+  border-radius: var(--radius-md);
+  border: 2px solid var(--color-border);
+  transition: background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.LightDarkModeButton:hover {
+  background-color: var(--color-accent-hover-subtle);
+}

@@ -1,0 +1,20 @@
+.TextLink {
+  text-decoration: underline;
+}
+
+.TextLink--accent {
+  color: var(--color-accent);
+  font-weight: var(--font-weight-semibold);
+}
+
+.TextLink--accent:hover {
+  color: var(--color-accent-hover);
+}
+
+.TextLink--primary {
+  color: var(--color-text-link);
+}
+
+.TextLink--primary:hover {
+  color: var(--color-text-link-hover);
+}

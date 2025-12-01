@@ -1,8 +1,10 @@
-import { LoginForm } from "@/src/components/login-form/LoginForm.tsx";
-import "./styles.css";
 import { Trans } from "@lingui/react/macro";
-import { Link } from "@tanstack/react-router";
+import MarqaLogo from "@/assets/icons/marqa_logo.svg?react";
+import { LoginForm } from "@/src/components/login-form/LoginForm.tsx";
 import { LightDarkModeButton } from "@/src/shared/components/light-dark-mode-button/LightDarkModeButton.tsx";
+import { TextLink } from "@/src/shared/components/text-link/TextLink.tsx";
+import { PROJECT_NAME, PROJECT_SUBTITLE } from "@/src/shared/constants.ts";
+import "./styles.css";
 
 export const LoginPage = () => {
   return (
@@ -11,26 +13,23 @@ export const LoginPage = () => {
         <LightDarkModeButton className="LoginPageLightDarkModeButton" />
       </div>
       <main className="LoginPageMain">
-        Logo
-        <div className="LoginPageProjectTitleWrapper">
-          <h1 className="LoginPageProjectTitle">
-            <Trans>Project Name</Trans>
-          </h1>
-          <p>
-            <Trans>Subtitle</Trans>
-          </p>
+        <div className="LoginPageProjectLogoTitleWrapper">
+          <MarqaLogo className="LoginPageLogo" />
+          <h1 className="LoginPageProjectTitle">{PROJECT_NAME}</h1>
+          <p>{PROJECT_SUBTITLE}</p>
         </div>
         <LoginForm />
         <p>
           <Trans>
             By continuing, you agree to our{" "}
-            <Link className="LoginPageFooterLink" to="/termsofservice">
-              Terms of Service
-            </Link>{" "}
+            <TextLink to="/termsofservice" variant="primary">
+              <Trans>Terms of Service</Trans>
+            </TextLink>{" "}
             and{" "}
-            <Link className="LoginPageFooterLink" to="/privacypolicy">
-              Privacy Policy
-            </Link>
+            <TextLink to="/privacypolicy" variant="primary">
+              <Trans>Privacy Policy</Trans>
+            </TextLink>
+            .
           </Trans>
         </p>
       </main>
@@ -38,10 +37,9 @@ export const LoginPage = () => {
   );
 };
 
-// Logo und Namen überlegen
-// Translations einbauen
 // Sign up page
 // Terms of Service und Privacy Policy Page
+// Landing page
 
 // e2e tests:
 // login testen mit fehlender mail, falscher mail, fehlendem pw, falschem pw, richtige mail aber falsches pw, richtiges pw aber falsche mail, beides korrekt weiterleitung checken

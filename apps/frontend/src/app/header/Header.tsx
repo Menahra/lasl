@@ -7,7 +7,7 @@ import { DonateButton } from "./DonateButton.tsx";
 import { GitHubButton } from "./GitHubButton.tsx";
 
 export const Header = () => {
-  const { t } = useLingui();
+  const { t: linguiTranslator } = useLingui();
   const [searchValue, setSearchValue] = useState("");
 
   return (
@@ -15,11 +15,11 @@ export const Header = () => {
       Logo placeholder
       <div className="ApplicationHeaderActions">
         <InputField
-          label={t`Search in all pages`}
+          label={linguiTranslator`Search in all pages`}
           icon={<MagnifyingGlassIcon />}
           value={searchValue}
           onInputValueChange={setSearchValue}
-          placeholder={t`Search...`}
+          placeholder={linguiTranslator`Search...`}
         />
         <div className="ApplicationHeaderActionsButtons">
           <GitHubButton />
