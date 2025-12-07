@@ -15,7 +15,7 @@ export const App = () => {
     <Suspense fallback="is loading">
       <QueryClientProvider client={tanstackQueryClient}>
         <AuthenticationProvider>
-          <I18nProvider loadingComponent={<span>HI there loading</span>}>
+          <I18nProvider>
             <RouterProvider router={router} />
           </I18nProvider>
         </AuthenticationProvider>

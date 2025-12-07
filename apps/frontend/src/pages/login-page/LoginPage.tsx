@@ -7,13 +7,21 @@ import { LightDarkModeButton } from "@/src/shared/components/light-dark-mode-but
 import { TextLink } from "@/src/shared/components/text-link/TextLink.tsx";
 import { PROJECT_NAME, PROJECT_SUBTITLE } from "@/src/shared/constants.ts";
 import "./styles.css";
+import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
+import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
 
 export const LoginPage = () => {
+  const { isLoading } = useI18nContext();
+
   return (
     <div className="LoginPage">
       <div className="LoginPageHeaderOptionsWrapper">
-        <LanguageSelect />
-        <LightDarkModeButton />
+        <Skeleton loading={isLoading} width={180} height={30}>
+          <LanguageSelect />
+        </Skeleton>
+        <Skeleton loading={isLoading} width={30} height={30}>
+          <LightDarkModeButton />
+        </Skeleton>
       </div>
       <main className="LoginPageMain">
         <div className="LoginPageProjectLogoTitleWrapper">
@@ -22,19 +30,21 @@ export const LoginPage = () => {
           <p>{PROJECT_SUBTITLE}</p>
         </div>
         <LoginForm />
-        <p>
-          <Trans>
-            By continuing, you agree to our{" "}
-            <TextLink to={ROUTE_TERMS_OF_SERVICE} variant="primary">
-              <Trans>Terms of Service</Trans>
-            </TextLink>{" "}
-            and{" "}
-            <TextLink to="/privacypolicy" variant="primary">
-              <Trans>Privacy Policy</Trans>
-            </TextLink>
-            .
-          </Trans>
-        </p>
+        <Skeleton loading={isLoading} width={480} height={18}>
+          <p>
+            <Trans>
+              By continuing, you agree to our{" "}
+              <TextLink to={ROUTE_TERMS_OF_SERVICE} variant="primary">
+                <Trans>Terms of Service</Trans>
+              </TextLink>{" "}
+              and{" "}
+              <TextLink to="/privacypolicy" variant="primary">
+                <Trans>Privacy Policy</Trans>
+              </TextLink>
+              .
+            </Trans>
+          </p>
+        </Skeleton>
       </main>
     </div>
   );

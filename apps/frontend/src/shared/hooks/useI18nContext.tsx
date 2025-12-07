@@ -2,7 +2,6 @@ import { I18nProvider as LinguiI18nProvider } from "@lingui/react";
 import {
   createContext,
   type PropsWithChildren,
-  type ReactNode,
   useContext,
   useEffect,
   useState,
@@ -18,18 +17,14 @@ import { useAuthenticationContext } from "@/src/shared/hooks/useAuthenticationCo
 type I18nProviderContext = {
   changeLocale: (newLocale: AvailableLocales) => Promise<void>;
   currentLocale: AvailableLocales;
+  isLoading: boolean;
 };
 
 const I18nContext = createContext<I18nProviderContext | undefined>(undefined);
 
-type I18nProviderProps = PropsWithChildren<{
-  loadingComponent: ReactNode;
-}>;
+type I18nProviderProps = PropsWithChildren;
 
-export const I18nProvider = ({
-  children,
-  loadingComponent,
-}: I18nProviderProps) => {
+export const I18nProvider = ({ children }: I18nProviderProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentLocale, setCurrentLocale] =
     useState<AvailableLocales>(DEFAULT_LOCALE);
@@ -63,11 +58,8 @@ export const I18nProvider = ({
   const i18nProviderContextValue: I18nProviderContext = {
     changeLocale,
     currentLocale,
+    isLoading,
   };
-
-  if (isLoading) {
-    return loadingComponent;
-  }
 
   return (
     <I18nContext.Provider value={i18nProviderContextValue}>
@@ -85,5 +77,3 @@ export const useI18nContext = () => {
   }
   return context;
 };
-
-// Skeletons for login/signup, terms, ...
