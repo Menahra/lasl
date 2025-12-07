@@ -6,3 +6,13 @@ export const AUTHENTICATION_TYPE = "Bearer";
 
 export const PROJECT_NAME = "Marqa";
 export const PROJECT_SUBTITLE = "Where Words Find Their Roots";
+
+export const AVAILABLE_LOCALES = ["en-US", "de-DE", "fr-FR"] as const;
+export type AvailableLocales = (typeof AVAILABLE_LOCALES)[number];
+export const LOCALE_LABELS: Record<AvailableLocales, string> = {
+  // biome-ignore lint/security/noSecrets: a translation, not a secret
+  "de-DE": "Deutsch (Deutschland)",
+  "en-US": "English (United States)",
+  "fr-FR": "Français (France)",
+};
+export const DEFAULT_LOCALE = "en-US";

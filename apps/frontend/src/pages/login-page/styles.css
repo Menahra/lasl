@@ -2,8 +2,9 @@
   padding: var(--space-xl) var(--space-md);
 }
 
-.LoginPageLightDarkModeButtonWrapper {
+.LoginPageHeaderOptionsWrapper {
   display: flex;
+  gap: var(--space-sm);
   justify-content: end;
 }
 

@@ -1,10 +1,10 @@
 import { useLingui } from "@lingui/react/macro";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
+import { DonateButton } from "@/src/layouts/main-layout/header/DonateButton.tsx";
+import { GitHubButton } from "@/src/layouts/main-layout/header/GitHubButton.tsx";
 import { InputField } from "@/src/shared/components/input-field/InputField.tsx";
-import { LightDarkModeButton } from "../../shared/components/light-dark-mode-button/LightDarkModeButton.tsx";
-import { DonateButton } from "./DonateButton.tsx";
-import { GitHubButton } from "./GitHubButton.tsx";
+import { LightDarkModeButton } from "@/src/shared/components/light-dark-mode-button/LightDarkModeButton.tsx";
 
 export const Header = () => {
   const { t: linguiTranslator } = useLingui();

@@ -3,6 +3,7 @@ import { FormInputField } from "@/src/shared/components/form-input-field/FormInp
 import { TextLink } from "@/src/shared/components/text-link/TextLink.tsx";
 import "./styles.css";
 import type { FormEvent } from "react";
+import { ROUTE_TERMS_OF_SERVICE } from "@/src/routes/terms.tsx";
 
 export const RegisterForm = () => {
   const { t: linguiTranslator } = useLingui();
@@ -45,7 +46,7 @@ export const RegisterForm = () => {
       <p>
         <Trans>
           By signing up, you agree to our{" "}
-          <TextLink to="/termsofservice" variant="primary">
+          <TextLink to={ROUTE_TERMS_OF_SERVICE} variant="primary">
             <Trans>Terms of Service</Trans>
           </TextLink>{" "}
           and{" "}

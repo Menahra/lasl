@@ -1,17 +1,11 @@
-.RegisterPageWrapper {
-  padding: var(--space-md);
-}
-
 .RegisterPage {
-  position: relative;
-  display: flex;
-  justify-content: center;
+  padding: var(--space-xl) var(--space-md);
 }
 
-.RegisterPageLightDarkModeButton {
-  position: fixed;
-  top: var(--space-md);
-  right: var(--space-md);
+.RegisterPageHeaderOptionsWrapper {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: end;
 }
 
 .RegisterPageMain {
@@ -25,6 +19,7 @@
   align-items: center;
   flex-direction: column;
   gap: var(--space-sm);
+  margin: 0 auto;
 }
 
 .RegisterPageLogo {

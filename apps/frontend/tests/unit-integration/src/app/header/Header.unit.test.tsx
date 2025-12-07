@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { Header } from "@/src/app/header/Header.tsx";
+import { Header } from "@/src/layouts/main-layout/header/Header.tsx";
 
 describe("Header", () => {
   it("renders a search field (among other things)", () => {

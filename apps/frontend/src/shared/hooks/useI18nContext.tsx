@@ -1,0 +1,89 @@
+import { I18nProvider as LinguiI18nProvider } from "@lingui/react";
+import {
+  createContext,
+  type PropsWithChildren,
+  type ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { userApi } from "@/src/api/userApi.ts";
+import { i18n, initI18n, switchI18nLocale } from "@/src/app/i18n.ts";
+import {
+  type AvailableLocales,
+  DEFAULT_LOCALE,
+} from "@/src/shared/constants.ts";
+import { useAuthenticationContext } from "@/src/shared/hooks/useAuthenticationContext.tsx";
+
+type I18nProviderContext = {
+  changeLocale: (newLocale: AvailableLocales) => Promise<void>;
+  currentLocale: AvailableLocales;
+};
+
+const I18nContext = createContext<I18nProviderContext | undefined>(undefined);
+
+type I18nProviderProps = PropsWithChildren<{
+  loadingComponent: ReactNode;
+}>;
+
+export const I18nProvider = ({
+  children,
+  loadingComponent,
+}: I18nProviderProps) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [currentLocale, setCurrentLocale] =
+    useState<AvailableLocales>(DEFAULT_LOCALE);
+
+  const { user } = useAuthenticationContext();
+
+  useEffect(() => {
+    const initialize = async () => {
+      const initialLocale = await initI18n(user);
+      setCurrentLocale(initialLocale);
+      setIsLoading(false);
+    };
+
+    initialize();
+  }, []);
+
+  const changeLocale = async (newLocale: AvailableLocales) => {
+    try {
+      await switchI18nLocale(newLocale);
+      setCurrentLocale(newLocale);
+
+      if (user) {
+        await userApi.updateUser(user.id, { ...user, newLocale });
+      }
+    } catch (error) {
+      console.error("Failed to update user language: ", error);
+      throw error;
+    }
+  };
+
+  const i18nProviderContextValue: I18nProviderContext = {
+    changeLocale,
+    currentLocale,
+  };
+
+  if (isLoading) {
+    return loadingComponent;
+  }
+
+  return (
+    <I18nContext.Provider value={i18nProviderContextValue}>
+      <LinguiI18nProvider i18n={i18n}>{children}</LinguiI18nProvider>
+    </I18nContext.Provider>
+  );
+};
+
+// biome-ignore lint/style/useComponentExportOnlyModules: okay for context provider
+export const useI18nContext = () => {
+  const context = useContext(I18nContext);
+  if (!context) {
+    // biome-ignore lint/security/noSecrets: not a secret
+    throw new Error("useI18nContext must be used within I18nProvider");
+  }
+  return context;
+};
+
+// Skeletons for login/signup, terms, ...

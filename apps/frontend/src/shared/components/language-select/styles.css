@@ -1,0 +1,45 @@
+.LanguageSelectTrigger {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background-color: transparent;
+  padding: var(--space-sm) var(--space-3);
+  font-size: var(--font-size-sm);
+}
+.LanguageSelectTrigger:hover {
+  border-color: var(--color-border-hover);
+}
+
+.LanguageSelectContent {
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+  padding: 5px;
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px;
+}
+
+.LanguageSelectItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  position: relative;
+  width: 100%;
+  padding: var(--space-xs) var(--space-md) var(--space-xs) 25px;
+  font-size: var(--font-size-sm);
+  border-radius: var(--radius-sm);
+  user-select: none;
+}
+.LanguageSelectItem[data-highlighted] {
+  background-color: var(--color-accent-hover-subtle);
+  outline: none;
+}
+
+.LanguageSelectItemIndicator {
+  position: absolute;
+  left: 0px;
+  width: 25px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,6 +1,8 @@
 import { Trans } from "@lingui/react/macro";
 import MarqaLogo from "@/assets/icons/marqa_logo.svg?react";
 import { LoginForm } from "@/src/components/login-form/LoginForm.tsx";
+import { ROUTE_TERMS_OF_SERVICE } from "@/src/routes/terms.tsx";
+import { LanguageSelect } from "@/src/shared/components/language-select/LanguageSelect.tsx";
 import { LightDarkModeButton } from "@/src/shared/components/light-dark-mode-button/LightDarkModeButton.tsx";
 import { TextLink } from "@/src/shared/components/text-link/TextLink.tsx";
 import { PROJECT_NAME, PROJECT_SUBTITLE } from "@/src/shared/constants.ts";
@@ -9,8 +11,9 @@ import "./styles.css";
 export const LoginPage = () => {
   return (
     <div className="LoginPage">
-      <div className="LoginPageLightDarkModeButtonWrapper">
-        <LightDarkModeButton className="LoginPageLightDarkModeButton" />
+      <div className="LoginPageHeaderOptionsWrapper">
+        <LanguageSelect />
+        <LightDarkModeButton />
       </div>
       <main className="LoginPageMain">
         <div className="LoginPageProjectLogoTitleWrapper">
@@ -22,7 +25,7 @@ export const LoginPage = () => {
         <p>
           <Trans>
             By continuing, you agree to our{" "}
-            <TextLink to="/termsofservice" variant="primary">
+            <TextLink to={ROUTE_TERMS_OF_SERVICE} variant="primary">
               <Trans>Terms of Service</Trans>
             </TextLink>{" "}
             and{" "}
