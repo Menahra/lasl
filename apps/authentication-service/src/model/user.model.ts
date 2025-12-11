@@ -1,3 +1,4 @@
+import { UserSettings } from "@/src/model/user.settings.model.ts";
 import {
   type DocumentType,
   getModelForClass,
@@ -49,6 +50,9 @@ export class User extends TimeStamps {
 
   @prop({ default: false })
   verified!: boolean;
+
+  @prop({ _id: false, type: () => UserSettings, default: {} })
+  settings!: UserSettings;
 
   async validatePassword(
     this: DocumentType<User>,
