@@ -1,7 +1,12 @@
 import type { FastifyBaseLogger } from "fastify";
 import jsonwebtoken from "jsonwebtoken";
 import { getEnvironmentConfig } from "@/src/config/environment.ts";
-import type { JWT_ACCESS_PRIVATE_KEY_NAME, JWT_ACCESS_PUBLIC_KEY_NAME, JWT_REFRESH_PRIVATE_KEY_NAME, JWT_REFRESH_PUBLIC_KEY_NAME } from "@/src/constants/jwt.constants.ts";
+import type {
+  JWT_ACCESS_PRIVATE_KEY_NAME,
+  JWT_ACCESS_PUBLIC_KEY_NAME,
+  JWT_REFRESH_PRIVATE_KEY_NAME,
+  JWT_REFRESH_PUBLIC_KEY_NAME,
+} from "@/src/constants/jwt.constants.ts";
 import { ENVIRONMENT } from "@/src/constants/environment.constants.ts";
 
 export const signJsonWebToken = (
@@ -14,9 +19,6 @@ export const signJsonWebToken = (
   logger: FastifyBaseLogger,
 ) => {
   try {
-    console.log(getEnvironmentConfig());
-    console.log( keyName, ENVIRONMENT[keyName])
-    console.log('final', getEnvironmentConfig()[ENVIRONMENT[keyName]])
     const privateSigningKey = Buffer.from(
       getEnvironmentConfig()[ENVIRONMENT[keyName]],
       "base64",
@@ -28,7 +30,6 @@ export const signJsonWebToken = (
     });
   } catch (error) {
     logger.error(error, `An error occured during sign of ${keyName} key`);
-    console.log(error);
     throw new Error(`JsonWebToken signing failed for ${keyName}`);
   }
 };

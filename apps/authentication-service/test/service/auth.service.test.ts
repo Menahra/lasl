@@ -10,11 +10,8 @@ import {
   signAccessToken,
   signRefreshToken,
 } from "@/src/service/auth.service.ts";
-import {
-  
-  signJsonWebToken,
-} from "@/src/util/jwt.util.ts";
-import {JWT_ACCESS_PRIVATE_KEY_NAME} from "@/src/constants/jwt.constants.ts";
+import { signJsonWebToken } from "@/src/util/jwt.util.ts";
+import { JWT_ACCESS_PRIVATE_KEY_NAME } from "@/src/constants/jwt.constants.ts";
 
 vi.mock("@/src/model/session.model.ts", () => ({
   // biome-ignore lint/style/useNamingConvention: ok here

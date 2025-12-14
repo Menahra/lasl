@@ -91,19 +91,19 @@ describe("user routes", () => {
           },
         },
       },
-    ])(
-      `there there should be a swagger documentation for post ${postUsersEndpointPath} with $statusCode status code`,
-      ({ statusCode, responseType }) => {
-        checkSwaggerDoc({
-          fastifyInstance: app,
-          endpointMethod: "post",
-          endpointPath: postUsersEndpointPath,
-          endpointStatusCode: statusCode,
-          endpointContentType: "application/json",
-          endpointResponseType: responseType,
-        });
-      },
-    );
+    ])(`there there should be a swagger documentation for post ${postUsersEndpointPath} with $statusCode status code`, ({
+      statusCode,
+      responseType,
+    }) => {
+      checkSwaggerDoc({
+        fastifyInstance: app,
+        endpointMethod: "post",
+        endpointPath: postUsersEndpointPath,
+        endpointStatusCode: statusCode,
+        endpointContentType: "application/json",
+        endpointResponseType: responseType,
+      });
+    });
   });
 
   describe("verify code route", () => {

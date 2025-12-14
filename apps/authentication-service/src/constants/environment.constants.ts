@@ -1,4 +1,9 @@
-import { JWT_ACCESS_PRIVATE_KEY_NAME, JWT_ACCESS_PUBLIC_KEY_NAME, JWT_REFRESH_PRIVATE_KEY_NAME, JWT_REFRESH_PUBLIC_KEY_NAME } from "@/src/constants/jwt.constants.ts";
+import {
+  JWT_ACCESS_PRIVATE_KEY_NAME,
+  JWT_ACCESS_PUBLIC_KEY_NAME,
+  JWT_REFRESH_PRIVATE_KEY_NAME,
+  JWT_REFRESH_PUBLIC_KEY_NAME,
+} from "@/src/constants/jwt.constants.ts";
 
 export const ENVIRONMENT = {
   applicationHostPort: "APPLICATION_HOST_PORT",
