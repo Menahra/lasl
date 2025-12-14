@@ -19,7 +19,6 @@ const environmentSchema = z.object({
 });
 
 type EnvironmentKey = keyof typeof ENVIRONMENT;
-
 type EnvironmentVar = (typeof ENVIRONMENT)[EnvironmentKey];
 
 export type EnvironmentSchema = z.infer<typeof environmentSchema>;

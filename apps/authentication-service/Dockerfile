@@ -21,7 +21,7 @@ COPY packages ./packages
 
 RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm --filter authentication-service... run build
-RUN pnpm deploy --filter=authentication-service... --prod /prod/authentication-service
+RUN pnpm deploy --filter=authentication-service --prod /prod/authentication-service
 
 # ---------- Runtime Stage ----------
 FROM base AS authentication-service
