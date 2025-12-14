@@ -5,7 +5,7 @@ import { StatusCodes } from "http-status-codes";
 
 export const updateUserHandler = async (
   req: FastifyRequest<{
-    // biome-ignore-start lint/style/useNamingConvention: property name comes from fastify
+    // biome-ignore lint/style/useNamingConvention: property name comes from fastify
     Body: UpdateUserInput["body"];
   }>,
   reply: FastifyReply,

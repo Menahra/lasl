@@ -9,6 +9,7 @@ import {
 import mongoose from "mongoose";
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 
+// biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok in test
 describe("User Settings model", () => {
   beforeAll(async () => {
     await setupFastifyTestEnvironment({ buildApp, useMongo: true });

@@ -10,6 +10,7 @@ import { StatusCodes } from "http-status-codes";
 import mongoose from "mongoose";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 
+// biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok in test
 describe("update user controller", () => {
   beforeAll(async () => {
     await setupFastifyTestEnvironment({ buildApp, useMongo: true });
@@ -55,6 +56,7 @@ describe("update user controller", () => {
 
   it("should respond with 400 if user is found but cannot be updated", async () => {
     const error = new Error("some error");
+    // biome-ignore lint/security/noSecrets: method name
     vi.spyOn(UserModel, "findByIdAndUpdate").mockRejectedValueOnce(error);
     const userUpdate = { firstName: "Gunther" };
     const id = "someId";

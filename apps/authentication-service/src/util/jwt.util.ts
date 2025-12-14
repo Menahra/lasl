@@ -2,10 +2,12 @@ import type { FastifyBaseLogger } from "fastify";
 import jsonwebtoken from "jsonwebtoken";
 import { ENVIRONMENT, getEnvironmentConfig } from "@/src/config/environment.ts";
 
+/** biome-ignore-start lint/security/noSecrets: just key names */
 export const JWT_ACCESS_PRIVATE_KEYNAME = "jwtAccessPrivateKey";
 export const JWT_ACCESS_PUBLIC_KEYNAME = "jwtAccessPublicKey";
 export const JWT_REFRESH_PRIVATE_KEYNAME = "jwtRefreshPrivateKey";
 export const JWT_REFRESH_PUBLIC_KEYNAME = "jwtRefreshPublicKey";
+/** biome-ignore-end lint/security/noSecrets: just key names */
 
 export const signJsonWebToken = (
   object: Record<string, unknown>,

@@ -180,7 +180,7 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
     "/users/me",
     {
       preHandler: deserializeUser<{
-        // biome-ignore-start lint/style/useNamingConvention: property name come from fastify
+        // biome-ignore lint/style/useNamingConvention: property name come from fastify
         Body: UpdateUserInput["body"];
       }>,
       schema: {
