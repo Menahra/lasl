@@ -27,6 +27,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
+  AUTHENTICATION_SERVICE_DIR: apps/authentication-service
   NODE_VERSION: lts/*
 
 jobs:
@@ -49,6 +50,9 @@ jobs:
   types-check:
     name: Type Check
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.AUTHENTICATION_SERVICE_DIR }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -59,11 +63,14 @@ jobs:
           node_version: ${{ env.NODE_VERSION }}
 
       - name: Check types
-        run: pnpm --filter authentication-service check:types
+        run: pnpm run check:types
 
   lint:
     name: Lint
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.AUTHENTICATION_SERVICE_DIR }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -74,11 +81,14 @@ jobs:
           node_version: ${{ env.NODE_VERSION }}
 
       - name: Lint code
-        run: pnpm --filter authentication-service check:ci
+        run: pnpm run check:ci
 
   test:
     name: Test
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.AUTHENTICATION_SERVICE_DIR }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -89,4 +99,4 @@ jobs:
           node_version: ${{ env.NODE_VERSION }}
 
       - name: Run tests
-        run: pnpm --filter authentication-service test
+        run: pnpm run test
