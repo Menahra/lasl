@@ -7,24 +7,20 @@ import { checkSwaggerDoc } from "@lasl/test-utils-fastify/swagger-doc-utils";
 import type { FastifyBaseLogger, FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import mongoose from "mongoose";
-import {
-  afterAll,
-  beforeAll,
-  describe,
-  expect,
-  it,
-  vi,
-} from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { buildApp } from "@/src/app.ts";
-import { getApiVersionPathPrefix } from "@/src/util/api.path.util.ts";
-import { mockUserData, mockUserDataWithSettings } from "@/test/__mocks__/user.mock.ts";
 import { UserModel } from "@/src/model/user.model.ts";
+import { getApiVersionPathPrefix } from "@/src/util/api.path.util.ts";
+import {
+  mockUserData,
+  mockUserDataWithSettings,
+} from "@/test/__mocks__/user.mock.ts";
 
 const mockUserId = new mongoose.Types.ObjectId().toString();
 
-vi.mock("@/src/util/jwt.util.ts",  () => ({
+vi.mock("@/src/util/jwt.util.ts", () => ({
   signJsonWebToken: vi.fn(),
-  verifyJsonWebToken: () => ({id: mockUserId, ...mockUserDataWithSettings}),
+  verifyJsonWebToken: () => ({ id: mockUserId, ...mockUserDataWithSettings }),
 }));
 
 describe("user routes me", () => {
@@ -114,7 +110,7 @@ describe("user routes me", () => {
   );
 
   it("should return the current authenticated user", async () => {
-    const token = "test234"
+    const token = "test234";
 
     const response = await app.inject({
       method: "GET",
@@ -134,7 +130,10 @@ describe("user routes me", () => {
   });
 
   it("should update the current authenticated user", async () => {
-    const createdUser = await UserModel.create({...mockUser, _id: mockUserId});
+    await UserModel.create({
+      ...mockUser,
+      _id: mockUserId,
+    });
 
     const token = "test234";
 
