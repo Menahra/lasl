@@ -28,15 +28,25 @@ import {
 import { mockUserData } from "@/test/__mocks__/user.mock.ts";
 
 const mockedEnvironmentConfig = {
-  jwtAccessPrivateKey: "",
-  jwtAccessPublicKey: "",
-  jwtRefreshPrivateKey: "",
-  jwtRefreshPublicKey: "",
+  // biome-ignore-start lint/style/useNamingConvention: ok in test
+  JWT_ACCESS_PRIVATE_KEY: "",
+  JWT_ACCESS_PUBLIC_KEY: "",
+  JWT_REFRESH_PRIVATE_KEY: "",
+  JWT_REFRESH_PUBLIC_KEY: "",
+  // biome-ignore-end lint/style/useNamingConvention: ok in test
 };
 
-vi.mock("@/src/config/environment.ts", () => {
+vi.mock("@/src/config/environment.ts", async (importOriginalEnvironment) => {
+  const originalEnvironmentConfig = (
+    await importOriginalEnvironment<
+      typeof import("@/src/config/environment.ts")
+    >()
+  ).getEnvironmentConfig();
   return {
-    getEnvironmentConfig: () => mockedEnvironmentConfig,
+    getEnvironmentConfig: () => ({
+      ...originalEnvironmentConfig,
+      ...mockedEnvironmentConfig,
+    }),
   };
 });
 
@@ -68,10 +78,10 @@ describe("user routes me", () => {
   };
 
   beforeEach(() => {
-    mockedEnvironmentConfig.jwtAccessPrivateKey = mockPrivateKeyBase64;
-    mockedEnvironmentConfig.jwtAccessPublicKey = mockPublicKeyBase64;
-    mockedEnvironmentConfig.jwtRefreshPrivateKey = mockPrivateKeyBase64;
-    mockedEnvironmentConfig.jwtRefreshPublicKey = mockPublicKeyBase64;
+    mockedEnvironmentConfig.JWT_ACCESS_PRIVATE_KEY = mockPrivateKeyBase64;
+    mockedEnvironmentConfig.JWT_ACCESS_PUBLIC_KEY = mockPublicKeyBase64;
+    mockedEnvironmentConfig.JWT_REFRESH_PRIVATE_KEY = mockPrivateKeyBase64;
+    mockedEnvironmentConfig.JWT_REFRESH_PUBLIC_KEY = mockPublicKeyBase64;
     vi.clearAllMocks();
   });
 

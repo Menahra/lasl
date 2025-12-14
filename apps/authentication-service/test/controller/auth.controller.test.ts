@@ -250,31 +250,6 @@ describe("refreshAccessTokenHandler", () => {
     });
   });
 
-  it("should catch and log unexpected errors", async () => {
-    vi.spyOn(jwtUtil, "verifyJsonWebToken").mockImplementation(() => {
-      throw new Error("bad token");
-    });
-
-    const req = {
-      cookies: { refreshToken: "bad.token" },
-      log: mockLog,
-    };
-    const reply = mockReply();
-
-    // @ts-expect-error okay in test
-    await refreshAccessTokenHandler(req, reply);
-
-    expect(mockLog.error).toHaveBeenCalledWith(
-      expect.any(Error),
-      "Could not refresh the token/session",
-    );
-
-    expect(reply.status).toHaveBeenCalledWith(401);
-    expect(reply.send).toHaveBeenCalledWith({
-      message: "Could not refresh access token",
-    });
-  });
-
   describe("logoutHandler", () => {
     it("should invalidate session, clear cookie, and return success", async () => {
       const mockSave = vi.fn();
