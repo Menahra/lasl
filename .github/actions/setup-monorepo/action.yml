@@ -24,3 +24,7 @@ runs:
     - name: Build all packages
       shell: bash
       run: pnpm build
+
+    - name: Re-install dependencies
+      shell: bash
+      run: pnpm install --frozen-lockfile
