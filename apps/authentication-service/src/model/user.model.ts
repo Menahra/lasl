@@ -12,7 +12,7 @@ import { nanoid } from "nanoid";
 
 export type UserJsonWebTokenPayload = {
   id: string;
-} & Pick<User, "email" | "firstName" | "lastName">;
+} & Pick<User, "email" | "firstName" | "lastName" | "settings">;
 
 @pre<User>("save", async function () {
   if (!this.isModified("password")) {
@@ -67,6 +67,7 @@ export class User extends TimeStamps {
       email: this.email,
       firstName: this.firstName,
       lastName: this.lastName,
+      settings: this.settings,
     };
   }
 }

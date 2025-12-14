@@ -18,8 +18,8 @@ export const createUserHandler = async (
   try {
     const user = await createUser(body);
 
-    const host = req.headers.host;
-    const protocol = req.protocol;
+    const { host } = req.headers;
+    const { protocol } = req;
     const origin = `${protocol}://${host}`;
 
     const verifyUrl = `${origin}${getApiVersionPathPrefix(1)}/users/verify/${user._id}/${user.verificationCode}`;

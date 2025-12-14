@@ -4,6 +4,9 @@ import {
   userEmailSchema,
   userPasswordWithConfirmationSchema,
 } from "./common.user.schema.ts";
+import { SUPPORTED_LOCALES } from "@lasl/app-contracts/locales";
+
+const ZOD_JSON_SCHEMA_TARGET = "draft-7";
 
 export const createUserInputSchema = z.object({
   body: z
@@ -14,6 +17,20 @@ export const createUserInputSchema = z.object({
     })
     .extend(userPasswordWithConfirmationSchema.shape)
     .superRefine(passwordMatchRefinement),
+});
+export const updateUserInputSchema = z.object({
+  body: createUserInputSchema.shape.body
+    .pick({ firstName: true, lastName: true })
+    .partial()
+    .extend({
+      settings: z
+        .strictObject({
+          darkMode: z.boolean().optional(),
+          uiLanguage: z.enum(SUPPORTED_LOCALES).optional(),
+          contentLanguage: z.enum(SUPPORTED_LOCALES).optional(),
+        })
+        .optional(),
+    }),
 });
 export const verifyUserInputSchema = z.object({
   params: z.object({
@@ -36,27 +53,33 @@ export const resetPasswordInputSchema = z.object({
 
 export const createUserInputJsonSchema = z.toJSONSchema(
   createUserInputSchema.shape.body,
-  { target: "draft-7" },
+  { target: ZOD_JSON_SCHEMA_TARGET },
+);
+
+export const updateUserInputJsonSchema = z.toJSONSchema(
+  updateUserInputSchema.shape.body,
+  { target: ZOD_JSON_SCHEMA_TARGET },
 );
 
 export const verifyUserInputJsonSchema = z.toJSONSchema(
   verifyUserInputSchema.shape.params,
-  { target: "draft-7" },
+  { target: ZOD_JSON_SCHEMA_TARGET },
 );
 export const forgotPasswordInputJsonSchema = z.toJSONSchema(
   forgotPasswordInputSchema.shape.body,
-  { target: "draft-7" },
+  { target: ZOD_JSON_SCHEMA_TARGET },
 );
 export const resetPasswordParamsInputJsonSchema = z.toJSONSchema(
   resetPasswordInputSchema.shape.params,
-  { target: "draft-7" },
+  { target: ZOD_JSON_SCHEMA_TARGET },
 );
 export const resetPasswordBodyInputJsonSchema = z.toJSONSchema(
   resetPasswordInputSchema.shape.body,
-  { target: "draft-7" },
+  { target: ZOD_JSON_SCHEMA_TARGET },
 );
 
 export type CreateUserInput = z.infer<typeof createUserInputSchema>;
+export type UpdateUserInput = z.infer<typeof updateUserInputSchema>;
 export type VerifyUserInput = z.infer<typeof verifyUserInputSchema>;
 export type ForgotPasswordInput = z.infer<typeof forgotPasswordInputSchema>;
 export type ResetPasswordInput = z.infer<typeof resetPasswordInputSchema>;

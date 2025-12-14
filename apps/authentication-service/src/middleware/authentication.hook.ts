@@ -1,4 +1,8 @@
-import type { FastifyReply, FastifyRequest } from "fastify";
+import type {
+  FastifyReply,
+  FastifyRequest,
+  RouteGenericInterface,
+} from "fastify";
 import { StatusCodes } from "http-status-codes";
 import type { UserJsonWebTokenPayload } from "../model/user.model.ts";
 import { findSessionById } from "../service/auth.service.ts";
@@ -11,8 +15,10 @@ export const REFRESH_COOKIE_NAME = "refreshToken";
 // biome-ignore-end lint/security/noSecrets: these are no secrets
 
 // biome-ignore lint/suspicious/useAwait: needed for preHandler functionality in fastify
-export const deserializeUser = async (
-  req: FastifyRequest,
+export const deserializeUser = async <
+  R extends RouteGenericInterface = RouteGenericInterface,
+>(
+  req: FastifyRequest<R>,
   reply: FastifyReply,
 ) => {
   const authorizationHeader = req.headers.authorization;

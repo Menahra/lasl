@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { genericMessageResponseSchema } from "@/src/routes/common.response.schema.ts";
 import { createUserInputSchema } from "@/src/schema/user.schema.ts";
+import { SUPPORTED_LOCALES } from "@lasl/app-contracts/locales";
 
 // Create User Responses
 export const createUserSuccessResponseSchema = genericMessageResponseSchema;
@@ -103,7 +104,14 @@ export const getCurrentAuthenticatedUserSuccessResponseSchema =
       firstName: true,
       lastName: true,
     })
-    .extend({ id: z.string().nonempty() });
+    .extend({
+      id: z.string().nonempty(),
+      settings: z.object({
+        darkMode: z.boolean(),
+        uiLanguage: z.enum(SUPPORTED_LOCALES),
+        contentLanguage: z.enum(SUPPORTED_LOCALES),
+      }),
+    });
 export type GetCurrentAuthenticatedUserSuccessResponse = z.infer<
   typeof getCurrentAuthenticatedUserSuccessResponseSchema
 >;
@@ -112,4 +120,23 @@ export const getCurrentAuthenticatedUserForbiddenResponseSchema =
   genericMessageResponseSchema;
 export type GetCurrentAuthenticatedUserForbiddenResponse = z.infer<
   typeof getCurrentAuthenticatedUserForbiddenResponseSchema
+>;
+
+// Update User Response
+export const updateCurrentAuthenticatedUserSuccessResponseSchema =
+  getCurrentAuthenticatedUserSuccessResponseSchema;
+export type UpdateCurrentAuthenticatedUserSuccessResponseSchema = z.infer<
+  typeof updateCurrentAuthenticatedUserSuccessResponseSchema
+>;
+
+export const updateCurrentAuthenticatedUserBadRequestResponseSchema =
+  genericMessageResponseSchema;
+export type UpdateCurrentAuthenticatedUserBadRequestResponse = z.infer<
+  typeof updateCurrentAuthenticatedUserBadRequestResponseSchema
+>;
+
+export const updateCurrentAuthenticatedUserForbiddenResponseSchema =
+  genericMessageResponseSchema;
+export type UpdateCurrentAuthenticatedUserForbiddenResponse = z.infer<
+  typeof updateCurrentAuthenticatedUserForbiddenResponseSchema
 >;

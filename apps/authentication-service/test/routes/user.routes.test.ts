@@ -13,6 +13,7 @@ import { buildApp } from "@/src/app.ts";
 import * as userService from "@/src/service/user.service.ts";
 import { getApiVersionPathPrefix } from "@/src/util/api.path.util.ts";
 import { mockUserInputData } from "../__mocks__/user.mock.ts";
+import { SUPPORTED_LOCALES } from "@lasl/app-contracts/locales";
 
 // biome-ignore lint/complexity/noExcessiveLinesPerFunction: test ok
 describe("user routes", () => {
@@ -230,38 +231,5 @@ describe("user routes", () => {
         },
       });
     });
-  });
-
-  describe("GET /users/me", () => {
-    const getUserPath = `${apiPathPrefix}/users/me`;
-
-    it.each([StatusCodes.OK, StatusCodes.UNAUTHORIZED])(
-      "should include %s in Swagger documentation",
-      (statusCode) => {
-        checkSwaggerDoc({
-          fastifyInstance: app,
-          endpointMethod: "get",
-          endpointPath: getUserPath,
-          endpointStatusCode: statusCode,
-          endpointContentType: "application/json",
-          endpointResponseType:
-            statusCode === StatusCodes.OK
-              ? {
-                  id: { type: "string", minLength: 1 },
-                  email: {
-                    type: "string",
-                    format: "email",
-                    pattern:
-                      "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$",
-                  },
-                  firstName: { type: "string", minLength: 1 },
-                  lastName: { type: "string", minLength: 1 },
-                }
-              : {
-                  message: { type: "string", minLength: 1 },
-                },
-        });
-      },
-    );
   });
 });

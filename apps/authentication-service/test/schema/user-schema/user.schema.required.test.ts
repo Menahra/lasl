@@ -1,9 +1,12 @@
+/** biome-ignore-all lint/security/noSecrets: just mock data */
 import { describe, expect, it } from "vitest";
-import { createUserInputSchema } from "@/src/schema/user.schema.ts";
+import {
+  createUserInputSchema,
+  updateUserInputSchema,
+} from "@/src/schema/user.schema.ts";
 import { validUserInput } from "./validInput.ts";
 
 // biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok in test
-// biome-ignore lint/security/noSecrets: not a secret
 describe("validation of createUserInputSchema", () => {
   it("fails when firstName is missing", () => {
     const { firstName: _firstName, ...schemaWithoutFirstName } =
@@ -83,6 +86,31 @@ describe("validation of createUserInputSchema", () => {
     expect(result.error?.issues).toHaveLength(1);
     expect(result.error?.issues[0].message).toEqual(
       "Please enter a valid email address",
+    );
+  });
+});
+
+describe("validation of updateUserInputSchema", () => {
+  it("everything is optional", () => {
+    const result = updateUserInputSchema.safeParse({ body: {} });
+    expect(result.success).toBeTruthy();
+  });
+
+  it("can contain firstName and settings object", () => {
+    const result = updateUserInputSchema.safeParse({
+      body: { firstName: "Tester", settings: { uiLanguage: "de-DE" } },
+    });
+    expect(result.success).toBeTruthy();
+  });
+
+  it("additional properties in settings object not allowed", () => {
+    const result = updateUserInputSchema.safeParse({
+      body: { settings: { someProperty: "cool" } },
+    });
+    expect(result.success).toBeFalsy();
+    expect(result.error?.issues).toHaveLength(1);
+    expect(result.error?.issues[0].message).toEqual(
+      'Unrecognized key: "someProperty"',
     );
   });
 });

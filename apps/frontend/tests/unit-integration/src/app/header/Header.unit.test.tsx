@@ -59,7 +59,7 @@ describe("Header", () => {
     const button = screen.getByRole("button");
     expect(button).toBeVisible();
 
-    expect(button).toHaveAccessibleName("header.switch_to_lightmode");
+    expect(button).toHaveAccessibleName("header.switch_to_light_mode");
   });
 
   it("renders a button to change theme to dark if current is light", () => {
@@ -85,6 +85,6 @@ describe("Header", () => {
     const button = screen.getByRole("button");
     expect(button).toBeVisible();
 
-    expect(button).toHaveAccessibleName("header.switch_to_darkmode");
+    expect(button).toHaveAccessibleName("header.switch_to_dark_mode");
   });
 });

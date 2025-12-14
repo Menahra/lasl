@@ -12,13 +12,13 @@ export const LightDarkModeButton = () => {
     ...(isDarkMode
       ? {
           icon: <MoonIcon />,
-          description: t("header.switch_to_lightmode"),
-          title: t("header.switch_to_lightmode"),
+          description: t("header.switch_to_light_mode"),
+          title: t("header.switch_to_light_mode"),
         }
       : {
           icon: <SunIcon />,
-          description: t("header.switch_to_darkmode"),
-          title: t("header.switch_to_darkmode"),
+          description: t("header.switch_to_dark_mode"),
+          title: t("header.switch_to_dark_mode"),
         }),
   };
 

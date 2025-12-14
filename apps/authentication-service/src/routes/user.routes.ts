@@ -14,6 +14,9 @@ import {
   resetPasswordInternalServerErrorResponseSchema,
   resetPasswordNotFoundResponseSchema,
   resetPasswordSuccessResponseSchema,
+  updateCurrentAuthenticatedUserBadRequestResponseSchema,
+  updateCurrentAuthenticatedUserForbiddenResponseSchema,
+  updateCurrentAuthenticatedUserSuccessResponseSchema,
   verifyUserBadRequestResponseSchema,
   verifyUserConflictResponseSchema,
   verifyUserInternalServerErrorResponseSchema,
@@ -31,8 +34,11 @@ import {
   forgotPasswordInputJsonSchema,
   resetPasswordBodyInputJsonSchema,
   resetPasswordParamsInputJsonSchema,
+  updateUserInputJsonSchema,
   verifyUserInputJsonSchema,
+  type UpdateUserInput,
 } from "../schema/user.schema.ts";
+import { updateUserHandler } from "@/src/controller/update.user.controller.ts";
 
 const UserSwaggerTag = "User";
 
@@ -168,5 +174,39 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
       },
     },
     getUserHandler,
+  );
+
+  fastifyInstance.patch(
+    "/users/me",
+    {
+      preHandler: deserializeUser<{
+        // biome-ignore-start lint/style/useNamingConvention: property name come from fastify
+        Body: UpdateUserInput["body"];
+      }>,
+      schema: {
+        summary: "Update the current authenticated user",
+        tags: [UserSwaggerTag],
+        description:
+          "Send the authorization header in Bearer format and the update options to update the current authenticated user",
+        headers: {
+          type: "object",
+          properties: { authorization: { type: "string" } },
+          required: ["authorization"],
+        },
+        body: updateUserInputJsonSchema,
+        response: {
+          [StatusCodes.OK]: z.toJSONSchema(
+            updateCurrentAuthenticatedUserSuccessResponseSchema,
+          ),
+          [StatusCodes.BAD_REQUEST]: z.toJSONSchema(
+            updateCurrentAuthenticatedUserBadRequestResponseSchema,
+          ),
+          [StatusCodes.UNAUTHORIZED]: z.toJSONSchema(
+            updateCurrentAuthenticatedUserForbiddenResponseSchema,
+          ),
+        },
+      },
+    },
+    updateUserHandler,
   );
 };

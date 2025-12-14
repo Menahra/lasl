@@ -14,7 +14,7 @@ declare module "fastify" {
   }
   // biome-ignore lint/style/useConsistentTypeDefinitions: needed for type augmentation
   interface FastifyRequest {
-    user: UserJsonWebTokenPayload;
-    session: DocumentType<Session>;
+    user?: UserJsonWebTokenPayload;
+    session?: DocumentType<Session>;
   }
 }
