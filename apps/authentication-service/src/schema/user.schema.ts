@@ -1,10 +1,10 @@
+import { SUPPORTED_LOCALES } from "@lasl/app-contracts/locales";
 import { z } from "zod";
 import {
   passwordMatchRefinement,
   userEmailSchema,
   userPasswordWithConfirmationSchema,
 } from "./common.user.schema.ts";
-import { SUPPORTED_LOCALES } from "@lasl/app-contracts/locales";
 
 const ZOD_JSON_SCHEMA_TARGET = "draft-7";
 

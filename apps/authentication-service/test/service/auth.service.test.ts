@@ -2,6 +2,7 @@ import type { DocumentType } from "@typegoose/typegoose";
 import type { FastifyBaseLogger } from "fastify";
 import mongoose from "mongoose";
 import { afterEach, describe, expect, it, type Mock, vi } from "vitest";
+import { JWT_ACCESS_PRIVATE_KEY_NAME } from "@/src/constants/jwt.constants.ts";
 import { SessionModel } from "@/src/model/session.model.ts";
 import type { User } from "@/src/model/user.model.ts";
 import {
@@ -11,7 +12,6 @@ import {
   signRefreshToken,
 } from "@/src/service/auth.service.ts";
 import { signJsonWebToken } from "@/src/util/jwt.util.ts";
-import { JWT_ACCESS_PRIVATE_KEY_NAME } from "@/src/constants/jwt.constants.ts";
 
 vi.mock("@/src/model/session.model.ts", () => ({
   // biome-ignore lint/style/useNamingConvention: ok here

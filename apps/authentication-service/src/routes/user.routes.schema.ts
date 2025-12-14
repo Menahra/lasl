@@ -1,7 +1,7 @@
+import { SUPPORTED_LOCALES } from "@lasl/app-contracts/locales";
 import { z } from "zod";
 import { genericMessageResponseSchema } from "@/src/routes/common.response.schema.ts";
 import { createUserInputSchema } from "@/src/schema/user.schema.ts";
-import { SUPPORTED_LOCALES } from "@lasl/app-contracts/locales";
 
 // Create User Responses
 export const createUserSuccessResponseSchema = genericMessageResponseSchema;

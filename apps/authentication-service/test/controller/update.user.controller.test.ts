@@ -1,7 +1,3 @@
-import { buildApp } from "@/src/app.ts";
-import { updateUserHandler } from "@/src/controller/update.user.controller.ts";
-import { UserModel } from "@/src/model/user.model.ts";
-import { mockUserDataWithSettings } from "@/test/__mocks__/user.mock.ts";
 import {
   setupFastifyTestEnvironment,
   teardownFastifyTestEnvironment,
@@ -9,6 +5,10 @@ import {
 import { StatusCodes } from "http-status-codes";
 import mongoose from "mongoose";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
+import { buildApp } from "@/src/app.ts";
+import { updateUserHandler } from "@/src/controller/update.user.controller.ts";
+import { UserModel } from "@/src/model/user.model.ts";
+import { mockUserDataWithSettings } from "@/test/__mocks__/user.mock.ts";
 
 describe("update user controller", () => {
   beforeAll(async () => {

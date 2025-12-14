@@ -1,6 +1,7 @@
 import type { FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import z from "zod";
+import { updateUserHandler } from "@/src/controller/update.user.controller.ts";
 import {
   createUserBadRequestResponseSchema,
   createUserConflictResponseSchema,
@@ -34,11 +35,10 @@ import {
   forgotPasswordInputJsonSchema,
   resetPasswordBodyInputJsonSchema,
   resetPasswordParamsInputJsonSchema,
+  type UpdateUserInput,
   updateUserInputJsonSchema,
   verifyUserInputJsonSchema,
-  type UpdateUserInput,
 } from "../schema/user.schema.ts";
-import { updateUserHandler } from "@/src/controller/update.user.controller.ts";
 
 const UserSwaggerTag = "User";
 

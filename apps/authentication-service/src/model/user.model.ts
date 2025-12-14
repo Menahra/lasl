@@ -1,4 +1,3 @@
-import { UserSettings } from "@/src/model/user.settings.model.ts";
 import {
   type DocumentType,
   getModelForClass,
@@ -9,6 +8,7 @@ import {
 import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses.js";
 import argon2 from "argon2";
 import { nanoid } from "nanoid";
+import { UserSettings } from "@/src/model/user.settings.model.ts";
 
 export type UserJsonWebTokenPayload = {
   id: string;

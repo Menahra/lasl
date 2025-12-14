@@ -1,13 +1,13 @@
 import type { FastifyBaseLogger } from "fastify";
 import jsonwebtoken from "jsonwebtoken";
 import { getEnvironmentConfig } from "@/src/config/environment.ts";
+import { ENVIRONMENT } from "@/src/constants/environment.constants.ts";
 import type {
   JWT_ACCESS_PRIVATE_KEY_NAME,
   JWT_ACCESS_PUBLIC_KEY_NAME,
   JWT_REFRESH_PRIVATE_KEY_NAME,
   JWT_REFRESH_PUBLIC_KEY_NAME,
 } from "@/src/constants/jwt.constants.ts";
-import { ENVIRONMENT } from "@/src/constants/environment.constants.ts";
 
 export const signJsonWebToken = (
   object: Record<string, unknown>,

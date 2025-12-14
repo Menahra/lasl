@@ -1,14 +1,14 @@
 import type { FastifyBaseLogger } from "fastify";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import {
+  JWT_ACCESS_PRIVATE_KEY_NAME,
+  JWT_ACCESS_PUBLIC_KEY_NAME,
+} from "@/src/constants/jwt.constants.ts";
 import * as jwtUtil from "@/src/util/jwt.util.ts";
 import {
   mockPrivateKeyBase64,
   mockPublicKeyBase64,
 } from "@/test/__mocks__/jwt.mock.ts";
-import {
-  JWT_ACCESS_PRIVATE_KEY_NAME,
-  JWT_ACCESS_PUBLIC_KEY_NAME,
-} from "@/src/constants/jwt.constants.ts";
 
 const mockedEnvironmentConfig = {
   // biome-ignore-start lint/style/useNamingConvention: ok in test

@@ -1,6 +1,6 @@
 import process from "node:process";
-import { buildApp } from "./app.ts";
 import { ENVIRONMENT } from "@/src/constants/environment.constants.ts";
+import { buildApp } from "./app.ts";
 
 const startAuthenticationServer = async () => {
   const app = await buildApp();

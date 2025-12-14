@@ -1,7 +1,7 @@
-import { UserModel } from "@/src/model/user.model.ts";
-import type { UpdateUserInput } from "@/src/schema/user.schema.ts";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { StatusCodes } from "http-status-codes";
+import { UserModel } from "@/src/model/user.model.ts";
+import type { UpdateUserInput } from "@/src/schema/user.schema.ts";
 
 export const updateUserHandler = async (
   req: FastifyRequest<{

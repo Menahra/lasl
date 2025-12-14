@@ -1,14 +1,12 @@
-import { buildApp } from "@/src/app.ts";
-import { getApiVersionPathPrefix } from "@/src/util/api.path.util.ts";
-import { signJsonWebToken } from "@/src/util/jwt.util.ts";
-import { JWT_ACCESS_PRIVATE_KEY_NAME } from "@/src/constants/jwt.constants.ts";
-import { mockUserData } from "@/test/__mocks__/user.mock.ts";
+import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "@lasl/app-contracts/locales";
 import {
   setupFastifyTestEnvironment,
   teardownFastifyTestEnvironment,
 } from "@lasl/test-utils-fastify/setup-utils";
+import { checkSwaggerDoc } from "@lasl/test-utils-fastify/swagger-doc-utils";
 import type { FastifyBaseLogger, FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
+import mongoose from "mongoose";
 import {
   afterAll,
   beforeAll,
@@ -18,14 +16,16 @@ import {
   it,
   vi,
 } from "vitest";
+import { buildApp } from "@/src/app.ts";
+import { JWT_ACCESS_PRIVATE_KEY_NAME } from "@/src/constants/jwt.constants.ts";
+import { UserModel } from "@/src/model/user.model.ts";
+import { getApiVersionPathPrefix } from "@/src/util/api.path.util.ts";
+import { signJsonWebToken } from "@/src/util/jwt.util.ts";
 import {
   mockPrivateKeyBase64,
   mockPublicKeyBase64,
 } from "@/test/__mocks__/jwt.mock.ts";
-import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "@lasl/app-contracts/locales";
-import mongoose from "mongoose";
-import { UserModel } from "@/src/model/user.model.ts";
-import { checkSwaggerDoc } from "@lasl/test-utils-fastify/swagger-doc-utils";
+import { mockUserData } from "@/test/__mocks__/user.mock.ts";
 
 const mockedEnvironmentConfig = {
   jwtAccessPrivateKey: "",

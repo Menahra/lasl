@@ -1,6 +1,3 @@
-import { buildApp } from "@/src/app.ts";
-import { UserModel } from "@/src/model/user.model.ts";
-import { mockUserData } from "@/test/__mocks__/user.mock.ts";
 import { DEFAULT_LOCALE } from "@lasl/app-contracts/locales";
 import {
   setupFastifyTestEnvironment,
@@ -8,6 +5,9 @@ import {
 } from "@lasl/test-utils-fastify/setup-utils";
 import mongoose from "mongoose";
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
+import { buildApp } from "@/src/app.ts";
+import { UserModel } from "@/src/model/user.model.ts";
+import { mockUserData } from "@/test/__mocks__/user.mock.ts";
 
 describe("User Settings model", () => {
   beforeAll(async () => {

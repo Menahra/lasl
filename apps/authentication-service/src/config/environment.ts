@@ -1,6 +1,6 @@
-import { ENVIRONMENT } from "@/src/constants/environment.constants.ts";
 import process from "node:process";
 import z from "zod";
+import { ENVIRONMENT } from "@/src/constants/environment.constants.ts";
 
 const defaultPort = 3000;
 const defaultApplicationHostPort = 8080;

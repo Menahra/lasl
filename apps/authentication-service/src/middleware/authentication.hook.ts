@@ -4,13 +4,13 @@ import type {
   RouteGenericInterface,
 } from "fastify";
 import { StatusCodes } from "http-status-codes";
-import type { UserJsonWebTokenPayload } from "../model/user.model.ts";
-import { findSessionById } from "../service/auth.service.ts";
 import {
   JWT_ACCESS_PUBLIC_KEY_NAME,
   JWT_REFRESH_PUBLIC_KEY_NAME,
 } from "@/src/constants/jwt.constants.ts";
 import { verifyJsonWebToken } from "@/src/util/jwt.util.ts";
+import type { UserJsonWebTokenPayload } from "../model/user.model.ts";
+import { findSessionById } from "../service/auth.service.ts";
 
 // biome-ignore lint/security/noSecrets: not a secret
 export const REFRESH_COOKIE_NAME = "refreshToken";

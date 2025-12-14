@@ -1,9 +1,9 @@
 import type { DocumentType } from "@typegoose/typegoose";
 import type { FastifyBaseLogger } from "fastify";
 import type { Types } from "mongoose";
+import { JWT_ACCESS_PRIVATE_KEY_NAME } from "@/src/constants/jwt.constants.ts";
 import type { User } from "@/src/model/user.model.ts";
 import { signJsonWebToken } from "@/src/util/jwt.util.ts";
-import { JWT_ACCESS_PRIVATE_KEY_NAME } from "@/src/constants/jwt.constants.ts";
 import { SessionModel } from "../model/session.model.ts";
 
 export const createSession = async (
