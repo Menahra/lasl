@@ -89,47 +89,50 @@ describe("user routes me", () => {
     ["patch", StatusCodes.OK],
     ["patch", StatusCodes.BAD_REQUEST],
     ["patch", StatusCodes.UNAUTHORIZED],
-  ] as const)("should include %s in Swagger documentation", (endpointMethod, statusCode) => {
-    checkSwaggerDoc({
-      fastifyInstance: app,
-      endpointMethod,
-      endpointPath: currentUserEndpoint,
-      endpointStatusCode: statusCode,
-      endpointContentType: "application/json",
-      endpointResponseType:
-        statusCode === StatusCodes.OK
-          ? {
-              id: { type: "string", minLength: 1 },
-              email: {
-                type: "string",
-                format: "email",
-                pattern:
-                  "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$",
-              },
-              firstName: { type: "string", minLength: 1 },
-              lastName: { type: "string", minLength: 1 },
-              settings: {
-                type: "object",
-                properties: {
-                  darkMode: { type: "boolean" },
-                  uiLanguage: {
-                    type: "string",
-                    enum: [...SUPPORTED_LOCALES],
-                  },
-                  contentLanguage: {
-                    type: "string",
-                    enum: [...SUPPORTED_LOCALES],
-                  },
+  ] as const)(
+    "should include %s in Swagger documentation",
+    (endpointMethod, statusCode) => {
+      checkSwaggerDoc({
+        fastifyInstance: app,
+        endpointMethod,
+        endpointPath: currentUserEndpoint,
+        endpointStatusCode: statusCode,
+        endpointContentType: "application/json",
+        endpointResponseType:
+          statusCode === StatusCodes.OK
+            ? {
+                id: { type: "string", minLength: 1 },
+                email: {
+                  type: "string",
+                  format: "email",
+                  pattern:
+                    "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$",
                 },
-                additionalProperties: false,
-                required: ["darkMode", "uiLanguage", "contentLanguage"],
+                firstName: { type: "string", minLength: 1 },
+                lastName: { type: "string", minLength: 1 },
+                settings: {
+                  type: "object",
+                  properties: {
+                    darkMode: { type: "boolean" },
+                    uiLanguage: {
+                      type: "string",
+                      enum: [...SUPPORTED_LOCALES],
+                    },
+                    contentLanguage: {
+                      type: "string",
+                      enum: [...SUPPORTED_LOCALES],
+                    },
+                  },
+                  additionalProperties: false,
+                  required: ["darkMode", "uiLanguage", "contentLanguage"],
+                },
+              }
+            : {
+                message: { type: "string", minLength: 1 },
               },
-            }
-          : {
-              message: { type: "string", minLength: 1 },
-            },
-    });
-  });
+      });
+    },
+  );
 
   it("should return the current authenticated user", async () => {
     const token = signJsonWebToken(

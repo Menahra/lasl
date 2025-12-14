@@ -52,21 +52,19 @@ describe("User Model", () => {
       expect(found?.verificationCode).toBeDefined();
     });
 
-    it.each([
-      "email",
-      "firstName",
-      "lastName",
-      "password",
-    ])("should require %s field", async (fieldName) => {
-      const userData = {
-        ...mockUserData,
-        [fieldName]: undefined,
-      };
+    it.each(["email", "firstName", "lastName", "password"])(
+      "should require %s field",
+      async (fieldName) => {
+        const userData = {
+          ...mockUserData,
+          [fieldName]: undefined,
+        };
 
-      const user = new UserModel(userData);
+        const user = new UserModel(userData);
 
-      await expect(user.save()).rejects.toThrow();
-    });
+        await expect(user.save()).rejects.toThrow();
+      },
+    );
   });
 
   describe("Email Validation", () => {

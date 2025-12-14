@@ -18,13 +18,13 @@ const environmentSchema = z.object({
   [ENVIRONMENT.resendApiKey]: z.string().min(1),
 });
 
-export type EnvironmentSchema = z.infer<typeof environmentSchema>;
-export const getEnvironmentConfig = (): EnvironmentSchema =>
-  environmentSchema.parse(process.env);
-
 type EnvironmentKey = keyof typeof ENVIRONMENT;
 
 type EnvironmentVar = (typeof ENVIRONMENT)[EnvironmentKey];
+
+export type EnvironmentSchema = z.infer<typeof environmentSchema>;
+export const getEnvironmentConfig = (): EnvironmentSchema =>
+  environmentSchema.parse(process.env);
 
 // Optional: reverse mapping (UPPER_SNAKE_CASE -> camelCase)
 export const ENVIRONMENT_KEYS = Object.fromEntries(

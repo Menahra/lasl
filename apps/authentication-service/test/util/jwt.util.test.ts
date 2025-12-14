@@ -8,15 +8,15 @@ import {
 import {
   JWT_ACCESS_PRIVATE_KEY_NAME,
   JWT_ACCESS_PUBLIC_KEY_NAME,
-  JWT_REFRESH_PRIVATE_KEY_NAME,
-  JWT_REFRESH_PUBLIC_KEY_NAME,
 } from "@/src/constants/jwt.constants.ts";
 
 const mockedEnvironmentConfig = {
+  // biome-ignore-start lint/style/useNamingConvention: ok in test
   JWT_ACCESS_PRIVATE_KEY: "",
   JWT_ACCESS_PUBLIC_KEY: "",
   JWT_REFRESH_PRIVATE_KEY: "",
   JWT_REFRESH_PUBLIC_KEY: "",
+  // biome-ignore-end lint/style/useNamingConvention: ok in test
 };
 
 vi.mock("@/src/config/environment.ts", () => ({
@@ -69,22 +69,23 @@ describe("JWT Utility", () => {
     ),
   ];
 
-  it.each(
-    malformedKeys,
-  )("signing with malformed key '%s' should throw", (badKey) => {
-    mockedEnvironmentConfig.JWT_ACCESS_PRIVATE_KEY = badKey;
+  it.each(malformedKeys)(
+    "signing with malformed key '%s' should throw",
+    (badKey) => {
+      mockedEnvironmentConfig.JWT_ACCESS_PRIVATE_KEY = badKey;
 
-    expect(() =>
-      jwtUtil.signJsonWebToken(
-        payload,
-        JWT_ACCESS_PRIVATE_KEY_NAME,
-        { expiresIn: "1h" },
-        mockLogger,
-      ),
-    ).toThrowError();
+      expect(() =>
+        jwtUtil.signJsonWebToken(
+          payload,
+          JWT_ACCESS_PRIVATE_KEY_NAME,
+          { expiresIn: "1h" },
+          mockLogger,
+        ),
+      ).toThrowError();
 
-    expect(mockLogger.error).toHaveBeenCalled();
-  });
+      expect(mockLogger.error).toHaveBeenCalled();
+    },
+  );
 
   it("verifies a valid JWT and returns payload", () => {
     const token = jwtUtil.signJsonWebToken(
