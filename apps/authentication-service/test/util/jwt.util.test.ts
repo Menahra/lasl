@@ -136,7 +136,11 @@ describe("JWT Utility", () => {
     mockedEnvironmentConfig.jwtAccessPublicKey = mockPublicKeyBase64;
 
     expect(() =>
-      jwtUtil.verifyJsonWebToken(forgedToken, jwtUtil.JWT_ACCESS_PUBLIC_KEYNAME, mockLogger),
+      jwtUtil.verifyJsonWebToken(
+        forgedToken,
+        jwtUtil.JWT_ACCESS_PUBLIC_KEYNAME,
+        mockLogger,
+      ),
     ).toThrowError();
     expect(mockLogger.error).toHaveBeenCalled();
   });

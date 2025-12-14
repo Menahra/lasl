@@ -1,6 +1,12 @@
 import { buildApp } from "@/src/app.ts";
 import { getApiVersionPathPrefix } from "@/src/util/api.path.util.ts";
-import { JWT_ACCESS_PRIVATE_KEYNAME, JWT_ACCESS_PUBLIC_KEYNAME, JWT_REFRESH_PRIVATE_KEYNAME, JWT_REFRESH_PUBLIC_KEYNAME, signJsonWebToken } from "@/src/util/jwt.util.ts";
+import {
+  JWT_ACCESS_PRIVATE_KEYNAME,
+  JWT_ACCESS_PUBLIC_KEYNAME,
+  JWT_REFRESH_PRIVATE_KEYNAME,
+  JWT_REFRESH_PUBLIC_KEYNAME,
+  signJsonWebToken,
+} from "@/src/util/jwt.util.ts";
 import { mockUserData } from "@/test/__mocks__/user.mock.ts";
 import {
   setupFastifyTestEnvironment,

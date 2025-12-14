@@ -6,7 +6,11 @@ import type {
 import { StatusCodes } from "http-status-codes";
 import type { UserJsonWebTokenPayload } from "../model/user.model.ts";
 import { findSessionById } from "../service/auth.service.ts";
-import { JWT_ACCESS_PUBLIC_KEYNAME, JWT_REFRESH_PUBLIC_KEYNAME, verifyJsonWebToken } from "../util/jwt.util.ts";
+import {
+  JWT_ACCESS_PUBLIC_KEYNAME,
+  JWT_REFRESH_PUBLIC_KEYNAME,
+  verifyJsonWebToken,
+} from "../util/jwt.util.ts";
 
 // biome-ignore lint/security/noSecrets: not a secret
 export const REFRESH_COOKIE_NAME = "refreshToken";

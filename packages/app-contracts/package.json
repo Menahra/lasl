@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "files": ["dist"],
+  "types": "./dist/locales.d.ts",
   "exports": {
     "./locales": {
       "import": "./dist/locales.js",
