@@ -2,10 +2,8 @@
   "name": "@lasl/app-contracts",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "type": "module",
   "files": ["dist"],
-  "types": "./dist/locales.d.ts",
   "exports": {
     "./locales": {
       "import": "./dist/locales.js",

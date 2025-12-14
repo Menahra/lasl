@@ -79,6 +79,12 @@ export const refreshAccessTokenHandler = async (
   try {
     const { session } = req;
 
+    if (!session) {
+      return reply
+        .status(StatusCodes.UNAUTHORIZED)
+        .send({ message: "Could not refresh access token" });
+    }
+
     const user = await findUserById(session.user.toString());
 
     if (!user) {
@@ -104,6 +110,12 @@ export const logoutHandler = async (
 ) => {
   try {
     const { session } = req;
+
+    if (!session) {
+      return reply
+        .status(StatusCodes.UNAUTHORIZED)
+        .send({ message: "Logout failed" });
+    }
 
     session.valid = false;
     await session.save();
