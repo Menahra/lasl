@@ -1,6 +1,6 @@
 /** biome-ignore-all lint/security/noSecrets: just mock data */
 import { vi } from "vitest";
-import { ENVIRONMENT } from "@/src/config/environment.ts";
+import { ENVIRONMENT } from "@/src/constants/environment.constants.ts";
 
 vi.stubEnv(ENVIRONMENT.jwtAccessPrivateKey, "123AccessPrivate");
 vi.stubEnv(ENVIRONMENT.jwtAccessPublicKey, "123AccessPublic");

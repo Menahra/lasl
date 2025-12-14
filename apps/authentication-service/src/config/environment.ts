@@ -1,17 +1,6 @@
+import { ENVIRONMENT } from "@/src/constants/environment.constants.ts";
 import process from "node:process";
 import z from "zod";
-
-// biome-ignore lint/style/useExportsLast: needs to be before environtmentSchema
-export const ENVIRONMENT = {
-  applicationHostPort: "APPLICATION_HOST_PORT",
-  jwtAccessPrivateKey: "JWT_ACCESS_PRIVATE_KEY",
-  jwtAccessPublicKey: "JWT_ACCESS_PUBLIC_KEY",
-  jwtRefreshPrivateKey: "JWT_REFRESH_PRIVATE_KEY",
-  jwtRefreshPublicKey: "JWT_REFRESH_PUBLIC_KEY",
-  mongoUri: "MONGO_URI",
-  port: "PORT",
-  resendApiKey: "RESEND_API_KEY",
-} as const;
 
 const defaultPort = 3000;
 const defaultApplicationHostPort = 8080;

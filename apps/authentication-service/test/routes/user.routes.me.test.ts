@@ -1,12 +1,9 @@
 import { buildApp } from "@/src/app.ts";
 import { getApiVersionPathPrefix } from "@/src/util/api.path.util.ts";
 import {
-  JWT_ACCESS_PRIVATE_KEYNAME,
-  JWT_ACCESS_PUBLIC_KEYNAME,
-  JWT_REFRESH_PRIVATE_KEYNAME,
-  JWT_REFRESH_PUBLIC_KEYNAME,
   signJsonWebToken,
 } from "@/src/util/jwt.util.ts";
+import {JWT_ACCESS_PRIVATE_KEY_NAME} from "@/src/constants/jwt.constants.ts";
 import { mockUserData } from "@/test/__mocks__/user.mock.ts";
 import {
   setupFastifyTestEnvironment,
@@ -39,25 +36,9 @@ const mockedEnvironmentConfig = {
   jwtRefreshPublicKey: "",
 };
 
-vi.mock("@/src/config/environment.ts", async (importOriginalEnvironment) => {
-  const { ENVIRONMENT, getEnvironmentConfig } =
-    await importOriginalEnvironment<
-      typeof import("@/src/config/environment.ts")
-    >();
-
+vi.mock("@/src/config/environment.ts", () => {
   return {
-    // biome-ignore lint/style/useNamingConvention: ok here
-    ENVIRONMENT: {
-      ...ENVIRONMENT,
-      jwtAccessPrivateKey: JWT_ACCESS_PRIVATE_KEYNAME,
-      jwtAccessPublicKey: JWT_ACCESS_PUBLIC_KEYNAME,
-      jwtRefreshPrivateKey: JWT_REFRESH_PRIVATE_KEYNAME,
-      jwtRefreshPublicKey: JWT_REFRESH_PUBLIC_KEYNAME,
-    },
-    getEnvironmentConfig: () => ({
-      ...getEnvironmentConfig(),
-      ...mockedEnvironmentConfig,
-    }),
+    getEnvironmentConfig: () => mockedEnvironmentConfig,
   };
 });
 
@@ -158,7 +139,7 @@ describe("user routes me", () => {
   it("should return the current authenticated user", async () => {
     const token = signJsonWebToken(
       mockUser,
-      JWT_ACCESS_PRIVATE_KEYNAME,
+      JWT_ACCESS_PRIVATE_KEY_NAME,
       {},
       mockLogger,
     );
@@ -189,7 +170,7 @@ describe("user routes me", () => {
 
     const token = signJsonWebToken(
       fakeUser,
-      JWT_ACCESS_PRIVATE_KEYNAME,
+      JWT_ACCESS_PRIVATE_KEY_NAME,
       {},
       mockLogger,
     );

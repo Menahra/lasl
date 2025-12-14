@@ -5,7 +5,7 @@ import fastifySwaggerUi, {
   type FastifySwaggerUiOptions,
 } from "@fastify/swagger-ui";
 import { fastifyPlugin } from "fastify-plugin";
-import { ENVIRONMENT } from "../config/environment.ts";
+import { ENVIRONMENT } from "@/src/constants/environment.constants.ts";
 
 export const fastifySwaggerPlugin = fastifyPlugin(async (fastifyInstance) => {
   const { [ENVIRONMENT.applicationHostPort]: port } = fastifyInstance.config;

@@ -1,24 +1,22 @@
 import type { FastifyBaseLogger } from "fastify";
 import jsonwebtoken from "jsonwebtoken";
-import { ENVIRONMENT, getEnvironmentConfig } from "@/src/config/environment.ts";
-
-/** biome-ignore-start lint/security/noSecrets: just key names */
-export const JWT_ACCESS_PRIVATE_KEYNAME = "jwtAccessPrivateKey";
-export const JWT_ACCESS_PUBLIC_KEYNAME = "jwtAccessPublicKey";
-export const JWT_REFRESH_PRIVATE_KEYNAME = "jwtRefreshPrivateKey";
-export const JWT_REFRESH_PUBLIC_KEYNAME = "jwtRefreshPublicKey";
-/** biome-ignore-end lint/security/noSecrets: just key names */
+import { getEnvironmentConfig } from "@/src/config/environment.ts";
+import type { JWT_ACCESS_PRIVATE_KEY_NAME, JWT_ACCESS_PUBLIC_KEY_NAME, JWT_REFRESH_PRIVATE_KEY_NAME, JWT_REFRESH_PUBLIC_KEY_NAME } from "@/src/constants/jwt.constants.ts";
+import { ENVIRONMENT } from "@/src/constants/environment.constants.ts";
 
 export const signJsonWebToken = (
   object: Record<string, unknown>,
   keyName: keyof Pick<
     typeof ENVIRONMENT,
-    typeof JWT_ACCESS_PRIVATE_KEYNAME | typeof JWT_REFRESH_PRIVATE_KEYNAME
+    typeof JWT_ACCESS_PRIVATE_KEY_NAME | typeof JWT_REFRESH_PRIVATE_KEY_NAME
   >,
   options: jsonwebtoken.SignOptions | undefined,
   logger: FastifyBaseLogger,
 ) => {
   try {
+    console.log(getEnvironmentConfig());
+    console.log( keyName, ENVIRONMENT[keyName])
+    console.log('final', getEnvironmentConfig()[ENVIRONMENT[keyName]])
     const privateSigningKey = Buffer.from(
       getEnvironmentConfig()[ENVIRONMENT[keyName]],
       "base64",
@@ -30,6 +28,7 @@ export const signJsonWebToken = (
     });
   } catch (error) {
     logger.error(error, `An error occured during sign of ${keyName} key`);
+    console.log(error);
     throw new Error(`JsonWebToken signing failed for ${keyName}`);
   }
 };
@@ -38,7 +37,7 @@ export const verifyJsonWebToken = <T>(
   token: string,
   keyName: keyof Pick<
     typeof ENVIRONMENT,
-    typeof JWT_ACCESS_PUBLIC_KEYNAME | typeof JWT_REFRESH_PUBLIC_KEYNAME
+    typeof JWT_ACCESS_PUBLIC_KEY_NAME | typeof JWT_REFRESH_PUBLIC_KEY_NAME
   >,
   logger: FastifyBaseLogger,
 ) => {

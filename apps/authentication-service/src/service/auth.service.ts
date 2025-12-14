@@ -3,9 +3,10 @@ import type { FastifyBaseLogger } from "fastify";
 import type { Types } from "mongoose";
 import type { User } from "@/src/model/user.model.ts";
 import {
-  JWT_ACCESS_PRIVATE_KEYNAME,
+  
   signJsonWebToken,
 } from "@/src/util/jwt.util.ts";
+import {JWT_ACCESS_PRIVATE_KEY_NAME} from "@/src/constants/jwt.constants.ts";
 import { SessionModel } from "../model/session.model.ts";
 
 export const createSession = async (
@@ -31,7 +32,7 @@ export const signAccessToken = (
 
     return signJsonWebToken(
       payload,
-      JWT_ACCESS_PRIVATE_KEYNAME,
+      JWT_ACCESS_PRIVATE_KEY_NAME,
       { expiresIn: "15m" },
       logger,
     );

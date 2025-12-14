@@ -7,10 +7,10 @@ import { StatusCodes } from "http-status-codes";
 import type { UserJsonWebTokenPayload } from "../model/user.model.ts";
 import { findSessionById } from "../service/auth.service.ts";
 import {
-  JWT_ACCESS_PUBLIC_KEYNAME,
-  JWT_REFRESH_PUBLIC_KEYNAME,
-  verifyJsonWebToken,
-} from "../util/jwt.util.ts";
+  JWT_ACCESS_PUBLIC_KEY_NAME,
+  JWT_REFRESH_PUBLIC_KEY_NAME,
+} from "@/src/constants/jwt.constants.ts";
+import { verifyJsonWebToken } from "@/src/util/jwt.util.ts";
 
 // biome-ignore lint/security/noSecrets: not a secret
 export const REFRESH_COOKIE_NAME = "refreshToken";
@@ -35,7 +35,7 @@ export const deserializeUser = async <
   try {
     const decoded = verifyJsonWebToken<UserJsonWebTokenPayload>(
       accessToken,
-      JWT_ACCESS_PUBLIC_KEYNAME,
+      JWT_ACCESS_PUBLIC_KEY_NAME,
       req.log,
     );
     req.user = decoded;
@@ -64,7 +64,7 @@ export const deserializeSession = async (
   try {
     const decoded = verifyJsonWebToken<{ session: string }>(
       refreshToken,
-      JWT_REFRESH_PUBLIC_KEYNAME,
+      JWT_REFRESH_PUBLIC_KEY_NAME,
       req.log,
     );
 
