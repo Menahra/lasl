@@ -14,13 +14,13 @@ export const connectToMongoDb = async (fastifyInstance: FastifyInstance) => {
     fastifyInstance.log.info("MongoDB connected successfully!");
 
     mongoose.connection.on("error", (err) => {
-      fastifyInstance.log.error("Mongoose connection error:", err);
+      fastifyInstance.log.error(err, "Mongoose connection error:");
     });
     mongoose.connection.on("disconnected", () => {
       fastifyInstance.log.warn("Mongoose disconnected from DB");
     });
   } catch (error) {
-    fastifyInstance.log.error("MongoDB connection failed:", error);
+    fastifyInstance.log.error(error, "MongoDB connection failed:");
     throw error;
   }
 };
