@@ -10,45 +10,22 @@ import mongoose from "mongoose";
 import {
   afterAll,
   beforeAll,
-  beforeEach,
   describe,
   expect,
   it,
   vi,
 } from "vitest";
 import { buildApp } from "@/src/app.ts";
-import { JWT_ACCESS_PRIVATE_KEY_NAME } from "@/src/constants/jwt.constants.ts";
-import { UserModel } from "@/src/model/user.model.ts";
 import { getApiVersionPathPrefix } from "@/src/util/api.path.util.ts";
-import { signJsonWebToken } from "@/src/util/jwt.util.ts";
-import {
-  mockPrivateKeyBase64,
-  mockPublicKeyBase64,
-} from "@/test/__mocks__/jwt.mock.ts";
-import { mockUserData } from "@/test/__mocks__/user.mock.ts";
+import { mockUserData, mockUserDataWithSettings } from "@/test/__mocks__/user.mock.ts";
+import { UserModel } from "@/src/model/user.model.ts";
 
-const mockedEnvironmentConfig = {
-  // biome-ignore-start lint/style/useNamingConvention: ok in test
-  JWT_ACCESS_PRIVATE_KEY: "",
-  JWT_ACCESS_PUBLIC_KEY: "",
-  JWT_REFRESH_PRIVATE_KEY: "",
-  JWT_REFRESH_PUBLIC_KEY: "",
-  // biome-ignore-end lint/style/useNamingConvention: ok in test
-};
+const mockUserId = new mongoose.Types.ObjectId().toString();
 
-vi.mock("@/src/config/environment.ts", async (importOriginalEnvironment) => {
-  const originalEnvironmentConfig = (
-    await importOriginalEnvironment<
-      typeof import("@/src/config/environment.ts")
-    >()
-  ).getEnvironmentConfig();
-  return {
-    getEnvironmentConfig: () => ({
-      ...originalEnvironmentConfig,
-      ...mockedEnvironmentConfig,
-    }),
-  };
-});
+vi.mock("@/src/util/jwt.util.ts",  () => ({
+  signJsonWebToken: vi.fn(),
+  verifyJsonWebToken: () => ({id: mockUserId, ...mockUserDataWithSettings}),
+}));
 
 describe("user routes me", () => {
   let app: FastifyInstance;
@@ -57,7 +34,7 @@ describe("user routes me", () => {
 
   const mockUser = {
     ...mockUserData,
-    id: new mongoose.Types.ObjectId().toString(),
+    id: mockUserId,
     settings: {
       darkMode: false,
       uiLanguage: DEFAULT_LOCALE,
@@ -76,14 +53,6 @@ describe("user routes me", () => {
     trace: vi.fn(),
     child: vi.fn(() => mockLogger),
   };
-
-  beforeEach(() => {
-    mockedEnvironmentConfig.JWT_ACCESS_PRIVATE_KEY = mockPrivateKeyBase64;
-    mockedEnvironmentConfig.JWT_ACCESS_PUBLIC_KEY = mockPublicKeyBase64;
-    mockedEnvironmentConfig.JWT_REFRESH_PRIVATE_KEY = mockPrivateKeyBase64;
-    mockedEnvironmentConfig.JWT_REFRESH_PUBLIC_KEY = mockPublicKeyBase64;
-    vi.clearAllMocks();
-  });
 
   beforeAll(async () => {
     app = await setupFastifyTestEnvironment({ buildApp, useMongo: true });
@@ -145,12 +114,7 @@ describe("user routes me", () => {
   );
 
   it("should return the current authenticated user", async () => {
-    const token = signJsonWebToken(
-      mockUser,
-      JWT_ACCESS_PRIVATE_KEY_NAME,
-      {},
-      mockLogger,
-    );
+    const token = "test234"
 
     const response = await app.inject({
       method: "GET",
@@ -170,18 +134,9 @@ describe("user routes me", () => {
   });
 
   it("should update the current authenticated user", async () => {
-    const createdUser = await UserModel.create(mockUser);
-    const fakeUser = {
-      ...mockUser,
-      id: createdUser._id.toString(),
-    };
+    const createdUser = await UserModel.create({...mockUser, _id: mockUserId});
 
-    const token = signJsonWebToken(
-      fakeUser,
-      JWT_ACCESS_PRIVATE_KEY_NAME,
-      {},
-      mockLogger,
-    );
+    const token = "test234";
 
     const update = {
       firstName: "Gunther",
@@ -209,7 +164,7 @@ describe("user routes me", () => {
     const updatedUser = {
       ...mockUserWithoutPassword,
       ...update,
-      id: createdUser._id.toString(),
+      id: mockUserId,
       settings: {
         ...mockUser.settings,
         ...update.settings,
