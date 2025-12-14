@@ -31,7 +31,6 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@lasl/test-utils-fastify": "workspace:*",
     "@types/json-schema": "^7.0.15",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.0.10",
@@ -49,6 +48,7 @@
     "@fastify/swagger": "^9.5.1",
     "@fastify/swagger-ui": "^5.2.3",
     "@lasl/app-contracts": "workspace:*",
+    "@lasl/test-utils-fastify": "workspace:*",
     "@typegoose/typegoose": "^12.18.0",
     "argon2": "^0.44.0",
     "fastify": "^5.4.0",
