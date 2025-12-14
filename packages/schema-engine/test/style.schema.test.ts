@@ -1,5 +1,3 @@
-/** biome-ignore-all lint/complexity/noExcessiveLinesPerFunction: okay in test files */
-/** biome-ignore-all lint/style/noMagicNumbers: okay in test files */
 import {
   afterEach,
   beforeEach,
@@ -178,12 +176,10 @@ describe("style json schema", () => {
     });
 
     it("does not allow other strings than hex, rgb and rgba", () => {
-      // biome-ignore-start lint/performance/useTopLevelRegex: okay in tests
       const hexRegExp = /^#[0-9a-fA-F]{6}$/;
       const rgbRegExp = /^rgb\(\d{1,3},\s?\d{1,3},\s?\d{1,3}\)$/;
       const rgbaRegExp =
         /^rgba\(\d{1,3},\s?\d{1,3},\s?\d{1,3},\s?(0|1|0?\.\d+)\)$/;
-      // biome-ignore-end lint/performance/useTopLevelRegex: okay in tests
       // biome-ignore lint/suspicious/useIterableCallbackReturn: not in case of test
       Array.from({ length: 20 }, () => {
         const randomLength = getRandomInteger(1, 20);
@@ -304,7 +300,6 @@ describe("style json schema", () => {
 
     it("does not allow other strings than a spacing value or small, medium, large, ...", () => {
       const specialStringsRegExp =
-        // biome-ignore lint/performance/useTopLevelRegex: okay in tests
         /^small|medium|large|x-large|xx-large|larger|smaller$/;
 
       // biome-ignore lint/suspicious/useIterableCallbackReturn: not in case of test
@@ -341,7 +336,6 @@ describe("style json schema", () => {
           const randomLength = getRandomInteger(1, 20);
           const randomString = generateRandomStringNotMatchingPattern(
             randomLength,
-            // biome-ignore lint/performance/useTopLevelRegex: okay in tests
             [/^normal|italic$/],
           );
 
@@ -371,7 +365,6 @@ describe("style json schema", () => {
         100, 200, 300, 400, 500, 600, 700, 800, 900,
       ];
       const allowedFontWeightValuesRegEx =
-        // biome-ignore lint/performance/useTopLevelRegex: okay in tests
         /^normal|bold|bolder|lighter|[1-9]00$/;
       const testData = [
         ...allowedNumericWeights.map((weight) => ({
@@ -544,7 +537,6 @@ describe("style json schema", () => {
 
       expect(consoleErrorSpy).toHaveBeenCalledWith([
         expect.objectContaining({
-          // biome-ignore lint/security/noSecrets: this is not a secret
           keyword: "additionalProperties",
           message: "must NOT have additional properties",
         }),

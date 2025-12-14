@@ -1,8 +1,6 @@
-/** biome-ignore-all lint/security/noSecrets: no secrets here in test */
 import { HttpResponse, http } from "msw";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { AUTH_API_BASE_URL, apiClient } from "@/src/api/apiClient.ts";
-// biome-ignore lint/performance/noNamespaceImport: needed for mocking
 import * as authApi from "@/src/api/authApi.ts";
 import { ACCESS_TOKEN_NAME } from "@/src/shared/constants.ts";
 import { mockPostRefreshNewAccessToken } from "@/tests/unit-integration/__msw__/authMocks.ts";
@@ -13,7 +11,6 @@ import {
 
 setupMockServiceWorker();
 
-// biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok in test
 describe("apiClient integration with cookie-based refresh token", () => {
   const postRefreshTokenSpy = vi.spyOn(authApi.authApi, "postRefreshToken");
 

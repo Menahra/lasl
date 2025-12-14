@@ -17,7 +17,6 @@ vi.mock("resend", async (importOriginalResendModule) => {
   };
 });
 
-// biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok in test
 describe("Resend Mailer util", () => {
   it("should have sendMail decorated", async () => {
     const app = await setupFastifyTestEnvironment({ buildApp, useMongo: true });

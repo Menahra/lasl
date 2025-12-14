@@ -6,8 +6,6 @@ import {
   vagueSessionErrorMessage,
 } from "@/src/schema/session.schema.ts";
 
-// biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok here
-// biome-ignore lint/security/noSecrets: not a secret
 describe("createSessionSchema", () => {
   const validEmail = "user@example.com";
   const validPassword = "a".repeat(PASSWORD_MIN_LENGTH);

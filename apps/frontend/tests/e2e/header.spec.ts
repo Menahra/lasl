@@ -4,7 +4,6 @@ import { navigateAndWaitForPageLoad } from "./utils/pageLoad.ts";
 test("has title", async ({ page }) => {
   await navigateAndWaitForPageLoad(page);
 
-  // biome-ignore lint/performance/useTopLevelRegex: ok in a test
   await expect(page).toHaveTitle(/Lasl/);
 });
 
@@ -16,7 +15,6 @@ test("github link", async ({ context, page }) => {
 
   const gitHubPage = await pagePromise;
   await gitHubPage.waitForLoadState();
-  // biome-ignore lint/performance/useTopLevelRegex: ok in a test
   await expect(gitHubPage).toHaveTitle(/GitHub/);
 });
 
@@ -28,11 +26,9 @@ test("ko-fi link", async ({ context, page }) => {
 
   const koFiPage = await pagePromise;
   await koFiPage.waitForLoadState();
-  // biome-ignore lint/performance/useTopLevelRegex: ok in a test
   await expect(koFiPage).toHaveTitle(/Zioui/);
 });
 
-// biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok here
 test.describe("light/ dark mode", () => {
   const lightBackgroundColor = "rgb(240, 240, 240)";
   const darkBackgroundColor = "rgb(15, 15, 15)";

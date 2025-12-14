@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/style/noMagicNumbers: ok in test */
 import {
   setupFastifyTestEnvironment,
   teardownFastifyTestEnvironment,
@@ -7,7 +6,6 @@ import type { FastifyInstance } from "fastify";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { buildApiGatewayApp } from "@/src/app.ts";
 
-// biome-ignore lint/security/noSecrets: test description and not a secret
 describe("fastifySwaggerPlugin", () => {
   let app: FastifyInstance;
 

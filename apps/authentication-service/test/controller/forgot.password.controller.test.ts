@@ -40,8 +40,6 @@ const mockReq = (
   } as unknown as Parameters<typeof forgotPasswordHandler>[0];
 };
 
-// biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok in test
-// biome-ignore lint/security/noSecrets: not a secret
 describe("forgotPasswordHandler", () => {
   beforeEach(() => {
     vi.clearAllMocks();

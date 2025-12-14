@@ -1,5 +1,3 @@
-/** biome-ignore-all lint/security/noSecrets: there are no secrets here in test */
-/** biome-ignore-all lint/style/noMagicNumbers: ok in test */
 import { StatusCodes } from "http-status-codes";
 import { describe, expect, it, vi } from "vitest";
 import {
@@ -7,12 +5,9 @@ import {
   logoutHandler,
   refreshAccessTokenHandler,
 } from "@/src/controller/auth.controller.ts";
-/* biome-ignore-start lint/performance/noNamespaceImport: okay in test */
 import * as authService from "@/src/service/auth.service.ts";
 import * as userService from "@/src/service/user.service.ts";
 import * as jwtUtil from "@/src/util/jwt.util.ts";
-
-/* biome-ignore-end lint/performance/noNamespaceImport: ok intest */
 
 const mockReply = () => {
   const reply = {
@@ -23,7 +18,6 @@ const mockReply = () => {
   return reply;
 };
 
-// biome-ignore lint/complexity/noExcessiveLinesPerFunction: acceptable in test
 describe("createSessionHandler", () => {
   const mockUser = {
     _id: "user123",
@@ -145,7 +139,6 @@ describe("createSessionHandler", () => {
   });
 });
 
-// biome-ignore lint/complexity/noExcessiveLinesPerFunction: acceptable in test
 describe("refreshAccessTokenHandler", () => {
   const mockReply = () => ({
     status: vi.fn().mockReturnThis(),

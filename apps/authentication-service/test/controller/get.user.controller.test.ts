@@ -2,7 +2,6 @@ import { StatusCodes } from "http-status-codes";
 import { describe, expect, it, vi } from "vitest";
 import { getUserHandler } from "@/src/controller/get.user.controller.ts";
 
-// biome-ignore lint/security/noSecrets: not a secret
 describe("getUserHandler", () => {
   it("should respond with 200 and the user object from req", () => {
     const user = { id: "123", email: "test@example.com" };

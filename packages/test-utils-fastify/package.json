@@ -17,12 +17,12 @@
   },
   "scripts": {
     "build": "tsup",
-    "lint": "biome lint src test",
-    "lint:fix": "biome lint --write src test",
-    "format": "biome lint src test",
-    "format:fix": "biome format --write src test",
-    "check:ci": "biome check src test",
-    "check:fix": "biome check --write src test",
+    "lint": "biome lint src",
+    "lint:fix": "biome lint --write src",
+    "format": "biome lint src",
+    "format:fix": "biome format --write src",
+    "check:ci": "biome check src",
+    "check:fix": "biome check --write src",
     "check:types": "tsc"
   },
   "keywords": [],

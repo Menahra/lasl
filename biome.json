@@ -312,5 +312,27 @@
     "formatter": {
       "trailingCommas": "none"
     }
-  }
+  },
+  "overrides": [
+    {
+        "includes": ["**/test/**", "**/*.test.*", "**/*.spec.*"],
+        "linter": {
+          "rules": {
+            "complexity": {
+              "noExcessiveLinesPerFunction": "off"
+            },
+            "performance": {
+              "noNamespaceImport": "off",
+              "useTopLevelRegex": "off"
+            },
+            "security": {
+              "noSecrets": "off"
+            },
+            "style": {
+              "noMagicNumbers": "off"
+            }
+          }
+        }
+    }
+  ]
 }

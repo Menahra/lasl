@@ -23,7 +23,6 @@ vi.mock("@/src/service/user.service", () => ({
   createUser: vi.fn(),
 }));
 
-// biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok here
 describe("User service", () => {
   const mockReply = (): FastifyReply => {
     const reply = {
@@ -97,7 +96,6 @@ describe("User service", () => {
     const duplicateError = new Error("Duplicate key") as Error & {
       code: number;
     };
-    // biome-ignore lint/style/noMagicNumbers: acceptable here
     duplicateError.code = 11_000;
 
     (createUser as ReturnType<typeof vi.fn>).mockRejectedValueOnce(

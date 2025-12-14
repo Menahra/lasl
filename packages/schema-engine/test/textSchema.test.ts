@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/complexity/noExcessiveLinesPerFunction: okay in test files */
 import {
   afterEach,
   beforeEach,
@@ -60,7 +59,6 @@ describe("text json schema", () => {
     {
       content: [
         {
-          // biome-ignore lint/style/noMagicNumbers: okay in test
           content: [12, false, "abc"],
         },
       ],

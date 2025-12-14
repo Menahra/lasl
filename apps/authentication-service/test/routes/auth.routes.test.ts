@@ -1,5 +1,3 @@
-/** biome-ignore-all lint/security/noSecrets: there are no secrets here in test */
-/** biome-ignore-all lint/complexity/noExcessiveLinesPerFunction: ok in test */
 import {
   setupFastifyTestEnvironment,
   teardownFastifyTestEnvironment,
@@ -10,12 +8,9 @@ import { StatusCodes } from "http-status-codes";
 import mongoose from "mongoose";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { buildApp } from "@/src/app.ts";
-// biome-ignore lint/performance/noNamespaceImport: ok in test
 import * as sessionService from "@/src/service/auth.service.ts";
-// biome-ignore lint/performance/noNamespaceImport: ok in test
 import * as userService from "@/src/service/user.service.ts";
 import { getApiVersionPathPrefix } from "@/src/util/api.path.util.ts";
-// biome-ignore lint/performance/noNamespaceImport: ok in test
 import * as jwtUtil from "@/src/util/jwt.util.ts";
 
 describe("auth routes", () => {
@@ -74,12 +69,10 @@ describe("auth routes", () => {
         ? setCookieHeader.find((c) => c.startsWith("refreshToken="))
         : setCookieHeader;
 
-      // biome-ignore lint/performance/useTopLevelRegex: okay in test
       expect(cookie).toMatch(/^refreshToken=refresh\.token\.here/);
       expect(cookie).toContain("HttpOnly");
       expect(cookie).toContain("Path=/api/v1/sessions/refresh");
       expect(cookie).toContain("SameSite=Strict");
-      // biome-ignore lint/performance/useTopLevelRegex: okay in test
       expect(cookie).toMatch(/Max-Age=\d+/);
     });
 
@@ -324,7 +317,6 @@ describe("auth routes", () => {
         ? setCookieHeader.find((c) => c.startsWith("refreshToken="))
         : setCookieHeader;
 
-      // biome-ignore lint/performance/useTopLevelRegex: acceptable in test
       expect(cookie).toMatch(/^refreshToken=;/); // cleared cookie
       expect(cookie).toContain("Path=/api/v1/sessions/refresh");
     });

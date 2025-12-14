@@ -1,7 +1,5 @@
-/** biome-ignore-all lint/security/noSecrets: there are no secrets here in test */
 import type { FastifyBaseLogger } from "fastify";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-// biome-ignore lint/performance/noNamespaceImport: okay in test
 import * as jwtUtil from "@/src/util/jwt.util.ts";
 import {
   mockPrivateKeyBase64,
@@ -40,7 +38,6 @@ const mockLogger: FastifyBaseLogger = {
   child: vi.fn(() => mockLogger),
 };
 
-// biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok here
 describe("JWT Utility", () => {
   const payload = { userId: "123" };
 

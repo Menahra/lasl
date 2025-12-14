@@ -1,5 +1,3 @@
-/** biome-ignore-all lint/security/noSecrets: there are no secrets here in test */
-/** biome-ignore-all lint/style/noMagicNumbers: ok in test */
 import {
   setupFastifyTestEnvironment,
   teardownFastifyTestEnvironment,
@@ -24,7 +22,6 @@ vi.mock("nanoid", () => ({
     [...new Array(30)].map(() => Math.random().toString(36)[2]).join(""),
 }));
 
-// biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok in test
 describe("User Model", () => {
   beforeAll(async () => {
     await setupFastifyTestEnvironment({ buildApp, useMongo: true });
@@ -93,7 +90,6 @@ describe("User Model", () => {
         firstName: "Jane",
       });
 
-      // biome-ignore lint/performance/useTopLevelRegex: okay in test
       await expect(user2.save()).rejects.toThrow(/duplicate key error/);
     });
   });

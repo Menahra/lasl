@@ -1,6 +1,5 @@
 const getRandomString = (length: number) => {
   const characters =
-    // biome-ignore lint/security/noSecrets: this is no secret
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789()#+*-,;:.<>`´|";
   return Array.from(
     { length },

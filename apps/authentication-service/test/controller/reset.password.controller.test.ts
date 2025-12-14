@@ -18,7 +18,6 @@ const mockReply = (): FastifyReply => {
   return reply as unknown as FastifyReply;
 };
 
-// biome-ignore lint/security/noSecrets: mock data
 const newPassword = "NewPassword123";
 const mockReq = (overrides = {}) =>
   ({
@@ -37,8 +36,6 @@ const mockReq = (overrides = {}) =>
     ...overrides,
   }) as unknown as Parameters<typeof resetPasswordHandler>[0];
 
-// biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok in test
-// biome-ignore lint/security/noSecrets: not a secret
 describe("resetPasswordHandler", () => {
   beforeEach(() => {
     vi.clearAllMocks();

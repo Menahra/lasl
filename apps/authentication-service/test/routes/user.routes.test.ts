@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/security/noSecrets: no secrets here and also ok in test */
 import {
   setupFastifyTestEnvironment,
   teardownFastifyTestEnvironment,
@@ -9,12 +8,10 @@ import { StatusCodes } from "http-status-codes";
 import mongoose from "mongoose";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { buildApp } from "@/src/app.ts";
-// biome-ignore lint/performance/noNamespaceImport: okay in tests
 import * as userService from "@/src/service/user.service.ts";
 import { getApiVersionPathPrefix } from "@/src/util/api.path.util.ts";
 import { mockUserInputData } from "../__mocks__/user.mock.ts";
 
-// biome-ignore lint/complexity/noExcessiveLinesPerFunction: test ok
 describe("user routes", () => {
   let app: FastifyInstance;
   const apiPathPrefix = getApiVersionPathPrefix(1);
@@ -33,7 +30,6 @@ describe("user routes", () => {
     await teardownFastifyTestEnvironment();
   });
 
-  // biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok in test
   describe("create user route", () => {
     const postUsersEndpointPath = `${apiPathPrefix}/users`;
 

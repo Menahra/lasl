@@ -19,8 +19,6 @@ const mockReply = (): FastifyReply => {
   return reply as unknown as FastifyReply;
 };
 
-// biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok in test
-// biome-ignore lint/security/noSecrets: not a secret
 describe("verifyUserHandler", () => {
   beforeEach(() => {
     vi.clearAllMocks();

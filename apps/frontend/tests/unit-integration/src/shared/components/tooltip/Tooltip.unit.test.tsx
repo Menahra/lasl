@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/complexity/noExcessiveLinesPerFunction: acceptable in tests */
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
@@ -70,7 +69,6 @@ describe("Tooltip", () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
     await user.hover(button);
     // Wait for 1 second and ensure the tooltip is not visible
-    // biome-ignore lint/style/noMagicNumbers: ok in test
     vi.advanceTimersByTime(1000);
     expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
     vi.useRealTimers();

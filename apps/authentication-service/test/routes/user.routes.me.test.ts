@@ -55,7 +55,6 @@ vi.mock("@/src/config/environment.ts", async (importOriginalEnvironment) => {
   };
 });
 
-// biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok in test
 describe("user routes me", () => {
   let app: FastifyInstance;
   const apiPathPrefix = getApiVersionPathPrefix(1);
