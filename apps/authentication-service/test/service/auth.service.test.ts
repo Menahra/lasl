@@ -11,7 +11,7 @@ import {
   signAccessToken,
   signRefreshToken,
 } from "@/src/service/auth.service.ts";
-import { signJsonWebToken } from "@/src/util/jwt.util.ts";
+import { JWT_ACCESS_PRIVATE_KEYNAME, signJsonWebToken } from "@/src/util/jwt.util.ts";
 
 vi.mock("@/src/model/session.model.ts", () => ({
   // biome-ignore lint/style/useNamingConvention: ok here
@@ -113,7 +113,7 @@ describe("Auth Service", () => {
       expect(signJsonWebToken).toHaveBeenCalledWith(
         // @ts-expect-error expected here
         mockUser.getJsonWebTokenPayload?.(),
-        "jwtAccessPrivateKey",
+        JWT_ACCESS_PRIVATE_KEYNAME,
         {
           expiresIn: "15m",
         },

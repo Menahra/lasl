@@ -1,6 +1,6 @@
 import { buildApp } from "@/src/app.ts";
 import { getApiVersionPathPrefix } from "@/src/util/api.path.util.ts";
-import { signJsonWebToken } from "@/src/util/jwt.util.ts";
+import { JWT_ACCESS_PRIVATE_KEYNAME, JWT_ACCESS_PUBLIC_KEYNAME, JWT_REFRESH_PRIVATE_KEYNAME, JWT_REFRESH_PUBLIC_KEYNAME, signJsonWebToken } from "@/src/util/jwt.util.ts";
 import { mockUserData } from "@/test/__mocks__/user.mock.ts";
 import {
   setupFastifyTestEnvironment,
@@ -43,10 +43,10 @@ vi.mock("@/src/config/environment.ts", async (importOriginalEnvironment) => {
     // biome-ignore lint/style/useNamingConvention: ok here
     ENVIRONMENT: {
       ...ENVIRONMENT,
-      jwtAccessPrivateKey: "jwtAccessPrivateKey",
-      jwtAccessPublicKey: "jwtAccessPublicKey",
-      jwtRefreshPrivateKey: "jwtRefreshPrivateKey",
-      jwtRefreshPublicKey: "jwtRefreshPublicKey",
+      jwtAccessPrivateKey: JWT_ACCESS_PRIVATE_KEYNAME,
+      jwtAccessPublicKey: JWT_ACCESS_PUBLIC_KEYNAME,
+      jwtRefreshPrivateKey: JWT_REFRESH_PRIVATE_KEYNAME,
+      jwtRefreshPublicKey: JWT_REFRESH_PUBLIC_KEYNAME,
     },
     getEnvironmentConfig: () => ({
       ...getEnvironmentConfig(),
@@ -153,7 +153,7 @@ describe("user routes me", () => {
   it("should return the current authenticated user", async () => {
     const token = signJsonWebToken(
       mockUser,
-      "jwtAccessPrivateKey",
+      JWT_ACCESS_PRIVATE_KEYNAME,
       {},
       mockLogger,
     );
@@ -169,7 +169,7 @@ describe("user routes me", () => {
     expect(response.statusCode).toBe(StatusCodes.OK);
     expect(response.headers["content-type"]).toMatch(/application\/json/);
 
-    const { password, ...mockUserWithoutPassword } = mockUser;
+    const { password: _password, ...mockUserWithoutPassword } = mockUser;
 
     const body = response.json();
     expect(body).toEqual(mockUserWithoutPassword);
@@ -184,7 +184,7 @@ describe("user routes me", () => {
 
     const token = signJsonWebToken(
       fakeUser,
-      "jwtAccessPrivateKey",
+      JWT_ACCESS_PRIVATE_KEYNAME,
       {},
       mockLogger,
     );
@@ -211,7 +211,7 @@ describe("user routes me", () => {
     expect(response.statusCode).toBe(StatusCodes.OK);
     expect(response.headers["content-type"]).toMatch(/application\/json/);
 
-    const { password, ...mockUserWithoutPassword } = mockUser;
+    const { password: _password, ...mockUserWithoutPassword } = mockUser;
     const updatedUser = {
       ...mockUserWithoutPassword,
       ...update,

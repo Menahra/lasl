@@ -2,11 +2,16 @@ import type { FastifyBaseLogger } from "fastify";
 import jsonwebtoken from "jsonwebtoken";
 import { ENVIRONMENT, getEnvironmentConfig } from "@/src/config/environment.ts";
 
+export const JWT_ACCESS_PRIVATE_KEYNAME = "jwtAccessPrivateKey";
+export const JWT_ACCESS_PUBLIC_KEYNAME = "jwtAccessPublicKey";
+export const JWT_REFRESH_PRIVATE_KEYNAME = "jwtRefreshPrivateKey";
+export const JWT_REFRESH_PUBLIC_KEYNAME = "jwtRefreshPublicKey";
+
 export const signJsonWebToken = (
   object: Record<string, unknown>,
   keyName: keyof Pick<
     typeof ENVIRONMENT,
-    "jwtAccessPrivateKey" | "jwtRefreshPrivateKey"
+    typeof JWT_ACCESS_PRIVATE_KEYNAME | typeof JWT_REFRESH_PRIVATE_KEYNAME
   >,
   options: jsonwebtoken.SignOptions | undefined,
   logger: FastifyBaseLogger,
@@ -31,7 +36,7 @@ export const verifyJsonWebToken = <T>(
   token: string,
   keyName: keyof Pick<
     typeof ENVIRONMENT,
-    "jwtAccessPublicKey" | "jwtRefreshPublicKey"
+    typeof JWT_ACCESS_PUBLIC_KEYNAME | typeof JWT_REFRESH_PUBLIC_KEYNAME
   >,
   logger: FastifyBaseLogger,
 ) => {

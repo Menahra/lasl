@@ -2,7 +2,7 @@ import type { DocumentType } from "@typegoose/typegoose";
 import type { FastifyBaseLogger } from "fastify";
 import type { Types } from "mongoose";
 import type { User } from "@/src/model/user.model.ts";
-import { signJsonWebToken } from "@/src/util/jwt.util.ts";
+import { JWT_ACCESS_PRIVATE_KEYNAME, signJsonWebToken } from "@/src/util/jwt.util.ts";
 import { SessionModel } from "../model/session.model.ts";
 
 export const createSession = async (
@@ -28,8 +28,7 @@ export const signAccessToken = (
 
     return signJsonWebToken(
       payload,
-      // biome-ignore lint/security/noSecrets: key name is no secret
-      "jwtAccessPrivateKey",
+      JWT_ACCESS_PRIVATE_KEYNAME,
       { expiresIn: "15m" },
       logger,
     );

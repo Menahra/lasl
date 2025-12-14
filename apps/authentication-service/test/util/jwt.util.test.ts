@@ -18,10 +18,10 @@ const mockedEnvironmentConfig = {
 vi.mock("@/src/config/environment.ts", () => ({
   // biome-ignore lint/style/useNamingConvention: ok for constants
   ENVIRONMENT: {
-    jwtAccessPrivateKey: "jwtAccessPrivateKey",
-    jwtAccessPublicKey: "jwtAccessPublicKey",
-    jwtRefreshPrivateKey: "jwtRefreshPrivateKey",
-    jwtRefreshPublicKey: "jwtRefreshPublicKey",
+    jwtAccessPrivateKey: jwtUtil.JWT_ACCESS_PRIVATE_KEYNAME,
+    jwtAccessPublicKey: jwtUtil.JWT_ACCESS_PUBLIC_KEYNAME,
+    jwtRefreshPrivateKey: jwtUtil.JWT_REFRESH_PRIVATE_KEYNAME,
+    jwtRefreshPublicKey: jwtUtil.JWT_REFRESH_PUBLIC_KEYNAME,
   },
   getEnvironmentConfig: () => {
     return mockedEnvironmentConfig;
@@ -55,7 +55,7 @@ describe("JWT Utility", () => {
   it("signs with a valid key", () => {
     const token = jwtUtil.signJsonWebToken(
       payload,
-      "jwtAccessPrivateKey",
+      jwtUtil.JWT_ACCESS_PRIVATE_KEYNAME,
       { expiresIn: "1h" },
       mockLogger,
     );
@@ -81,7 +81,7 @@ describe("JWT Utility", () => {
       expect(() =>
         jwtUtil.signJsonWebToken(
           payload,
-          "jwtAccessPrivateKey",
+          jwtUtil.JWT_ACCESS_PRIVATE_KEYNAME,
           { expiresIn: "1h" },
           mockLogger,
         ),
@@ -94,14 +94,14 @@ describe("JWT Utility", () => {
   it("verifies a valid JWT and returns payload", () => {
     const token = jwtUtil.signJsonWebToken(
       payload,
-      "jwtAccessPrivateKey",
+      jwtUtil.JWT_ACCESS_PRIVATE_KEYNAME,
       { expiresIn: "1h" },
       mockLogger,
     ) as string;
 
     const result = jwtUtil.verifyJsonWebToken<{ userId: string }>(
       token,
-      "jwtAccessPublicKey",
+      jwtUtil.JWT_ACCESS_PUBLIC_KEYNAME,
       mockLogger,
     );
 
@@ -116,7 +116,7 @@ describe("JWT Utility", () => {
     expect(() =>
       jwtUtil.verifyJsonWebToken(
         invalidToken,
-        "jwtAccessPublicKey",
+        jwtUtil.JWT_ACCESS_PUBLIC_KEYNAME,
         mockLogger,
       ),
     ).toThrowError();
@@ -130,7 +130,7 @@ describe("JWT Utility", () => {
     mockedEnvironmentConfig.jwtAccessPrivateKey = otherPrivateKey;
     const forgedToken = jwtUtil.signJsonWebToken(
       payload,
-      "jwtAccessPrivateKey",
+      jwtUtil.JWT_ACCESS_PRIVATE_KEYNAME,
       { expiresIn: "1h" },
       mockLogger,
     );
@@ -139,7 +139,7 @@ describe("JWT Utility", () => {
     mockedEnvironmentConfig.jwtAccessPublicKey = mockPublicKeyBase64;
 
     expect(() =>
-      jwtUtil.verifyJsonWebToken(forgedToken, "jwtAccessPublicKey", mockLogger),
+      jwtUtil.verifyJsonWebToken(forgedToken, jwtUtil.JWT_ACCESS_PUBLIC_KEYNAME, mockLogger),
     ).toThrowError();
     expect(mockLogger.error).toHaveBeenCalled();
   });

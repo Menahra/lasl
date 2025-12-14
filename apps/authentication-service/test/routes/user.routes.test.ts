@@ -13,7 +13,6 @@ import { buildApp } from "@/src/app.ts";
 import * as userService from "@/src/service/user.service.ts";
 import { getApiVersionPathPrefix } from "@/src/util/api.path.util.ts";
 import { mockUserInputData } from "../__mocks__/user.mock.ts";
-import { SUPPORTED_LOCALES } from "@lasl/app-contracts/locales";
 
 // biome-ignore lint/complexity/noExcessiveLinesPerFunction: test ok
 describe("user routes", () => {

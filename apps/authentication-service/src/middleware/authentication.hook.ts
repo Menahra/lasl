@@ -6,13 +6,10 @@ import type {
 import { StatusCodes } from "http-status-codes";
 import type { UserJsonWebTokenPayload } from "../model/user.model.ts";
 import { findSessionById } from "../service/auth.service.ts";
-import { verifyJsonWebToken } from "../util/jwt.util.ts";
+import { JWT_ACCESS_PUBLIC_KEYNAME, JWT_REFRESH_PUBLIC_KEYNAME, verifyJsonWebToken } from "../util/jwt.util.ts";
 
-// biome-ignore-start lint/security/noSecrets: these are no secrets
-const accessKeyName = "jwtAccessPublicKey";
-const refreshKeyName = "jwtRefreshPublicKey";
+// biome-ignore lint/security/noSecrets: not a secret
 export const REFRESH_COOKIE_NAME = "refreshToken";
-// biome-ignore-end lint/security/noSecrets: these are no secrets
 
 // biome-ignore lint/suspicious/useAwait: needed for preHandler functionality in fastify
 export const deserializeUser = async <
@@ -34,7 +31,7 @@ export const deserializeUser = async <
   try {
     const decoded = verifyJsonWebToken<UserJsonWebTokenPayload>(
       accessToken,
-      accessKeyName,
+      JWT_ACCESS_PUBLIC_KEYNAME,
       req.log,
     );
     req.user = decoded;
@@ -63,7 +60,7 @@ export const deserializeSession = async (
   try {
     const decoded = verifyJsonWebToken<{ session: string }>(
       refreshToken,
-      refreshKeyName,
+      JWT_REFRESH_PUBLIC_KEYNAME,
       req.log,
     );
 
