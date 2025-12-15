@@ -36,12 +36,12 @@
     "mongodb-memory-server": "^10.1.4",
     "mongoose": "^9.0.1",
     "tsup": "^8.5.0",
-    "vitest": "^4.0.3"
+    "vitest": "^4.0.15"
   },
   "peerDependencies": {
     "fastify": "^5.4.0",
     "mongodb-memory-server": "^10.1.4",
     "mongoose": "^9.0.1",
-    "vitest": "^4.0.3"
+    "vitest": "^4.0.15"
   }
 }
