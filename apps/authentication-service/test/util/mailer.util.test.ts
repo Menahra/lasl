@@ -30,11 +30,14 @@ describe("Resend Mailer util", () => {
       error: null,
     });
 
-    ResendMock.mockImplementationOnce(() => ({
-      emails: {
-        send: mockSend,
-      },
-    }));
+    // biome-ignore lint/complexity/useArrowFunction: needed due to https://vitest.dev/guide/migration.html#spyon-and-fn-support-constructors
+    ResendMock.mockImplementationOnce(function () {
+      return {
+        emails: {
+          send: mockSend,
+        },
+      };
+    });
 
     const app = await setupFastifyTestEnvironment({ buildApp, useMongo: true });
 
@@ -67,11 +70,14 @@ describe("Resend Mailer util", () => {
       error: fakeError,
     });
 
-    ResendMock.mockImplementationOnce(() => ({
-      emails: {
-        send: mockSend,
-      },
-    }));
+    // biome-ignore lint/complexity/useArrowFunction: needed due to https://vitest.dev/guide/migration.html#spyon-and-fn-support-constructors
+    ResendMock.mockImplementationOnce(function () {
+      return {
+        emails: {
+          send: mockSend,
+        },
+      };
+    });
 
     const app: FastifyInstance = await setupFastifyTestEnvironment({
       buildApp,
