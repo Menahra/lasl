@@ -1,11 +1,17 @@
 import clsx from "clsx";
 import type { PropsWithChildren, ReactNode } from "react";
-import "./styles.css";
+import "./Button.css";
+
+const ButtonVariants = {
+  primary: "Button--primary",
+  secondary: "Button--secondary",
+  text: "Button--text",
+};
 
 type ButtonProps = PropsWithChildren<{
   startIcon?: ReactNode;
   endIcon?: ReactNode;
-  variant?: "primary" | "secondary" | "text";
+  variant?: keyof typeof ButtonVariants;
   fullWidth?: boolean;
   type?: HTMLButtonElement["type"];
   onClick?: () => void;
@@ -20,13 +26,12 @@ export const Button = ({
   type = "button",
   onClick,
 }: ButtonProps) => {
-  const finalVariant = `${variant.charAt(0).toUpperCase()}${variant.slice(1)}`;
   return (
     <button
       type={type}
       className={clsx(
         "Button",
-        `${finalVariant}Button`,
+        ButtonVariants[variant],
         fullWidth && "Button--fullWidth",
       )}
       onClick={onClick}

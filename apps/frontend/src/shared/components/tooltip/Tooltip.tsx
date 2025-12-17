@@ -12,7 +12,7 @@ import {
   Trigger as RadixTrigger,
 } from "@radix-ui/react-tooltip";
 import type { PropsWithChildren } from "react";
-import "./styles.css";
+import "./Tooltip.css";
 
 export type TooltipProps = {
   children: PropsWithChildren["children"];

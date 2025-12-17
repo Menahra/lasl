@@ -1,12 +1,12 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { FormEvent } from "react";
 import { ROUTE_TERMS_OF_SERVICE } from "@/src/app/routes/terms.tsx";
+import { Button } from "@/src/shared/components/button/Button.tsx";
 import { FormInputField } from "@/src/shared/components/form-input-field/FormInputField.tsx";
+import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
 import { TextLink } from "@/src/shared/components/text-link/TextLink.tsx";
 import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
-import "./styles.css";
-import { Button } from "@/src/shared/components/button/Button.tsx";
-import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
+import "./RegisterForm.css";
 
 export const RegisterForm = () => {
   const { isLoading } = useI18nContext();

@@ -1,7 +1,7 @@
 import type { LinkComponentProps as TanstackRouterLinkComponentProps } from "@tanstack/react-router";
 import { Link as TanstackRouterLink } from "@tanstack/react-router";
 import type { PropsWithChildren } from "react";
-import "./styles.css";
+import "./TextLink.css";
 
 const TextLinkVariants = {
   primary: "TextLink--primay",

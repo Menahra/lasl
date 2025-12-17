@@ -21,7 +21,7 @@ import {
   LOCALE_LABELS,
 } from "@/src/shared/constants.ts";
 import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
-import "./styles.css";
+import "./LanguageSelect.css";
 
 type LanguageSelectProps = {
   className?: string;

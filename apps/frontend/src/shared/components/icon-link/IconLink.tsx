@@ -4,7 +4,8 @@ import {
   ExternalLink,
   type ExternalLinkProps,
 } from "@/src/shared/components/external-link/ExternalLink.tsx";
-import { Tooltip } from "../tooltip/Tooltip.tsx";
+import { Tooltip } from "@/src/shared/components/tooltip/Tooltip.tsx";
+import "./IconLink.css";
 
 export type IconLinkProps = Pick<ExternalLinkProps, "href" | "ariaLabel"> & {
   className?: string;

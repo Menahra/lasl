@@ -1,5 +1,5 @@
 import type { CSSProperties, PropsWithChildren } from "react";
-import "./styles.css";
+import "./Skeleton.css";
 
 export type SkeletonProps = PropsWithChildren<
   Partial<

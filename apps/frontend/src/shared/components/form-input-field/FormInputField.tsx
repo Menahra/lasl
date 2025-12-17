@@ -3,7 +3,7 @@ import {
   Skeleton,
   type SkeletonProps,
 } from "@/src/shared/components/skeleton/Skeleton.tsx";
-import "./styles.css";
+import "./FormInputField.css";
 
 type FormInputFieldProps = {
   /** This id is used as id for the input and as htmlFor for the label */

@@ -6,7 +6,7 @@ import {
   type IconButtonProps,
 } from "@/src/shared/components/icon-button/IconButton.tsx";
 import { useDarkMode } from "@/src/shared/hooks/useDarkMode.ts";
-import "./styles.css";
+import "./LightDarkModeButton.css";
 
 type LightDarkModeButtonProps = Pick<IconButtonProps, "className">;
 

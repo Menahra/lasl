@@ -3,14 +3,14 @@ import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import MarqaLogo from "@/assets/icons/marqa_logo.svg?react";
 import { DonateButton } from "@/src/app/layouts/main-layout/header/DonateButton.tsx";
+import { HeaderDrawer } from "@/src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx";
 import { GitHubButton } from "@/src/app/layouts/main-layout/header/GitHubButton.tsx";
 import { InputField } from "@/src/shared/components/input-field/InputField.tsx";
 import { LanguageSelect } from "@/src/shared/components/language-select/LanguageSelect.tsx";
 import { LightDarkModeButton } from "@/src/shared/components/light-dark-mode-button/LightDarkModeButton.tsx";
 import { PROJECT_NAME } from "@/src/shared/constants.ts";
-import "./styles.css";
-import { HeaderDrawer } from "@/src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx";
 import { useIsDesktop } from "@/src/shared/hooks/useIsDesktop.ts";
+import "./Header.css";
 
 export const Header = () => {
   const { t: linguiTranslator } = useLingui();
