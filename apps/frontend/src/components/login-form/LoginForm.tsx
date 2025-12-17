@@ -6,6 +6,7 @@ import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
 import { TextLink } from "@/src/shared/components/text-link/TextLink.tsx";
 import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
 import "./styles.css";
+import { Button } from "@/src/shared/components/button/Button.tsx";
 
 export const LoginForm = () => {
   const { isLoading } = useI18nContext();
@@ -49,9 +50,9 @@ export const LoginForm = () => {
           loading={isLoading}
         />
         <Skeleton loading={isLoading} width="100%" height={40}>
-          <button className="LoginFormSubmitButton" type="submit">
+          <Button type="submit">
             <Trans>Sign In</Trans>
-          </button>
+          </Button>
         </Skeleton>
       </form>
       <div className="LoginFormCardFooter">

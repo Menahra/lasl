@@ -1,17 +1,30 @@
 import { useLingui } from "@lingui/react/macro";
 import KoFiLogo from "@/assets/icons/ko-fi.svg?react";
-import { IconLink } from "@/src/shared/components/icon-link/IconLink.tsx";
+import {
+  IconLink,
+  type IconLinkProps,
+} from "@/src/shared/components/icon-link/IconLink.tsx";
+import { DONATE_PROJECT_LINK } from "@/src/shared/constants.ts";
 
-export const DonateButton = () => {
+type DonateButtonProps = Pick<IconLinkProps, "className">;
+
+export const DonateButton = ({
+  className,
+  ...donateButtonLogoProps
+}: DonateButtonProps) => {
   const { t: linguiTranslator } = useLingui();
 
   return (
     <IconLink
-      icon={<KoFiLogo />}
-      href="https://ko-fi.com/zioui"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={linguiTranslator`Visit Ko-Fi to support this project with a donation.`}
+      {...(className ? { className } : {})}
+      icon={
+        <KoFiLogo
+          {...donateButtonLogoProps}
+          className="MainLayoutHeaderActionButtonIcon"
+        />
+      }
+      href={DONATE_PROJECT_LINK}
+      ariaLabel={linguiTranslator`Visit Ko-Fi to support this project with a donation.`}
       title={linguiTranslator`Visit Ko-Fi to support this project with a donation.`}
     />
   );

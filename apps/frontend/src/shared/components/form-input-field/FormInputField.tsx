@@ -1,9 +1,9 @@
 import { Label } from "@radix-ui/react-label";
-import "./styles.css";
 import {
   Skeleton,
   type SkeletonProps,
 } from "@/src/shared/components/skeleton/Skeleton.tsx";
+import "./styles.css";
 
 type FormInputFieldProps = {
   /** This id is used as id for the input and as htmlFor for the label */

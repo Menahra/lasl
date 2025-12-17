@@ -1,17 +1,30 @@
 import { useLingui } from "@lingui/react/macro";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
-import { IconLink } from "@/src/shared/components/icon-link/IconLink.tsx";
+import {
+  IconLink,
+  type IconLinkProps,
+} from "@/src/shared/components/icon-link/IconLink.tsx";
+import { GITHUB_PROJECT_LINK } from "@/src/shared/constants.ts";
 
-export const GitHubButton = () => {
+type GitHubButtonProps = Pick<IconLinkProps, "className">;
+
+export const GitHubButton = ({
+  className,
+  ...gitHubLogoStyleProps
+}: GitHubButtonProps) => {
   const { t: linguiTranslator } = useLingui();
 
   return (
     <IconLink
-      icon={<GitHubLogoIcon />}
-      href="https://github.com/Menahra/lasl"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={linguiTranslator`Open the GitHub repository in a new browser tab.`}
+      {...(className ? { className } : {})}
+      icon={
+        <GitHubLogoIcon
+          {...gitHubLogoStyleProps}
+          className="MainLayoutHeaderActionButtonIcon"
+        />
+      }
+      href={GITHUB_PROJECT_LINK}
+      ariaLabel={linguiTranslator`Open the GitHub repository in a new browser tab.`}
       title={linguiTranslator`Open the GitHub repository in a new browser tab.`}
     />
   );

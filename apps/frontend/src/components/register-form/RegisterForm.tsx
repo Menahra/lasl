@@ -5,6 +5,7 @@ import { FormInputField } from "@/src/shared/components/form-input-field/FormInp
 import { TextLink } from "@/src/shared/components/text-link/TextLink.tsx";
 import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
 import "./styles.css";
+import { Button } from "@/src/shared/components/button/Button.tsx";
 import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
 
 export const RegisterForm = () => {
@@ -66,9 +67,9 @@ export const RegisterForm = () => {
           </Trans>
         </p>
       </Skeleton>
-      <button className="RegisterFormSubmitButton" type="submit">
+      <Button variant="primary" type="submit">
         <Trans>Create Account</Trans>
-      </button>
+      </Button>
     </form>
   );
 };

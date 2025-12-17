@@ -6,92 +6,112 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
 "Language: fr-FR\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
 
-#: src/pages/register-page/RegisterPage.tsx:25
+#: src/pages/register-page/RegisterPage.tsx:38
 msgid "Already have an Account? <0>Sign In</0>"
 msgstr ""
 
-#: src/pages/login-page/LoginPage.tsx:24
+#: src/pages/login-page/LoginPage.tsx:35
 msgid "By continuing, you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>."
 msgstr ""
 
-#: src/components/register-form/RegisterForm.tsx:47
+#: src/components/register-form/RegisterForm.tsx:56
 msgid "By signing up, you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>."
 msgstr ""
 
-#: src/components/register-form/RegisterForm.tsx:42
+#: src/layouts/main-layout/header/drawer/HeaderDrawer.tsx:44
+msgid "Close menu"
+msgstr ""
+
+#: src/components/register-form/RegisterForm.tsx:49
 msgid "Confirm Password"
 msgstr ""
 
-#: src/components/register-form/RegisterForm.tsx:43
+#: src/components/register-form/RegisterForm.tsx:50
 msgid "Confirm your password"
 msgstr ""
 
-#: src/components/register-form/RegisterForm.tsx:60
+#: src/components/register-form/RegisterForm.tsx:70
 msgid "Create Account"
 msgstr ""
 
-#: src/pages/register-page/RegisterPage.tsx:20
+#: src/pages/register-page/RegisterPage.tsx:31
 msgid "Create your Account"
 msgstr ""
 
-#: src/components/login-form/LoginForm.tsx:43
+#: src/components/login-form/LoginForm.tsx:60
 msgid "Don't have an account yet?"
 msgstr ""
 
-#: src/components/login-form/LoginForm.tsx:29
-#: src/components/register-form/RegisterForm.tsx:30
+#: src/components/login-form/LoginForm.tsx:41
+#: src/components/register-form/RegisterForm.tsx:35
 msgid "Email"
 msgstr ""
 
-#: src/components/register-form/RegisterForm.tsx:19
+#: src/components/register-form/RegisterForm.tsx:22
 msgid "Enter your first name"
 msgstr ""
 
-#: src/components/register-form/RegisterForm.tsx:25
+#: src/components/register-form/RegisterForm.tsx:29
 msgid "Enter your last name"
 msgstr ""
 
-#: src/components/login-form/LoginForm.tsx:34
-#: src/components/register-form/RegisterForm.tsx:37
+#: src/components/login-form/LoginForm.tsx:47
+#: src/components/register-form/RegisterForm.tsx:43
 msgid "Enter your password"
 msgstr ""
 
-#: src/components/register-form/RegisterForm.tsx:18
+#: src/components/register-form/RegisterForm.tsx:21
 msgid "First Name"
 msgstr ""
 
-#: src/components/register-form/RegisterForm.tsx:24
+#: src/shared/components/language-select/LanguageSelect.tsx:64
+msgid "Language"
+msgstr ""
+
+#: src/components/register-form/RegisterForm.tsx:28
 msgid "Last Name"
 msgstr ""
 
-#: src/layouts/main-layout/header/GitHubButton.tsx:14
-#: src/layouts/main-layout/header/GitHubButton.tsx:15
+#: src/layouts/main-layout/header/drawer/HeaderDrawer.tsx:39
+msgid "Menu"
+msgstr ""
+
+#: src/layouts/main-layout/header/GitHubButton.tsx:28
+#: src/layouts/main-layout/header/GitHubButton.tsx:29
 msgid "Open the GitHub repository in a new browser tab."
 msgstr ""
 
-#: src/components/login-form/LoginForm.tsx:35
-#: src/components/register-form/RegisterForm.tsx:36
+#: src/components/login-form/LoginForm.tsx:48
+#: src/components/register-form/RegisterForm.tsx:42
 msgid "Password"
 msgstr ""
 
-#: src/layouts/main-layout/header/Header.tsx:18
+#: src/layouts/main-layout/header/drawer/HeaderDrawer.tsx:52
+#: src/layouts/main-layout/header/Header.tsx:30
 msgid "Search in all pages"
 msgstr ""
 
-#: src/layouts/main-layout/header/Header.tsx:22
+#: src/layouts/main-layout/header/drawer/HeaderDrawer.tsx:57
+#: src/layouts/main-layout/header/Header.tsx:35
 msgid "Search..."
 msgstr ""
 
-#: src/components/login-form/LoginForm.tsx:38
+#: src/components/login-form/LoginForm.tsx:53
 msgid "Sign In"
 msgstr ""
 
-#: src/components/login-form/LoginForm.tsx:21
+#: src/components/login-form/LoginForm.tsx:32
 msgid "Sign in to enhance your learning"
 msgstr ""
 
-#: src/components/login-form/LoginForm.tsx:46
+#: src/components/login-form/LoginForm.tsx:63
 msgid "Sign Up"
 msgstr ""
 
@@ -105,11 +125,11 @@ msgstr ""
 msgid "Switch to light mode"
 msgstr ""
 
-#: src/layouts/main-layout/header/DonateButton.tsx:14
-#: src/layouts/main-layout/header/DonateButton.tsx:15
+#: src/layouts/main-layout/header/DonateButton.tsx:28
+#: src/layouts/main-layout/header/DonateButton.tsx:29
 msgid "Visit Ko-Fi to support this project with a donation."
 msgstr ""
 
-#: src/components/login-form/LoginForm.tsx:18
+#: src/components/login-form/LoginForm.tsx:27
 msgid "Welcome back"
 msgstr ""

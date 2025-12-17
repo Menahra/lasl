@@ -5,12 +5,6 @@
   gap: var(--space-sm);
 }
 
-.InputFieldInputIconWrapper {
-  position: relative;
-  display: flex;
-  flex: 1;
-}
-
 .InputFieldInput {
   all: unset;
   font-size: var(--font-size-sm);
@@ -24,11 +18,9 @@
   border: 1px solid var(--color-border);
   line-height: 1;
 }
-
 .InputFieldInput:hover {
   border-color: var(--color-border-light);
 }
-
 .InputFieldInput:focus {
   outline: 2px solid var(--color-border-focus);
 }
@@ -37,6 +29,11 @@
   padding-right: var(--space-32);
 }
 
+.InputFieldInputIconWrapper {
+  position: relative;
+  display: flex;
+  flex: 1;
+}
 .InputFieldIcon {
   position: absolute;
   top: 50%;

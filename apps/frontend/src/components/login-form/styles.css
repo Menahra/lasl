@@ -56,20 +56,6 @@
   border-color: var(--color-border-strong);
 }
 
-.LoginFormSubmitButton {
-  border-radius: var(--radius-md);
-  border-width: 0;
-  padding: var(--space-md) var(--space-sm);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  background-color: var(--color-primary);
-  color: var(--color-text-inverse);
-  cursor: pointer;
-}
-.LoginFormSubmitButton:hover {
-  background-color: var(--primary-500); 
-}
-
 .LoginFormCardFooter {
   display: flex;
   flex-direction: row;

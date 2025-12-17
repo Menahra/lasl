@@ -57,4 +57,4 @@ export const LoginPage = () => {
 // e2e tests:
 // login testen mit fehlender mail, falscher mail, fehlendem pw, falschem pw, richtige mail aber falsches pw, richtiges pw aber falsche mail, beides korrekt weiterleitung checken
 // checken ob sign up richtig redirected, sign up durch testen mit ähnlichen validierungen
-// checken ob terms of service und privacy policy links gehen
+// checken ob terms of service und privacy policy links gehen und back navigation etc

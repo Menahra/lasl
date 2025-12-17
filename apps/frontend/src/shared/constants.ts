@@ -16,3 +16,6 @@ export const LOCALE_LABELS: Record<AvailableLocales, string> = {
   "fr-FR": "Français (France)",
 };
 export const DEFAULT_LOCALE = "en-US";
+
+export const GITHUB_PROJECT_LINK = "https://github.com/Menahra/lasl";
+export const DONATE_PROJECT_LINK = "https://ko-fi.com/zioui";

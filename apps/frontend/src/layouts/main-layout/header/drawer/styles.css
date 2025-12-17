@@ -1,0 +1,80 @@
+.MainLayoutHeaderDrawerTrigger {
+  margin-left: auto;
+  cursor: pointer;
+  border: 0;
+  background-color: transparent;
+  width: var(--size-md);
+  height: var(--size-md);
+  box-sizing: content-box;
+  padding: var(--space-sm);
+  border-radius: var(--radius-sm);
+}
+.MainLayoutHeaderDrawerTrigger:hover {
+  background-color: var(--color-accent-hover-subtle);
+}
+
+.MainLayoutHeaderDrawerOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: var(--color-overlay);
+}
+
+.MainLayoutHeaderDrawerContent {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: min(90vw, 360px);
+  background: var(--color-background);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  will-change: transform;
+}
+.MainLayoutHeaderDrawerContent[data-state="open"] {
+  animation: slideInFromRight 200ms ease-out;
+}
+.MainLayoutHeaderDrawerContent[data-state="closed"] {
+  animation: slideOutToRight 200ms ease-in;
+}
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes slideOutToRight {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.MainLayoutHeaderDrawerHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.MainLayoutHeaderDrawerHeaderCloseButton {
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: transform 120ms ease;
+}
+.MainLayoutHeaderDrawerHeaderCloseButton:hover, .MainLayoutHeaderDrawerHeaderCloseButton:focus-visible {
+  color: var(--color-text-primary);
+  transform: scale(1.1);
+}
+
+.MainLayoutHeaderDrawerContentActions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}

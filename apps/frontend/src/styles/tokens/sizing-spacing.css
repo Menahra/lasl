@@ -1,9 +1,12 @@
 :root {
   /* Base units */
   --size-unit: 0.25rem;
+  --size-unit-half: calc(var(--size-unit) / 2);
   --space-unit: var(--size-unit);
+  --space-unit-half: calc(var(--size-unit) / 2);
 
   --size-0: 0;
+  --size-0_5: calc(var(--size-unit-half) * 1); /* 2px */
   --size-1: calc(var(--size-unit) * 1); /* 4px */
   --size-2: calc(var(--size-unit) * 2); /* 8px */
   --size-3: calc(var(--size-unit) * 3); /* 12px */
@@ -19,6 +22,7 @@
 
   /* Spacing scale */
   --space-0: 0;
+  --space-0_5: calc(var(--space-unit-half) * 1); /* 2px */
   --space-1: calc(var(--space-unit) * 1); /* 4px */
   --space-2: calc(var(--space-unit) * 2); /* 8px */
   --space-3: calc(var(--space-unit) * 3); /* 12px */
@@ -33,6 +37,7 @@
   --space-24: calc(var(--space-unit) * 24); /* 96px */
 
   /* Semantic sizing aliases */
+  --size-xxs: var(--size-0_5); 
   --size-xs: var(--size-1);
   --size-sm: var(--size-2);
   --size-md: var(--size-4);
@@ -42,6 +47,7 @@
   --size-3xl: var(--size-16);
 
   /* Semantic spacing aliases */
+  --space-xxs: var(--space-0_5);
   --space-xs: var(--space-1);
   --space-sm: var(--space-2);
   --space-md: var(--space-4);

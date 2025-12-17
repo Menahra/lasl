@@ -6,17 +6,18 @@
     "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono: "Consolas", "Monaco", monospace;
 
-  --font-size-xs: 0.75rem;
-  --font-size-sm: 0.875rem;
-  --font-size-md: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
-  --font-size-3xl: 1.875rem;
-  --font-size-4xl: 2.25rem;
-  --font-size-5xl: 3rem;
-  --font-size-6xl: 3.75rem;
-  --font-size-7xl: 4.5rem;
+  --font-size-xs: calc(var(--size-unit) * 1);
+  --font-size-sm: calc(var(--size-unit) * 3.5);
+  --font-size-md: calc(var(--size-unit) * 4);
+  --font-size-lg: calc(var(--size-unit) * 4.5);
+  --font-size-xl: calc(var(--size-unit) * 5);
+  --font-size-2xl: calc(var(--size-unit) * 6);
+  --font-size-3xl: calc(var(--size-unit) * 7);
+  --font-size-4xl: calc(var(--size-unit) * 8);
+  --font-size-5xl: calc(var(--size-unit) * 9);
+  --font-size-6xl: calc(var(--size-unit) * 10.5);
+  --font-size-7xl: calc(var(--size-unit) * 12);
+  --font-size-8xl: calc(var(--size-unit) * 13.5);
 
   --font-weight-light: 300;
   --font-weight-regular: 400;
