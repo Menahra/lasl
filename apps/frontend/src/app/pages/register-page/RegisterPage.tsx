@@ -1,14 +1,14 @@
 import { Trans } from "@lingui/react/macro";
 import MarqaLogo from "@/assets/icons/marqa_logo.svg?react";
+import { RegisterForm } from "@/src/app/pages/register-page/RegisterForm.tsx";
 import { ROUTE_LOGIN } from "@/src/app/routes/login.tsx";
-import { RegisterForm } from "@/src/components/register-form/RegisterForm.tsx";
 import { LanguageSelect } from "@/src/shared/components/language-select/LanguageSelect.tsx";
 import { LightDarkModeButton } from "@/src/shared/components/light-dark-mode-button/LightDarkModeButton.tsx";
 import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
 import { TextLink } from "@/src/shared/components/text-link/TextLink.tsx";
 import { PROJECT_NAME } from "@/src/shared/constants.ts";
 import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
-import "./styles.css";
+import "./RegisterPage.css";
 
 export const RegisterPage = () => {
   const { isLoading } = useI18nContext();
