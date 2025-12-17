@@ -8,10 +8,10 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as TermsRouteImport } from './routes/terms'
-import { Route as RegisterRouteImport } from './routes/register'
-import { Route as LoginRouteImport } from './routes/login'
+import { Route as rootRouteImport } from './app/routes/__root'
+import { Route as TermsRouteImport } from './app/routes/terms'
+import { Route as RegisterRouteImport } from './app/routes/register'
+import { Route as LoginRouteImport } from './app/routes/login'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',

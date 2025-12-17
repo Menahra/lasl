@@ -1,6 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { FormEvent } from "react";
-import { ROUTE_SIGN_UP } from "@/src/routes/register.tsx";
+import { ROUTE_SIGN_UP } from "@/src/app/routes/register.tsx";
 import { FormInputField } from "@/src/shared/components/form-input-field/FormInputField.tsx";
 import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
 import { TextLink } from "@/src/shared/components/text-link/TextLink.tsx";

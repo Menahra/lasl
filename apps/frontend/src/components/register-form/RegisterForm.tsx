@@ -1,6 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { FormEvent } from "react";
-import { ROUTE_TERMS_OF_SERVICE } from "@/src/routes/terms.tsx";
+import { ROUTE_TERMS_OF_SERVICE } from "@/src/app/routes/terms.tsx";
 import { FormInputField } from "@/src/shared/components/form-input-field/FormInputField.tsx";
 import { TextLink } from "@/src/shared/components/text-link/TextLink.tsx";
 import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";

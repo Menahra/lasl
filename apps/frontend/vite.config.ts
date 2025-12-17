@@ -20,6 +20,7 @@ export default defineConfig(({ mode }) => {
       tanstackRouter({
         target: "react",
         autoCodeSplitting: true,
+        routesDirectory: "src/app/routes",
       }),
       react({
         babel: {

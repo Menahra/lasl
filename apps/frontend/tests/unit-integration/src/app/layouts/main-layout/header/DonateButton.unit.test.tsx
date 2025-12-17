@@ -1,37 +1,37 @@
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
-import { GitHubButton } from "@/src/layouts/main-layout/header/GitHubButton.tsx";
+import { DonateButton } from "@/src/app/layouts/main-layout/header/DonateButton.tsx";
 
-describe("GitHubButton", () => {
+describe("DonateButton", () => {
   it("renders a link", () => {
-    render(<GitHubButton />);
+    render(<DonateButton />);
 
     expect(screen.getByRole("link")).toBeVisible();
   });
 
   it("link points to ko-fi page", () => {
-    render(<GitHubButton />);
+    render(<DonateButton />);
 
     const link = screen.getByRole("link");
-    expect(link).toHaveAttribute("href", "https://github.com/Menahra/lasl");
+    expect(link).toHaveAttribute("href", "https://ko-fi.com/zioui");
   });
 
   it("has proper aria label set", () => {
-    render(<GitHubButton />);
+    render(<DonateButton />);
 
     const link = screen.getByRole("link");
-    expect(link).toHaveAccessibleName("header.visit_github_repository");
+    expect(link).toHaveAccessibleName("header.ko-fi_donate_description");
   });
 
   it("shows proper tooltip on focus/hover", async () => {
-    render(<GitHubButton />);
+    render(<DonateButton />);
 
     const user = userEvent.setup();
 
     await user.tab();
     expect(
-      screen.getByRole("tooltip", { name: "header.visit_github_repository" }),
+      screen.getByRole("tooltip", { name: "header.ko-fi_donate_description" }),
     ).toBeVisible();
   });
 });

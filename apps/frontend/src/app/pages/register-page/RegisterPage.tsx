@@ -1,7 +1,7 @@
 import { Trans } from "@lingui/react/macro";
 import MarqaLogo from "@/assets/icons/marqa_logo.svg?react";
+import { ROUTE_LOGIN } from "@/src/app/routes/login.tsx";
 import { RegisterForm } from "@/src/components/register-form/RegisterForm.tsx";
-import { ROUTE_LOGIN } from "@/src/routes/login.tsx";
 import { LanguageSelect } from "@/src/shared/components/language-select/LanguageSelect.tsx";
 import { LightDarkModeButton } from "@/src/shared/components/light-dark-mode-button/LightDarkModeButton.tsx";
 import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";

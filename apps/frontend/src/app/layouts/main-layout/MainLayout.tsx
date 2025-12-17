@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from "react";
-import { Header } from "@/src/layouts/main-layout/header/Header.tsx";
+import { Header } from "@/src/app/layouts/main-layout/header/Header.tsx";
 
 type MainLayoutProps = PropsWithChildren;
 

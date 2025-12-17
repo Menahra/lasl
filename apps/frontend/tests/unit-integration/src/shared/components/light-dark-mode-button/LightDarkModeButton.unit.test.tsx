@@ -1,7 +1,8 @@
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { LightDarkModeButton } from "@/src/shared/components/light-dark-mode-button/LightDarkModeButton.tsx";
+import { renderWithI18n } from "@/tests/unit-integration/__wrappers__/I18nTestingWrapper.tsx";
 
 const useDarkModeMock = vi.hoisted(() => vi.fn());
 vi.mock("@/src/shared/hooks/useDarkMode", () => ({
@@ -9,8 +10,8 @@ vi.mock("@/src/shared/hooks/useDarkMode", () => ({
 }));
 
 describe("LightDarkModeButton", () => {
-  const toDarkModeText = "header.switch_to_dark_mode";
-  const toLightModeText = "header.switch_to_light_mode";
+  const toDarkModeText = "Switch to dark mode";
+  const toLightModeText = "Switch to light mode";
   const user = userEvent.setup();
 
   it("renders a button", () => {
@@ -18,7 +19,7 @@ describe("LightDarkModeButton", () => {
       isDarkMode: false,
       updateDarkModeSetting: vi.fn(),
     });
-    render(<LightDarkModeButton />);
+    renderWithI18n(<LightDarkModeButton />);
 
     expect(screen.getByRole("button")).toBeVisible();
   });
@@ -29,7 +30,7 @@ describe("LightDarkModeButton", () => {
       updateDarkModeSetting: vi.fn(),
     });
 
-    render(<LightDarkModeButton />);
+    renderWithI18n(<LightDarkModeButton />);
     const button = screen.getByRole("button");
     expect(button).toHaveAccessibleName(toDarkModeText);
 
@@ -43,7 +44,7 @@ describe("LightDarkModeButton", () => {
       updateDarkModeSetting: vi.fn(),
     });
 
-    render(<LightDarkModeButton />);
+    renderWithI18n(<LightDarkModeButton />);
     const button = screen.getByRole("button");
     expect(button).toHaveAccessibleName(toLightModeText);
 
@@ -60,7 +61,7 @@ describe("LightDarkModeButton", () => {
       updateDarkModeSetting: onClickFn,
     });
 
-    render(<LightDarkModeButton />);
+    renderWithI18n(<LightDarkModeButton />);
 
     await user.tab();
     await user.keyboard(" ");

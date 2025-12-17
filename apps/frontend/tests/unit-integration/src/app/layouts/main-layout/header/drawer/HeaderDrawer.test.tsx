@@ -1,15 +1,12 @@
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { HeaderDrawer } from "@/src/layouts/main-layout/header/drawer/HeaderDrawer.tsx";
+import { HeaderDrawer } from "@/src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx";
 import {
   DONATE_PROJECT_LINK,
   GITHUB_PROJECT_LINK,
 } from "@/src/shared/constants.ts";
-import {
-  I18nTestingWrapper,
-  renderWithI18n,
-} from "@/tests/unit-integration/__wrappers__/I18nTestingWrapper.tsx";
+import { renderWithI18n } from "@/tests/unit-integration/__wrappers__/I18nTestingWrapper.tsx";
 
 describe("HeaderDrawer", () => {
   let searchValue = "";
