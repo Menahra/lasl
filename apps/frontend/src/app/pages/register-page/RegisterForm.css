@@ -17,3 +17,7 @@
 .RegisterFormLink:hover {
   color: var(--color-text-link-hover);
 }
+
+.RegisterFormSubmitButton {
+  text-align: center;
+}

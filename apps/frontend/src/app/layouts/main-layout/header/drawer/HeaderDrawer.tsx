@@ -17,14 +17,14 @@ import {
 } from "@radix-ui/react-icons";
 import KoFiLogo from "@/assets/icons/ko-fi.svg?react";
 import { Button } from "@/src/shared/components/button/Button.tsx";
+import { ExternalLink } from "@/src/shared/components/external-link/ExternalLink.tsx";
 import { InputField } from "@/src/shared/components/input-field/InputField.tsx";
 import { LightDarkModeButton } from "@/src/shared/components/light-dark-mode-button/LightDarkModeButton.tsx";
-import "./styles.css";
-import { ExternalLink } from "@/src/shared/components/external-link/ExternalLink.tsx";
 import {
   DONATE_PROJECT_LINK,
   GITHUB_PROJECT_LINK,
 } from "@/src/shared/constants.ts";
+import "./HeaderDrawer.css";
 
 type HeaderDrawerProps = {
   searchValue: string;

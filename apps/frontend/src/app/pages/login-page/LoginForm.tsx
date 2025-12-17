@@ -50,7 +50,7 @@ export const LoginForm = () => {
           loading={isLoading}
         />
         <Skeleton loading={isLoading} width="100%" height={40}>
-          <Button type="submit">
+          <Button type="submit" align="center">
             <Trans>Sign In</Trans>
           </Button>
         </Skeleton>

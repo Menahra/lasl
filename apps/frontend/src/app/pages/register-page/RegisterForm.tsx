@@ -67,7 +67,7 @@ export const RegisterForm = () => {
           </Trans>
         </p>
       </Skeleton>
-      <Button variant="primary" type="submit">
+      <Button variant="primary" type="submit" align="center">
         <Trans>Create Account</Trans>
       </Button>
     </form>

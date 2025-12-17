@@ -1,7 +1,6 @@
 .Button {
   display: inline-flex;
   align-items: center;
-  justify-content: flex-start;
   gap: var(--space-sm);
   font-size: var(--font-size-sm);
   background: none;
@@ -33,6 +32,16 @@
 .Button--text:hover {
   font-weight: var(--font-weight-semibold);
   background-color: var(--color-accent-subtle);
+}
+
+.Button--alignStart {
+  justify-content: flex-start;
+}
+.Button--alignCenter {
+  justify-content: center;
+}
+.Button--alignEnd {
+  justify-content: flex-end;
 }
 
 .ButtonIcon {
