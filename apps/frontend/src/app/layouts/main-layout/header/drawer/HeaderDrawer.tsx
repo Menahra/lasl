@@ -20,10 +20,12 @@ import { Button } from "@/src/shared/components/button/Button.tsx";
 import { ExternalLink } from "@/src/shared/components/external-link/ExternalLink.tsx";
 import { InputField } from "@/src/shared/components/input-field/InputField.tsx";
 import { LightDarkModeButton } from "@/src/shared/components/light-dark-mode-button/LightDarkModeButton.tsx";
+import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
 import {
   DONATE_PROJECT_LINK,
   GITHUB_PROJECT_LINK,
 } from "@/src/shared/constants.ts";
+import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
 import "./HeaderDrawer.css";
 
 type HeaderDrawerProps = {
@@ -36,68 +38,85 @@ export const HeaderDrawer = ({
   setSearchValue,
 }: HeaderDrawerProps) => {
   const { t: linguiTranslator } = useLingui();
+  const { isLoading } = useI18nContext();
 
   return (
     <DialogRoot>
-      <DialogTrigger asChild={true}>
-        <button
-          type="button"
-          className="MainLayoutHeaderDrawerTrigger"
-          aria-label={linguiTranslator`Open menu`}
-        >
-          <HamburgerMenuIcon />
-        </button>
-      </DialogTrigger>
+      <Skeleton loading={isLoading} width={24} height={24} margin="0 0 0 auto">
+        <DialogTrigger asChild={true}>
+          <button
+            type="button"
+            className="MainLayoutHeaderDrawerTrigger"
+            aria-label={linguiTranslator`Open menu`}
+          >
+            <HamburgerMenuIcon />
+          </button>
+        </DialogTrigger>
+      </Skeleton>
       <DialogPortal>
         <DialogOverlay className="MainLayoutHeaderDrawerOverlay" />
         <DialogContent className="MainLayoutHeaderDrawerContent">
           <div className="MainLayoutHeaderDrawerHeader">
-            <DialogTitle asChild={true}>
-              <h2>{linguiTranslator`Menu`}</h2>
-            </DialogTitle>
-            <DialogClose asChild={true}>
-              <button
-                className="MainLayoutHeaderDrawerHeaderCloseButton"
-                type="button"
-                aria-label={linguiTranslator`Close menu`}
-              >
-                <Cross2Icon />
-              </button>
-            </DialogClose>
+            <Skeleton loading={isLoading} width={75} height={30}>
+              <DialogTitle asChild={true}>
+                <h2>{linguiTranslator`Menu`}</h2>
+              </DialogTitle>
+            </Skeleton>
+            <Skeleton loading={isLoading} width={24} height={24}>
+              <DialogClose asChild={true}>
+                <button
+                  className="MainLayoutHeaderDrawerHeaderCloseButton"
+                  type="button"
+                  aria-label={linguiTranslator`Close menu`}
+                >
+                  <Cross2Icon />
+                </button>
+              </DialogClose>
+            </Skeleton>
           </div>
           <div>
-            <InputField
-              label={linguiTranslator`Search in all pages`}
-              showLabel={false}
-              icon={<MagnifyingGlassIcon />}
-              value={searchValue}
-              onInputValueChange={setSearchValue}
-              placeholder={linguiTranslator`Search...`}
-            />
+            <Skeleton loading={isLoading} width="100%" height="100%">
+              <InputField
+                label={linguiTranslator`Search in all pages`}
+                showLabel={false}
+                icon={<MagnifyingGlassIcon />}
+                value={searchValue}
+                onInputValueChange={setSearchValue}
+                placeholder={linguiTranslator`Search...`}
+              />
+            </Skeleton>
           </div>
           <div className="MainLayoutHeaderDrawerContentActions">
-            <ExternalLink href={GITHUB_PROJECT_LINK}>
-              <Button
-                startIcon={<GitHubLogoIcon />}
-                endIcon={<ArrowTopRightIcon />}
-                variant="text"
-                fullWidth={true}
-              >
-                {linguiTranslator`View source code on GitHub`}
-              </Button>
-            </ExternalLink>
-            <ExternalLink href={DONATE_PROJECT_LINK}>
-              <Button
-                startIcon={<KoFiLogo />}
-                endIcon={<ArrowTopRightIcon />}
-                variant="text"
-                fullWidth={true}
-              >
-                {linguiTranslator`Support this project on Ko-Fi`}
-              </Button>
-            </ExternalLink>
-            <h4>Theme</h4>
-            <LightDarkModeButton />
+            <Skeleton loading={isLoading} width="100%" height={28}>
+              <ExternalLink href={GITHUB_PROJECT_LINK}>
+                <Button
+                  startIcon={<GitHubLogoIcon />}
+                  endIcon={<ArrowTopRightIcon />}
+                  variant="text"
+                  fullWidth={true}
+                >
+                  {linguiTranslator`View source code on GitHub`}
+                </Button>
+              </ExternalLink>
+            </Skeleton>
+            <Skeleton loading={isLoading} width="100%" height={28}>
+              <ExternalLink href={DONATE_PROJECT_LINK}>
+                <Button
+                  startIcon={<KoFiLogo />}
+                  endIcon={<ArrowTopRightIcon />}
+                  variant="text"
+                  fullWidth={true}
+                >
+                  {linguiTranslator`Support this project on Ko-Fi`}
+                </Button>
+              </ExternalLink>
+            </Skeleton>
+            <Skeleton loading={isLoading} width={65} height={22}>
+              <h4>{linguiTranslator`Theme`}</h4>
+            </Skeleton>
+            <Skeleton loading={isLoading} width="100%" height={28}>
+              <LightDarkModeButton />
+            </Skeleton>
           </div>
         </DialogContent>
       </DialogPortal>

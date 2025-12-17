@@ -3,7 +3,17 @@ import "./Skeleton.css";
 
 export type SkeletonProps = PropsWithChildren<
   Partial<
-    Pick<CSSProperties, "borderRadius" | "height" | "width" | "margin">
+    Pick<
+      CSSProperties,
+      | "borderRadius"
+      | "height"
+      | "width"
+      | "margin"
+      | "flex"
+      | "flexGrow"
+      | "flexShrink"
+      | "alignSelf"
+    >
   > & {
     /**
      * this should be a stateful variable, indicating
