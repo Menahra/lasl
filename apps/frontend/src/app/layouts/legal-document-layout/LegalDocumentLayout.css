@@ -1,0 +1,18 @@
+.LegalDocumentLayout {
+  max-width: var(--container-4xl);
+  margin: var(--space-2xl) auto;
+  padding: var(--space-lg);
+}
+
+.LegalDocumentArticle {
+  margin-top: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.LegalDocumentArticleTitle {
+  margin-bottom: var(--space-xs);
+  font-size: var(--font-size-5xl);
+  font-weight: var(--font-weight-bold);
+}

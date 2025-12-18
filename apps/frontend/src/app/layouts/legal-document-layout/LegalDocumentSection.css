@@ -1,0 +1,10 @@
+.LegalDocumentSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.LegalDocumentSectionTitle {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+}
