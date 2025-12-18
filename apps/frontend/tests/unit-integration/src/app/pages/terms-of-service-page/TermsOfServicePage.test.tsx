@@ -21,7 +21,9 @@ describe("TermsOfServicePage", () => {
 
   it("renders the page title", async () => {
     await renderTermsOfServicePage();
-    expect(screen.getByText("Terms of Service")).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "Terms of Service", level: 1 }),
+    ).toBeInTheDocument();
   });
 
   it("renders the back to home button", async () => {
@@ -36,22 +38,27 @@ describe("TermsOfServicePage", () => {
 
   it("renders all main sections", async () => {
     await renderTermsOfServicePage();
+    const sectionHeadlines = [
+      "Service Provider",
+      "Agreement to Terms",
+      "Use License",
+      "User Accounts",
+      "Termination",
+      "Intellectual Property",
+      "Learning Content",
+      "Limitation of Liability",
+      "Consumer Rights",
+      "Modifications",
+      "Governing Law and Jurisdiction",
+      "Privacy and Data Protection",
+      "Contact Us",
+    ];
 
-    expect(screen.getByText("Service Provider")).toBeInTheDocument();
-    expect(screen.getByText("Agreement to Terms")).toBeInTheDocument();
-    expect(screen.getByText("Use License")).toBeInTheDocument();
-    expect(screen.getByText("User Accounts")).toBeInTheDocument();
-    expect(screen.getByText("Termination")).toBeInTheDocument();
-    expect(screen.getByText("Intellectual Property")).toBeInTheDocument();
-    expect(screen.getByText("Learning Content")).toBeInTheDocument();
-    expect(screen.getByText("Limitation of Liability")).toBeInTheDocument();
-    expect(screen.getByText("Consumer Rights")).toBeInTheDocument();
-    expect(screen.getByText("Modifications")).toBeInTheDocument();
-    expect(
-      screen.getByText("Governing Law and Jurisdiction"),
-    ).toBeInTheDocument();
-    expect(screen.getByText("Privacy and Data Protection")).toBeInTheDocument();
-    expect(screen.getByText("Contact Us")).toBeInTheDocument();
+    for (const sectionHeadline of sectionHeadlines) {
+      expect(
+        screen.getByRole("heading", { name: sectionHeadline, level: 2 }),
+      ).toBeInTheDocument();
+    }
   });
 
   it("displays service provider information", async () => {
