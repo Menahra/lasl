@@ -1,5 +1,4 @@
-import { Trans } from "@lingui/react";
-import { useLingui } from "@lingui/react/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import { Link as TanstackRouterLink } from "@tanstack/react-router";
 import { MainLayout } from "@/src/app/layouts/main-layout/MainLayout.tsx";
@@ -8,7 +7,6 @@ import { TextLink } from "@/src/shared/components/text-link/TextLink.tsx";
 import { PROJECT_INFORMATION } from "@/src/shared/constants.ts";
 import "./TermsOfServicePage.css";
 
-// biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok for static pages
 export const TermsOfServicePage = () => {
   const { i18n } = useLingui();
   const lastUpdated = new Date("2025-12-18");
@@ -17,332 +15,246 @@ export const TermsOfServicePage = () => {
       <div className="TermsOfServicePage">
         <TanstackRouterLink to="/">
           <Button variant="text" startIcon={<ArrowLeftIcon />}>
-            <Trans id="common.back.to.home" message="Back to Home" />
+            <Trans>Back to Home</Trans>
           </Button>
         </TanstackRouterLink>
         <article className="TermsOfServicePageArticle">
           <header>
             <h1 className="TermsOfServicePageArticleTitle">
-              <Trans id="terms.title" message="Terms of Service" />
+              <Trans>Terms of Service</Trans>
             </h1>
             <p>
-              <Trans
-                id="terms.last.update"
-                message={`Last updated: ${i18n.date(lastUpdated)}`}
-              />
+              <Trans>Last updated: {i18n.date(lastUpdated)}</Trans>
             </p>
           </header>
 
           <section className="TermsOfServicePageArticleSection">
             <h2 className="TermsOfServicePageArticleSectionTitle">
-              <Trans
-                id="terms.provider.section.title"
-                message="Service Provider"
-              />
+              <Trans>Service Provider</Trans>
             </h2>
             <p>
-              <Trans
-                id="terms.provider.section.content"
-                message="This service is provided by {firstName} {lastName}, with his registered address at {street} {housenumber}, {zip} {city} ({country})."
-                values={{
-                  firstName: PROJECT_INFORMATION.author.firstName,
-                  lastName: PROJECT_INFORMATION.author.lastName,
-                  street: PROJECT_INFORMATION.author.address.street,
-                  housenumber: PROJECT_INFORMATION.author.address.housenumber,
-                  zip: PROJECT_INFORMATION.author.address.zip,
-                  city: PROJECT_INFORMATION.author.address.city,
-                  country: PROJECT_INFORMATION.author.address.country,
-                }}
-              />
+              <Trans>
+                This service is provided by{" "}
+                {`${PROJECT_INFORMATION.author.firstName} ${PROJECT_INFORMATION.author.lastName}`}
+                , with his registered address at{" "}
+                {`${PROJECT_INFORMATION.author.address.street} ${PROJECT_INFORMATION.author.address.housenumber}, ${PROJECT_INFORMATION.author.address.zip} ${PROJECT_INFORMATION.author.address.city} (${PROJECT_INFORMATION.author.address.country})`}
+                .
+              </Trans>
             </p>
             <p>
-              <Trans
-                id="terms.provider.section.disclaimer"
-                message="This project is operated as a non-commercial, experimental hobby
-                project."
-              />
+              <Trans>
+                This project is operated as a non-commercial, experimental hobby
+                project.
+              </Trans>
             </p>
           </section>
 
           <section className="TermsOfServicePageArticleSection">
             <h2 className="TermsOfServicePageArticleSectionTitle">
-              <Trans
-                id="terms.agreement.section.title"
-                message="Agreement to Terms"
-              />
+              <Trans>Agreement to Terms</Trans>
             </h2>
             <p>
-              <Trans
-                id="terms.agreement.section.content"
-                message="By accessing or using {projectName}, you agree to
+              <Trans>
+                By accessing or using {PROJECT_INFORMATION.name}, you agree to
                 be bound by these Terms of Service and all applicable laws and
                 regulations. If you do not agree with any of these terms, you
-                are prohibited from using this platform."
-                values={{ projectName: PROJECT_INFORMATION.name }}
-              />
+                are prohibited from using this platform.
+              </Trans>
             </p>
             <p>
-              <Trans
-                id="terms.agreement.section.disclaimer"
-                message="These Terms apply upon registration and continued use of the
-                service."
-              />
+              <Trans>
+                These Terms apply upon registration and continued use of the
+                service.
+              </Trans>
             </p>
           </section>
 
           <section className="TermsOfServicePageArticleSection">
             <h2 className="TermsOfServicePageArticleSectionTitle">
-              <Trans id="terms.license.section.title" message="Use License" />
+              <Trans>Use License</Trans>
             </h2>
             <p>
-              <Trans
-                id="terms.license.section.explanation"
-                message="Permission is granted to temporarily access the materials on
-                {projectName} for personal, non-commercial use
+              <Trans>
+                Permission is granted to temporarily access the materials on
+                {PROJECT_INFORMATION.name} for personal, non-commercial use
                 only. This is the grant of a license, not a transfer of title,
-                and under this license you may not:"
-                values={{ projectName: PROJECT_INFORMATION.name }}
-              />
+                and under this license you may not:
+              </Trans>
             </p>
             <ul>
-              <li>
-                <Trans
-                  id="terms.license.section.item.modify"
-                  message="Modify or copy the materials"
-                />
-              </li>
-              <li>
-                <Trans
-                  id="terms.license.section.item.commercial"
-                  message="Use the materials for any commercial purpose"
-                />
-              </li>
-              <li>
-                <Trans
-                  id="terms.license.section.item.reverse.engineer"
-                  message="Attempt to reverse engineer any software contained on 
-                {projectName}"
-                  values={{ projectName: PROJECT_INFORMATION.name }}
-                />
-              </li>
-              <li>
-                <Trans
-                  id="terms.license.section.item.copyright"
-                  message="Remove any copyright or proprietary notations from the materials"
-                />
-              </li>
-              <li>
-                <Trans
-                  id="terms.license.section.item.transfer"
-                  message='Transfer the materials to another person or "mirror" the
-                materials on any other server'
-                />
-              </li>
+              <Trans>
+                <li>Modify or copy the materials</li>
+                <li>Use the materials for any commercial purpose</li>
+                <li>
+                  Attempt to reverse engineer any software contained on{" "}
+                  {PROJECT_INFORMATION.name}
+                </li>
+                <li>
+                  Remove any copyright or proprietary notations from the
+                  materials
+                </li>
+                <li>
+                  Transfer the materials to another person or "mirror" the
+                  materials on any other server
+                </li>
+              </Trans>
             </ul>
           </section>
 
           <section className="TermsOfServicePageArticleSection">
             <h2 className="TermsOfServicePageArticleSectionTitle">
-              <Trans
-                id="terms.accounts.section.title"
-                message="User Accounts"
-              />
+              <Trans>User Accounts</Trans>
             </h2>
             <p>
-              <Trans
-                id="terms.accounts.section.content"
-                message="When you create an account with us, you must provide accurate,
+              <Trans>
+                When you create an account with us, you must provide accurate,
                 complete, and current information. Failure to do so constitutes
                 a breach of the Terms, which may result in immediate termination
-                of your account."
-              />
+                of your account.
+              </Trans>
             </p>
             <p>
-              <Trans
-                id="terms.accounts.section.responsibility"
-                message="You are responsible for safeguarding the password that you use
+              <Trans>
+                You are responsible for safeguarding the password that you use
                 to access the platform and for any activities or actions under
-                your password."
-              />
+                your password.
+              </Trans>
             </p>
           </section>
 
           <section className="TermsOfServicePageArticleSection">
             <h2 className="TermsOfServicePageArticleSectionTitle">
-              <Trans
-                id="terms.termination.section.title"
-                message="Termination"
-              />
+              <Trans>Termination</Trans>
             </h2>
             <p>
-              <Trans
-                id="terms.termination.section.content"
-                message="We may suspend or terminate your access to
-                {projectName} immediately, without prior notice, if
-                you breach these Terms or applicable laws."
-                values={{ projectName: PROJECT_INFORMATION.name }}
-              />
+              <Trans>
+                We may suspend or terminate your access to{" "}
+                {PROJECT_INFORMATION.name} immediately, without prior notice, if
+                you breach these Terms or applicable laws.
+              </Trans>
             </p>
           </section>
 
           <section className="TermsOfServicePageArticleSection">
             <h2 className="TermsOfServicePageArticleSectionTitle">
-              <Trans
-                id="terms.intellectual.section.title"
-                message="Intellectual Property"
-              />
+              <Trans>Intellectual Property</Trans>
             </h2>
             <p>
-              <Trans
-                id="terms.intellectual.section.content"
-                message="All content, features, and functionality on 
-                {projectName}, including but not limited to text,
-                graphics, logos, and software, are the exclusive property of 
-                {projectName} and are protected by international
-                copyright, trademark, and other intellectual property laws."
-                values={{ projectName: PROJECT_INFORMATION.name }}
-              />
+              <Trans>
+                All content, features, and functionality on{" "}
+                {PROJECT_INFORMATION.name}, including but not limited to text,
+                graphics, logos, and software, are the exclusive property of{" "}
+                {PROJECT_INFORMATION.name} and are protected by international
+                copyright, trademark, and other intellectual property laws.
+              </Trans>
             </p>
           </section>
 
           <section className="TermsOfServicePageArticleSection">
             <h2 className="TermsOfServicePageArticleSectionTitle">
-              <Trans
-                id="terms.learning.section.title"
-                message="Learning Content"
-              />
+              <Trans>Learning Content</Trans>
             </h2>
             <p>
-              <Trans
-                id="terms.learning.section.content"
-                message="The language learning materials provided on 
-                {projectName} are for educational purposes. While
+              <Trans>
+                The language learning materials provided on{" "}
+                {PROJECT_INFORMATION.name} are for educational purposes. While
                 we strive for accuracy, we make no guarantees about the
                 completeness or accuracy of the content. Users should verify
-                important information independently."
-                values={{ projectName: PROJECT_INFORMATION.name }}
-              />
+                important information independently.
+              </Trans>
             </p>
           </section>
 
           <section className="TermsOfServicePageArticleSection">
             <h2 className="TermsOfServicePageArticleSectionTitle">
-              <Trans
-                id="terms.liability.section.title"
-                message="Limitation of Liability"
-              />
+              <Trans>Limitation of Liability</Trans>
             </h2>
             <p>
-              <Trans
-                id="terms.liability.section.content"
-                message="To the extent permitted by applicable law, 
-                {projectName} shall not be liable for any indirect,
+              <Trans>
+                To the extent permitted by applicable law,{" "}
+                {PROJECT_INFORMATION.name} shall not be liable for any indirect,
                 incidental, special, or consequential damages arising out of or
-                in connection with the use or inability to use the service."
-                values={{ projectName: PROJECT_INFORMATION.name }}
-              />
+                in connection with the use or inability to use the service.
+              </Trans>
             </p>
             <p>
-              <Trans
-                id="terms.liability.section.disclaimer"
-                message="This limitation of liability does not apply in cases of intent,
+              <Trans>
+                This limitation of liability does not apply in cases of intent,
                 gross negligence, or where liability is mandatory under
-                applicable consumer protection laws."
-              />
+                applicable consumer protection laws.
+              </Trans>
             </p>
           </section>
 
           <section className="TermsOfServicePageArticleSection">
             <h2 className="TermsOfServicePageArticleSectionTitle">
-              <Trans
-                id="terms.consumer.section.title"
-                message="Consumer Rights"
-              />
+              <Trans>Consumer Rights</Trans>
             </h2>
             <p>
-              <Trans
-                id="terms.consumer.section.content"
-                message="If you are a consumer residing in the European Union, you
+              <Trans>
+                If you are a consumer residing in the European Union, you
                 benefit from mandatory consumer protection rights under
                 applicable EU and national laws. Nothing in these Terms limits
-                or excludes those rights."
-              />
+                or excludes those rights.
+              </Trans>
             </p>
           </section>
 
           <section className="TermsOfServicePageArticleSection">
             <h2 className="TermsOfServicePageArticleSectionTitle">
-              <Trans
-                id="terms.modifications.section.title"
-                message="Modifications"
-              />
+              <Trans>Modifications</Trans>
             </h2>
             <p>
-              <Trans
-                id="terms.modifications.section.content"
-                message="{projectName} may revise these Terms of Service at
+              <Trans>
+                {PROJECT_INFORMATION.name} may revise these Terms of Service at
                 any time without notice. By using this platform, you agree to be
-                bound by the current version of these Terms of Service."
-                values={{ projectName: PROJECT_INFORMATION.name }}
-              />
+                bound by the current version of these Terms of Service.
+              </Trans>
             </p>
           </section>
 
           <section className="TermsOfServicePageArticleSection">
             <h2 className="TermsOfServicePageArticleSectionTitle">
-              <Trans
-                id="terms.jurisdiction.section.title"
-                message="Governing Law and Jurisdiction"
-              />
+              <Trans>Governing Law and Jurisdiction</Trans>
             </h2>
             <p>
-              <Trans
-                id="terms.jurisdiction.section.author.country"
-                message="These Terms shall be governed by the laws of {country}, excluding
-                its conflict-of-law provisions."
-                values={{ country: PROJECT_INFORMATION.author.address.country }}
-              />
+              <Trans>
+                These Terms shall be governed by the laws of Germany, excluding
+                its conflict-of-law provisions.
+              </Trans>
             </p>
             <p>
-              <Trans
-                id="terms.jurisdiction.section.consumser.law"
-                message="If you are a consumer, this choice of law does not deprive you
+              <Trans>
+                If you are a consumer, this choice of law does not deprive you
                 of the protection afforded by mandatory provisions of the law of
-                your country of residence."
-              />
+                your country of residence.
+              </Trans>
             </p>
           </section>
 
           <section className="TermsOfServicePageArticleSection">
             <h2 className="TermsOfServicePageArticleSectionTitle">
-              <Trans
-                id="terms.data.section.title"
-                message="Privacy and Data Protection"
-              />
+              <Trans>Privacy and Data Protection</Trans>
             </h2>
             <p>
-              <Trans
-                id="terms.data.section.content"
-                components={{
-                  link: <TextLink to="/privacypolicy" variant="primary" />,
-                }}
-                message="The processing of personal data is governed by our{' '}
-                <link>Privacy Policy</link>, which explains how we collect, use, and
-                protect your personal information in accordance with the General
-                Data Protection Regulation (GDPR)."
-              />
+              <Trans>
+                The processing of personal data is governed by our{" "}
+                <TextLink to="/privacy" variant="primary">
+                  Privacy Policy
+                </TextLink>
+                , which explains how we collect, use, and protect your personal
+                information in accordance with the General Data Protection
+                Regulation (GDPR).
+              </Trans>
             </p>
           </section>
 
           <section className="TermsOfServicePageArticleSection">
             <h2 className="TermsOfServicePageArticleSectionTitle">
-              <Trans id="terms.contact.section.title" message="Contact Us" />
+              <Trans>Contact Us</Trans>
             </h2>
             <p>
-              <Trans
-                id="terms.contact.section.content"
-                message="There is no E-Mail available yet. Stay tuned."
-              />
+              <Trans>There is no E-Mail available yet. Stay tuned.</Trans>
             </p>
           </section>
         </article>
