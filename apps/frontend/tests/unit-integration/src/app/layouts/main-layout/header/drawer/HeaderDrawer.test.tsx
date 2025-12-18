@@ -26,6 +26,8 @@ describe("HeaderDrawer", () => {
       />,
     );
 
+  const user = userEvent.setup();
+
   it("renders trigger button", () => {
     renderDrawer();
     const trigger = screen.getByRole("button", { name: /Open menu/i });
@@ -33,7 +35,6 @@ describe("HeaderDrawer", () => {
   });
 
   it("opens and closes the drawer", async () => {
-    const user = userEvent.setup();
     renderDrawer();
 
     const trigger = screen.getByRole("button", { name: /open menu/i });
@@ -50,7 +51,6 @@ describe("HeaderDrawer", () => {
   });
 
   it("renders search input and updates value", async () => {
-    const user = userEvent.setup();
     renderDrawer();
 
     await user.click(screen.getByRole("button", { name: /open menu/i }));
@@ -59,11 +59,10 @@ describe("HeaderDrawer", () => {
     expect(input).toBeInTheDocument();
 
     await user.type(input, "hello");
-    expect(setSearchValue).toHaveBeenCalledTimes(5); // "hello" = 5 keystrokes
+    expect(setSearchValue).toHaveBeenCalledTimes(5);
   });
 
   it("renders GitHub and Ko-Fi buttons with correct hrefs", async () => {
-    const user = userEvent.setup();
     renderDrawer();
 
     await user.click(screen.getByRole("button", { name: /open menu/i }));
@@ -79,8 +78,14 @@ describe("HeaderDrawer", () => {
     expect(kofiLink).toHaveAttribute("href", DONATE_PROJECT_LINK);
   });
 
+  it("renders the language select combobox", async () => {
+    renderDrawer();
+    await user.click(screen.getByRole("button", { name: /open menu/i }));
+
+    expect(screen.getByRole("combobox", { name: "Language" })).toBeVisible();
+  });
+
   it("renders theme toggle button", async () => {
-    const user = userEvent.setup();
     renderDrawer();
 
     await user.click(screen.getByRole("button", { name: /open menu/i }));

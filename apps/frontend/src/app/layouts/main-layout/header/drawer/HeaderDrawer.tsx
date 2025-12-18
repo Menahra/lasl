@@ -19,6 +19,7 @@ import KoFiLogo from "@/assets/icons/ko-fi.svg?react";
 import { Button } from "@/src/shared/components/button/Button.tsx";
 import { ExternalLink } from "@/src/shared/components/external-link/ExternalLink.tsx";
 import { InputField } from "@/src/shared/components/input-field/InputField.tsx";
+import { LanguageSelect } from "@/src/shared/components/language-select/LanguageSelect.tsx";
 import { LightDarkModeButton } from "@/src/shared/components/light-dark-mode-button/LightDarkModeButton.tsx";
 import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
 import {
@@ -110,6 +111,12 @@ export const HeaderDrawer = ({
                   {linguiTranslator`Support this project on Ko-Fi`}
                 </Button>
               </ExternalLink>
+            </Skeleton>
+            <Skeleton loading={isLoading} width={190} height={22}>
+              <h4>{linguiTranslator`Surface language`}</h4>
+            </Skeleton>
+            <Skeleton loading={isLoading} width="100%" height={28}>
+              <LanguageSelect />
             </Skeleton>
             <Skeleton loading={isLoading} width={65} height={22}>
               <h4>{linguiTranslator`Theme`}</h4>
