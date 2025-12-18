@@ -28,7 +28,7 @@ export const GitHubButton = ({
           />
         }
         href={GITHUB_PROJECT_LINK}
-        ariaLabel={linguiTranslator`Open the GitHub repository in a new browser tab.`}
+        aria-label={linguiTranslator`Open the GitHub repository in a new browser tab.`}
         title={linguiTranslator`Open the GitHub repository in a new browser tab.`}
       />
     </Skeleton>

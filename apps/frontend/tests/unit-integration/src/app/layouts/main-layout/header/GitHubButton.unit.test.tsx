@@ -1,37 +1,44 @@
-import { render, screen } from "@testing-library/react";
+import "@/tests/unit-integration/__mocks__/i18nContextMock.ts";
+import { screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import { GitHubButton } from "@/src/app/layouts/main-layout/header/GitHubButton.tsx";
+import { renderWithI18n } from "@/tests/unit-integration/__wrappers__/I18nTestingWrapper.tsx";
 
 describe("GitHubButton", () => {
+  const renderGitHubButton = () => renderWithI18n(<GitHubButton />);
   it("renders a link", () => {
-    render(<GitHubButton />);
+    renderGitHubButton();
 
     expect(screen.getByRole("link")).toBeVisible();
   });
 
   it("link points to ko-fi page", () => {
-    render(<GitHubButton />);
+    renderGitHubButton();
 
     const link = screen.getByRole("link");
     expect(link).toHaveAttribute("href", "https://github.com/Menahra/lasl");
   });
 
   it("has proper aria label set", () => {
-    render(<GitHubButton />);
+    renderGitHubButton();
 
     const link = screen.getByRole("link");
-    expect(link).toHaveAccessibleName("header.visit_github_repository");
+    expect(link).toHaveAccessibleName(
+      "Open the GitHub repository in a new browser tab.",
+    );
   });
 
   it("shows proper tooltip on focus/hover", async () => {
-    render(<GitHubButton />);
+    renderGitHubButton();
 
     const user = userEvent.setup();
 
     await user.tab();
     expect(
-      screen.getByRole("tooltip", { name: "header.visit_github_repository" }),
+      screen.getByRole("tooltip", {
+        name: "Open the GitHub repository in a new browser tab.",
+      }),
     ).toBeVisible();
   });
 });

@@ -7,7 +7,7 @@ import {
 import { Tooltip } from "@/src/shared/components/tooltip/Tooltip.tsx";
 import "./IconLink.css";
 
-export type IconLinkProps = Pick<ExternalLinkProps, "href" | "ariaLabel"> & {
+export type IconLinkProps = Pick<ExternalLinkProps, "href" | "aria-label"> & {
   className?: string;
   icon: ReactNode;
   /** if this is given it will be shown in a tooltip */

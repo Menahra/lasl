@@ -1,8 +1,10 @@
-import type { PropsWithChildren } from "react";
+import type { AnchorHTMLAttributes, PropsWithChildren } from "react";
 
 export type ExternalLinkProps = PropsWithChildren<
   Pick<HTMLAnchorElement, "href"> &
-    Partial<Pick<HTMLAnchorElement, "ariaLabel" | "className">>
+    Partial<
+      Pick<AnchorHTMLAttributes<HTMLAnchorElement>, "aria-label" | "className">
+    >
 >;
 
 export const ExternalLink = ({

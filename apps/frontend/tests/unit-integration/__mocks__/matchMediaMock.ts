@@ -1,41 +1,44 @@
 import { vi } from "vitest";
 
-export const setupMatchMedia = (matches = false) => {
-  let currentMatches = matches;
-  const listeners = new Set<(e: MediaQueryListEvent) => void>();
+type Listener = () => void;
 
-  const mql: MediaQueryList = {
-    matches: currentMatches,
-    media: "",
-    onchange: null,
-    addEventListener: (
-      _event: string,
-      listener: (ev: MediaQueryListEvent) => void,
-    ) => {
-      listeners.add(listener);
-    },
-    removeEventListener: (
-      _event: string,
-      listener: (ev: MediaQueryListEvent) => void,
-    ) => {
-      listeners.delete(listener);
-    },
-    dispatchEvent: (event) => {
-      for (const listener of listeners) {
-        listener(event as MediaQueryListEvent);
-      }
-      return true;
-    },
-  } as MediaQueryList;
+class MockMediaQueryList {
+  matches: boolean;
+  listeners = new Set<Listener>();
 
-  vi.spyOn(window, "matchMedia").mockImplementation(() => mql);
+  constructor(matches: boolean) {
+    this.matches = matches;
+  }
+
+  addEventListener(_: "change", listener: Listener) {
+    this.listeners.add(listener);
+  }
+
+  removeEventListener(_: "change", listener: Listener) {
+    this.listeners.delete(listener);
+  }
+
+  setMatches(value: boolean) {
+    this.matches = value;
+    for (const listener of this.listeners) {
+      listener();
+    }
+  }
+}
+
+export const mockMatchMedia = (initial: Record<string, boolean>) => {
+  const queries = new Map<string, MockMediaQueryList>();
+
+  vi.spyOn(window, "matchMedia").mockImplementation((query: string) => {
+    if (!queries.has(query)) {
+      queries.set(query, new MockMediaQueryList(!!initial[query]));
+    }
+    return queries.get(query)! as unknown as MediaQueryList;
+  });
 
   return {
-    setMatches(value: boolean) {
-      currentMatches = value;
-      // @ts-expect-error ok in test
-      mql.matches = value;
-      mql.dispatchEvent(new Event("change") as MediaQueryListEvent);
+    setQuery(query: string, matches: boolean) {
+      queries.get(query)?.setMatches(matches);
     },
   };
 };

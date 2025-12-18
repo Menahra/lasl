@@ -50,7 +50,7 @@ describe("Button", () => {
       </Button>,
     );
 
-    expect(screen.getByRole("button")).toHaveClass("SecondaryButton");
+    expect(screen.getByRole("button")).toHaveClass("Button--secondary");
   });
 
   it("applies fullWidth class when fullWidth is true", () => {

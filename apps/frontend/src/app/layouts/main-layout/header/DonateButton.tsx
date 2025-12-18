@@ -28,7 +28,7 @@ export const DonateButton = ({
           />
         }
         href={DONATE_PROJECT_LINK}
-        ariaLabel={linguiTranslator`Visit Ko-Fi to support this project with a donation.`}
+        aria-label={linguiTranslator`Visit Ko-Fi to support this project with a donation.`}
         title={linguiTranslator`Visit Ko-Fi to support this project with a donation.`}
       />
     </Skeleton>
