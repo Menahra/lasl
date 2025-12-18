@@ -6,7 +6,7 @@ import { MainLayout } from "@/src/app/layouts/main-layout/MainLayout.tsx";
 import { Button } from "@/src/shared/components/button/Button.tsx";
 import "./LegalDocumentLayout.css";
 
-type LegalDocumentLayoutProps = PropsWithChildren<{
+export type LegalDocumentLayoutProps = PropsWithChildren<{
   /* the title of the document  */
   title: ReactNode;
   /* the date of the last update of the legal document */
