@@ -3,7 +3,6 @@ import { LegalDocumentLayout } from "@/src/app/layouts/legal-document-layout/Leg
 import { LegalDocumentSection } from "@/src/app/layouts/legal-document-layout/LegalDocumentSection.tsx";
 import { TextLink } from "@/src/shared/components/text-link/TextLink.tsx";
 import { PROJECT_INFORMATION } from "@/src/shared/constants.ts";
-import "./TermsOfServicePage.css";
 
 export const TermsOfServicePage = () => {
   const lastUpdated = new Date("2025-12-18");
