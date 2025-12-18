@@ -1,6 +1,10 @@
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
-import { type RenderOptions, render } from "@testing-library/react";
+import {
+  type RenderOptions,
+  type RenderResult,
+  render,
+} from "@testing-library/react";
 import type { ReactElement } from "react";
 import { messages as enMessages } from "@/src/locales/en-US/messages.ts";
 import { DEFAULT_LOCALE } from "@/src/shared/constants.ts";
@@ -12,7 +16,7 @@ interface RenderWithI18nOptions extends Omit<RenderOptions, "wrapper"> {
 export const renderWithI18n = (
   component: ReactElement,
   { locale = DEFAULT_LOCALE, ...renderOptions }: RenderWithI18nOptions = {},
-) => {
+): RenderResult => {
   i18n.load(locale, enMessages);
   i18n.activate(locale);
 

@@ -4,8 +4,21 @@ export const REFRESH_TOKEN_COOKIE_NAME = "refreshToken";
 export const ACCESS_TOKEN_NAME = "accessToken";
 export const AUTHENTICATION_TYPE = "Bearer";
 
-export const PROJECT_NAME = "Marqa";
-export const PROJECT_SUBTITLE = "Where Words Find Their Roots";
+export const PROJECT_INFORMATION = {
+  name: "Marqa",
+  subtitle: "Where Words Find Their Roots",
+  author: {
+    firstName: "Salih",
+    lastName: "Zaweeyah",
+    address: {
+      street: "Höhenberger Straße",
+      housenumber: "17",
+      zip: "51103",
+      city: "Köln",
+      country: "Germany",
+    },
+  },
+};
 
 export const AVAILABLE_LOCALES = ["en-US", "de-DE", "fr-FR"] as const;
 export type AvailableLocales = (typeof AVAILABLE_LOCALES)[number];

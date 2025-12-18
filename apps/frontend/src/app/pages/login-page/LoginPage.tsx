@@ -6,7 +6,7 @@ import { LanguageSelect } from "@/src/shared/components/language-select/Language
 import { LightDarkModeButton } from "@/src/shared/components/light-dark-mode-button/LightDarkModeButton.tsx";
 import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
 import { TextLink } from "@/src/shared/components/text-link/TextLink.tsx";
-import { PROJECT_NAME, PROJECT_SUBTITLE } from "@/src/shared/constants.ts";
+import { PROJECT_INFORMATION } from "@/src/shared/constants.ts";
 import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
 import "./LoginPage.css";
 
@@ -26,8 +26,8 @@ export const LoginPage = () => {
       <main className="LoginPageMain">
         <div className="LoginPageProjectLogoTitleWrapper">
           <MarqaLogo className="LoginPageLogo" />
-          <h1 className="LoginPageProjectTitle">{PROJECT_NAME}</h1>
-          <p>{PROJECT_SUBTITLE}</p>
+          <h1 className="LoginPageProjectTitle">{PROJECT_INFORMATION.name}</h1>
+          <p>{PROJECT_INFORMATION.subtitle}</p>
         </div>
         <LoginForm />
         <Skeleton loading={isLoading} width={480} height={18}>

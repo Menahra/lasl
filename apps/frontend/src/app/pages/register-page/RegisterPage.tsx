@@ -6,7 +6,7 @@ import { LanguageSelect } from "@/src/shared/components/language-select/Language
 import { LightDarkModeButton } from "@/src/shared/components/light-dark-mode-button/LightDarkModeButton.tsx";
 import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
 import { TextLink } from "@/src/shared/components/text-link/TextLink.tsx";
-import { PROJECT_NAME } from "@/src/shared/constants.ts";
+import { PROJECT_INFORMATION } from "@/src/shared/constants.ts";
 import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
 import "./RegisterPage.css";
 
@@ -25,7 +25,9 @@ export const RegisterPage = () => {
       <main className="RegisterPageMain">
         <MarqaLogo className="RegisterPageLogo" />
         <div className="RegisterPageProjectTitleWrapper">
-          <h1 className="RegisterPageProjectTitle">{PROJECT_NAME}</h1>
+          <h1 className="RegisterPageProjectTitle">
+            {PROJECT_INFORMATION.name}
+          </h1>
           <Skeleton loading={isLoading} height={22} width={120}>
             <p>
               <Trans>Create your Account</Trans>

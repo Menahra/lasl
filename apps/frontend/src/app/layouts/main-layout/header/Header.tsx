@@ -9,7 +9,7 @@ import { InputField } from "@/src/shared/components/input-field/InputField.tsx";
 import { LanguageSelect } from "@/src/shared/components/language-select/LanguageSelect.tsx";
 import { LightDarkModeButton } from "@/src/shared/components/light-dark-mode-button/LightDarkModeButton.tsx";
 import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
-import { PROJECT_NAME } from "@/src/shared/constants.ts";
+import { PROJECT_INFORMATION } from "@/src/shared/constants.ts";
 import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
 import { useIsDesktop } from "@/src/shared/hooks/useIsDesktop.ts";
 import "./Header.css";
@@ -25,7 +25,9 @@ export const Header = () => {
     <header className="MainLayoutHeader">
       <div className="MainLayoutHeaderLogoTitleWrapper">
         <MarqaLogo className="MainLayoutHeaderLogo" />
-        <h1 className="MainLayoutHeaderProjectTitle">{PROJECT_NAME}</h1>
+        <h1 className="MainLayoutHeaderProjectTitle">
+          {PROJECT_INFORMATION.name}
+        </h1>
       </div>
       {isDesktop ? (
         <>
