@@ -11,11 +11,11 @@ describe("LoginPage", () => {
     setI18nLoading(false);
   });
 
-  const renderLoginForm = () =>
+  const renderLoginPage = () =>
     renderWithRouterAndI18n(LoginPage, { pathPattern: "/login" });
 
   it("renders project name and subtitle", async () => {
-    await renderLoginForm();
+    await renderLoginPage();
 
     expect(
       screen.getByRole("heading", { name: PROJECT_INFORMATION.name }),
@@ -25,12 +25,12 @@ describe("LoginPage", () => {
   });
 
   it("renders the login form", async () => {
-    await renderLoginForm();
+    await renderLoginPage();
     expect(screen.getByLabelText("Password")).toBeInTheDocument();
   });
 
   it("renders language select and theme toggle", async () => {
-    await renderLoginForm();
+    await renderLoginPage();
 
     expect(
       screen.getByRole("combobox", { name: /Language/i }),
@@ -41,7 +41,7 @@ describe("LoginPage", () => {
   });
 
   it("contains links to Terms of Service and Privacy Policy", async () => {
-    await renderLoginForm();
+    await renderLoginPage();
 
     expect(
       screen.getByRole("link", { name: /terms of service/i }),
@@ -54,7 +54,7 @@ describe("LoginPage", () => {
 
   it("shows skeletons while loading", async () => {
     setI18nLoading(true);
-    await renderLoginForm();
+    await renderLoginPage();
 
     expect(screen.queryByRole("link")).not.toBeInTheDocument();
   });

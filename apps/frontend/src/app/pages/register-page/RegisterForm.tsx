@@ -67,9 +67,11 @@ export const RegisterForm = () => {
           </Trans>
         </p>
       </Skeleton>
-      <Button variant="primary" type="submit" align="center">
-        <Trans>Create Account</Trans>
-      </Button>
+      <Skeleton loading={isLoading} height={48} width="100%">
+        <Button variant="primary" type="submit" align="center">
+          <Trans>Create Account</Trans>
+        </Button>
+      </Skeleton>
     </form>
   );
 };
