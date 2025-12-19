@@ -196,7 +196,6 @@ export const PrivacyPolicyPage = () => {
   );
 };
 
-// unit tests hierfür
 // impressum
 // footer für main layout, mit kleinen links für impressum, etc
 // search feld kleiner im header
