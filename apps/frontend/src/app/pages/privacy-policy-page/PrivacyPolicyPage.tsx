@@ -196,7 +196,6 @@ export const PrivacyPolicyPage = () => {
   );
 };
 
-// unit tests für login und register page und form
 // logo und text clickbar auch auf login/ register
 // eigene component für clickbares logo mit steuerbarer größe?
 // testen

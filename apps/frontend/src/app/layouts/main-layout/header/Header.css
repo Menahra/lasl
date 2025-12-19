@@ -16,11 +16,6 @@
   align-items: center;
 }
 
-.MainLayoutHeaderLogo {
-  width: var(--size-xl);
-  height: var(--size-xl);
-}
-
 .MainLayoutHeaderProjectTitle {
   font-size: var(--font-size-4xl);
   line-height: var(--line-height-none);

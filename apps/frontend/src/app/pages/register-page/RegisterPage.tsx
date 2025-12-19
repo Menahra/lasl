@@ -1,7 +1,7 @@
 import { Trans } from "@lingui/react/macro";
-import MarqaLogo from "@/assets/icons/marqa_logo.svg?react";
 import { RegisterForm } from "@/src/app/pages/register-page/RegisterForm.tsx";
 import { ROUTE_LOGIN } from "@/src/app/routes/login.tsx";
+import { BrandLogo } from "@/src/shared/components/brand-logo/BrandLogo.tsx";
 import { LanguageSelect } from "@/src/shared/components/language-select/LanguageSelect.tsx";
 import { LightDarkModeButton } from "@/src/shared/components/light-dark-mode-button/LightDarkModeButton.tsx";
 import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
@@ -23,7 +23,7 @@ export const RegisterPage = () => {
         </Skeleton>
       </div>
       <main className="RegisterPageMain">
-        <MarqaLogo className="RegisterPageLogo" />
+        <BrandLogo variant="auth" />
         <div className="RegisterPageProjectTitleWrapper">
           <h1 className="RegisterPageProjectTitle">
             {PROJECT_INFORMATION.name}

@@ -16,11 +16,6 @@
   gap: var(--space-xl);
 }
 
-.LoginPageLogo {
-  height: var(--size-2xl);
-  width: var(--size-2xl);
-}
-
 .LoginPageProjectLogoTitleWrapper {
   display: flex;
   align-items: center;

@@ -1,7 +1,7 @@
 import { Trans } from "@lingui/react/macro";
-import MarqaLogo from "@/assets/icons/marqa_logo.svg?react";
 import { LoginForm } from "@/src/app/pages/login-page/LoginForm.tsx";
 import { ROUTE_TERMS_OF_SERVICE } from "@/src/app/routes/terms.tsx";
+import { BrandLogo } from "@/src/shared/components/brand-logo/BrandLogo.tsx";
 import { LanguageSelect } from "@/src/shared/components/language-select/LanguageSelect.tsx";
 import { LightDarkModeButton } from "@/src/shared/components/light-dark-mode-button/LightDarkModeButton.tsx";
 import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
@@ -25,7 +25,7 @@ export const LoginPage = () => {
       </div>
       <main className="LoginPageMain">
         <div className="LoginPageProjectLogoTitleWrapper">
-          <MarqaLogo className="LoginPageLogo" />
+          <BrandLogo variant="auth" />
           <h1 className="LoginPageProjectTitle">{PROJECT_INFORMATION.name}</h1>
           <p>{PROJECT_INFORMATION.subtitle}</p>
         </div>
