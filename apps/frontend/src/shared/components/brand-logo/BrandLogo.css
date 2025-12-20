@@ -7,8 +7,8 @@
   height: var(--size-xl);
 }
 .BrandLogo--footer {
-  width: var(--size-xl);
-  height: var(--size-xl);
+  width: var(--size-5);
+  height: var(--size-5);
 }
 .BrandLogo--auth {
   height: var(--size-2xl);

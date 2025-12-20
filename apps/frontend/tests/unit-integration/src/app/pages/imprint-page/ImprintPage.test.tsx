@@ -11,10 +11,10 @@ vi.mock("@/src/app/layouts/main-layout/MainLayout.tsx", () => ({
   ),
 }));
 
-const renderImprintPage = () =>
-  renderWithRouterAndI18n(ImprintPage, { pathPattern: "/imprint" });
-
 describe("ImprintPage", () => {
+  const renderImprintPage = () =>
+    renderWithRouterAndI18n(ImprintPage, { pathPattern: "/imprint" });
+
   it("renders the main layout", async () => {
     await renderImprintPage();
     expect(screen.getByTestId("main-layout")).toBeInTheDocument();

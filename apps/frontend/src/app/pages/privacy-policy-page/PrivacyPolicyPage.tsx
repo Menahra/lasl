@@ -196,9 +196,6 @@ export const PrivacyPolicyPage = () => {
   );
 };
 
-// logo und text clickbar auch auf login/ register
-// eigene component für clickbares logo mit steuerbarer größe?
-// testen
 // footer für main layout, mit kleinen links für impressum, etc
 // search feld kleiner im header
 // login/ signup button

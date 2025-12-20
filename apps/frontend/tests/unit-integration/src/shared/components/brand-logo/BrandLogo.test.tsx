@@ -23,5 +23,3 @@ describe("BrandLogo", () => {
     ).toBeInTheDocument();
   });
 });
-
-// plus text im header clickbar

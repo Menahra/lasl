@@ -1,8 +1,8 @@
+import { useLingui } from "@lingui/react/macro";
 import { Link as TanstackRouterLink } from "@tanstack/react-router";
 import clsx from "clsx";
 import MarqaLogo from "@/assets/icons/marqa_logo.svg?react";
 import "./BrandLogo.css";
-import { useLingui } from "@lingui/react/macro";
 
 const BrandLogoVariants = {
   header: "BrandLogo--header",

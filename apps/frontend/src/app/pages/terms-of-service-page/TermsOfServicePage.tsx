@@ -1,6 +1,7 @@
 import { Trans } from "@lingui/react/macro";
 import { LegalDocumentLayout } from "@/src/app/layouts/legal-document-layout/LegalDocumentLayout.tsx";
 import { LegalDocumentSection } from "@/src/app/layouts/legal-document-layout/LegalDocumentSection.tsx";
+import { ROUTE_PRIVACY_POLICY } from "@/src/app/routes/privacy.tsx";
 import { TextLink } from "@/src/shared/components/text-link/TextLink.tsx";
 import { PROJECT_INFORMATION } from "@/src/shared/constants.ts";
 
@@ -176,7 +177,7 @@ export const TermsOfServicePage = () => {
         <p>
           <Trans>
             The processing of personal data is governed by our{" "}
-            <TextLink to="/privacy" variant="primary">
+            <TextLink to={ROUTE_PRIVACY_POLICY} variant="primary">
               Privacy Policy
             </TextLink>
             , which explains how we collect, use, and protect your personal

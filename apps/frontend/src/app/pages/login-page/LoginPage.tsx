@@ -9,6 +9,7 @@ import { TextLink } from "@/src/shared/components/text-link/TextLink.tsx";
 import { PROJECT_INFORMATION } from "@/src/shared/constants.ts";
 import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
 import "./LoginPage.css";
+import { ROUTE_PRIVACY_POLICY } from "@/src/app/routes/privacy.tsx";
 
 export const LoginPage = () => {
   const { isLoading } = useI18nContext();
@@ -38,7 +39,7 @@ export const LoginPage = () => {
                 <Trans>Terms of Service</Trans>
               </TextLink>{" "}
               and{" "}
-              <TextLink to="/privacypolicy" variant="primary">
+              <TextLink to={ROUTE_PRIVACY_POLICY} variant="primary">
                 <Trans>Privacy Policy</Trans>
               </TextLink>
               .

@@ -7,6 +7,7 @@ import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
 import { TextLink } from "@/src/shared/components/text-link/TextLink.tsx";
 import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
 import "./RegisterForm.css";
+import { ROUTE_PRIVACY_POLICY } from "@/src/app/routes/privacy.tsx";
 
 export const RegisterForm = () => {
   const { isLoading } = useI18nContext();
@@ -60,7 +61,7 @@ export const RegisterForm = () => {
               <Trans>Terms of Service</Trans>
             </TextLink>{" "}
             and{" "}
-            <TextLink to="/privacypolicy" variant="primary">
+            <TextLink to={ROUTE_PRIVACY_POLICY} variant="primary">
               <Trans>Privacy Policy</Trans>
             </TextLink>
             .

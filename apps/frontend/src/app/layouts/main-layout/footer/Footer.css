@@ -1,0 +1,51 @@
+.MainLayoutFooter {
+  border-top: 1px solid var(--color-border-light);
+  background: var(--color-surface-elevated);
+}
+
+.MainLayoutFooterLinkContainer {
+  padding: var(--space-lg);
+  display: grid;
+}
+/* should match --container-3xl */
+@media (min-width: 768px) {
+  .MainLayoutFooterLinkContainer {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.MainLayoutFooterLinkColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.MainLayoutFooterLinkProjectColumnTitleWrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.MainLayoutFooterLinkProjectColumnTitle {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.MainLayoutFooterLinkColumnTitle {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
+
+.MainLayoutFooterLinkColumnList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.MainLayoutFooterCopyright {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-sm);
+  border-top: 1px solid var(--color-border-light);
+}
