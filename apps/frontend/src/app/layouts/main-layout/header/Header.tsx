@@ -13,6 +13,7 @@ import { PROJECT_INFORMATION } from "@/src/shared/constants.ts";
 import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
 import { useIsDesktop } from "@/src/shared/hooks/useIsDesktop.ts";
 import "./Header.css";
+import { AuthButton } from "@/src/app/layouts/main-layout/header/AuthButton.tsx";
 
 export const Header = () => {
   const { t: linguiTranslator } = useLingui();
@@ -31,7 +32,7 @@ export const Header = () => {
       </div>
       {isDesktop ? (
         <>
-          <Skeleton loading={isLoading} flexGrow={1} height={22}>
+          <Skeleton loading={isLoading} flexGrow={0.7} height={28}>
             <div className="MainLayoutHeaderSearchFieldWrapper">
               <InputField
                 label={linguiTranslator`Search in all pages`}
@@ -51,6 +52,7 @@ export const Header = () => {
               <Skeleton loading={isLoading} height={32} width={32}>
                 <LightDarkModeButton className="MainLayoutHeaderLightDarkModeButton" />
               </Skeleton>
+              <AuthButton />
             </div>
           </div>
         </>

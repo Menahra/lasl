@@ -195,7 +195,3 @@ export const PrivacyPolicyPage = () => {
     </LegalDocumentLayout>
   );
 };
-
-// login/ signup button
-// macht es sinn im localstorage sich zu merken ob user schon account hat und entsprechend
-// entweder login oder signup button anzuzeigen?

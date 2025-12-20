@@ -56,7 +56,3 @@
   flex-direction: row;
   gap: var(--space-xs);
 }
-
-.MainLayoutHeaderLightDarkModeButton {
-  max-height: 35px;
-}

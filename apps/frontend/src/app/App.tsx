@@ -6,7 +6,7 @@ import { AuthenticationProvider } from "@/src/shared/hooks/useAuthenticationCont
 import { I18nProvider } from "@/src/shared/hooks/useI18nContext.tsx";
 import "@/src/styles/index.css";
 
-const router = createRouter({ routeTree });
+const router = createRouter({ routeTree, scrollRestoration: true });
 
 const tanstackQueryClient = new QueryClient();
 
