@@ -32,14 +32,16 @@ export const Header = () => {
       {isDesktop ? (
         <>
           <Skeleton loading={isLoading} flexGrow={1} height={22}>
-            <InputField
-              label={linguiTranslator`Search in all pages`}
-              showLabel={false}
-              icon={<MagnifyingGlassIcon />}
-              value={searchValue}
-              onInputValueChange={setSearchValue}
-              placeholder={linguiTranslator`Search...`}
-            />
+            <div className="MainLayoutHeaderSearchFieldWrapper">
+              <InputField
+                label={linguiTranslator`Search in all pages`}
+                showLabel={false}
+                icon={<MagnifyingGlassIcon />}
+                value={searchValue}
+                onInputValueChange={setSearchValue}
+                placeholder={linguiTranslator`Search...`}
+              />
+            </div>
           </Skeleton>
           <div className="MainLayoutHeaderActionButtonsWrapper">
             <GitHubButton className="MainLayoutHeaderActionButton" />

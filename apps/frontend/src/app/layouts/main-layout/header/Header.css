@@ -1,6 +1,7 @@
 .MainLayoutHeader {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   height: 50px;
   padding: var(--space-xxs) var(--space-lg);
   gap: var(--space-xl);
@@ -20,6 +21,12 @@
   font-size: var(--font-size-4xl);
   line-height: var(--line-height-none);
   font-weight: var(--font-weight-bold);
+}
+
+.MainLayoutHeaderSearchFieldWrapper {
+  max-width: 380px;
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 
 .MainLayoutHeaderActionButtonsWrapper {
