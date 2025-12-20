@@ -1,4 +1,5 @@
 .MainLayoutFooter {
+  font-size: var(--font-size-sm);
   border-top: 1px solid var(--color-border-light);
   background: var(--color-surface-elevated);
 }
@@ -6,6 +7,8 @@
 .MainLayoutFooterLinkContainer {
   padding: var(--space-lg);
   display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
 }
 /* should match --container-3xl */
 @media (min-width: 768px) {
