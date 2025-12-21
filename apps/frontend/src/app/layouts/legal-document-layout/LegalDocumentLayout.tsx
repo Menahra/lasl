@@ -3,6 +3,7 @@ import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import { Link as TanstackRouterLink } from "@tanstack/react-router";
 import type { PropsWithChildren, ReactNode } from "react";
 import { MainLayout } from "@/src/app/layouts/main-layout/MainLayout.tsx";
+import { ROUTE_HOME } from "@/src/app/routes/index.tsx";
 import { Button } from "@/src/shared/components/button/Button.tsx";
 import "./LegalDocumentLayout.css";
 
@@ -23,7 +24,7 @@ export const LegalDocumentLayout = ({
   return (
     <MainLayout>
       <div className="LegalDocumentLayout">
-        <TanstackRouterLink to="/">
+        <TanstackRouterLink to={ROUTE_HOME}>
           <Button variant="text" startIcon={<ArrowLeftIcon />}>
             <Trans>Back to Home</Trans>
           </Button>

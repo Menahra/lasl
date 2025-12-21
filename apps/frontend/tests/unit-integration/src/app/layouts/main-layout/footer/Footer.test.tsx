@@ -3,6 +3,7 @@ import { screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 import { Footer } from "@/src/app/layouts/main-layout/footer/Footer.tsx";
 import { ROUTE_IMPRINT } from "@/src/app/routes/imprint.tsx";
+import { ROUTE_HOME } from "@/src/app/routes/index.tsx";
 import { ROUTE_PRIVACY_POLICY } from "@/src/app/routes/privacy.tsx";
 import { ROUTE_TERMS_OF_SERVICE } from "@/src/app/routes/terms.tsx";
 import { PROJECT_INFORMATION } from "@/src/shared/constants.ts";
@@ -65,7 +66,7 @@ describe("Footer", () => {
 
     const logoLink = screen
       .getAllByRole("link")
-      .find((link) => link.getAttribute("href") === "/");
+      .find((link) => link.getAttribute("href") === ROUTE_HOME);
 
     expect(logoLink).toBeTruthy();
   });

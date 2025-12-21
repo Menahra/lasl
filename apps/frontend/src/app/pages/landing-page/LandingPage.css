@@ -1,0 +1,113 @@
+.LandingPageTitleSection {
+  padding: var(--space-20) var(--space-md);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.LandingPageTitleArabic {
+  color: var(--color-primary);
+  font-size: var(--font-size-8xl);
+  margin-bottom: var(--space-sm);
+}
+
+.LandingPageSubTitle {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--space-lg);
+}
+/* should match --container-3xl */
+@media (min-width: 768px) {
+  .LandingPageSubTitle {
+    font-size: var(--font-size-6xl);
+  }
+}
+
+.LandingPageProjectGoal {
+  max-width: var(--container-2xl);
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-xl);
+}
+
+.LandingPageAuthActionWrapper {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-md);
+  align-items: center;
+}
+.LandingPageAuthActionWrapper button {
+  padding: var(--space-md) var(--space-xl);
+  height: 100%;
+}
+
+.LandingPageSection {
+  padding: var(--space-3xl) var(--space-md);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.LandingPageSectionTitle {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--space-xl);
+}
+
+.LandingPageLearnOverviewHighlightWrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+}
+/* should match --container-3xl */
+@media (min-width: 768px) {
+  .LandingPageLearnOverviewHighlightWrapper {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.LandingPageMotivationFeatureWrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+  max-width: var(--container-5xl);
+}
+/* should match --container-3xl */
+@media (min-width: 768px) {
+  .LandingPageMotivationFeatureWrapper {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+/* should match --container-4xl */
+@media (min-width: 896px) {
+  .LandingPageMotivationFeatureWrapper {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.LandingPageStartJourneySection {
+  padding: var(--space-20) var(--space-md);
+}
+
+.LandingPageStartJourneySectionContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-2xl);
+  background-color: var(--color-primary-subtle);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+}
+
+.LandingPageStartJourneySectionTitle {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--space-sm);
+}
+
+.LandingPageStartJourneySectionText {
+  margin-bottom: var(--space-md);
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+}

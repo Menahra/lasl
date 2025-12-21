@@ -1,0 +1,37 @@
+.FeatureCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  padding: var(--space-lg);
+}
+
+.FeatureCardComingSoonBadge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.FeatureCardIcon {
+  margin-bottom: var(--space-md);
+}
+.FeatureCardIcon > svg {
+  width: var(--size-10);
+  height: var(--size-10);
+  color: var(--color-primary);
+}
+
+.FeatureCardTitle {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-sm);
+}
+
+.FeatureCardDescription {
+  color: var(--color-text-secondary);
+}

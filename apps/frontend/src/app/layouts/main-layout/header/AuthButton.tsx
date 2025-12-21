@@ -1,6 +1,7 @@
 import { Trans } from "@lingui/react/macro";
 import { EnterIcon, ExitIcon } from "@radix-ui/react-icons";
 import { Link as TanstackRouterLink } from "@tanstack/react-router";
+import { ROUTE_HOME } from "@/src/app/routes/index.tsx";
 import { ROUTE_LOGIN } from "@/src/app/routes/login.tsx";
 import { Button } from "@/src/shared/components/button/Button.tsx";
 import { useAuthenticationContext } from "@/src/shared/hooks/useAuthenticationContext.tsx";
@@ -20,7 +21,7 @@ export const AuthButton = () => {
   }
 
   return (
-    <TanstackRouterLink to="/" className="AuthButton">
+    <TanstackRouterLink to={ROUTE_HOME} className="AuthButton">
       <Button startIcon={<ExitIcon />} variant="text">
         <Trans>Logout</Trans>
       </Button>

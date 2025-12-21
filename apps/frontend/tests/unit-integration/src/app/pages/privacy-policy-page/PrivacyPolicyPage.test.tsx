@@ -1,6 +1,7 @@
 import { screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { PrivacyPolicyPage } from "@/src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx";
+import { ROUTE_HOME } from "@/src/app/routes/index.tsx";
 import { PROJECT_INFORMATION } from "@/src/shared/constants.ts";
 import { renderWithRouterAndI18n } from "@/tests/unit-integration/__wrappers__/RouterAndI18nTestingWrapper.tsx";
 
@@ -113,6 +114,6 @@ describe("PrivacyPolicyPage", () => {
     await renderPrivacyPolicyPage();
 
     const backLink = screen.getByText("Back to Home").closest("a");
-    expect(backLink).toHaveAttribute("href", "/");
+    expect(backLink).toHaveAttribute("href", ROUTE_HOME);
   });
 });

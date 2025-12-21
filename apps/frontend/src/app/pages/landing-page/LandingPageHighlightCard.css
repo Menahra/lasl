@@ -1,0 +1,16 @@
+.LandingPageHighlightCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+}
+
+.LandingPageHighlightCardTitle {
+  font-size: var(--font-size-2xl);
+  color: var(--color-primary);
+}

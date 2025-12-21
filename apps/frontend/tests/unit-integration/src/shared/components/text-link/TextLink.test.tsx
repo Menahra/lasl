@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import type { PropsWithChildren } from "react";
 import { describe, expect, it, vi } from "vitest";
+import { ROUTE_HOME } from "@/src/app/routes/index.tsx";
 import { TextLink } from "@/src/shared/components/text-link/TextLink.tsx";
 
 /* mock tanstack router link */
@@ -47,7 +48,7 @@ describe("TextLink", () => {
 
   it("applies base TextLink class", () => {
     render(
-      <TextLink variant="primary" to="/">
+      <TextLink variant="primary" to={ROUTE_HOME}>
         Home
       </TextLink>,
     );
@@ -58,7 +59,7 @@ describe("TextLink", () => {
 
   it("applies primary variant class", () => {
     render(
-      <TextLink variant="primary" to="/">
+      <TextLink variant="primary" to={ROUTE_HOME}>
         Home
       </TextLink>,
     );
@@ -69,7 +70,7 @@ describe("TextLink", () => {
 
   it("applies accent variant class", () => {
     render(
-      <TextLink variant="accent" to="/">
+      <TextLink variant="accent" to={ROUTE_HOME}>
         Accent link
       </TextLink>,
     );

@@ -4,6 +4,7 @@ import {
   LegalDocumentLayout,
   type LegalDocumentLayoutProps,
 } from "@/src/app/layouts/legal-document-layout/LegalDocumentLayout.tsx";
+import { ROUTE_HOME } from "@/src/app/routes/index.tsx";
 import { renderWithRouterAndI18n } from "@/tests/unit-integration/__wrappers__/RouterAndI18nTestingWrapper.tsx";
 
 vi.mock("@/src/app/layouts/main-layout/MainLayout.tsx", () => ({
@@ -54,7 +55,7 @@ describe("LegalDocumentLayout", () => {
     await renderLegalDocumentLayout({ title: testTitle, lastUpdate });
 
     const link = screen.getByRole("link", { name: /back to home/i });
-    expect(link).toHaveAttribute("href", "/");
+    expect(link).toHaveAttribute("href", ROUTE_HOME);
   });
 
   it("wraps content in MainLayout", async () => {

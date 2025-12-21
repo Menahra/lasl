@@ -7,6 +7,7 @@ import {
   RouterProvider,
 } from "@tanstack/react-router";
 import { screen } from "@testing-library/react";
+import { ROUTE_HOME } from "@/src/app/routes/index.tsx";
 import { renderWithI18n } from "@/tests/unit-integration/__wrappers__/I18nTestingWrapper.tsx";
 
 type RenderOptions = {
@@ -29,7 +30,7 @@ export async function renderWithRouterAndI18n(
 
   const indexRoute = createRoute({
     getParentRoute: () => rootRoute,
-    path: "/",
+    path: ROUTE_HOME,
     component: () => <div>Index</div>,
   });
 

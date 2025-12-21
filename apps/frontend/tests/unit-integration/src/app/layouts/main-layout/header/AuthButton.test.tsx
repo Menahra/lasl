@@ -7,6 +7,7 @@ vi.mock("@/src/shared/hooks/useAuthenticationContext.tsx", () => ({
   useAuthenticationContext: vi.fn(),
 }));
 
+import { ROUTE_HOME } from "@/src/app/routes/index.tsx";
 import { useAuthenticationContext } from "@/src/shared/hooks/useAuthenticationContext.tsx";
 import { renderWithRouterAndI18n } from "@/tests/unit-integration/__wrappers__/RouterAndI18nTestingWrapper.tsx";
 
@@ -37,6 +38,6 @@ describe("AuthButton", () => {
     expect(screen.getByText(/logout/i)).toBeInTheDocument();
 
     const link = screen.getByRole("link");
-    expect(link).toHaveAttribute("href", "/");
+    expect(link).toHaveAttribute("href", ROUTE_HOME);
   });
 });

@@ -14,6 +14,7 @@ import { Route as RegisterRouteImport } from './app/routes/register'
 import { Route as PrivacyRouteImport } from './app/routes/privacy'
 import { Route as LoginRouteImport } from './app/routes/login'
 import { Route as ImprintRouteImport } from './app/routes/imprint'
+import { Route as IndexRouteImport } from './app/routes/index'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -40,8 +41,14 @@ const ImprintRoute = ImprintRouteImport.update({
   path: '/imprint',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
   '/imprint': typeof ImprintRoute
   '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
@@ -49,6 +56,7 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
   '/imprint': typeof ImprintRoute
   '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
@@ -57,6 +65,7 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
   '/imprint': typeof ImprintRoute
   '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
@@ -65,13 +74,21 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/imprint' | '/login' | '/privacy' | '/register' | '/terms'
+  fullPaths: '/' | '/imprint' | '/login' | '/privacy' | '/register' | '/terms'
   fileRoutesByTo: FileRoutesByTo
-  to: '/imprint' | '/login' | '/privacy' | '/register' | '/terms'
-  id: '__root__' | '/imprint' | '/login' | '/privacy' | '/register' | '/terms'
+  to: '/' | '/imprint' | '/login' | '/privacy' | '/register' | '/terms'
+  id:
+    | '__root__'
+    | '/'
+    | '/imprint'
+    | '/login'
+    | '/privacy'
+    | '/register'
+    | '/terms'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
   ImprintRoute: typeof ImprintRoute
   LoginRoute: typeof LoginRoute
   PrivacyRoute: typeof PrivacyRoute
@@ -116,10 +133,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ImprintRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
   ImprintRoute: ImprintRoute,
   LoginRoute: LoginRoute,
   PrivacyRoute: PrivacyRoute,
