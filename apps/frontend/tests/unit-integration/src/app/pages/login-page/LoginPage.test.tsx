@@ -2,6 +2,8 @@ import "@/tests/unit-integration/__mocks__/i18nContextMock.ts";
 import { screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 import { LoginPage } from "@/src/app/pages/login-page/LoginPage.tsx";
+import { ROUTE_PRIVACY_POLICY } from "@/src/app/routes/privacy.tsx";
+import { ROUTE_TERMS_OF_SERVICE } from "@/src/app/routes/terms.tsx";
 import { PROJECT_INFORMATION } from "@/src/shared/constants.ts";
 import { setI18nLoading } from "@/tests/unit-integration/__mocks__/i18nContextMock.ts";
 import { renderWithRouterAndI18n } from "@/tests/unit-integration/__wrappers__/RouterAndI18nTestingWrapper.tsx";
@@ -45,17 +47,17 @@ describe("LoginPage", () => {
 
     expect(
       screen.getByRole("link", { name: /terms of service/i }),
-    ).toHaveAttribute("href", "/terms");
+    ).toHaveAttribute("href", ROUTE_TERMS_OF_SERVICE);
 
     expect(
       screen.getByRole("link", { name: /privacy policy/i }),
-    ).toHaveAttribute("href", "/privacypolicy");
+    ).toHaveAttribute("href", ROUTE_PRIVACY_POLICY);
   });
 
   it("shows skeletons while loading", async () => {
     setI18nLoading(true);
     await renderLoginPage();
 
-    expect(screen.queryByRole("link")).not.toBeInTheDocument();
+    expect(screen.getAllByRole("link").length).toBeLessThan(2);
   });
 });

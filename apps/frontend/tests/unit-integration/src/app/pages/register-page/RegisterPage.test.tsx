@@ -1,9 +1,8 @@
 import "@/tests/unit-integration/__mocks__/i18nContextMock.ts";
-import { render, screen } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { screen } from "@testing-library/react";
+import { afterEach, describe, expect, it } from "vitest";
 import { RegisterPage } from "@/src/app/pages/register-page/RegisterPage.tsx";
 import { PROJECT_INFORMATION } from "@/src/shared/constants.ts";
-import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
 import { setI18nLoading } from "@/tests/unit-integration/__mocks__/i18nContextMock.ts";
 import { renderWithRouterAndI18n } from "@/tests/unit-integration/__wrappers__/RouterAndI18nTestingWrapper.tsx";
 
@@ -47,6 +46,7 @@ describe("RegisterPage", () => {
 
     await renderRegisterPage();
 
-    expect(screen.queryByRole("link")).not.toBeInTheDocument();
+    // only link to homepage
+    expect(screen.getAllByRole("link").length).toBeLessThan(2);
   });
 });

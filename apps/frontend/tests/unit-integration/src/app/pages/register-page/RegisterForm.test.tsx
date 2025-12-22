@@ -2,6 +2,8 @@ import "@/tests/unit-integration/__mocks__/i18nContextMock.ts";
 import { screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 import { RegisterForm } from "@/src/app/pages/register-page/RegisterForm.tsx";
+import { ROUTE_PRIVACY_POLICY } from "@/src/app/routes/privacy.tsx";
+import { ROUTE_TERMS_OF_SERVICE } from "@/src/app/routes/terms.tsx";
 import { setI18nLoading } from "@/tests/unit-integration/__mocks__/i18nContextMock.ts";
 import { renderWithRouterAndI18n } from "@/tests/unit-integration/__wrappers__/RouterAndI18nTestingWrapper.tsx";
 
@@ -46,8 +48,8 @@ describe("RegisterForm", () => {
       name: /privacy policy/i,
     });
 
-    expect(termsLink).toHaveAttribute("href", "/terms");
-    expect(privacyLink).toHaveAttribute("href", "/privacypolicy");
+    expect(termsLink).toHaveAttribute("href", ROUTE_TERMS_OF_SERVICE);
+    expect(privacyLink).toHaveAttribute("href", ROUTE_PRIVACY_POLICY);
   });
 
   it("hides content when loading", async () => {
