@@ -13,106 +13,460 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/pages/register-page/RegisterPage.tsx:38
+#. placeholder {0}: PROJECT_INFORMATION.author.firstName
+#. placeholder {1}: PROJECT_INFORMATION.author.lastName
+#. placeholder {2}: PROJECT_INFORMATION.author.address.street
+#. placeholder {3}: PROJECT_INFORMATION.author.address.housenumber
+#. placeholder {4}: PROJECT_INFORMATION.author.address.zip
+#. placeholder {5}: PROJECT_INFORMATION.author.address.city
+#. placeholder {6}: PROJECT_INFORMATION.author.address.country
+#: src/app/pages/imprint-page/ImprintPage.tsx:16
+#: src/app/pages/imprint-page/ImprintPage.tsx:42
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:34
+msgid "{0} {1}<0/>{2} {3}<1/>{4} {5}<2/>{6}"
+msgstr ""
+
+#. placeholder {0}: PROJECT_INFORMATION.name
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:152
+msgid "{0} may revise these Terms of Service at any time without notice. By using this platform, you agree to be bound by the current version of these Terms of Service."
+msgstr ""
+
+#. placeholder {0}: PROJECT_INFORMATION.name
+#: src/app/layouts/main-layout/footer/Footer.tsx:83
+msgid "© {currentYear} {0}. All rights reserved."
+msgstr ""
+
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:116
+msgid "<0>Account data is retained for the duration of the account</0><1>Learning progress data is deleted when the account is deleted</1><2>Technical and log data is retained for a limited period for security purposes</2>"
+msgstr ""
+
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:53
+msgid "<0>Identity data (such as name and email address)</0><1>Usage data (information about how you use the platform)</1><2>Technical data (such as IP address, browser type, and device information)</2>"
+msgstr ""
+
+#. placeholder {0}: PROJECT_INFORMATION.name
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:58
+msgid "<0>Modify or copy the materials</0><1>Use the materials for any commercial purpose</1><2>Attempt to reverse engineer any software contained on {0}</2><3>Remove any copyright or proprietary notations from the materials</3><4>Transfer the materials to another person or \"mirror\" the materials on any other server</4>"
+msgstr ""
+
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:87
+msgid "<0>Performance of a contract (Art. 6(1)(b) GDPR), where processing is necessary to provide user accounts and learning services</0><1>Legitimate interests (Art. 6(1)(f) GDPR), in particular to ensure the security and stability of the platform</1><2>Legal obligations (Art. 6(1)(c) GDPR), where processing is required by applicable law</2><3>Consent (Art. 6(1)(a) GDPR), where you have explicitly given consent</3>"
+msgstr ""
+
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:69
+msgid "<0>Providing and maintaining the platform</0><1>Tracking learning progress and personalizing the experience</1><2>Improving the platform and developing new features</2><3>Ensuring security and preventing misuse</3><4>Complying with legal obligations</4>"
+msgstr ""
+
+#: src/app/pages/landing-page/LandingPage.tsx:145
+msgid "Accessible Everywhere"
+msgstr ""
+
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:32
+msgid "Agreement to Terms"
+msgstr ""
+
+#: src/app/pages/landing-page/LandingPage.tsx:105
+msgid "All content is stored as JSON documents that contributors can edit and improve."
+msgstr ""
+
+#. placeholder {0}: PROJECT_INFORMATION.name
+#. placeholder {1}: PROJECT_INFORMATION.name
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:103
+msgid "All content, features, and functionality on {0}, including but not limited to text, graphics, logos, and software, are the exclusive property of {1} and are protected by international copyright, trademark, and other intellectual property laws."
+msgstr ""
+
+#: src/app/pages/register-page/RegisterPage.tsx:40
 msgid "Already have an Account? <0>Sign In</0>"
 msgstr ""
 
-#: src/pages/login-page/LoginPage.tsx:35
+#: src/app/pages/landing-page/LandingPage.tsx:41
+msgid "An open, community-driven platform for learning Modern Standard Arabic. Explore Nahw, Sarf, Balagha, and more — with content you can help improve."
+msgstr ""
+
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:151
+msgid "Appropriate technical and organizational measures are implemented to protect personal data against accidental or unlawful loss, alteration, or unauthorized access."
+msgstr ""
+
+#: src/app/pages/landing-page/LandingPage.tsx:74
+msgid "Arabic Grammar & Syntax"
+msgstr ""
+
+#: src/app/pages/imprint-page/ImprintPage.tsx:56
+msgid "As the service provider, we are responsible for our own content on these pages in accordance with applicable laws."
+msgstr ""
+
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:177
+msgid "Automated Decision-Making"
+msgstr ""
+
+#: src/app/layouts/legal-document-layout/LegalDocumentLayout.tsx:29
+msgid "Back to Home"
+msgstr ""
+
+#. placeholder {0}: PROJECT_INFORMATION.name
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:34
+msgid "By accessing or using {0}, you agree to be bound by these Terms of Service and all applicable laws and regulations. If you do not agree with any of these terms, you are prohibited from using this platform."
+msgstr ""
+
+#: src/app/pages/login-page/LoginPage.tsx:36
 msgid "By continuing, you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>."
 msgstr ""
 
-#: src/components/register-form/RegisterForm.tsx:56
+#: src/app/pages/register-page/RegisterForm.tsx:58
 msgid "By signing up, you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>."
 msgstr ""
 
-#: src/layouts/main-layout/header/drawer/HeaderDrawer.tsx:44
+#: src/app/pages/landing-page/LandingPage.tsx:95
+msgid "Carefully organized lessons covering grammar, morphology, and rhetoric progressively."
+msgstr ""
+
+#: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:71
 msgid "Close menu"
 msgstr ""
 
-#: src/components/register-form/RegisterForm.tsx:49
+#: src/app/pages/landing-page/LandingPage.tsx:135
+msgid "Collaborative Learning"
+msgstr ""
+
+#: src/app/pages/landing-page/LandingPageFeatureCard.tsx:30
+msgid "Coming Soon"
+msgstr ""
+
+#: src/app/pages/landing-page/LandingPage.tsx:103
+msgid "Community-Driven Content"
+msgstr ""
+
+#: src/app/pages/register-page/RegisterForm.tsx:51
 msgid "Confirm Password"
 msgstr ""
 
-#: src/components/register-form/RegisterForm.tsx:50
+#: src/app/pages/register-page/RegisterForm.tsx:52
 msgid "Confirm your password"
 msgstr ""
 
-#: src/components/register-form/RegisterForm.tsx:70
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:140
+msgid "Consumer Rights"
+msgstr ""
+
+#: src/app/pages/imprint-page/ImprintPage.tsx:28
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:186
+msgid "Contact"
+msgstr ""
+
+#: src/app/layouts/main-layout/footer/Footer.tsx:74
+msgid "Contact Form??"
+msgstr ""
+
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:189
+msgid "Contact Us"
+msgstr ""
+
+#: src/app/pages/imprint-page/ImprintPage.tsx:110
+msgid "Content and works created by the site operator on this website are subject to copyright law. Duplication, processing, distribution, or any form of commercialization requires prior written consent."
+msgstr ""
+
+#: src/app/pages/imprint-page/ImprintPage.tsx:108
+msgid "Copyright"
+msgstr ""
+
+#: src/app/pages/register-page/RegisterForm.tsx:73
 msgid "Create Account"
 msgstr ""
 
-#: src/pages/register-page/RegisterPage.tsx:31
+#: src/app/pages/register-page/RegisterPage.tsx:33
 msgid "Create your Account"
 msgstr "Erstelle Deinen Account"
 
-#: src/components/login-form/LoginForm.tsx:60
+#: src/app/pages/landing-page/LandingPage.tsx:175
+msgid "Create Your Free Account"
+msgstr ""
+
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:26
+msgid "Data Controller"
+msgstr ""
+
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:108
+msgid "Data Retention"
+msgstr ""
+
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:149
+msgid "Data Security"
+msgstr ""
+
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:129
+msgid "Data Sharing and Recipients"
+msgstr ""
+
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:46
+msgid "Data We Collect"
+msgstr ""
+
+#: src/app/pages/login-page/LoginForm.tsx:61
 msgid "Don't have an account yet?"
 msgstr ""
 
-#: src/components/login-form/LoginForm.tsx:41
-#: src/components/register-form/RegisterForm.tsx:35
+#: src/app/pages/login-page/LoginForm.tsx:42
+#: src/app/pages/register-page/RegisterForm.tsx:37
 msgid "Email"
 msgstr ""
 
-#: src/components/register-form/RegisterForm.tsx:22
+#: src/app/pages/register-page/RegisterForm.tsx:24
 msgid "Enter your first name"
 msgstr ""
 
-#: src/components/register-form/RegisterForm.tsx:29
+#: src/app/pages/register-page/RegisterForm.tsx:31
 msgid "Enter your last name"
 msgstr ""
 
-#: src/components/login-form/LoginForm.tsx:47
-#: src/components/register-form/RegisterForm.tsx:43
+#: src/app/pages/login-page/LoginForm.tsx:48
+#: src/app/pages/register-page/RegisterForm.tsx:45
 msgid "Enter your password"
 msgstr ""
 
-#: src/components/register-form/RegisterForm.tsx:21
+#: src/app/pages/register-page/RegisterForm.tsx:23
 msgid "First Name"
 msgstr ""
 
-#: src/shared/components/language-select/LanguageSelect.tsx:64
+#: src/shared/components/brand-logo/BrandLogo.tsx:24
+msgid "Go to homepage"
+msgstr ""
+
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:160
+msgid "Governing Law and Jurisdiction"
+msgstr ""
+
+#: src/app/pages/imprint-page/ImprintPage.tsx:62
+msgid "However, we are not obligated to monitor transmitted or stored third-party information or to actively investigate circumstances that indicate illegal activity."
+msgstr ""
+
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:142
+msgid "If you are a consumer residing in the European Union, you benefit from mandatory consumer protection rights under applicable EU and national laws. Nothing in these Terms limits or excludes those rights."
+msgstr ""
+
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:169
+msgid "If you are a consumer, this choice of law does not deprive you of the protection afforded by mandatory provisions of the law of your country of residence."
+msgstr ""
+
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:188
+msgid "If you have any questions about this Privacy Policy or the processing of your personal data, please contact us. There is no dedicated privacy email available yet."
+msgstr ""
+
+#: src/app/layouts/main-layout/footer/Footer.tsx:58
+#: src/app/pages/imprint-page/ImprintPage.tsx:11
+msgid "Imprint"
+msgstr ""
+
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:101
+msgid "Intellectual Property"
+msgstr ""
+
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:140
+msgid "International Data Transfers"
+msgstr ""
+
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:14
+msgid "Introduction"
+msgstr ""
+
+#: src/app/pages/landing-page/LandingPage.tsx:137
+msgid "Join a community of learners and contributors passionate about Arabic."
+msgstr ""
+
+#: src/app/pages/landing-page/LandingPage.tsx:163
+msgid "Join learners and contributors shaping the future of Arabic language education."
+msgstr ""
+
+#: src/shared/components/language-select/LanguageSelect.tsx:66
 msgid "Language"
 msgstr ""
 
-#: src/components/register-form/RegisterForm.tsx:28
+#: src/app/pages/register-page/RegisterForm.tsx:30
 msgid "Last Name"
 msgstr ""
 
-#: src/layouts/main-layout/header/drawer/HeaderDrawer.tsx:39
+#. placeholder {0}: i18n.date(lastUpdate)
+#: src/app/layouts/legal-document-layout/LegalDocumentLayout.tsx:36
+msgid "Last updated: {0}"
+msgstr ""
+
+#: src/app/pages/landing-page/LandingPage.tsx:126
+msgid "Learn in English, with German, French, and more languages coming soon."
+msgstr ""
+
+#: src/app/pages/landing-page/LandingPage.tsx:147
+msgid "Learn on any device with a responsive, accessible design."
+msgstr ""
+
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:112
+msgid "Learning Content"
+msgstr ""
+
+#: src/app/layouts/main-layout/footer/Footer.tsx:37
+msgid "Legal"
+msgstr ""
+
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:79
+msgid "Legal Basis for Processing"
+msgstr ""
+
+#: src/app/pages/imprint-page/ImprintPage.tsx:88
+msgid "Liability for Content"
+msgstr ""
+
+#: src/app/pages/imprint-page/ImprintPage.tsx:98
+msgid "Liability for Links"
+msgstr ""
+
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:123
+msgid "Limitation of Liability"
+msgstr ""
+
+#: src/app/layouts/main-layout/header/AuthButton.tsx:17
+msgid "Login"
+msgstr ""
+
+#: src/app/layouts/main-layout/header/AuthButton.tsx:26
+msgid "Logout"
+msgstr ""
+
+#: src/app/pages/landing-page/LandingPage.tsx:36
+msgid "Master Classical Arabic (Fusha)"
+msgstr ""
+
+#: src/app/layouts/main-layout/footer/Footer.tsx:27
+msgid "Master فصحى, the standard arabic language used in the Qur'an, literature, and news."
+msgstr ""
+
+#: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:63
 msgid "Menu"
 msgstr ""
 
-#: src/layouts/main-layout/header/GitHubButton.tsx:28
-#: src/layouts/main-layout/header/GitHubButton.tsx:29
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:150
+msgid "Modifications"
+msgstr ""
+
+#: src/app/pages/landing-page/LandingPage.tsx:78
+msgid "Morphology & Word Patterns"
+msgstr ""
+
+#: src/app/pages/landing-page/LandingPage.tsx:124
+msgid "Multi-Language Interface"
+msgstr ""
+
+#: src/app/pages/imprint-page/ImprintPage.tsx:79
+msgid "Non-Commercial Notice"
+msgstr ""
+
+#: src/app/pages/imprint-page/ImprintPage.tsx:69
+msgid "Obligations to remove or block the use of information under general laws remain unaffected. Liability in this regard is only possible from the point in time at which a specific infringement becomes known. Upon becoming aware of such violations, we will remove the content immediately."
+msgstr ""
+
+#: src/app/pages/landing-page/LandingPage.tsx:114
+msgid "Open & Transparent"
+msgstr ""
+
+#: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:51
+msgid "Open menu"
+msgstr ""
+
+#: src/app/layouts/main-layout/header/GitHubButton.tsx:31
+#: src/app/layouts/main-layout/header/GitHubButton.tsx:32
 msgid "Open the GitHub repository in a new browser tab."
 msgstr ""
 
-#: src/components/login-form/LoginForm.tsx:48
-#: src/components/register-form/RegisterForm.tsx:42
+#: src/app/pages/login-page/LoginForm.tsx:49
+#: src/app/pages/register-page/RegisterForm.tsx:44
 msgid "Password"
 msgstr ""
 
-#: src/layouts/main-layout/header/drawer/HeaderDrawer.tsx:52
-#: src/layouts/main-layout/header/Header.tsx:30
+#. placeholder {0}: PROJECT_INFORMATION.name
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:50
+msgid "Permission is granted to temporarily access the materials on{0} for personal, non-commercial use only. This is the grant of a license, not a transfer of title, and under this license you may not:"
+msgstr ""
+
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:142
+msgid "Personal data is processed exclusively within the European Union. No transfer of personal data to third countries takes place."
+msgstr ""
+
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:176
+msgid "Privacy and Data Protection"
+msgstr ""
+
+#: src/app/layouts/main-layout/footer/Footer.tsx:44
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:11
+msgid "Privacy Policy"
+msgstr ""
+
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:64
+msgid "Purposes of Processing"
+msgstr ""
+
+#: src/app/pages/landing-page/LandingPage.tsx:158
+msgid "Ready to Begin Your Arabic Journey?"
+msgstr ""
+
+#: src/app/layouts/main-layout/footer/Footer.tsx:67
+msgid "Resources"
+msgstr ""
+
+#: src/app/pages/imprint-page/ImprintPage.tsx:54
+msgid "Responsibility for Content"
+msgstr ""
+
+#: src/app/pages/imprint-page/ImprintPage.tsx:37
+msgid "Responsible for Content"
+msgstr ""
+
+#: src/app/pages/imprint-page/ImprintPage.tsx:39
+msgid "Responsible for content according to § 55 Abs. 2 RStV:"
+msgstr ""
+
+#: src/app/pages/landing-page/LandingPage.tsx:82
+msgid "Rhetoric & Eloquence"
+msgstr ""
+
+#: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:81
+#: src/app/layouts/main-layout/header/Header.tsx:38
 msgid "Search in all pages"
 msgstr ""
 
-#: src/layouts/main-layout/header/drawer/HeaderDrawer.tsx:57
-#: src/layouts/main-layout/header/Header.tsx:35
+#: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:86
+#: src/app/layouts/main-layout/header/Header.tsx:43
 msgid "Search..."
 msgstr ""
 
-#: src/components/login-form/LoginForm.tsx:53
+#: src/app/pages/imprint-page/ImprintPage.tsx:14
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:15
+msgid "Service Provider"
+msgstr ""
+
+#: src/app/pages/landing-page/LandingPage.tsx:59
+#: src/app/pages/login-page/LoginForm.tsx:54
 msgid "Sign In"
 msgstr ""
 
-#: src/components/login-form/LoginForm.tsx:32
+#: src/app/pages/login-page/LoginForm.tsx:33
 msgid "Sign in to enhance your learning"
 msgstr ""
 
-#: src/components/login-form/LoginForm.tsx:63
+#: src/app/pages/login-page/LoginForm.tsx:64
 msgid "Sign Up"
+msgstr ""
+
+#: src/app/pages/landing-page/LandingPage.tsx:52
+msgid "Start Learning Free"
+msgstr ""
+
+#: src/app/pages/landing-page/LandingPage.tsx:93
+msgid "Structured Curriculum"
+msgstr ""
+
+#: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:111
+msgid "Support this project on Ko-Fi"
+msgstr ""
+
+#: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:116
+msgid "Surface language"
 msgstr ""
 
 #: src/shared/components/light-dark-mode-button/LightDarkModeButton.tsx:29
@@ -125,11 +479,168 @@ msgstr ""
 msgid "Switch to light mode"
 msgstr ""
 
-#: src/layouts/main-layout/header/DonateButton.tsx:28
-#: src/layouts/main-layout/header/DonateButton.tsx:29
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:92
+msgid "Termination"
+msgstr ""
+
+#: src/app/layouts/main-layout/footer/Footer.tsx:51
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:12
+msgid "Terms of Service"
+msgstr ""
+
+#: src/app/pages/imprint-page/ImprintPage.tsx:90
+msgid "The contents of this website have been created with the greatest possible care. However, no guarantee is given for the accuracy, completeness, or timeliness of the content."
+msgstr ""
+
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:28
+msgid "The data controller responsible for the processing of personal data within the meaning of the GDPR is:"
+msgstr ""
+
+#. placeholder {0}: PROJECT_INFORMATION.name
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:114
+msgid "The language learning materials provided on {0} are for educational purposes. While we strive for accuracy, we make no guarantees about the completeness or accuracy of the content. Users should verify important information independently."
+msgstr ""
+
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:178
+msgid "The processing of personal data is governed by our <0>Privacy Policy</0>, which explains how we collect, use, and protect your personal information in accordance with the General Data Protection Regulation (GDPR)."
+msgstr ""
+
+#: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:122
+msgid "Theme"
+msgstr ""
+
+#: src/app/pages/imprint-page/ImprintPage.tsx:30
+msgid "There is currently no direct email contact available. Please use the contact options provided within the platform."
+msgstr ""
+
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:191
+msgid "There is no E-Mail available yet. Stay tuned."
+msgstr ""
+
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:42
+msgid "These Terms apply upon registration and continued use of the service."
+msgstr ""
+
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:163
+msgid "These Terms shall be governed by the laws of Germany, excluding its conflict-of-law provisions."
+msgstr ""
+
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:133
+msgid "This limitation of liability does not apply in cases of intent, gross negligence, or where liability is mandatory under applicable consumer protection laws."
+msgstr ""
+
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:26
+msgid "This project is operated as a non-commercial, experimental hobby project."
+msgstr ""
+
+#. placeholder {0}: PROJECT_INFORMATION.author.firstName
+#. placeholder {1}: PROJECT_INFORMATION.author.lastName
+#. placeholder {2}: PROJECT_INFORMATION.author.address.street
+#. placeholder {3}: PROJECT_INFORMATION.author.address.housenumber
+#. placeholder {4}: PROJECT_INFORMATION.author.address.zip
+#. placeholder {5}: PROJECT_INFORMATION.author.address.city
+#. placeholder {6}: PROJECT_INFORMATION.author.address.country
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:17
+msgid "This service is provided by {0} {1}, with his registered address at {2} {3}, {4} {5} ({6})."
+msgstr ""
+
+#: src/app/pages/imprint-page/ImprintPage.tsx:81
+msgid "This website is operated as a private, non-commercial hobby project. No commercial services are offered. No intention of profit exists."
+msgstr ""
+
+#: src/app/pages/imprint-page/ImprintPage.tsx:100
+msgid "This website may contain links to external third-party websites. We have no influence over the contents of those websites and therefore assume no liability for external content."
+msgstr ""
+
+#. placeholder {0}: PROJECT_INFORMATION.name
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:125
+msgid "To the extent permitted by applicable law, {0} shall not be liable for any indirect, incidental, special, or consequential damages arising out of or in connection with the use or inability to use the service."
+msgstr ""
+
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:161
+msgid "Under the GDPR, you have the right to access, correct, delete, or restrict the processing of your personal data. You also have the right to data portability and to object to certain processing activities."
+msgstr ""
+
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:48
+msgid "Use License"
+msgstr ""
+
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:75
+msgid "User Accounts"
+msgstr ""
+
+#: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:99
+msgid "View source code on GitHub"
+msgstr ""
+
+#: src/app/pages/landing-page/LandingPage.tsx:116
+msgid "View, suggest changes, and contribute to the learning materials directly."
+msgstr ""
+
+#: src/app/layouts/main-layout/header/DonateButton.tsx:31
+#: src/app/layouts/main-layout/header/DonateButton.tsx:32
 msgid "Visit Ko-Fi to support this project with a donation."
 msgstr ""
 
-#: src/components/login-form/LoginForm.tsx:27
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:48
+msgid "We collect and process the following categories of data:"
+msgstr ""
+
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:131
+msgid "We do not sell or rent personal data. Personal data is not shared with third parties, except where required by law or where technical service providers are used to operate the platform under data processing agreements."
+msgstr ""
+
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:179
+msgid "We do not use automated decision-making or profiling within the meaning of Art. 22 GDPR."
+msgstr ""
+
+#. placeholder {0}: PROJECT_INFORMATION.name
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:94
+msgid "We may suspend or terminate your access to {0} immediately, without prior notice, if you breach these Terms or applicable laws."
+msgstr ""
+
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:81
+msgid "We process personal data on the following legal bases in accordance with Art. 6 GDPR:"
+msgstr ""
+
+#. placeholder {0}: PROJECT_INFORMATION.name
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:16
+msgid "We respect your privacy and are committed to protecting your personal data. This Privacy Policy explains how we collect, use, and protect your personal data when you use {0}, as well as your rights under the General Data Protection Regulation (GDPR)."
+msgstr ""
+
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:110
+msgid "We store personal data only for as long as necessary to fulfill the purposes for which it was collected."
+msgstr ""
+
+#: src/app/pages/login-page/LoginForm.tsx:28
 msgid "Welcome back"
+msgstr ""
+
+#: src/app/pages/landing-page/LandingPage.tsx:68
+msgid "What You Will Learn"
+msgstr ""
+
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:77
+msgid "When you create an account with us, you must provide accurate, complete, and current information. Failure to do so constitutes a breach of the Terms, which may result in immediate termination of your account."
+msgstr ""
+
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:169
+msgid "Where processing is based on consent, you may withdraw your consent at any time. You also have the right to lodge a complaint with a supervisory authority."
+msgstr ""
+
+#. placeholder {0}: PROJECT_INFORMATION.name
+#: src/app/pages/landing-page/LandingPage.tsx:88
+msgid "Why {0}?"
+msgstr ""
+
+#: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:85
+msgid "You are responsible for safeguarding the password that you use to access the platform and for any activities or actions under your password."
+msgstr ""
+
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:66
+msgid "Your personal data is used for the following purposes:"
+msgstr ""
+
+#: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:159
+msgid "Your Rights"
 msgstr ""
