@@ -1,9 +1,12 @@
 import "@/tests/unit-integration/__mocks__/i18nContextMock.ts";
+import {
+  DEFAULT_LOCALE,
+  SUPPORTED_LOCALES_LABELS,
+} from "@lasl/app-contracts/locales";
 import { screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { beforeAll, describe, expect, it } from "vitest";
 import { LanguageSelect } from "@/src/shared/components/language-select/LanguageSelect.tsx";
-import { DEFAULT_LOCALE, LOCALE_LABELS } from "@/src/shared/constants.ts";
 import {
   mockedChangeLocaleFn,
   setI18nLoading,
@@ -21,7 +24,9 @@ describe("LanguageSelect", () => {
   it("renders the current locale label", () => {
     renderLanguageSelect();
 
-    expect(screen.getByText(LOCALE_LABELS[DEFAULT_LOCALE])).toBeInTheDocument();
+    expect(
+      screen.getByText(SUPPORTED_LOCALES_LABELS[DEFAULT_LOCALE]),
+    ).toBeInTheDocument();
   });
 
   it("shows all available languages when opened", async () => {
@@ -29,8 +34,8 @@ describe("LanguageSelect", () => {
 
     await user.click(screen.getByRole("combobox", { name: "Language" }));
 
-    for (const localeLabel of Object.values(LOCALE_LABELS)) {
-      if (localeLabel !== LOCALE_LABELS[DEFAULT_LOCALE]) {
+    for (const localeLabel of Object.values(SUPPORTED_LOCALES_LABELS)) {
+      if (localeLabel !== SUPPORTED_LOCALES_LABELS[DEFAULT_LOCALE]) {
         expect(screen.getByText(localeLabel)).toBeVisible();
       } else {
         expect(screen.getAllByText(localeLabel)).toHaveLength(2);
@@ -43,7 +48,7 @@ describe("LanguageSelect", () => {
 
     await userEvent.click(screen.getByRole("combobox", { name: "Language" }));
 
-    await userEvent.click(screen.getByText(LOCALE_LABELS["de-DE"]));
+    await userEvent.click(screen.getByText(SUPPORTED_LOCALES_LABELS["de-DE"]));
 
     expect(mockedChangeLocaleFn).toHaveBeenCalledWith("de-DE");
   });

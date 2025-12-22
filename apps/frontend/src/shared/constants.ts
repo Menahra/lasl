@@ -20,15 +20,5 @@ export const PROJECT_INFORMATION = {
   },
 };
 
-export const AVAILABLE_LOCALES = ["en-US", "de-DE", "fr-FR"] as const;
-export type AvailableLocales = (typeof AVAILABLE_LOCALES)[number];
-export const LOCALE_LABELS: Record<AvailableLocales, string> = {
-  // biome-ignore lint/security/noSecrets: a translation, not a secret
-  "de-DE": "Deutsch (Deutschland)",
-  "en-US": "English (United States)",
-  "fr-FR": "Français (France)",
-};
-export const DEFAULT_LOCALE = "en-US";
-
 export const GITHUB_PROJECT_LINK = "https://github.com/Menahra/lasl";
 export const DONATE_PROJECT_LINK = "https://ko-fi.com/zioui";

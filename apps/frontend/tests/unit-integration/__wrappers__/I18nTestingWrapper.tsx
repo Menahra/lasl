@@ -1,3 +1,4 @@
+import { DEFAULT_LOCALE } from "@lasl/app-contracts/locales";
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 import {
@@ -7,7 +8,6 @@ import {
 } from "@testing-library/react";
 import type { ReactElement } from "react";
 import { messages as enMessages } from "@/src/locales/en-US/messages.ts";
-import { DEFAULT_LOCALE } from "@/src/shared/constants.ts";
 
 interface RenderWithI18nOptions extends Omit<RenderOptions, "wrapper"> {
   locale?: string;

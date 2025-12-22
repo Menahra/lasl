@@ -19,6 +19,7 @@
     "check:messages": "lingui extract --check"
   },
   "dependencies": {
+    "@lasl/app-contracts": "workspace:*",
     "@lingui/core": "^5.6.0",
     "@lingui/react": "^5.6.0",
     "@radix-ui/react-dialog": "^1.1.15",

@@ -1,3 +1,7 @@
+import {
+  DEFAULT_LOCALE,
+  type SupportedLocale,
+} from "@lasl/app-contracts/locales";
 import { I18nProvider as LinguiI18nProvider } from "@lingui/react";
 import {
   createContext,
@@ -8,15 +12,11 @@ import {
 } from "react";
 import { userApi } from "@/src/api/userApi.ts";
 import { i18n, initI18n, switchI18nLocale } from "@/src/app/i18n.ts";
-import {
-  type AvailableLocales,
-  DEFAULT_LOCALE,
-} from "@/src/shared/constants.ts";
 import { useAuthenticationContext } from "@/src/shared/hooks/useAuthenticationContext.tsx";
 
 type I18nProviderContext = {
-  changeLocale: (newLocale: AvailableLocales) => Promise<void>;
-  currentLocale: AvailableLocales;
+  changeLocale: (newLocale: SupportedLocale) => Promise<void>;
+  currentLocale: SupportedLocale;
   isLoading: boolean;
 };
 
@@ -27,7 +27,7 @@ type I18nProviderProps = PropsWithChildren;
 export const I18nProvider = ({ children }: I18nProviderProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentLocale, setCurrentLocale] =
-    useState<AvailableLocales>(DEFAULT_LOCALE);
+    useState<SupportedLocale>(DEFAULT_LOCALE);
 
   const { user } = useAuthenticationContext();
 
@@ -41,7 +41,7 @@ export const I18nProvider = ({ children }: I18nProviderProps) => {
     initialize();
   }, []);
 
-  const changeLocale = async (newLocale: AvailableLocales) => {
+  const changeLocale = async (newLocale: SupportedLocale) => {
     try {
       await switchI18nLocale(newLocale);
       setCurrentLocale(newLocale);

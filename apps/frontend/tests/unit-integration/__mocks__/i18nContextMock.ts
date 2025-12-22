@@ -1,5 +1,5 @@
+import { DEFAULT_LOCALE } from "@lasl/app-contracts/locales";
 import { type Mock, vi } from "vitest";
-import { DEFAULT_LOCALE } from "@/src/shared/constants.ts";
 
 // biome-ignore lint/style/useExportsLast: ok in test mock
 export const mockedChangeLocaleFn: Mock = vi.fn();

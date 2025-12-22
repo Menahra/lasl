@@ -1,14 +1,14 @@
+import {
+  DEFAULT_LOCALE,
+  SUPPORTED_LOCALES,
+  type SupportedLocale,
+} from "@lasl/app-contracts/locales";
 // biome-ignore lint/style/noExportedImports: ok here
 import { i18n } from "@lingui/core";
-import {
-  AVAILABLE_LOCALES,
-  type AvailableLocales,
-  DEFAULT_LOCALE,
-} from "@/src/shared/constants.ts";
 
 const LOCALE_IDENTIFIER = "userLocale";
 
-export const switchI18nLocale = async (newLocale: AvailableLocales) => {
+export const switchI18nLocale = async (newLocale: SupportedLocale) => {
   try {
     const { messages } = await import(`../locales/${newLocale}/messages.po`);
 
@@ -33,11 +33,11 @@ export const switchI18nLocale = async (newLocale: AvailableLocales) => {
 };
 
 export const getInitialLocale = (
-  userLocale?: AvailableLocales,
-): AvailableLocales => {
+  userLocale?: SupportedLocale,
+): SupportedLocale => {
   const storedLocale = localStorage.getItem(
     LOCALE_IDENTIFIER,
-  ) as AvailableLocales | null;
+  ) as SupportedLocale | null;
   if (storedLocale) {
     return storedLocale;
   }
@@ -47,8 +47,8 @@ export const getInitialLocale = (
   }
 
   const browserLocale = navigator.language;
-  if (AVAILABLE_LOCALES.includes(browserLocale as AvailableLocales)) {
-    return browserLocale as AvailableLocales;
+  if (SUPPORTED_LOCALES.includes(browserLocale as SupportedLocale)) {
+    return browserLocale as SupportedLocale;
   }
 
   return DEFAULT_LOCALE;

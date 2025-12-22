@@ -139,7 +139,7 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    needs: [types-check, lint, test, e2etest]
+    needs: [types-check, lint, i18n-check, test, e2etest]
     defaults:
       run:
         working-directory: ${{ env.FRONTEND_DIR }}

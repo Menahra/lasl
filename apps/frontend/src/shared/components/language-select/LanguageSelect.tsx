@@ -1,3 +1,8 @@
+import {
+  SUPPORTED_LOCALES,
+  SUPPORTED_LOCALES_LABELS,
+  type SupportedLocale,
+} from "@lasl/app-contracts/locales";
 import { useLingui } from "@lingui/react/macro";
 import { CheckIcon, ChevronDownIcon, GlobeIcon } from "@radix-ui/react-icons";
 import {
@@ -16,11 +21,6 @@ import {
 import clsx from "clsx";
 import { forwardRef } from "react";
 import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
-import {
-  AVAILABLE_LOCALES,
-  type AvailableLocales,
-  LOCALE_LABELS,
-} from "@/src/shared/constants.ts";
 import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
 import "./LanguageSelect.css";
 
@@ -29,14 +29,14 @@ type LanguageSelectProps = {
 };
 
 type LanguageOption = {
-  locale: AvailableLocales;
+  locale: SupportedLocale;
   label: string;
 };
 
-const languageOptions: LanguageOption[] = AVAILABLE_LOCALES.map(
-  (availableLocale) => ({
-    locale: availableLocale,
-    label: LOCALE_LABELS[availableLocale],
+const languageOptions: LanguageOption[] = SUPPORTED_LOCALES.map(
+  (supportedLocale) => ({
+    locale: supportedLocale,
+    label: SUPPORTED_LOCALES_LABELS[supportedLocale],
   }),
 );
 
@@ -66,7 +66,7 @@ export const LanguageSelect = ({ className }: LanguageSelectProps) => {
           aria-label={t`Language`}
         >
           <GlobeIcon />
-          <SelectValue>{LOCALE_LABELS[currentLocale]}</SelectValue>
+          <SelectValue>{SUPPORTED_LOCALES_LABELS[currentLocale]}</SelectValue>
           <SelectIcon className="LanguageSelectIcon">
             <ChevronDownIcon />
           </SelectIcon>
