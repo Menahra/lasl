@@ -68,6 +68,23 @@ jobs:
       - name: "🔍 lint code"
         run: pnpm run check:ci
 
+  i18n-check:
+    name: I18n check
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.FRONTEND_DIR }}
+    steps:
+      - name: "☁️ checkout repository"
+        uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup-monorepo
+        with:
+          node_version: ${{ env.NODE_VERSION }}
+
+      - name: "🔍 lint code"
+        run: pnpm run check:messages
+
   test:
     name: Code reliability
     runs-on: ubuntu-latest
