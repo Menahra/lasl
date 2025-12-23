@@ -15,8 +15,7 @@
     "test:e2e": "playwright test",
     "check:types": "tsc --noEmit",
     "compile:messages": "lingui compile --typescript",
-    "extract:messages": "lingui extract",
-    "check:messages": "lingui extract --check"
+    "extract:messages": "lingui extract"
   },
   "dependencies": {
     "@lasl/app-contracts": "workspace:*",
