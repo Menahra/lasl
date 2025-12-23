@@ -1,5 +1,8 @@
+import {
+  PASSWORD_MIN_LENGTH,
+  userEmailSchema,
+} from "@lasl/app-contracts/schemas/user";
 import z from "zod";
-import { PASSWORD_MIN_LENGTH, userEmailSchema } from "./common.user.schema.ts";
 
 export const vagueSessionErrorMessage = "Invalid email or password";
 

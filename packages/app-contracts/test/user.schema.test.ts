@@ -3,7 +3,7 @@ import {
   userEmailSchema,
   userPasswordSchema,
   userPasswordWithConfirmationAndRefinementSchema,
-} from "@/src/schema/common.user.schema.ts";
+} from "@/src/user.schemas.ts";
 
 describe("common user schema > email", () => {
   it.each([

@@ -3,11 +3,17 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "exports": {
     "./locales": {
       "import": "./dist/locales.js",
       "types": "./dist/locales.d.ts"
+    },
+    "./schemas/user": {
+      "import": "./dist/user.schemas.js",
+      "types": "./dist/user.schemas.d.ts"
     }
   },
   "scripts": {
@@ -18,13 +24,19 @@
     "format:fix": "biome format --write src",
     "check:ci": "biome check src",
     "check:fix": "biome check --write src",
-    "check:types": "tsc"
+    "check:types": "tsc",
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.13.1",
   "devDependencies": {
-    "tsup": "^8.5.1"
+    "tsup": "^8.5.1",
+    "vitest": "^4.0.16",
+    "zod": "^4.2.1"
+  },
+  "peerDependencies": {
+    "zod": "^4.2.1"
   }
 }

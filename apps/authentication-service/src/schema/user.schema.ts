@@ -1,22 +1,16 @@
 import { SUPPORTED_LOCALES } from "@lasl/app-contracts/locales";
-import { z } from "zod";
 import {
+  createUserSchema,
   passwordMatchRefinement,
   userEmailSchema,
   userPasswordWithConfirmationSchema,
-} from "./common.user.schema.ts";
+} from "@lasl/app-contracts/schemas/user";
+import { z } from "zod";
 
 const ZOD_JSON_SCHEMA_TARGET = "draft-7";
 
 export const createUserInputSchema = z.object({
-  body: z
-    .object({
-      firstName: z.string().nonempty({ error: "First name is required" }),
-      lastName: z.string().nonempty({ error: "Last name is required" }),
-      email: userEmailSchema,
-    })
-    .extend(userPasswordWithConfirmationSchema.shape)
-    .superRefine(passwordMatchRefinement),
+  body: createUserSchema,
 });
 export const updateUserInputSchema = z.object({
   body: createUserInputSchema.shape.body

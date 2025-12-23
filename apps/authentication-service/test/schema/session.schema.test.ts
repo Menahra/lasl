@@ -1,6 +1,6 @@
+import { PASSWORD_MIN_LENGTH } from "@lasl/app-contracts/schemas/user";
 import { describe, expect, it } from "vitest";
 import z from "zod";
-import { PASSWORD_MIN_LENGTH } from "@/src/schema/common.user.schema.ts";
 import {
   createSessionSchema,
   vagueSessionErrorMessage,

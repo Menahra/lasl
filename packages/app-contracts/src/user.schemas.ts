@@ -4,7 +4,9 @@ type UserPasswordWithConformationSchema = z.infer<
   typeof userPasswordWithConfirmationSchema
 >;
 
-export const userEmailSchema = z.email("Please enter a valid email address");
+export const userEmailSchema = z.email({
+  error: "Please enter a valid email address",
+});
 
 export const PASSWORD_MIN_LENGTH = 8;
 export const userPasswordSchema = z
@@ -14,12 +16,12 @@ export const userPasswordSchema = z
     error: "Password must be at least 8 characters long",
   })
   .regex(/[A-Z]/, {
-    message: "Password must contain at least one uppercase letter",
+    error: "Password must contain at least one uppercase letter",
   })
   .regex(/[a-z]/, {
-    message: "Password must contain at least one lowercase letter",
+    error: "Password must contain at least one lowercase letter",
   })
-  .regex(/\d/, { message: "Password must contain at least one number" });
+  .regex(/\d/, { error: "Password must contain at least one number" });
 export const userPasswordConfirmationSchema = z.string().nonempty({
   error: "Password confirmation is required",
 });
@@ -46,3 +48,12 @@ export const passwordMatchRefinement = <
 
 export const userPasswordWithConfirmationAndRefinementSchema =
   userPasswordWithConfirmationSchema.superRefine(passwordMatchRefinement);
+
+export const createUserSchema = z
+  .object({
+    firstName: z.string().nonempty({ error: "First name is required" }),
+    lastName: z.string().nonempty({ error: "Last name is required" }),
+    email: userEmailSchema,
+  })
+  .extend(userPasswordWithConfirmationSchema.shape)
+  .superRefine(passwordMatchRefinement);
