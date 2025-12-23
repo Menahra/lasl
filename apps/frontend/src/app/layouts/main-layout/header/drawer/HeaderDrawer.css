@@ -68,7 +68,8 @@
   cursor: pointer;
   transition: transform 120ms ease;
 }
-.MainLayoutHeaderDrawerHeaderCloseButton:hover, .MainLayoutHeaderDrawerHeaderCloseButton:focus-visible {
+.MainLayoutHeaderDrawerHeaderCloseButton:hover,
+.MainLayoutHeaderDrawerHeaderCloseButton:focus-visible {
   color: var(--color-text-primary);
   transform: scale(1.1);
 }

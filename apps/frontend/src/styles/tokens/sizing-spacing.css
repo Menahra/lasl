@@ -37,7 +37,7 @@
   --space-24: calc(var(--space-unit) * 24); /* 96px */
 
   /* Semantic sizing aliases */
-  --size-xxs: var(--size-0_5); 
+  --size-xxs: var(--size-0_5);
   --size-xs: var(--size-1);
   --size-sm: var(--size-2);
   --size-md: var(--size-4);
