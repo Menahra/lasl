@@ -1,6 +1,6 @@
 import "@/tests/unit-integration/__mocks__/i18nContextMock.ts";
 import { screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { userEvent } from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { HeaderDrawer } from "@/src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx";
 import {
@@ -11,7 +11,9 @@ import { renderWithI18n } from "@/tests/unit-integration/__wrappers__/I18nTestin
 
 describe("HeaderDrawer", () => {
   let searchValue = "";
-  const setSearchValue = vi.fn((value: string) => (searchValue = value));
+  const setSearchValue = vi.fn((value: string) => {
+    searchValue = value;
+  });
 
   beforeEach(() => {
     searchValue = "";

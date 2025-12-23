@@ -33,7 +33,7 @@ export const I18nProvider = ({ children }: I18nProviderProps) => {
 
   useEffect(() => {
     const initialize = async () => {
-      const initialLocale = await initI18n(user);
+      const initialLocale = await initI18n(user?.settings.uiLanguage);
       setCurrentLocale(initialLocale);
       setIsLoading(false);
     };
@@ -47,7 +47,10 @@ export const I18nProvider = ({ children }: I18nProviderProps) => {
       setCurrentLocale(newLocale);
 
       if (user) {
-        await userApi.updateUser(user.id, { ...user, newLocale });
+        await userApi.updateUser(user.id, {
+          ...user,
+          settings: { ...user.settings, uiLanguage: newLocale },
+        });
       }
     } catch (error) {
       console.error("Failed to update user language: ", error);
