@@ -31,9 +31,9 @@ export const mockMatchMedia = (initial: Record<string, boolean>) => {
 
   vi.spyOn(window, "matchMedia").mockImplementation((query: string) => {
     if (!queries.has(query)) {
-      queries.set(query, new MockMediaQueryList(!!initial[query]));
+      queries.set(query, new MockMediaQueryList(Boolean(initial[query])));
     }
-    return queries.get(query)! as unknown as MediaQueryList;
+    return queries.get(query) as unknown as MediaQueryList;
   });
 
   return {

@@ -6,6 +6,7 @@ import { PROJECT_INFORMATION } from "@/src/shared/constants.ts";
 import { renderWithRouterAndI18n } from "@/tests/unit-integration/__wrappers__/RouterAndI18nTestingWrapper.tsx";
 
 vi.mock("@/src/app/layouts/main-layout/MainLayout.tsx", () => ({
+  // biome-ignore lint/style/useNamingConvention: ok for mocking
   MainLayout: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="main-layout">{children}</div>
   ),

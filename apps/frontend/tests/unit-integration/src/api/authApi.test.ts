@@ -30,13 +30,11 @@ vi.mock("@/src/utils/accessTokenManager.ts", () => ({
 
 const mockAxiosPost = axios.post as Mock;
 
-// biome-ignore lint/complexity/noExcessiveLinesPerFunction: acceptable in test
 describe("authApi", () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  // biome-ignore lint/security/noSecrets: just test name
   describe("createSession", () => {
     it("posts to /sessions, saves token, and returns it", async () => {
       mockAxiosPost.mockResolvedValue({
@@ -71,7 +69,6 @@ describe("authApi", () => {
     });
   });
 
-  // biome-ignore lint/security/noSecrets: just test name
   describe("postRefreshToken", () => {
     it("calls refresh endpoint and updates access token", async () => {
       mockAxiosPost.mockResolvedValue({
@@ -117,7 +114,6 @@ describe("authApi", () => {
     });
   });
 
-  // biome-ignore lint/security/noSecrets: just test name
   describe("getCurrentUser", () => {
     it("posts to /users/me and returns user data", async () => {
       const user = { id: 1, name: "Jane" };

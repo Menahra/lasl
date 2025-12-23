@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/security/noSecrets: no secrets in test */
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, type Mock, vi } from "vitest";
 import {
@@ -54,11 +53,9 @@ beforeEach(() => {
   });
 });
 
-// biome-ignore lint/complexity/noExcessiveLinesPerFunction: okay here
 describe("AuthenticationProvider", () => {
   it("throws when useAuthenticationContext is used without provider", () => {
     expect(() => render(<Consumer />)).toThrowError(
-      // biome-ignore lint/performance/useTopLevelRegex: ok in test
       /must be used within AuthenticationProvider/i,
     );
   });

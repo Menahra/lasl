@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/security/noSecrets: no secrets in test */
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { act, renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, type Mock, vi } from "vitest";
@@ -38,7 +37,6 @@ const createTanstackQueryWrapper = () => {
   return { wrapper, tanstackQueryClient };
 };
 
-// biome-ignore lint/complexity/noExcessiveLinesPerFunction: acceptable in test
 describe("useAuth hooks", () => {
   beforeEach(() => {
     vi.clearAllMocks();
