@@ -1,20 +1,35 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createUserSchema } from "@lasl/app-contracts/schemas/user";
-import { Trans, useLingui } from "@lingui/react/macro";
+import { type _t, Trans, useLingui } from "@lingui/react/macro";
 import { useForm } from "react-hook-form";
-import type { z } from "zod";
+import {
+  type RegisterFormField,
+  type RegisterFormValues,
+  registerFormFields,
+} from "@/src/app/pages/register-page/registerFormFields.ts";
 import { ROUTE_PRIVACY_POLICY } from "@/src/app/routes/privacy.tsx";
 import { ROUTE_TERMS_OF_SERVICE } from "@/src/app/routes/terms.tsx";
 import { Button } from "@/src/shared/components/button/Button.tsx";
 import { FormInputField } from "@/src/shared/components/form-input-field/FormInputField.tsx";
 import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
 import { TextLink } from "@/src/shared/components/text-link/TextLink.tsx";
+import { userErrorMessages } from "@/src/shared/formErrors.ts";
 import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
+import { useTranslateFormFieldError } from "@/src/shared/hooks/useTranslateFormFieldError.ts";
 import "./RegisterForm.css";
 
-type RegisterFormValues = z.infer<typeof createUserSchema>;
+const resolvePlaceholder = (
+  field: RegisterFormField<RegisterFormValues>,
+  t: typeof _t,
+): string => {
+  // biome-ignore lint/security/noSecrets: just a field name
+  if ("placeholderId" in field) {
+    return t({ id: field.placeholderId });
+  }
 
-// biome-ignore lint/complexity/noExcessiveLinesPerFunction: <explanation>
+  return field.defaultPlaceholder;
+};
+
 export const RegisterForm = () => {
   const { isLoading } = useI18nContext();
   const { t: linguiTranslator } = useLingui();
@@ -24,8 +39,9 @@ export const RegisterForm = () => {
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormValues>({
     resolver: zodResolver(createUserSchema),
-    mode: "onSubmit", // or "onBlur"
+    mode: "onSubmit",
   });
+  const translateFormFieldError = useTranslateFormFieldError(userErrorMessages);
 
   const onSubmit = (data: RegisterFormValues) => {
     console.log(data);
@@ -38,52 +54,19 @@ export const RegisterForm = () => {
       onSubmit={handleSubmit(onSubmit)}
       noValidate={true}
     >
-      <FormInputField
-        id="firstName"
-        label={linguiTranslator`First Name`}
-        placeholder={linguiTranslator`Enter your first name`}
-        type="text"
-        loading={isLoading}
-        {...register("firstName")}
-        error={errors.firstName}
-      />
-      <FormInputField
-        id="lastName"
-        label={linguiTranslator`Last Name`}
-        placeholder={linguiTranslator`Enter your last name`}
-        type="text"
-        loading={isLoading}
-        {...register("lastName")}
-        error={errors.lastName}
-      />
-      <FormInputField
-        id="email"
-        label={linguiTranslator`Email`}
-        placeholder="student@example.com"
-        type="email"
-        loading={isLoading}
-        {...register("email")}
-        error={errors.email}
-      />
-      <FormInputField
-        id="password"
-        label={linguiTranslator`Password`}
-        placeholder={linguiTranslator`Enter your password`}
-        type="password"
-        loading={isLoading}
-        {...register("password")}
-        error={errors.password}
-      />
-      <FormInputField
-        id="passwordConfirmation"
-        label={linguiTranslator`Confirm Password`}
-        placeholder={linguiTranslator`Confirm your password`}
-        type="password"
-        loading={isLoading}
-        // biome-ignore lint/security/noSecrets: field name, no secret
-        {...register("passwordConfirmation")}
-        error={errors.passwordConfirmation}
-      />
+      {registerFormFields.map((field) => (
+        <FormInputField
+          key={String(field.name)}
+          id={String(field.name)}
+          type={field.type}
+          label={linguiTranslator({ id: field.labelId })}
+          placeholder={resolvePlaceholder(field, linguiTranslator)}
+          loading={isLoading}
+          {...register(field.name)}
+          error={translateFormFieldError(errors[field.name])}
+        />
+      ))}
+
       <Skeleton loading={isLoading} height={16} width="100%">
         <p>
           <Trans>
@@ -100,7 +83,12 @@ export const RegisterForm = () => {
         </p>
       </Skeleton>
       <Skeleton loading={isLoading} height={48} width="100%">
-        <Button variant="primary" type="submit" align="center">
+        <Button
+          variant="primary"
+          type="submit"
+          align="center"
+          loading={isSubmitting}
+        >
           <Trans>Create Account</Trans>
         </Button>
       </Skeleton>

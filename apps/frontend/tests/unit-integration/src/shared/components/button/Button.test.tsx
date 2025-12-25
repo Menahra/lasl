@@ -4,6 +4,8 @@ import { describe, expect, it, vi } from "vitest";
 import { Button } from "@/src/shared/components/button/Button.tsx";
 
 describe("Button", () => {
+  const user = userEvent.setup();
+
   it("renders children", () => {
     render(<Button onClick={vi.fn()}>Click me</Button>);
 
@@ -13,7 +15,6 @@ describe("Button", () => {
   });
 
   it("calls onClick when clicked", async () => {
-    const user = userEvent.setup();
     const onClick = vi.fn();
 
     render(<Button onClick={onClick}>Click</Button>);
@@ -71,5 +72,37 @@ describe("Button", () => {
     );
 
     expect(screen.getByRole("button")).toHaveAttribute("type", "submit");
+  });
+
+  it("is disabled when loading", () => {
+    render(<Button loading={true}>Click</Button>);
+
+    expect(screen.getByRole("button")).toBeDisabled();
+  });
+
+  it("does not call onClick when loading", async () => {
+    const onClick = vi.fn();
+
+    render(
+      <Button loading={true} onClick={onClick}>
+        Click
+      </Button>,
+    );
+
+    await user.click(screen.getByRole("button"));
+
+    expect(onClick).not.toHaveBeenCalled();
+  });
+
+  it("keeps button text visible while loading", () => {
+    render(<Button loading={true}>Click</Button>);
+
+    expect(screen.getByRole("button", { name: "Click" })).toBeInTheDocument();
+  });
+
+  it("sets aria-busy when loading", () => {
+    render(<Button loading={true}>Click</Button>);
+
+    expect(screen.getByRole("button")).toHaveAttribute("aria-busy", "true");
   });
 });

@@ -20,6 +20,7 @@ type ButtonProps = PropsWithChildren<{
   align?: keyof typeof ButtonAlignments;
   fullWidth?: boolean;
   type?: HTMLButtonElement["type"];
+  loading?: boolean;
   onClick?: () => void;
 }>;
 
@@ -31,6 +32,7 @@ export const Button = ({
   fullWidth = false,
   children,
   type = "button",
+  loading = false,
   onClick,
 }: ButtonProps) => {
   return (
@@ -39,14 +41,25 @@ export const Button = ({
       className={clsx(
         "Button",
         ButtonVariants[variant],
-        ButtonAlignments[align],
+        !loading && ButtonAlignments[align],
         fullWidth && "Button--fullWidth",
+        loading && "Button--loading",
+        loading && ButtonAlignments.center,
       )}
-      onClick={onClick}
+      onClick={loading ? undefined : onClick}
+      disabled={loading}
+      aria-busy={loading}
     >
-      {startIcon ? <span className="ButtonIcon">{startIcon}</span> : undefined}
+      {loading ? (
+        <span className="ButtonSpinner" aria-hidden="true" />
+      ) : undefined}
+      {!loading && startIcon ? (
+        <span className="ButtonIcon">{startIcon}</span>
+      ) : undefined}
       {children}
-      {endIcon ? <span className="ButtonIcon">{endIcon}</span> : undefined}
+      {!loading && endIcon ? (
+        <span className="ButtonIcon">{endIcon}</span>
+      ) : undefined}
     </button>
   );
 };

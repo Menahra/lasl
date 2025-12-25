@@ -6,7 +6,6 @@ import {
 import "./FormInputField.css";
 import clsx from "clsx";
 import { forwardRef } from "react";
-import type { FieldError } from "react-hook-form";
 
 type FormInputFieldProps = {
   /** This id is used as id for the input and as htmlFor for the label */
@@ -14,7 +13,7 @@ type FormInputFieldProps = {
   /** The text on the label */
   label: string;
   /** an optional error string which indicates that this field is erroneous */
-  error?: FieldError | undefined;
+  error?: string | undefined;
 } & Pick<HTMLInputElement, "placeholder" | "type" | "name"> &
   Pick<SkeletonProps, "loading">;
 
@@ -32,14 +31,16 @@ export const FormInputField = forwardRef<HTMLInputElement, FormInputFieldProps>(
             ref={ref}
             id={id}
             className={clsx(
+              // biome-ignore-start lint/security/noSecrets: classnames, no secrets
               "FormInputFieldInput",
               error && "FormInputFieldInputError",
+              // biome-ignore-end lint/security/noSecrets: classnames, no secrets
             )}
             {...props}
           />
         </Skeleton>
         {error ? (
-          <span className="FormInputFieldError">{error.message}</span>
+          <span className="FormInputFieldError">{error}</span>
         ) : undefined}
       </div>
     );

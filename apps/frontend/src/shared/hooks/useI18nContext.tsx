@@ -66,7 +66,9 @@ export const I18nProvider = ({ children }: I18nProviderProps) => {
 
   return (
     <I18nContext.Provider value={i18nProviderContextValue}>
-      <LinguiI18nProvider i18n={i18n}>{children}</LinguiI18nProvider>
+      {!isLoading && (
+        <LinguiI18nProvider i18n={i18n}>{children}</LinguiI18nProvider>
+      )}
     </I18nContext.Provider>
   );
 };

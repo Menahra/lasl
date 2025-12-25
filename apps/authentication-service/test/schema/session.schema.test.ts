@@ -1,4 +1,4 @@
-import { PASSWORD_MIN_LENGTH } from "@lasl/app-contracts/schemas/user";
+import { USER_PASSWORD_MIN_LENGTH } from "@lasl/app-contracts/schemas/user";
 import { describe, expect, it } from "vitest";
 import z from "zod";
 import {
@@ -8,7 +8,7 @@ import {
 
 describe("createSessionSchema", () => {
   const validEmail = "user@example.com";
-  const validPassword = "a".repeat(PASSWORD_MIN_LENGTH);
+  const validPassword = "a".repeat(USER_PASSWORD_MIN_LENGTH);
 
   it("should pass with valid input", () => {
     const result = createSessionSchema.safeParse({

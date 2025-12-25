@@ -14,6 +14,10 @@
     "./schemas/user": {
       "import": "./dist/user.schemas.js",
       "types": "./dist/user.schemas.d.ts"
+    },
+    "./errors/user": {
+      "import": "./dist/user.errors.js",
+      "types": "./dist/user.errors.d.ts"
     }
   },
   "scripts": {

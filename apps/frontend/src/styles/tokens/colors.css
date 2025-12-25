@@ -79,6 +79,7 @@
   --color-surface-elevated: light-dark(#ffffff, #252d3d);
   --color-surface-sunken: var(--gray-100);
   --color-overlay: light-dark(rgba(15, 23, 42, 0.5), rgba(0, 0, 0, 0.7));
+  --color-background-disabled: var(--gray-200);
 
   /* Text Colors */
   --color-text-primary: var(--gray-900);

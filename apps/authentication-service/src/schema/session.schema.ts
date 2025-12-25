@@ -1,5 +1,5 @@
 import {
-  PASSWORD_MIN_LENGTH,
+  USER_PASSWORD_MIN_LENGTH,
   userEmailSchema,
 } from "@lasl/app-contracts/schemas/user";
 import z from "zod";
@@ -12,7 +12,7 @@ export const createSessionSchema = z.object({
     password: z
       .string()
       .nonempty({ error: "Password is required" })
-      .min(PASSWORD_MIN_LENGTH, vagueSessionErrorMessage),
+      .min(USER_PASSWORD_MIN_LENGTH, vagueSessionErrorMessage),
   }),
 });
 

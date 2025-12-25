@@ -1,29 +1,30 @@
 import { z } from "zod";
+import { USER_ERRORS } from "@/src/user.errors.ts";
 
 type UserPasswordWithConformationSchema = z.infer<
   typeof userPasswordWithConfirmationSchema
 >;
 
 export const userEmailSchema = z.email({
-  error: "Please enter a valid email address",
+  error: USER_ERRORS.emailInvalid,
 });
 
-export const PASSWORD_MIN_LENGTH = 8;
+export const USER_PASSWORD_MIN_LENGTH = 8;
 export const userPasswordSchema = z
   .string()
-  .nonempty({ error: "Password is required" })
-  .min(PASSWORD_MIN_LENGTH, {
-    error: "Password must be at least 8 characters long",
+  .nonempty({ error: USER_ERRORS.passwordRequired })
+  .min(USER_PASSWORD_MIN_LENGTH, {
+    error: USER_ERRORS.passwordMinLength,
   })
   .regex(/[A-Z]/, {
-    error: "Password must contain at least one uppercase letter",
+    error: USER_ERRORS.passwordUppercase,
   })
   .regex(/[a-z]/, {
-    error: "Password must contain at least one lowercase letter",
+    error: USER_ERRORS.passwordLowercase,
   })
-  .regex(/\d/, { error: "Password must contain at least one number" });
+  .regex(/\d/, { error: USER_ERRORS.passwordNumber });
 export const userPasswordConfirmationSchema = z.string().nonempty({
-  error: "Password confirmation is required",
+  error: USER_ERRORS.passwordConfirmationRequired,
 });
 export const userPasswordWithConfirmationSchema = z.object({
   password: userPasswordSchema,
@@ -41,7 +42,7 @@ export const passwordMatchRefinement = <
       // biome-ignore lint/security/noSecrets: property name
       path: ["passwordConfirmation"],
       code: "custom",
-      message: "Passwords do not match",
+      message: USER_ERRORS.passwordMismatch,
     });
   }
 };
@@ -51,8 +52,8 @@ export const userPasswordWithConfirmationAndRefinementSchema =
 
 export const createUserSchema = z
   .object({
-    firstName: z.string().nonempty({ error: "First name is required" }),
-    lastName: z.string().nonempty({ error: "Last name is required" }),
+    firstName: z.string().nonempty({ error: USER_ERRORS.firstNameRequired }),
+    lastName: z.string().nonempty({ error: USER_ERRORS.lastNameRequired }),
     email: userEmailSchema,
   })
   .extend(userPasswordWithConfirmationSchema.shape)
