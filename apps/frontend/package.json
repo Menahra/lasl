@@ -18,6 +18,7 @@
     "extract:messages": "lingui extract"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
     "@lasl/app-contracts": "workspace:*",
     "@lingui/core": "^5.7.0",
     "@lingui/react": "^5.7.0",
@@ -33,7 +34,9 @@
     "http-status-codes": "^2.3.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
-    "uuid": "^13.0.0"
+    "react-hook-form": "^7.69.0",
+    "uuid": "^13.0.0",
+    "zod": "^4.2.1"
   },
   "devDependencies": {
     "@lasl/authentication-service": "workspace:*",
