@@ -1,5 +1,5 @@
 import type { MacroMessageDescriptor } from "@lingui/core/macro";
-import { useLingui } from "@lingui/react/macro";
+import { useLingui } from "@lingui/react";
 import type { FieldError } from "react-hook-form";
 
 export type ErrorKeyMap = Record<string, MacroMessageDescriptor>;
@@ -7,7 +7,7 @@ export type ErrorKeyMap = Record<string, MacroMessageDescriptor>;
 export const useTranslateFormFieldError = <T extends ErrorKeyMap>(
   errorMap: T,
 ) => {
-  const { t: linguiTranslator } = useLingui();
+  const { i18n } = useLingui();
 
   return (error?: FieldError): string | undefined => {
     if (!error?.message) {
@@ -16,8 +16,6 @@ export const useTranslateFormFieldError = <T extends ErrorKeyMap>(
 
     const messageDescriptor = errorMap[error.message as keyof T];
 
-    return messageDescriptor
-      ? linguiTranslator(messageDescriptor)
-      : error.message;
+    return messageDescriptor ? i18n._(messageDescriptor) : error.message;
   };
 };

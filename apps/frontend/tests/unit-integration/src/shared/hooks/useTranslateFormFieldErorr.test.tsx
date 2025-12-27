@@ -5,9 +5,12 @@ import {
   useTranslateFormFieldError,
 } from "@/src/shared/hooks/useTranslateFormFieldError.ts";
 
-vi.mock("@lingui/react", () => ({
-  useLingui: (): { t: (msg: { id: string; message?: string }) => string } => ({
-    t: (msg) => msg.id, // return id as translation
+vi.mock("@lingui/react", async (importOriginalLinguiReactMacro) => ({
+  ...(await importOriginalLinguiReactMacro()),
+  useLingui: () => ({
+    i18n: {
+      _: (msg: { id: string }) => msg.id,
+    },
   }),
 }));
 
