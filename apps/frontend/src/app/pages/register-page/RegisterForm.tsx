@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createUserSchema } from "@lasl/app-contracts/schemas/user";
 import { useLingui as useRuntimeLingui } from "@lingui/react";
 import { Trans } from "@lingui/react/macro";
+import { useRouter } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { userApi } from "@/src/api/userApi.ts";
 import {
@@ -9,6 +10,7 @@ import {
   type RegisterFormValues,
 } from "@/src/app/pages/register-page/registerFormFields.ts";
 import { ROUTE_PRIVACY_POLICY } from "@/src/app/routes/privacy.tsx";
+import { ROUTE_SIGN_UP_SUCCESS } from "@/src/app/routes/register-success.tsx";
 import { ROUTE_TERMS_OF_SERVICE } from "@/src/app/routes/terms.tsx";
 import { Button } from "@/src/shared/components/button/Button.tsx";
 import { FormInputField } from "@/src/shared/components/form-input-field/FormInputField.tsx";
@@ -22,6 +24,7 @@ import "./RegisterForm.css";
 export const RegisterForm = () => {
   const { isLoading } = useI18nContext();
   const { i18n } = useRuntimeLingui();
+  const { navigate } = useRouter();
   const {
     register,
     handleSubmit,
@@ -33,8 +36,14 @@ export const RegisterForm = () => {
   const translateFormFieldError = useTranslateFormFieldError(userErrorMessages);
 
   const onSubmit = async (data: RegisterFormValues) => {
-    const user = await userApi.createUser(data);
-    console.log(user);
+    try {
+      await userApi.createUser(data);
+      navigate({ to: ROUTE_SIGN_UP_SUCCESS });
+    } catch (error) {
+      // ERROR HANDLING --> email already in use
+      // OTHER ERRORS
+      console.error(error);
+    }
   };
 
   return (

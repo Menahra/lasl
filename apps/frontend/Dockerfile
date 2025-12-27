@@ -19,15 +19,7 @@ RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store pnpm install --frozen-lo
 
 ARG DOPPLER_TOKEN
 ENV DOPPLER_TOKEN=$DOPPLER_TOKEN
-
-# Debug: Check if Doppler can list secrets
-RUN doppler secrets --project frontend --config dev --token $DOPPLER_TOKEN || echo "Failed to list secrets"
-
-# Debug: Try to get the specific secret
-RUN doppler secrets get VITE_API_URL --plain --project frontend --config dev --token $DOPPLER_TOKEN || echo "Failed to get VITE_API_URL"
-
-# Try the build with doppler run instead
-RUN doppler run --project frontend --config dev --token $DOPPLER_TOKEN --command="pnpm --filter frontend run build"
+RUN doppler run --command="pnpm --filter frontend run build"
 
 FROM nginx:alpine AS frontend
 COPY --from=build /usr/src/app/apps/frontend/dist /usr/share/nginx/html
