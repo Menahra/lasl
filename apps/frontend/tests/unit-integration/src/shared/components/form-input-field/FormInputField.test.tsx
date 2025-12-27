@@ -12,6 +12,7 @@ describe("FormInputField", () => {
         placeholder="Enter email"
         type="email"
         loading={false}
+        name="email"
       />,
     );
 
@@ -31,6 +32,7 @@ describe("FormInputField", () => {
         loading={false}
         type="text"
         placeholder=""
+        name="username"
       />,
     );
 
@@ -48,6 +50,7 @@ describe("FormInputField", () => {
         loading={false}
         type="text"
         placeholder=""
+        name="name"
       />,
     );
 
@@ -66,6 +69,7 @@ describe("FormInputField", () => {
         loading={true}
         type="text"
         placeholder=""
+        name="password"
       />,
     );
 

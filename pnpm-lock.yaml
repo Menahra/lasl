@@ -142,7 +142,7 @@ importers:
         version: 5.2.2(react-hook-form@7.69.0(react@19.2.3))
       '@lasl/app-contracts':
         specifier: workspace:*
-        version: file:packages/app-contracts(zod@4.2.1)
+        version: link:../../packages/app-contracts
       '@lingui/core':
         specifier: ^5.7.0
         version: 5.7.0(@lingui/babel-plugin-lingui-macro@5.7.0(typescript@5.9.3))
@@ -197,7 +197,7 @@ importers:
     devDependencies:
       '@lasl/authentication-service':
         specifier: workspace:*
-        version: file:apps/authentication-service(mongodb-memory-server@10.4.2)(vitest@4.0.16(@types/node@25.0.3)(happy-dom@20.0.11)(jiti@2.6.1)(msw@2.12.4(@types/node@25.0.3)(typescript@5.9.3))(sass-embedded@1.93.3)(sass@1.93.3)(tsx@4.20.6)(yaml@2.8.1))
+        version: link:../authentication-service
       '@lingui/babel-plugin-lingui-macro':
         specifier: ^5.7.0
         version: 5.7.0(typescript@5.9.3)
@@ -1015,22 +1015,6 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
-
-  '@lasl/app-contracts@file:packages/app-contracts':
-    resolution: {directory: packages/app-contracts, type: directory}
-    peerDependencies:
-      zod: ^4.2.1
-
-  '@lasl/authentication-service@file:apps/authentication-service':
-    resolution: {directory: apps/authentication-service, type: directory}
-
-  '@lasl/test-utils-fastify@file:packages/test-utils-fastify':
-    resolution: {directory: packages/test-utils-fastify, type: directory}
-    peerDependencies:
-      fastify: ^5.6.2
-      mongodb-memory-server: ^10.4.1
-      mongoose: ^9.0.1
-      vitest: ^4.0.15
 
   '@lingui/babel-plugin-extract-messages@5.7.0':
     resolution: {integrity: sha512-kTRw/cr4crwKim2mAd4f5dHUQtIWK1ydN3Ga5FHb5hYgPhfK9egzykVCIEb/N10TfwwLUjSzNZXmTlCiLrgTLw==}
@@ -5244,48 +5228,6 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
-
-  '@lasl/app-contracts@file:packages/app-contracts(zod@4.2.1)':
-    dependencies:
-      zod: 4.2.1
-
-  '@lasl/authentication-service@file:apps/authentication-service(mongodb-memory-server@10.4.2)(vitest@4.0.16(@types/node@25.0.3)(happy-dom@20.0.11)(jiti@2.6.1)(msw@2.12.4(@types/node@25.0.3)(typescript@5.9.3))(sass-embedded@1.93.3)(sass@1.93.3)(tsx@4.20.6)(yaml@2.8.1))':
-    dependencies:
-      '@fastify/cookie': 11.0.2
-      '@fastify/env': 5.0.3
-      '@fastify/swagger': 9.6.1
-      '@fastify/swagger-ui': 5.2.3
-      '@lasl/app-contracts': file:packages/app-contracts(zod@4.2.1)
-      '@lasl/test-utils-fastify': file:packages/test-utils-fastify(fastify@5.6.2)(mongodb-memory-server@10.4.2)(mongoose@9.0.2)(vitest@4.0.16(@types/node@25.0.3)(happy-dom@20.0.11)(jiti@2.6.1)(msw@2.12.4(@types/node@25.0.3)(typescript@5.9.3))(sass-embedded@1.93.3)(sass@1.93.3)(tsx@4.20.6)(yaml@2.8.1))
-      '@typegoose/typegoose': 12.20.1(mongoose@9.0.2)
-      argon2: 0.44.0
-      fastify: 5.6.2
-      fastify-plugin: 5.1.0
-      http-status-codes: 2.3.0
-      jsonwebtoken: 9.0.3
-      mongoose: 9.0.2
-      nanoid: 5.1.6
-      resend: 6.6.0
-      zod: 4.2.1
-    transitivePeerDependencies:
-      - '@aws-sdk/credential-providers'
-      - '@mongodb-js/zstd'
-      - '@react-email/render'
-      - gcp-metadata
-      - kerberos
-      - mongodb-client-encryption
-      - mongodb-memory-server
-      - snappy
-      - socks
-      - supports-color
-      - vitest
-
-  '@lasl/test-utils-fastify@file:packages/test-utils-fastify(fastify@5.6.2)(mongodb-memory-server@10.4.2)(mongoose@9.0.2)(vitest@4.0.16(@types/node@25.0.3)(happy-dom@20.0.11)(jiti@2.6.1)(msw@2.12.4(@types/node@25.0.3)(typescript@5.9.3))(sass-embedded@1.93.3)(sass@1.93.3)(tsx@4.20.6)(yaml@2.8.1))':
-    dependencies:
-      fastify: 5.6.2
-      mongodb-memory-server: 10.4.2
-      mongoose: 9.0.2
-      vitest: 4.0.16(@types/node@25.0.3)(happy-dom@20.0.11)(jiti@2.6.1)(msw@2.12.4(@types/node@25.0.3)(typescript@5.9.3))(sass-embedded@1.93.3)(sass@1.93.3)(tsx@4.20.6)(yaml@2.8.1)
 
   '@lingui/babel-plugin-extract-messages@5.7.0': {}
 

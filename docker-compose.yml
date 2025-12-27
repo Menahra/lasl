@@ -42,5 +42,18 @@ services:
     ports:
       - "8080:3000"
 
+  frontend:
+    build:
+      context: .
+      dockerfile: apps/frontend/Dockerfile
+      args:
+        DOPPLER_TOKEN: ${DOPPLER_TOKEN_FRONTEND}
+    container_name: frontend
+    image: frontend:latest
+    ports:
+      - "3000:80"
+    depends_on:
+      - api-gateway
+
 volumes:
   mongo_data:

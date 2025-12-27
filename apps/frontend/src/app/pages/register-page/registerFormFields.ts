@@ -1,53 +1,48 @@
 import type { createUserSchema } from "@lasl/app-contracts/schemas/user";
+import type { MessageDescriptor } from "@lingui/core";
+import { msg } from "@lingui/core/macro";
 import type { z } from "zod";
 
 export type RegisterFormField<T> = {
   name: keyof T;
   type: "text" | "email" | "password";
-  labelId: string; // lingui message id
-} & (
-  | {
-      placeholderId: string; // lingui message id
-      defaultPlaceholder?: never;
-    }
-  | {
-      placeholderId?: never;
-      defaultPlaceholder: string;
-    }
-);
+  label: MessageDescriptor;
+  placeholder: MessageDescriptor;
+};
 
 export type RegisterFormValues = z.infer<typeof createUserSchema>;
 
-export const registerFormFields: RegisterFormField<RegisterFormValues>[] = [
-  {
-    name: "firstName",
-    type: "text",
-    labelId: "First Name",
-    placeholderId: "Enter your first name",
-  },
-  {
-    name: "lastName",
-    type: "text",
-    labelId: "Last Name",
-    placeholderId: "Enter your last name",
-  },
-  {
-    name: "email",
-    type: "email",
-    labelId: "Email",
-    defaultPlaceholder: "student@example.com",
-  },
-  {
-    name: "password",
-    type: "password",
-    labelId: "Password",
-    placeholderId: "Enter your password",
-  },
-  {
-    // biome-ignore lint/security/noSecrets: field name, not a secret
-    name: "passwordConfirmation",
-    type: "password",
-    labelId: "Confirm Password",
-    placeholderId: "Confirm your password",
-  },
-];
+export const getRegisterFormFields =
+  (): RegisterFormField<RegisterFormValues>[] => [
+    {
+      name: "firstName",
+      type: "text",
+      label: msg`First Name`,
+      placeholder: msg`Enter your first name`,
+    },
+    {
+      name: "lastName",
+      type: "text",
+      label: msg`Last Name`,
+      placeholder: msg`Enter your last name`,
+    },
+    {
+      name: "email",
+      type: "email",
+      label: msg`Email`,
+      placeholder: msg`student@example.com`,
+    },
+    {
+      name: "password",
+      type: "password",
+      label: msg`Password`,
+      placeholder: msg`Enter your password`,
+    },
+    {
+      // biome-ignore lint/security/noSecrets: field name, not a secret
+      name: "passwordConfirmation",
+      type: "password",
+      label: msg`Confirm Password`,
+      placeholder: msg`Confirm your password`,
+    },
+  ];

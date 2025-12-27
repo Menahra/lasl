@@ -41,6 +41,7 @@ export const LoginForm = () => {
           placeholder="student@example.com"
           label={linguiTranslator`Email`}
           loading={isLoading}
+          name="email"
         />
         <FormInputField
           id="password"
@@ -48,6 +49,7 @@ export const LoginForm = () => {
           placeholder={linguiTranslator`Enter your password`}
           label={linguiTranslator`Password`}
           loading={isLoading}
+          name="password"
         />
         <Skeleton loading={isLoading} width="100%" height={40}>
           <Button type="submit" align="center">

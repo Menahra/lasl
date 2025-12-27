@@ -112,7 +112,7 @@ msgstr "By accessing or using {0}, you agree to be bound by these Terms of Servi
 msgid "By continuing, you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>."
 msgstr "By continuing, you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>."
 
-#: src/app/pages/register-page/RegisterForm.tsx:58
+#: src/app/pages/register-page/RegisterForm.tsx:62
 msgid "By signing up, you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>."
 msgstr "By signing up, you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>."
 
@@ -136,11 +136,11 @@ msgstr "Coming Soon"
 msgid "Community-Driven Content"
 msgstr "Community-Driven Content"
 
-#: src/app/pages/register-page/RegisterForm.tsx:51
+#: src/app/pages/register-page/registerFormFields.ts:45
 msgid "Confirm Password"
 msgstr "Confirm Password"
 
-#: src/app/pages/register-page/RegisterForm.tsx:52
+#: src/app/pages/register-page/registerFormFields.ts:46
 msgid "Confirm your password"
 msgstr "Confirm your password"
 
@@ -169,7 +169,7 @@ msgstr "Content and works created by the site operator on this website are subje
 msgid "Copyright"
 msgstr "Copyright"
 
-#: src/app/pages/register-page/RegisterForm.tsx:73
+#: src/app/pages/register-page/RegisterForm.tsx:82
 msgid "Create Account"
 msgstr "Create Account"
 
@@ -201,31 +201,35 @@ msgstr "Data Sharing and Recipients"
 msgid "Data We Collect"
 msgstr "Data We Collect"
 
-#: src/app/pages/login-page/LoginForm.tsx:61
+#: src/app/pages/login-page/LoginForm.tsx:63
 msgid "Don't have an account yet?"
 msgstr "Don't have an account yet?"
 
 #: src/app/pages/login-page/LoginForm.tsx:42
-#: src/app/pages/register-page/RegisterForm.tsx:37
+#: src/app/pages/register-page/registerFormFields.ts:32
 msgid "Email"
 msgstr "Email"
 
-#: src/app/pages/register-page/RegisterForm.tsx:24
+#: src/app/pages/register-page/registerFormFields.ts:21
 msgid "Enter your first name"
 msgstr "Enter your first name"
 
-#: src/app/pages/register-page/RegisterForm.tsx:31
+#: src/app/pages/register-page/registerFormFields.ts:27
 msgid "Enter your last name"
 msgstr "Enter your last name"
 
-#: src/app/pages/login-page/LoginForm.tsx:48
-#: src/app/pages/register-page/RegisterForm.tsx:45
+#: src/app/pages/login-page/LoginForm.tsx:49
+#: src/app/pages/register-page/registerFormFields.ts:39
 msgid "Enter your password"
 msgstr "Enter your password"
 
-#: src/app/pages/register-page/RegisterForm.tsx:23
+#: src/app/pages/register-page/registerFormFields.ts:20
 msgid "First Name"
 msgstr "First Name"
+
+#: src/shared/formErrors.ts:10
+msgid "First name is required"
+msgstr "First name is required"
 
 #: src/shared/components/brand-logo/BrandLogo.tsx:24
 msgid "Go to homepage"
@@ -280,9 +284,13 @@ msgstr "Join learners and contributors shaping the future of Arabic language edu
 msgid "Language"
 msgstr "Language"
 
-#: src/app/pages/register-page/RegisterForm.tsx:30
+#: src/app/pages/register-page/registerFormFields.ts:26
 msgid "Last Name"
 msgstr "Last Name"
+
+#: src/shared/formErrors.ts:11
+msgid "Last name is required"
+msgstr "Last name is required"
 
 #. placeholder {0}: i18n.date(lastUpdate)
 #: src/app/layouts/legal-document-layout/LegalDocumentLayout.tsx:36
@@ -374,10 +382,38 @@ msgstr "Open menu"
 msgid "Open the GitHub repository in a new browser tab."
 msgstr "Open the GitHub repository in a new browser tab."
 
-#: src/app/pages/login-page/LoginForm.tsx:49
-#: src/app/pages/register-page/RegisterForm.tsx:44
+#: src/app/pages/login-page/LoginForm.tsx:50
+#: src/app/pages/register-page/registerFormFields.ts:38
 msgid "Password"
 msgstr "Password"
+
+#: src/shared/formErrors.ts:12
+msgid "Password confirmation is required"
+msgstr "Password confirmation is required"
+
+#: src/shared/formErrors.ts:17
+msgid "Password is required"
+msgstr "Password is required"
+
+#: src/shared/formErrors.ts:14
+msgid "Password must be at least {USER_PASSWORD_MIN_LENGTH} characters long"
+msgstr "Password must be at least {USER_PASSWORD_MIN_LENGTH} characters long"
+
+#: src/shared/formErrors.ts:13
+msgid "Password must contain at least one lowercase letter"
+msgstr "Password must contain at least one lowercase letter"
+
+#: src/shared/formErrors.ts:16
+msgid "Password must contain at least one number"
+msgstr "Password must contain at least one number"
+
+#: src/shared/formErrors.ts:18
+msgid "Password must contain at least one uppercase letter"
+msgstr "Password must contain at least one uppercase letter"
+
+#: src/shared/formErrors.ts:15
+msgid "Passwords do not match"
+msgstr "Passwords do not match"
 
 #. placeholder {0}: PROJECT_INFORMATION.name
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:50
@@ -387,6 +423,10 @@ msgstr "Permission is granted to temporarily access the materials on{0} for pers
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:142
 msgid "Personal data is processed exclusively within the European Union. No transfer of personal data to third countries takes place."
 msgstr "Personal data is processed exclusively within the European Union. No transfer of personal data to third countries takes place."
+
+#: src/shared/formErrors.ts:9
+msgid "Please enter a valid email address"
+msgstr "Please enter a valid email address"
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:176
 msgid "Privacy and Data Protection"
@@ -441,7 +481,7 @@ msgid "Service Provider"
 msgstr "Service Provider"
 
 #: src/app/pages/landing-page/LandingPage.tsx:59
-#: src/app/pages/login-page/LoginForm.tsx:54
+#: src/app/pages/login-page/LoginForm.tsx:56
 msgid "Sign In"
 msgstr "Sign In"
 
@@ -449,7 +489,7 @@ msgstr "Sign In"
 msgid "Sign in to enhance your learning"
 msgstr "Sign in to enhance your learning"
 
-#: src/app/pages/login-page/LoginForm.tsx:64
+#: src/app/pages/login-page/LoginForm.tsx:66
 msgid "Sign Up"
 msgstr "Sign Up"
 
@@ -460,6 +500,10 @@ msgstr "Start Learning Free"
 #: src/app/pages/landing-page/LandingPage.tsx:93
 msgid "Structured Curriculum"
 msgstr "Structured Curriculum"
+
+#: src/app/pages/register-page/registerFormFields.ts:33
+msgid "student@example.com"
+msgstr "student@example.com"
 
 #: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:111
 msgid "Support this project on Ko-Fi"

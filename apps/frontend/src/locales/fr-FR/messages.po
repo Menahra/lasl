@@ -112,7 +112,7 @@ msgstr ""
 msgid "By continuing, you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>."
 msgstr ""
 
-#: src/app/pages/register-page/RegisterForm.tsx:58
+#: src/app/pages/register-page/RegisterForm.tsx:62
 msgid "By signing up, you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>."
 msgstr ""
 
@@ -136,11 +136,11 @@ msgstr ""
 msgid "Community-Driven Content"
 msgstr ""
 
-#: src/app/pages/register-page/RegisterForm.tsx:51
+#: src/app/pages/register-page/registerFormFields.ts:45
 msgid "Confirm Password"
 msgstr ""
 
-#: src/app/pages/register-page/RegisterForm.tsx:52
+#: src/app/pages/register-page/registerFormFields.ts:46
 msgid "Confirm your password"
 msgstr ""
 
@@ -169,7 +169,7 @@ msgstr ""
 msgid "Copyright"
 msgstr ""
 
-#: src/app/pages/register-page/RegisterForm.tsx:73
+#: src/app/pages/register-page/RegisterForm.tsx:82
 msgid "Create Account"
 msgstr ""
 
@@ -201,30 +201,34 @@ msgstr ""
 msgid "Data We Collect"
 msgstr ""
 
-#: src/app/pages/login-page/LoginForm.tsx:61
+#: src/app/pages/login-page/LoginForm.tsx:63
 msgid "Don't have an account yet?"
 msgstr ""
 
 #: src/app/pages/login-page/LoginForm.tsx:42
-#: src/app/pages/register-page/RegisterForm.tsx:37
+#: src/app/pages/register-page/registerFormFields.ts:32
 msgid "Email"
 msgstr ""
 
-#: src/app/pages/register-page/RegisterForm.tsx:24
+#: src/app/pages/register-page/registerFormFields.ts:21
 msgid "Enter your first name"
 msgstr ""
 
-#: src/app/pages/register-page/RegisterForm.tsx:31
+#: src/app/pages/register-page/registerFormFields.ts:27
 msgid "Enter your last name"
 msgstr ""
 
-#: src/app/pages/login-page/LoginForm.tsx:48
-#: src/app/pages/register-page/RegisterForm.tsx:45
+#: src/app/pages/login-page/LoginForm.tsx:49
+#: src/app/pages/register-page/registerFormFields.ts:39
 msgid "Enter your password"
 msgstr ""
 
-#: src/app/pages/register-page/RegisterForm.tsx:23
+#: src/app/pages/register-page/registerFormFields.ts:20
 msgid "First Name"
+msgstr ""
+
+#: src/shared/formErrors.ts:10
+msgid "First name is required"
 msgstr ""
 
 #: src/shared/components/brand-logo/BrandLogo.tsx:24
@@ -280,8 +284,12 @@ msgstr ""
 msgid "Language"
 msgstr ""
 
-#: src/app/pages/register-page/RegisterForm.tsx:30
+#: src/app/pages/register-page/registerFormFields.ts:26
 msgid "Last Name"
+msgstr ""
+
+#: src/shared/formErrors.ts:11
+msgid "Last name is required"
 msgstr ""
 
 #. placeholder {0}: i18n.date(lastUpdate)
@@ -374,9 +382,37 @@ msgstr ""
 msgid "Open the GitHub repository in a new browser tab."
 msgstr ""
 
-#: src/app/pages/login-page/LoginForm.tsx:49
-#: src/app/pages/register-page/RegisterForm.tsx:44
+#: src/app/pages/login-page/LoginForm.tsx:50
+#: src/app/pages/register-page/registerFormFields.ts:38
 msgid "Password"
+msgstr ""
+
+#: src/shared/formErrors.ts:12
+msgid "Password confirmation is required"
+msgstr ""
+
+#: src/shared/formErrors.ts:17
+msgid "Password is required"
+msgstr ""
+
+#: src/shared/formErrors.ts:14
+msgid "Password must be at least {USER_PASSWORD_MIN_LENGTH} characters long"
+msgstr ""
+
+#: src/shared/formErrors.ts:13
+msgid "Password must contain at least one lowercase letter"
+msgstr ""
+
+#: src/shared/formErrors.ts:16
+msgid "Password must contain at least one number"
+msgstr ""
+
+#: src/shared/formErrors.ts:18
+msgid "Password must contain at least one uppercase letter"
+msgstr ""
+
+#: src/shared/formErrors.ts:15
+msgid "Passwords do not match"
 msgstr ""
 
 #. placeholder {0}: PROJECT_INFORMATION.name
@@ -386,6 +422,10 @@ msgstr ""
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:142
 msgid "Personal data is processed exclusively within the European Union. No transfer of personal data to third countries takes place."
+msgstr ""
+
+#: src/shared/formErrors.ts:9
+msgid "Please enter a valid email address"
 msgstr ""
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:176
@@ -441,7 +481,7 @@ msgid "Service Provider"
 msgstr ""
 
 #: src/app/pages/landing-page/LandingPage.tsx:59
-#: src/app/pages/login-page/LoginForm.tsx:54
+#: src/app/pages/login-page/LoginForm.tsx:56
 msgid "Sign In"
 msgstr ""
 
@@ -449,7 +489,7 @@ msgstr ""
 msgid "Sign in to enhance your learning"
 msgstr ""
 
-#: src/app/pages/login-page/LoginForm.tsx:64
+#: src/app/pages/login-page/LoginForm.tsx:66
 msgid "Sign Up"
 msgstr ""
 
@@ -459,6 +499,10 @@ msgstr ""
 
 #: src/app/pages/landing-page/LandingPage.tsx:93
 msgid "Structured Curriculum"
+msgstr ""
+
+#: src/app/pages/register-page/registerFormFields.ts:33
+msgid "student@example.com"
 msgstr ""
 
 #: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:111

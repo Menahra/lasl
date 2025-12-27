@@ -7,7 +7,12 @@ import { accessTokenManager } from "@/src/utils/accessTokenManager.ts";
 
 // biome-ignore lint/complexity/useLiteralKeys: needed for typescript
 const API_BASE_URL = import.meta.env["VITE_API_URL"];
+console.log("🔍 DEBUG - API_BASE_URL:", API_BASE_URL);
+console.log("🔍 DEBUG - typeof API_BASE_URL:", typeof API_BASE_URL);
+console.log("🔍 DEBUG - import.meta.env:", import.meta.env);
+
 const AUTH_API_BASE_URL = `${API_BASE_URL}/auth/api/v1`;
+console.log("🔍 DEBUG - AUTH_API_BASE_URL:", AUTH_API_BASE_URL);
 
 const apiClient = axios.create({
   // biome-ignore lint/style/useNamingConvention: naming from axios

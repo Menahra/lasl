@@ -1,11 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createUserSchema } from "@lasl/app-contracts/schemas/user";
-import { type _t, Trans, useLingui } from "@lingui/react/macro";
+import { Trans } from "@lingui/react/macro";
 import { useForm } from "react-hook-form";
+import { userApi } from "@/src/api/userApi.ts";
 import {
-  type RegisterFormField,
+  getRegisterFormFields,
   type RegisterFormValues,
-  registerFormFields,
 } from "@/src/app/pages/register-page/registerFormFields.ts";
 import { ROUTE_PRIVACY_POLICY } from "@/src/app/routes/privacy.tsx";
 import { ROUTE_TERMS_OF_SERVICE } from "@/src/app/routes/terms.tsx";
@@ -17,22 +17,11 @@ import { userErrorMessages } from "@/src/shared/formErrors.ts";
 import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
 import { useTranslateFormFieldError } from "@/src/shared/hooks/useTranslateFormFieldError.ts";
 import "./RegisterForm.css";
-
-const resolvePlaceholder = (
-  field: RegisterFormField<RegisterFormValues>,
-  t: typeof _t,
-): string => {
-  // biome-ignore lint/security/noSecrets: just a field name
-  if ("placeholderId" in field) {
-    return t({ id: field.placeholderId });
-  }
-
-  return field.defaultPlaceholder;
-};
+import { useLingui as useRuntimeLingui } from "@lingui/react";
 
 export const RegisterForm = () => {
   const { isLoading } = useI18nContext();
-  const { t: linguiTranslator } = useLingui();
+  const { i18n } = useRuntimeLingui();
   const {
     register,
     handleSubmit,
@@ -43,9 +32,11 @@ export const RegisterForm = () => {
   });
   const translateFormFieldError = useTranslateFormFieldError(userErrorMessages);
 
-  const onSubmit = (data: RegisterFormValues) => {
+  const onSubmit = async (data: RegisterFormValues) => {
     console.log(data);
-    // send to backend
+
+    const user = await userApi.createUser(data);
+    console.log(user);
   };
 
   return (
@@ -54,16 +45,16 @@ export const RegisterForm = () => {
       onSubmit={handleSubmit(onSubmit)}
       noValidate={true}
     >
-      {registerFormFields.map((field) => (
+      {getRegisterFormFields().map(({ name, label, placeholder, type }) => (
         <FormInputField
-          key={String(field.name)}
-          id={String(field.name)}
-          type={field.type}
-          label={linguiTranslator({ id: field.labelId })}
-          placeholder={resolvePlaceholder(field, linguiTranslator)}
+          key={name}
+          id={name}
+          type={type}
+          label={i18n._(label)}
+          placeholder={i18n._(placeholder)}
           loading={isLoading}
-          {...register(field.name)}
-          error={translateFormFieldError(errors[field.name])}
+          {...register(name)}
+          error={translateFormFieldError(errors[name])}
         />
       ))}
 
