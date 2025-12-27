@@ -1,5 +1,5 @@
 {
-  "name": "lasl-frontend",
+  "name": "frontend",
   "type": "module",
   "scripts": {
     "build": "tsc && vite build",

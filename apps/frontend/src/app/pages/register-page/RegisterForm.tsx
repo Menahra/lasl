@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createUserSchema } from "@lasl/app-contracts/schemas/user";
+import { useLingui as useRuntimeLingui } from "@lingui/react";
 import { Trans } from "@lingui/react/macro";
 import { useForm } from "react-hook-form";
 import { userApi } from "@/src/api/userApi.ts";
@@ -17,7 +18,6 @@ import { userErrorMessages } from "@/src/shared/formErrors.ts";
 import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
 import { useTranslateFormFieldError } from "@/src/shared/hooks/useTranslateFormFieldError.ts";
 import "./RegisterForm.css";
-import { useLingui as useRuntimeLingui } from "@lingui/react";
 
 export const RegisterForm = () => {
   const { isLoading } = useI18nContext();
@@ -33,8 +33,6 @@ export const RegisterForm = () => {
   const translateFormFieldError = useTranslateFormFieldError(userErrorMessages);
 
   const onSubmit = async (data: RegisterFormValues) => {
-    console.log(data);
-
     const user = await userApi.createUser(data);
     console.log(user);
   };

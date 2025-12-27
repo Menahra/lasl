@@ -24,6 +24,3 @@ export const userApi = {
     return response.data;
   },
 };
-
-// frontend muss dockerized werden?
-// redirect wenn user created wurde wegen bestätigungs mail?
