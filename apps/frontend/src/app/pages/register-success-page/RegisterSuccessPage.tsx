@@ -29,7 +29,7 @@ export const RegisterSuccessPage = () => {
         </p>
         <TanstackRouterLink to={ROUTE_SIGN_UP}>
           <Button fullWidth={true} align="center" variant="primary">
-            <Trans>Back to Login</Trans>
+            <Trans>Back to Registration</Trans>
           </Button>
         </TanstackRouterLink>
       </div>
