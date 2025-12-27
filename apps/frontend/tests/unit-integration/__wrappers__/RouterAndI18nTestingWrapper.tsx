@@ -15,10 +15,10 @@ type RenderOptions = {
   initialEntry?: string;
 };
 
-export async function renderWithRouterAndI18n(
+export const renderWithRouterAndI18n = async (
   Component: React.ComponentType,
   { pathPattern, initialEntry = pathPattern }: RenderOptions,
-) {
+) => {
   const rootRoute = createRootRoute({
     component: () => (
       <>
@@ -53,4 +53,4 @@ export async function renderWithRouterAndI18n(
   await screen.findByTestId("root-layout");
 
   return { router, renderResult };
-}
+};

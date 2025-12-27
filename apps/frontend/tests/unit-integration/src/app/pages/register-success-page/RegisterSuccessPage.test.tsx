@@ -1,3 +1,4 @@
+import "@/tests/unit-integration/__mocks__/i18nContextMock.ts";
 import { screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { RegisterSuccessPage } from "@/src/app/pages/register-success-page/RegisterSuccessPage.tsx";
