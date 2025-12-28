@@ -83,7 +83,7 @@ msgstr ""
 msgid "An open, community-driven platform for learning Modern Standard Arabic. Explore Nahw, Sarf, Balagha, and more — with content you can help improve."
 msgstr ""
 
-#: src/app/pages/register-page/RegisterForm.tsx:76
+#: src/app/pages/register-page/RegisterForm.tsx:84
 msgid "An unexpected error occurred. Please try again."
 msgstr ""
 
@@ -120,7 +120,7 @@ msgstr ""
 msgid "By continuing, you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>."
 msgstr ""
 
-#: src/app/pages/register-page/RegisterForm.tsx:100
+#: src/app/pages/register-page/RegisterForm.tsx:109
 msgid "By signing up, you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>."
 msgstr ""
 
@@ -185,7 +185,7 @@ msgstr ""
 msgid "Copyright"
 msgstr ""
 
-#: src/app/pages/register-page/RegisterForm.tsx:120
+#: src/app/pages/register-page/RegisterForm.tsx:129
 msgid "Create Account"
 msgstr ""
 
@@ -221,11 +221,11 @@ msgstr ""
 msgid "Didn't receive the email? Check your spam folder or try signing up again."
 msgstr ""
 
-#: src/app/pages/login-page/LoginForm.tsx:63
+#: src/app/pages/login-page/LoginForm.tsx:128
 msgid "Don't have an account yet?"
 msgstr ""
 
-#: src/app/pages/login-page/LoginForm.tsx:42
+#: src/app/pages/login-page/LoginForm.tsx:102
 #: src/app/pages/register-page/registerFormFields.ts:32
 msgid "Email"
 msgstr ""
@@ -242,7 +242,7 @@ msgstr ""
 msgid "Enter your last name"
 msgstr ""
 
-#: src/app/pages/login-page/LoginForm.tsx:49
+#: src/app/pages/login-page/LoginForm.tsx:110
 #: src/app/pages/register-page/registerFormFields.ts:39
 msgid "Enter your password"
 msgstr ""
@@ -294,6 +294,10 @@ msgstr ""
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:14
 msgid "Introduction"
+msgstr ""
+
+#: src/app/pages/login-page/LoginForm.tsx:91
+msgid "Invalid Email or password. Please try again"
 msgstr ""
 
 #: src/app/pages/landing-page/LandingPage.tsx:137
@@ -406,7 +410,7 @@ msgstr ""
 msgid "Open the GitHub repository in a new browser tab."
 msgstr ""
 
-#: src/app/pages/login-page/LoginForm.tsx:50
+#: src/app/pages/login-page/LoginForm.tsx:111
 #: src/app/pages/register-page/registerFormFields.ts:38
 msgid "Password"
 msgstr ""
@@ -450,6 +454,10 @@ msgstr ""
 
 #: src/shared/formErrors.ts:10
 msgid "Please enter a valid email address"
+msgstr ""
+
+#: src/app/pages/login-page/LoginForm.tsx:89
+msgid "Please verify your email first"
 msgstr ""
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:176
@@ -509,15 +517,15 @@ msgid "Service Provider"
 msgstr ""
 
 #: src/app/pages/landing-page/LandingPage.tsx:59
-#: src/app/pages/login-page/LoginForm.tsx:56
+#: src/app/pages/login-page/LoginForm.tsx:121
 msgid "Sign In"
 msgstr ""
 
-#: src/app/pages/login-page/LoginForm.tsx:33
+#: src/app/pages/login-page/LoginForm.tsx:77
 msgid "Sign in to enhance your learning"
 msgstr ""
 
-#: src/app/pages/login-page/LoginForm.tsx:66
+#: src/app/pages/login-page/LoginForm.tsx:131
 msgid "Sign Up"
 msgstr ""
 
@@ -529,6 +537,7 @@ msgstr ""
 msgid "Structured Curriculum"
 msgstr ""
 
+#: src/app/pages/login-page/LoginForm.tsx:101
 #: src/app/pages/register-page/registerFormFields.ts:33
 msgid "student@example.com"
 msgstr ""
@@ -597,7 +606,7 @@ msgstr ""
 msgid "These Terms shall be governed by the laws of Germany, excluding its conflict-of-law provisions."
 msgstr ""
 
-#: src/app/pages/register-page/RegisterForm.tsx:69
+#: src/app/pages/register-page/RegisterForm.tsx:77
 msgid "This email is already registered. <0>Sign in instead</0>"
 msgstr ""
 
@@ -692,7 +701,7 @@ msgstr ""
 msgid "We've sent a verification link to your email address. Please click the link to verify your account."
 msgstr ""
 
-#: src/app/pages/login-page/LoginForm.tsx:28
+#: src/app/pages/login-page/LoginForm.tsx:72
 msgid "Welcome back"
 msgstr ""
 
