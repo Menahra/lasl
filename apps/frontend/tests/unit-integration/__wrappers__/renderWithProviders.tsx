@@ -7,20 +7,22 @@ import {
   TestRouterProvider,
 } from "@/tests/unit-integration/__wrappers__/TestRouterProvider.tsx";
 
-type RenderOptions = {
+export type RenderWithProviderOptions = {
   query?: boolean;
   i18n?: boolean;
   router?: {
     pathPattern: string;
     initialEntry?: string;
   };
+  // this option can be used to avoid the findBy* query (i.e. if fake timers needed)
+  synchronous?: boolean;
 };
 
 export const renderWithProviders = async (
   Component: ComponentType,
-  options: RenderOptions = {},
+  options: RenderWithProviderOptions = {},
 ): Promise<RenderResult> => {
-  const { query, i18n, router } = options;
+  const { query, i18n, router, synchronous } = options;
 
   let tree: ReactNode = <Component />;
 
@@ -38,7 +40,7 @@ export const renderWithProviders = async (
 
   const renderResult = render(tree);
 
-  if (router) {
+  if (!synchronous && router) {
     await screen.findByTestId(ROOT_LAYOUT_TESTID);
   }
 
