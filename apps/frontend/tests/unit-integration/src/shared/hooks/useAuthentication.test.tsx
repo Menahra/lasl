@@ -8,7 +8,7 @@ import {
   usePostLogin,
   usePostLogout,
   usePostRefreshToken,
-} from "@/src/shared/hooks/useAuthentication.ts";
+} from "@/src/shared/hooks/api/useAuthentication.ts";
 import { accessTokenManager } from "@/src/utils/accessTokenManager.ts";
 
 vi.mock("@/src/api/authApi", () => ({

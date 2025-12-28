@@ -5,7 +5,7 @@ import {
   useGetCurrentUser,
   usePostLogin,
   usePostLogout,
-} from "@/src/shared/hooks/useAuthentication.ts";
+} from "@/src/shared/hooks/api/useAuthentication.ts";
 
 type AuthenticationProviderContext = {
   user: GetCurrentAuthenticatedUserSuccessResponse | undefined;

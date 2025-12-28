@@ -4,7 +4,7 @@ import {
   useGetCurrentUser,
   usePostLogin,
   usePostLogout,
-} from "@/src/shared/hooks/useAuthentication.ts";
+} from "@/src/shared/hooks/api/useAuthentication.ts";
 import {
   AuthenticationProvider,
   useAuthenticationContext,

@@ -7,7 +7,6 @@ import { isAxiosError } from "axios";
 import { StatusCodes } from "http-status-codes";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { userApi } from "@/src/api/userApi.ts";
 import {
   getRegisterFormFields,
   type RegisterFormValues,
@@ -22,6 +21,7 @@ import { FormInputField } from "@/src/shared/components/form-input-field/FormInp
 import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
 import { TextLink } from "@/src/shared/components/text-link/TextLink.tsx";
 import { userErrorMessages } from "@/src/shared/formErrors.ts";
+import { useCreateUser } from "@/src/shared/hooks/api/useCreateUser.ts";
 import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
 import { useTranslateFormFieldError } from "@/src/shared/hooks/useTranslateFormFieldError.ts";
 import "./RegisterForm.css";
@@ -35,10 +35,11 @@ export const RegisterForm = () => {
   const { isLoading } = useI18nContext();
   const { i18n } = useRuntimeLingui();
   const { navigate } = useRouter();
+  const createUserMutation = useCreateUser();
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<RegisterFormValues>({
     resolver: zodResolver(createUserSchema),
     mode: "onSubmit",
@@ -46,11 +47,16 @@ export const RegisterForm = () => {
   const translateFormFieldError = useTranslateFormFieldError(userErrorMessages);
 
   const onSubmit = async (data: RegisterFormValues) => {
+    setRegistrationError("none");
+
     try {
-      await userApi.createUser(data);
+      await createUserMutation.mutateAsync(data);
       navigate({ to: ROUTE_SIGN_UP_SUCCESS });
     } catch (error) {
-      if (isAxiosError(error) && error.status === StatusCodes.CONFLICT) {
+      if (
+        isAxiosError(error) &&
+        error.response?.status === StatusCodes.CONFLICT
+      ) {
         setRegistrationError("duplicate");
       } else {
         setRegistrationError("unknown");
@@ -116,7 +122,7 @@ export const RegisterForm = () => {
             variant="primary"
             type="submit"
             align="center"
-            loading={isSubmitting}
+            loading={createUserMutation.isPending}
           >
             <Trans>Create Account</Trans>
           </Button>
