@@ -12,10 +12,8 @@ describe("createSessionSchema", () => {
 
   it("should pass with valid input", () => {
     const result = createSessionSchema.safeParse({
-      body: {
-        email: validEmail,
-        password: validPassword,
-      },
+      email: validEmail,
+      password: validPassword,
     });
 
     expect(result.success).toBe(true);
@@ -23,92 +21,77 @@ describe("createSessionSchema", () => {
 
   it("should fail if email is missing", () => {
     const result = createSessionSchema.safeParse({
-      body: {
-        password: validPassword,
-      },
+      password: validPassword,
     });
 
     expect(result.success).toBe(false);
     expect(
       // biome-ignore lint/style/noNonNullAssertion: ok in test
-      z.treeifyError(result.error!).properties?.body?.properties?.email?.errors,
+      z.treeifyError(result.error!).properties?.email?.errors,
     ).toContain("errors.user.email.invalid");
   });
 
   it("should fail if password is missing", () => {
     const result = createSessionSchema.safeParse({
-      body: {
-        email: validEmail,
-      },
+      email: validEmail,
     });
 
     expect(result.success).toBe(false);
     expect(
       // biome-ignore lint/style/noNonNullAssertion: ok in test
-      z.treeifyError(result.error!).properties?.body?.properties?.password
-        ?.errors,
+      z.treeifyError(result.error!).properties?.password?.errors,
     ).toContain("Invalid input: expected string, received undefined");
   });
 
   it("should fail if email is empty string", () => {
     const result = createSessionSchema.safeParse({
-      body: {
-        email: "",
-        password: validPassword,
-      },
+      email: "",
+      password: validPassword,
     });
 
     expect(result.success).toBe(false);
     expect(
       // biome-ignore lint/style/noNonNullAssertion: ok in test
-      z.treeifyError(result.error!).properties?.body?.properties?.email?.errors,
+      z.treeifyError(result.error!).properties?.email?.errors,
     ).toContain("errors.user.email.invalid");
   });
 
   it("should fail if password is empty string", () => {
     const result = createSessionSchema.safeParse({
-      body: {
-        email: validEmail,
-        password: "",
-      },
+      email: validEmail,
+      password: "",
     });
 
     expect(result.success).toBe(false);
     expect(
       // biome-ignore lint/style/noNonNullAssertion: ok in test
-      z.treeifyError(result.error!).properties?.body?.properties?.password
-        ?.errors,
+      z.treeifyError(result.error!).properties?.password?.errors,
     ).toContain("errors.user.password.required");
   });
 
   it("should fail if email is invalid format", () => {
     const result = createSessionSchema.safeParse({
-      body: {
-        email: "invalid-email",
-        password: validPassword,
-      },
+      email: "invalid-email",
+      password: validPassword,
     });
 
     expect(result.success).toBe(false);
     expect(
       // biome-ignore lint/style/noNonNullAssertion: ok in test
-      z.treeifyError(result.error!).properties?.body?.properties?.email?.errors,
+      z.treeifyError(result.error!).properties?.email?.errors,
     ).toContain("errors.user.email.invalid");
   });
 
   it("should fail if password is too short", () => {
     const result = createSessionSchema.safeParse({
-      body: {
-        email: validEmail,
-        password: "short",
-      },
+      email: validEmail,
+      password: "short",
     });
 
     expect(result.success).toBe(false);
     expect(
       // biome-ignore lint/style/noNonNullAssertion: ok in test
-      z.treeifyError(result.error!).properties?.body?.properties?.password
-        ?.errors,
+      z.treeifyError(result.error!).properties?.password?.errors,
     ).toContain(vagueSessionErrorMessage);
   });
 });

@@ -1,12 +1,10 @@
 import process from "node:process";
-import {
-  type CreateSessionInput,
-  vagueSessionErrorMessage,
-} from "@lasl/app-contracts/schemas/session";
+import { vagueSessionErrorMessage } from "@lasl/app-contracts/schemas/session";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import { REFRESH_SESSION_ROUTE } from "@/src/constants/auth.routes.constants.ts";
 import { REFRESH_COOKIE_NAME } from "@/src/middleware/authentication.hook.ts";
+import type { CreateSessionInputSchemaType } from "@/src/schema/session.schema.ts";
 import {
   signAccessToken,
   signRefreshToken,
@@ -21,7 +19,7 @@ const fullRefreshSessionRoute = `${getApiVersionPathPrefix(1)}${REFRESH_SESSION_
 
 export const createSessionHandler = async (
   // biome-ignore lint/style/useNamingConvention: naming from fastify
-  req: FastifyRequest<{ Body: CreateSessionInput["body"] }>,
+  req: FastifyRequest<{ Body: CreateSessionInputSchemaType["body"] }>,
   reply: FastifyReply,
 ) => {
   const { email, password } = req.body;

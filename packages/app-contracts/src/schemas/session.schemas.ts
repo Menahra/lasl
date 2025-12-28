@@ -8,13 +8,11 @@ import {
 export const vagueSessionErrorMessage = "Invalid email or password";
 
 export const createSessionSchema = z.object({
-  body: z.object({
-    email: userEmailSchema.nonempty({ error: USER_ERRORS.emailInvalid }),
-    password: z
-      .string()
-      .nonempty({ error: USER_ERRORS.passwordRequired })
-      .min(USER_PASSWORD_MIN_LENGTH, vagueSessionErrorMessage),
-  }),
+  email: userEmailSchema.nonempty({ error: USER_ERRORS.emailInvalid }),
+  password: z
+    .string()
+    .nonempty({ error: USER_ERRORS.passwordRequired })
+    .min(USER_PASSWORD_MIN_LENGTH, vagueSessionErrorMessage),
 });
 
-export type CreateSessionInput = z.infer<typeof createSessionSchema>;
+export type CreateSessionSchemaType = z.infer<typeof createSessionSchema>;
