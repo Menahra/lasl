@@ -1,3 +1,4 @@
+import type { createSessionSchema } from "@lasl/app-contracts/schemas/session";
 import type {
   CreateSessionSuccessResponse,
   GetCurrentAuthenticatedUserSuccessResponse,
@@ -5,18 +6,18 @@ import type {
   RefreshSessionSuccessResponse,
 } from "@lasl/authentication-service";
 import axios from "axios";
+import type { z } from "zod";
 import { AUTH_API_BASE_URL } from "@/src/api/apiClient.ts";
 import { accessTokenManager } from "@/src/utils/accessTokenManager.ts";
 
 export const authApi = {
-  createSession: async (email: string, password: string) => {
+  createSession: async (
+    sessionParameters: z.infer<typeof createSessionSchema>,
+  ) => {
     try {
       const response = await axios.post<CreateSessionSuccessResponse>(
         `${AUTH_API_BASE_URL}/sessions`,
-        {
-          email,
-          password,
-        },
+        sessionParameters,
         { withCredentials: true },
       );
       const { accessToken } = response.data;

@@ -25,7 +25,10 @@ const Consumer = () => {
       <div data-testid="user">{JSON.stringify(ctx.user)}</div>
       <div data-testid="isLoading">{String(ctx.isLoading)}</div>
       <div data-testid="isAuthenticated">{String(ctx.isAuthenticated)}</div>
-      <button type="button" onClick={() => ctx.login("email", "password")}>
+      <button
+        type="button"
+        onClick={() => ctx.login({ email: "email", password: "password" })}
+      >
         login
       </button>
       <button type="button" onClick={() => ctx.logout()}>
@@ -35,7 +38,6 @@ const Consumer = () => {
   );
 };
 
-// Reset mocks before each test
 beforeEach(() => {
   vi.clearAllMocks();
 
@@ -114,7 +116,10 @@ describe("AuthenticationProvider", () => {
 
     fireEvent.click(screen.getByText("login"));
 
-    expect(mutateAsyncMock).toHaveBeenCalledWith(["email", "password"]);
+    expect(mutateAsyncMock).toHaveBeenCalledWith({
+      email: "email",
+      password: "password",
+    });
   });
 
   it("logout() calls logoutMutation.mutateAsync()", () => {

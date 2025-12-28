@@ -17,7 +17,7 @@ vi.mock("axios", () => {
   return {
     default: {
       create: vi.fn(() => mockAxiosInstance),
-      post: vi.fn(), // only needed if your code uses axios.post directly
+      post: vi.fn(),
     },
   };
 });
@@ -41,10 +41,10 @@ describe("authApi", () => {
         data: { accessToken: "abc123" },
       });
 
-      const result = await authApi.createSession(
-        "test@example.com",
-        "password",
-      );
+      const result = await authApi.createSession({
+        email: "test@example.com",
+        password: "password",
+      });
 
       expect(mockAxiosPost).toHaveBeenCalledWith(
         `${AUTH_API_BASE_URL}/sessions`,
@@ -63,7 +63,9 @@ describe("authApi", () => {
       const error = new Error("fail");
       mockAxiosPost.mockRejectedValue(error);
 
-      await expect(authApi.createSession("x", "y")).rejects.toThrow("fail");
+      await expect(
+        authApi.createSession({ email: "x", password: "y" }),
+      ).rejects.toThrow("fail");
 
       expect(accessTokenManager.clearAccessToken).toHaveBeenCalled();
     });

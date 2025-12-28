@@ -28,7 +28,7 @@ export const AuthenticationProvider = (props: PropsWithChildren) => {
   const logoutMutation = usePostLogout();
 
   const login = async (
-    ...credentials: Parameters<(typeof authApi)["createSession"]>
+    credentials: Parameters<(typeof authApi)["createSession"]>[0],
   ) => {
     await loginMutation.mutateAsync(credentials);
   };

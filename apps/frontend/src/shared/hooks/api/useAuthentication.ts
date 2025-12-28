@@ -24,8 +24,8 @@ export const usePostLogin = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ([email, password]: Parameters<typeof authApi.createSession>) =>
-      authApi.createSession(email, password),
+    mutationFn: (loginBody: Parameters<typeof authApi.createSession>[0]) =>
+      authApi.createSession(loginBody),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: authKeys.user() });
     },

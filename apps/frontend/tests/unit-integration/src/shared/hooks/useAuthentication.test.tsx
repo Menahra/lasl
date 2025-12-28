@@ -53,13 +53,16 @@ describe("useAuth hooks", () => {
     const { result } = renderHook(() => usePostLogin(), { wrapper });
 
     await act(async () => {
-      await result.current.mutateAsync(["test@example.com", "secret"]);
+      await result.current.mutateAsync({
+        email: "test@example.com",
+        password: "secret",
+      });
     });
 
-    expect(authApi.createSession).toHaveBeenCalledWith(
-      "test@example.com",
-      "secret",
-    );
+    expect(authApi.createSession).toHaveBeenCalledWith({
+      email: "test@example.com",
+      password: "secret",
+    });
     expect(invalidateQueries).toHaveBeenCalledWith({
       queryKey: authKeys.user(),
     });

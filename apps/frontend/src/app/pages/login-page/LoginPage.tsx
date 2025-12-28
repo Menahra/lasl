@@ -1,5 +1,6 @@
 import { Trans } from "@lingui/react/macro";
 import { LoginForm } from "@/src/app/pages/login-page/LoginForm.tsx";
+import { ROUTE_PRIVACY_POLICY } from "@/src/app/routes/privacy.tsx";
 import { ROUTE_TERMS_OF_SERVICE } from "@/src/app/routes/terms.tsx";
 import { BrandLogo } from "@/src/shared/components/brand-logo/BrandLogo.tsx";
 import { LanguageSelect } from "@/src/shared/components/language-select/LanguageSelect.tsx";
@@ -9,7 +10,6 @@ import { TextLink } from "@/src/shared/components/text-link/TextLink.tsx";
 import { PROJECT_INFORMATION } from "@/src/shared/constants.ts";
 import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
 import "./LoginPage.css";
-import { ROUTE_PRIVACY_POLICY } from "@/src/app/routes/privacy.tsx";
 
 export const LoginPage = () => {
   const { isLoading } = useI18nContext();
@@ -50,12 +50,3 @@ export const LoginPage = () => {
     </div>
   );
 };
-
-// Sign up page
-// Terms of Service und Privacy Policy Page
-// Landing page
-
-// e2e tests:
-// login testen mit fehlender mail, falscher mail, fehlendem pw, falschem pw, richtige mail aber falsches pw, richtiges pw aber falsche mail, beides korrekt weiterleitung checken
-// checken ob sign up richtig redirected, sign up durch testen mit ähnlichen validierungen
-// checken ob terms of service und privacy policy links gehen und back navigation etc

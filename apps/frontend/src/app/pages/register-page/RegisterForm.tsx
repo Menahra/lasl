@@ -67,22 +67,24 @@ export const RegisterForm = () => {
   return (
     <div className="RegisterForm">
       {registrationError !== "none" ? (
-        <Callout
-          severity="error"
-          variant="outlined"
-          onClose={() => setRegistrationError("none")}
-        >
-          {registrationError === "duplicate" ? (
-            <Trans>
-              This email is already registered.{" "}
-              <TextLink variant="primary" to={ROUTE_LOGIN}>
-                Sign in instead
-              </TextLink>
-            </Trans>
-          ) : (
-            <Trans>An unexpected error occurred. Please try again.</Trans>
-          )}
-        </Callout>
+        <Skeleton loading={isLoading} width="100%" height={34}>
+          <Callout
+            severity="error"
+            variant="outlined"
+            onClose={() => setRegistrationError("none")}
+          >
+            {registrationError === "duplicate" ? (
+              <Trans>
+                This email is already registered.{" "}
+                <TextLink variant="primary" to={ROUTE_LOGIN}>
+                  Sign in instead
+                </TextLink>
+              </Trans>
+            ) : (
+              <Trans>An unexpected error occurred. Please try again.</Trans>
+            )}
+          </Callout>
+        </Skeleton>
       ) : undefined}
       <form
         className="RegisterFormWrapper"
