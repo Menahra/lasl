@@ -1,6 +1,6 @@
 {
   "name": "@lasl/app-contracts",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "type": "module",
   "files": [
@@ -12,12 +12,16 @@
       "types": "./dist/locales.d.ts"
     },
     "./schemas/user": {
-      "import": "./dist/user.schemas.js",
-      "types": "./dist/user.schemas.d.ts"
+      "import": "./dist/schemas/user.schemas.js",
+      "types": "./dist/schemas/user.schemas.d.ts"
+    },
+    "./schemas/session": {
+      "import": "./dist/schemas/session.schemas.js",
+      "types": "./dist/schemas/session.schemas.d.ts"
     },
     "./errors/user": {
-      "import": "./dist/user.errors.js",
-      "types": "./dist/user.errors.d.ts"
+      "import": "./dist/schemas/user.errors.js",
+      "types": "./dist/schemas/user.errors.d.ts"
     }
   },
   "scripts": {

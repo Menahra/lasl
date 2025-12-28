@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { USER_ERRORS } from "@/src/user.errors.ts";
+import { USER_ERRORS } from "@/src/schemas/user.errors.ts";
 
 type UserPasswordWithConformationSchema = z.infer<
   typeof userPasswordWithConfirmationSchema
