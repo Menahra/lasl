@@ -1,3 +1,9 @@
+.RegisterForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
 .RegisterFormWrapper {
   display: flex;
   flex-direction: column;
