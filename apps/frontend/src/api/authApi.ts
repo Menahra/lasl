@@ -49,18 +49,23 @@ export const authApi = {
   },
 
   logout: async () => {
-    return await axios.post<LogoutSuccessResponse>(
+    const { data } = await axios.post<LogoutSuccessResponse>(
       `${AUTH_API_BASE_URL}/sessions/logout`,
       {},
       { withCredentials: true },
     );
+
+    return data;
   },
 
   getCurrentUser: async () => {
-    return await axios.post<GetCurrentAuthenticatedUserSuccessResponse>(
-      `${AUTH_API_BASE_URL}/users/me`,
-      {},
-      { withCredentials: true },
-    );
+    const { data } =
+      await axios.post<GetCurrentAuthenticatedUserSuccessResponse>(
+        `${AUTH_API_BASE_URL}/users/me`,
+        {},
+        { withCredentials: true },
+      );
+
+    return data;
   },
 };

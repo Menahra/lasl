@@ -1,19 +1,24 @@
 import { screen } from "@testing-library/react";
 import { describe, expect, it, type Mock, vi } from "vitest";
 import { AuthButton } from "@/src/app/layouts/main-layout/header/AuthButton.tsx";
+import { ROUTE_HOME } from "@/src/app/routes/index.tsx";
 import { ROUTE_LOGIN } from "@/src/app/routes/login.tsx";
+import { renderWithProviders } from "@/tests/unit-integration/__wrappers__/renderWithProviders.tsx";
 
 vi.mock("@/src/shared/hooks/useAuthenticationContext.tsx", () => ({
   useAuthenticationContext: vi.fn(),
 }));
 
-import { ROUTE_HOME } from "@/src/app/routes/index.tsx";
 import { useAuthenticationContext } from "@/src/shared/hooks/useAuthenticationContext.tsx";
-import { renderWithRouterAndI18n } from "@/tests/unit-integration/__wrappers__/RouterAndI18nTestingWrapper.tsx";
 
 describe("AuthButton", () => {
   const renderAuthButton = () =>
-    renderWithRouterAndI18n(AuthButton, { pathPattern: "/login" });
+    renderWithProviders(AuthButton, {
+      i18n: true,
+      router: {
+        pathPattern: "/login",
+      },
+    });
 
   it("renders login button linking to login page if user is not authenticated", async () => {
     (useAuthenticationContext as Mock).mockReturnValue({

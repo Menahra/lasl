@@ -3,7 +3,7 @@ import { screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { LandingPage } from "@/src/app/pages/landing-page/LandingPage.tsx";
 import { PROJECT_INFORMATION } from "@/src/shared/constants.ts";
-import { renderWithRouterAndI18n } from "@/tests/unit-integration/__wrappers__/RouterAndI18nTestingWrapper.tsx";
+import { renderWithProviders } from "@/tests/unit-integration/__wrappers__/renderWithProviders.tsx";
 
 vi.mock("@/src/shared/hooks/useAuthenticationContext.tsx", () => ({
   useAuthenticationContext: () => ({}),
@@ -11,8 +11,11 @@ vi.mock("@/src/shared/hooks/useAuthenticationContext.tsx", () => ({
 
 describe("LandingPage", () => {
   const renderLandingPage = () =>
-    renderWithRouterAndI18n(LandingPage, {
-      pathPattern: "/test",
+    renderWithProviders(LandingPage, {
+      i18n: true,
+      router: {
+        pathPattern: "/test",
+      },
     });
 
   it("renders without crashing", async () => {

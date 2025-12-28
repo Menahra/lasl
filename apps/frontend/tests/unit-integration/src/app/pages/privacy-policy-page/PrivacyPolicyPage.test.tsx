@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 import { PrivacyPolicyPage } from "@/src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx";
 import { ROUTE_HOME } from "@/src/app/routes/index.tsx";
 import { PROJECT_INFORMATION } from "@/src/shared/constants.ts";
-import { renderWithRouterAndI18n } from "@/tests/unit-integration/__wrappers__/RouterAndI18nTestingWrapper.tsx";
+import { renderWithProviders } from "@/tests/unit-integration/__wrappers__/renderWithProviders.tsx";
 
 vi.mock("@/src/app/layouts/main-layout/MainLayout.tsx", () => ({
   // biome-ignore lint/style/useNamingConvention: ok here
@@ -13,7 +13,12 @@ vi.mock("@/src/app/layouts/main-layout/MainLayout.tsx", () => ({
 }));
 
 const renderPrivacyPolicyPage = () =>
-  renderWithRouterAndI18n(PrivacyPolicyPage, { pathPattern: "/privacy" });
+  renderWithProviders(PrivacyPolicyPage, {
+    i18n: true,
+    router: {
+      pathPattern: "/privacy",
+    },
+  });
 
 describe("PrivacyPolicyPage", () => {
   it("renders the main layout", async () => {

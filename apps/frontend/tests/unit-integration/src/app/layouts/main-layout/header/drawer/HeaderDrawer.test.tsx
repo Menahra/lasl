@@ -7,7 +7,7 @@ import {
   DONATE_PROJECT_LINK,
   GITHUB_PROJECT_LINK,
 } from "@/src/shared/constants.ts";
-import { renderWithI18n } from "@/tests/unit-integration/__wrappers__/I18nTestingWrapper.tsx";
+import { renderWithProviders } from "@/tests/unit-integration/__wrappers__/renderWithProviders.tsx";
 
 describe("HeaderDrawer", () => {
   let searchValue = "";
@@ -21,11 +21,16 @@ describe("HeaderDrawer", () => {
   });
 
   const renderDrawer = () =>
-    renderWithI18n(
-      <HeaderDrawer
-        searchValue={searchValue}
-        setSearchValue={setSearchValue}
-      />,
+    renderWithProviders(
+      () => (
+        <HeaderDrawer
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+        />
+      ),
+      {
+        i18n: true,
+      },
     );
 
   const user = userEvent.setup();

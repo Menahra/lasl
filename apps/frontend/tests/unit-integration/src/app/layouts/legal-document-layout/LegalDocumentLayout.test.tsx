@@ -5,7 +5,7 @@ import {
   type LegalDocumentLayoutProps,
 } from "@/src/app/layouts/legal-document-layout/LegalDocumentLayout.tsx";
 import { ROUTE_HOME } from "@/src/app/routes/index.tsx";
-import { renderWithRouterAndI18n } from "@/tests/unit-integration/__wrappers__/RouterAndI18nTestingWrapper.tsx";
+import { renderWithProviders } from "@/tests/unit-integration/__wrappers__/renderWithProviders.tsx";
 
 vi.mock("@/src/app/layouts/main-layout/MainLayout.tsx", () => ({
   // biome-ignore lint/style/useNamingConvention: ok here
@@ -15,8 +15,11 @@ vi.mock("@/src/app/layouts/main-layout/MainLayout.tsx", () => ({
 }));
 
 const renderLegalDocumentLayout = (props: LegalDocumentLayoutProps) =>
-  renderWithRouterAndI18n(() => <LegalDocumentLayout {...props} />, {
-    pathPattern: "/legal-doc",
+  renderWithProviders(() => <LegalDocumentLayout {...props} />, {
+    i18n: true,
+    router: {
+      pathPattern: "/legal-doc",
+    },
   });
 
 describe("LegalDocumentLayout", () => {

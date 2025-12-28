@@ -4,7 +4,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { LoginForm } from "@/src/app/pages/login-page/LoginForm.tsx";
 import { ROUTE_SIGN_UP } from "@/src/app/routes/register.tsx";
 import { setI18nLoading } from "@/tests/unit-integration/__mocks__/i18nContextMock.ts";
-import { renderWithRouterAndI18n } from "@/tests/unit-integration/__wrappers__/RouterAndI18nTestingWrapper.tsx";
+import { renderWithProviders } from "@/tests/unit-integration/__wrappers__/renderWithProviders.tsx";
 
 describe("LoginForm", () => {
   afterEach(() => {
@@ -12,7 +12,13 @@ describe("LoginForm", () => {
   });
 
   const renderLoginForm = () =>
-    renderWithRouterAndI18n(LoginForm, { pathPattern: "/login" });
+    renderWithProviders(LoginForm, {
+      query: true,
+      i18n: true,
+      router: {
+        pathPattern: "/login",
+      },
+    });
 
   it("renders title and subtitle", async () => {
     await renderLoginForm();

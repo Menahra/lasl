@@ -3,10 +3,14 @@ import { screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import { GitHubButton } from "@/src/app/layouts/main-layout/header/GitHubButton.tsx";
-import { renderWithI18n } from "@/tests/unit-integration/__wrappers__/I18nTestingWrapper.tsx";
+import { renderWithProviders } from "@/tests/unit-integration/__wrappers__/renderWithProviders.tsx";
 
 describe("GitHubButton", () => {
-  const renderGitHubButton = () => renderWithI18n(<GitHubButton />);
+  const renderGitHubButton = () =>
+    renderWithProviders(GitHubButton, {
+      i18n: true,
+    });
+
   it("renders a link", () => {
     renderGitHubButton();
 

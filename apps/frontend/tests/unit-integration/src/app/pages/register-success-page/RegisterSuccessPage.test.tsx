@@ -3,11 +3,15 @@ import { screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { RegisterSuccessPage } from "@/src/app/pages/register-success-page/RegisterSuccessPage.tsx";
 import { ROUTE_SIGN_UP } from "@/src/app/routes/register.tsx";
-import { renderWithRouterAndI18n } from "@/tests/unit-integration/__wrappers__/RouterAndI18nTestingWrapper.tsx";
+import { renderWithProviders } from "@/tests/unit-integration/__wrappers__/renderWithProviders.tsx";
 
 const renderPage = () =>
-  renderWithRouterAndI18n(RegisterSuccessPage, {
-    pathPattern: "/register/success",
+  renderWithProviders(RegisterSuccessPage, {
+    query: true,
+    i18n: true,
+    router: {
+      pathPattern: "/register/success",
+    },
   });
 
 describe("RegisterSuccessPage", () => {

@@ -5,7 +5,7 @@ import { RegisterForm } from "@/src/app/pages/register-page/RegisterForm.tsx";
 import { ROUTE_PRIVACY_POLICY } from "@/src/app/routes/privacy.tsx";
 import { ROUTE_TERMS_OF_SERVICE } from "@/src/app/routes/terms.tsx";
 import { setI18nLoading } from "@/tests/unit-integration/__mocks__/i18nContextMock.ts";
-import { renderWithRouterAndI18n } from "@/tests/unit-integration/__wrappers__/RouterAndI18nTestingWrapper.tsx";
+import { renderWithProviders } from "@/tests/unit-integration/__wrappers__/renderWithProviders.tsx";
 
 describe("RegisterForm", () => {
   afterEach(() => {
@@ -13,7 +13,13 @@ describe("RegisterForm", () => {
   });
 
   const renderRegisterForm = () =>
-    renderWithRouterAndI18n(RegisterForm, { pathPattern: "/signup" });
+    renderWithProviders(RegisterForm, {
+      query: true,
+      i18n: true,
+      router: {
+        pathPattern: "/signup",
+      },
+    });
 
   it("renders all input fields", async () => {
     await renderRegisterForm();

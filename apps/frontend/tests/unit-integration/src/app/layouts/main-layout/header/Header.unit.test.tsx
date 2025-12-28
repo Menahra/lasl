@@ -5,7 +5,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { Header } from "@/src/app/layouts/main-layout/header/Header.tsx";
 import { setI18nLoading } from "@/tests/unit-integration/__mocks__/i18nContextMock.ts";
 import { mockMatchMedia } from "@/tests/unit-integration/__mocks__/matchMediaMock.ts";
-import { renderWithRouterAndI18n } from "@/tests/unit-integration/__wrappers__/RouterAndI18nTestingWrapper.tsx";
+import { renderWithProviders } from "@/tests/unit-integration/__wrappers__/renderWithProviders.tsx";
 
 vi.mock("@/src/shared/hooks/useAuthenticationContext.tsx", () => ({
   useAuthenticationContext: () => ({
@@ -22,7 +22,14 @@ describe("Header", () => {
   });
 
   const renderHeader = () =>
-    renderWithRouterAndI18n(Header, { pathPattern: "/header" });
+    renderWithProviders(Header, {
+      query: true,
+      i18n: true,
+      router: {
+        pathPattern: "/header",
+      },
+    });
+
   const user = userEvent.setup();
 
   it("renders a search field (among other things)", async () => {

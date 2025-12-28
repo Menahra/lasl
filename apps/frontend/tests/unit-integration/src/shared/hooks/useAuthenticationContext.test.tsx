@@ -10,7 +10,7 @@ import {
   useAuthenticationContext,
 } from "@/src/shared/hooks/useAuthenticationContext.tsx";
 
-vi.mock("@/src/shared/hooks/useAuthentication.ts", () => ({
+vi.mock("@/src/shared/hooks/api/useAuthentication.ts", () => ({
   useGetCurrentUser: vi.fn(),
   usePostLogin: vi.fn(),
   usePostLogout: vi.fn(),

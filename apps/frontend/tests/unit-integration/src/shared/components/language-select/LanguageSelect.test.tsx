@@ -12,14 +12,17 @@ import {
   setI18nLoading,
 } from "@/tests/unit-integration/__mocks__/i18nContextMock.ts";
 import { polyfillPointerEvents } from "@/tests/unit-integration/__mocks__/polyfillPointerEvents.ts";
-import { renderWithI18n } from "@/tests/unit-integration/__wrappers__/I18nTestingWrapper.tsx";
+import { renderWithProviders } from "@/tests/unit-integration/__wrappers__/renderWithProviders.tsx";
 
 describe("LanguageSelect", () => {
   beforeAll(() => {
     polyfillPointerEvents();
   });
 
-  const renderLanguageSelect = () => renderWithI18n(<LanguageSelect />);
+  const renderLanguageSelect = () =>
+    renderWithProviders(LanguageSelect, {
+      i18n: true,
+    });
   const user = userEvent.setup();
   it("renders the current locale label", () => {
     renderLanguageSelect();

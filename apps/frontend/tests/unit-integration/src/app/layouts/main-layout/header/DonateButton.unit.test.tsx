@@ -3,10 +3,14 @@ import { screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import { DonateButton } from "@/src/app/layouts/main-layout/header/DonateButton.tsx";
-import { renderWithI18n } from "@/tests/unit-integration/__wrappers__/I18nTestingWrapper.tsx";
+import { renderWithProviders } from "@/tests/unit-integration/__wrappers__/renderWithProviders.tsx";
 
 describe("DonateButton", () => {
-  const renderDonateButton = () => renderWithI18n(<DonateButton />);
+  const renderDonateButton = () =>
+    renderWithProviders(DonateButton, {
+      i18n: true,
+    });
+
   it("renders a link", () => {
     renderDonateButton();
 

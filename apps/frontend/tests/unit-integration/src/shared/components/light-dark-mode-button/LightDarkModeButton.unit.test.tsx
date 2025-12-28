@@ -2,7 +2,7 @@ import { screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { LightDarkModeButton } from "@/src/shared/components/light-dark-mode-button/LightDarkModeButton.tsx";
-import { renderWithI18n } from "@/tests/unit-integration/__wrappers__/I18nTestingWrapper.tsx";
+import { renderWithProviders } from "@/tests/unit-integration/__wrappers__/renderWithProviders.tsx";
 
 const useDarkModeMock = vi.hoisted(() => vi.fn());
 vi.mock("@/src/shared/hooks/useDarkMode", () => ({
@@ -14,12 +14,17 @@ describe("LightDarkModeButton", () => {
   const toLightModeText = "Switch to light mode";
   const user = userEvent.setup();
 
+  const renderLightDarkModeButton = () =>
+    renderWithProviders(LightDarkModeButton, {
+      i18n: true,
+    });
+
   it("renders a button", () => {
     useDarkModeMock.mockReturnValue({
       isDarkMode: false,
       updateDarkModeSetting: vi.fn(),
     });
-    renderWithI18n(<LightDarkModeButton />);
+    renderLightDarkModeButton();
 
     expect(screen.getByRole("button")).toBeVisible();
   });
@@ -30,7 +35,7 @@ describe("LightDarkModeButton", () => {
       updateDarkModeSetting: vi.fn(),
     });
 
-    renderWithI18n(<LightDarkModeButton />);
+    renderLightDarkModeButton();
     const button = screen.getByRole("button");
     expect(button).toHaveAccessibleName(toDarkModeText);
 
@@ -44,7 +49,7 @@ describe("LightDarkModeButton", () => {
       updateDarkModeSetting: vi.fn(),
     });
 
-    renderWithI18n(<LightDarkModeButton />);
+    renderLightDarkModeButton();
     const button = screen.getByRole("button");
     expect(button).toHaveAccessibleName(toLightModeText);
 
@@ -61,7 +66,7 @@ describe("LightDarkModeButton", () => {
       updateDarkModeSetting: onClickFn,
     });
 
-    renderWithI18n(<LightDarkModeButton />);
+    renderLightDarkModeButton();
 
     await user.tab();
     await user.keyboard(" ");

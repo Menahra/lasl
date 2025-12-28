@@ -8,7 +8,7 @@ import { ROUTE_PRIVACY_POLICY } from "@/src/app/routes/privacy.tsx";
 import { ROUTE_TERMS_OF_SERVICE } from "@/src/app/routes/terms.tsx";
 import { PROJECT_INFORMATION } from "@/src/shared/constants.ts";
 import { setI18nLoading } from "@/tests/unit-integration/__mocks__/i18nContextMock.ts";
-import { renderWithRouterAndI18n } from "@/tests/unit-integration/__wrappers__/RouterAndI18nTestingWrapper.tsx";
+import { renderWithProviders } from "@/tests/unit-integration/__wrappers__/renderWithProviders.tsx";
 
 describe("Footer", () => {
   afterEach(() => {
@@ -16,7 +16,12 @@ describe("Footer", () => {
   });
 
   const renderFooter = () =>
-    renderWithRouterAndI18n(Footer, { pathPattern: "/footer" });
+    renderWithProviders(Footer, {
+      i18n: true,
+      router: {
+        pathPattern: "/footer",
+      },
+    });
 
   it("renders the footer element", async () => {
     await renderFooter();

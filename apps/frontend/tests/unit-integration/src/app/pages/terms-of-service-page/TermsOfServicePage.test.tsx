@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 import { TermsOfServicePage } from "@/src/app/pages/terms-of-service-page/TermsOfServicePage.tsx";
 import { ROUTE_HOME } from "@/src/app/routes/index.tsx";
 import { PROJECT_INFORMATION } from "@/src/shared/constants.ts";
-import { renderWithRouterAndI18n } from "@/tests/unit-integration/__wrappers__/RouterAndI18nTestingWrapper.tsx";
+import { renderWithProviders } from "@/tests/unit-integration/__wrappers__/renderWithProviders.tsx";
 
 vi.mock("@/src/app/layouts/main-layout/MainLayout.tsx", () => ({
   // biome-ignore lint/style/useNamingConvention: ok for mocking
@@ -13,7 +13,12 @@ vi.mock("@/src/app/layouts/main-layout/MainLayout.tsx", () => ({
 }));
 
 const renderTermsOfServicePage = () =>
-  renderWithRouterAndI18n(TermsOfServicePage, { pathPattern: "/terms" });
+  renderWithProviders(TermsOfServicePage, {
+    i18n: true,
+    router: {
+      pathPattern: "/terms",
+    },
+  });
 
 describe("TermsOfServicePage", () => {
   it("renders the main layout", async () => {

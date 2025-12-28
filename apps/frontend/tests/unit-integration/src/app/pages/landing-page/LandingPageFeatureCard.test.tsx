@@ -6,16 +6,17 @@ import {
   type LandingPageFeatureCardProps,
 } from "@/src/app/pages/landing-page/LandingPageFeatureCard.tsx";
 import { setI18nLoading } from "@/tests/unit-integration/__mocks__/i18nContextMock.ts";
-import { renderWithI18n } from "@/tests/unit-integration/__wrappers__/I18nTestingWrapper.tsx";
+import { renderWithProviders } from "@/tests/unit-integration/__wrappers__/renderWithProviders.tsx";
 
 describe("LandingPageFeatureCard", () => {
   afterEach(() => {
     setI18nLoading(false);
   });
 
-  const renderLandingPageFeatureCard = (props: LandingPageFeatureCardProps) => {
-    return renderWithI18n(<LandingPageFeatureCard {...props} />);
-  };
+  const renderLandingPageFeatureCard = (props: LandingPageFeatureCardProps) =>
+    renderWithProviders(() => <LandingPageFeatureCard {...props} />, {
+      i18n: true,
+    });
 
   it("renders icon, title and description when not loading", () => {
     renderLandingPageFeatureCard({

@@ -2,7 +2,7 @@ import "@/tests/unit-integration/__mocks__/i18nContextMock.ts";
 import { act, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { EmailVerifiedPage } from "@/src/app/pages/email-verified-page/EmailVerifiedPage.tsx";
-import { renderWithRouterAndI18n } from "@/tests/unit-integration/__wrappers__/RouterAndI18nTestingWrapper.tsx";
+import { renderWithProviders } from "@/tests/unit-integration/__wrappers__/renderWithProviders.tsx";
 
 const navigateMock = vi.fn();
 vi.mock("@tanstack/react-router", async (importOriginalTanstackRouter) => {
@@ -30,8 +30,11 @@ describe("EmailVerifiedPage", () => {
   });
 
   const renderEmailVerifiedPage = () =>
-    renderWithRouterAndI18n(EmailVerifiedPage, {
-      pathPattern: "/emailverified",
+    renderWithProviders(EmailVerifiedPage, {
+      i18n: true,
+      router: {
+        pathPattern: "/emailverified",
+      },
     });
 
   it("renders success message", async () => {
@@ -83,9 +86,7 @@ describe("EmailVerifiedPage", () => {
   });
 
   it("cleans up the redirect timer on unmount", async () => {
-    const {
-      renderResult: { unmount },
-    } = await renderEmailVerifiedPage();
+    const { unmount } = await renderEmailVerifiedPage();
     vi.useFakeTimers();
 
     unmount();

@@ -2,12 +2,16 @@ import { screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { ROUTE_HOME } from "@/src/app/routes/index.tsx";
 import { BrandLogo } from "@/src/shared/components/brand-logo/BrandLogo.tsx";
-import { renderWithRouterAndI18n } from "@/tests/unit-integration/__wrappers__/RouterAndI18nTestingWrapper.tsx";
+import { renderWithProviders } from "@/tests/unit-integration/__wrappers__/renderWithProviders.tsx";
 
 describe("BrandLogo", () => {
   const renderBrandLogo = () =>
-    renderWithRouterAndI18n(() => <BrandLogo variant="header" />, {
-      pathPattern: "/someroute",
+    renderWithProviders(() => <BrandLogo variant="header" />, {
+      query: true,
+      i18n: true,
+      router: {
+        pathPattern: "/someroute",
+      },
     });
 
   it("renders a link to the homepage", async () => {
