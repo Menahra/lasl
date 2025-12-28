@@ -1,12 +1,12 @@
 import process from "node:process";
+import {
+  type CreateSessionInput,
+  vagueSessionErrorMessage,
+} from "@lasl/app-contracts/schemas/session";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import { REFRESH_SESSION_ROUTE } from "@/src/constants/auth.routes.constants.ts";
 import { REFRESH_COOKIE_NAME } from "@/src/middleware/authentication.hook.ts";
-import {
-  type CreateSessionInput,
-  vagueSessionErrorMessage,
-} from "@/src/schema/session.schema.ts";
 import {
   signAccessToken,
   signRefreshToken,

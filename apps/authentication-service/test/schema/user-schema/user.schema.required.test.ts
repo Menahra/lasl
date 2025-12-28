@@ -1,3 +1,4 @@
+import { USER_ERRORS } from "@lasl/app-contracts/errors/user";
 import { describe, expect, it } from "vitest";
 import {
   createUserInputSchema,
@@ -18,7 +19,9 @@ describe("validation of createUserInputSchema", () => {
 
     expect(result.success).toBeFalsy();
     expect(result.error?.issues).toHaveLength(1);
-    expect(result.error?.issues[0].message).toEqual("First name is required");
+    expect(result.error?.issues[0].message).toEqual(
+      USER_ERRORS.firstNameRequired,
+    );
   });
 
   it("fails when lastName is missing", () => {
@@ -33,7 +36,9 @@ describe("validation of createUserInputSchema", () => {
 
     expect(result.success).toBeFalsy();
     expect(result.error?.issues).toHaveLength(1);
-    expect(result.error?.issues[0].message).toEqual("Last name is required");
+    expect(result.error?.issues[0].message).toEqual(
+      USER_ERRORS.lastNameRequired,
+    );
   });
 
   it("fails when password is missing", () => {
@@ -48,7 +53,9 @@ describe("validation of createUserInputSchema", () => {
 
     expect(result.success).toBeFalsy();
     expect(result.error?.issues).toHaveLength(6);
-    expect(result.error?.issues[0].message).toEqual("Password is required");
+    expect(result.error?.issues[0].message).toEqual(
+      USER_ERRORS.passwordRequired,
+    );
   });
 
   it("fails when password confirmation is missing", () => {
@@ -66,7 +73,7 @@ describe("validation of createUserInputSchema", () => {
     expect(result.success).toBeFalsy();
     expect(result.error?.issues).toHaveLength(2);
     expect(result.error?.issues[0].message).toEqual(
-      "Password confirmation is required",
+      USER_ERRORS.passwordConfirmationRequired,
     );
   });
 
@@ -81,9 +88,7 @@ describe("validation of createUserInputSchema", () => {
 
     expect(result.success).toBeFalsy();
     expect(result.error?.issues).toHaveLength(1);
-    expect(result.error?.issues[0].message).toEqual(
-      "Please enter a valid email address",
-    );
+    expect(result.error?.issues[0].message).toEqual(USER_ERRORS.emailInvalid);
   });
 });
 

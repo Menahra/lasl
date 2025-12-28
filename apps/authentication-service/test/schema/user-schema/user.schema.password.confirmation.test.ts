@@ -1,3 +1,4 @@
+import { USER_ERRORS } from "@lasl/app-contracts/errors/user";
 import { describe, expect, it } from "vitest";
 import { createUserInputSchema } from "@/src/schema/user.schema.ts";
 import { validUserInput } from "./validInput.ts";
@@ -13,6 +14,8 @@ describe("createUserInputSchema password confirmation validation", () => {
 
     expect(result.success).toBeFalsy();
     expect(result.error?.issues).toHaveLength(1);
-    expect(result.error?.issues[0].message).toEqual("Passwords do not match");
+    expect(result.error?.issues[0].message).toEqual(
+      USER_ERRORS.passwordMismatch,
+    );
   });
 });

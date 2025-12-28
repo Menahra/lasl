@@ -1,17 +1,9 @@
+import { USER_ERRORS } from "@lasl/app-contracts/errors/user";
 import { describe, expect, it } from "vitest";
 import { createUserInputSchema } from "@/src/schema/user.schema.ts";
 import { validUserInput } from "./validInput.ts";
 
 describe("createUserInputSchema password validation", () => {
-  const passwordMustContainUppercaseLetterMessage =
-    "Password must contain at least one uppercase letter";
-  const passwordMustContainLowercaseLetterMessage =
-    "Password must contain at least one lowercase letter";
-  const passwordMustContainNumberMessage =
-    "Password must contain at least one number";
-  const passwordMinimumLengthMessage =
-    "Password must be at least 8 characters long";
-
   it("fails when password does not contain an uppercase letter", () => {
     const passwordWithoutUppercaseLetter = "password123";
     const result = createUserInputSchema.safeParse({
@@ -25,7 +17,7 @@ describe("createUserInputSchema password validation", () => {
     expect(result.success).toBeFalsy();
     expect(result.error?.issues).toHaveLength(1);
     expect(result.error?.issues[0].message).toEqual(
-      passwordMustContainUppercaseLetterMessage,
+      USER_ERRORS.passwordUppercase,
     );
   });
 
@@ -42,7 +34,7 @@ describe("createUserInputSchema password validation", () => {
     expect(result.success).toBeFalsy();
     expect(result.error?.issues).toHaveLength(1);
     expect(result.error?.issues[0].message).toEqual(
-      passwordMustContainLowercaseLetterMessage,
+      USER_ERRORS.passwordLowercase,
     );
   });
 
@@ -58,9 +50,7 @@ describe("createUserInputSchema password validation", () => {
 
     expect(result.success).toBeFalsy();
     expect(result.error?.issues).toHaveLength(1);
-    expect(result.error?.issues[0].message).toEqual(
-      passwordMustContainNumberMessage,
-    );
+    expect(result.error?.issues[0].message).toEqual(USER_ERRORS.passwordNumber);
   });
 
   const tooShortPasswordTestData = [
@@ -68,44 +58,41 @@ describe("createUserInputSchema password validation", () => {
       password: "P",
       errorCount: 3,
       messages: [
-        passwordMinimumLengthMessage,
-        passwordMustContainLowercaseLetterMessage,
-        passwordMustContainNumberMessage,
+        USER_ERRORS.passwordMinLength,
+        USER_ERRORS.passwordLowercase,
+        USER_ERRORS.passwordNumber,
       ],
     },
     {
       password: "Pa",
       errorCount: 2,
-      messages: [
-        passwordMinimumLengthMessage,
-        passwordMustContainNumberMessage,
-      ],
+      messages: [USER_ERRORS.passwordMinLength, USER_ERRORS.passwordNumber],
     },
     {
       password: "Pa1",
       errorCount: 1,
-      messages: [passwordMinimumLengthMessage],
+      messages: [USER_ERRORS.passwordMinLength],
     },
     {
       password: "Pa12",
       errorCount: 1,
-      messages: [passwordMinimumLengthMessage],
+      messages: [USER_ERRORS.passwordMinLength],
     },
     {
       password: "Pa123",
       errorCount: 1,
-      messages: [passwordMinimumLengthMessage],
+      messages: [USER_ERRORS.passwordMinLength],
     },
     {
       password: "Pa1234",
       errorCount: 1,
-      messages: [passwordMinimumLengthMessage],
+      messages: [USER_ERRORS.passwordMinLength],
     },
 
     {
       password: "Pa12345",
       errorCount: 1,
-      messages: [passwordMinimumLengthMessage],
+      messages: [USER_ERRORS.passwordMinLength],
     },
   ];
   it.each(tooShortPasswordTestData)(
