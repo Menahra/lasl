@@ -1,8 +1,8 @@
-import type { MacroMessageDescriptor } from "@lingui/core/macro";
+import type { MessageDescriptor } from "@lingui/core/";
 import { useLingui } from "@lingui/react";
 import type { FieldError } from "react-hook-form";
 
-export type ErrorKeyMap = Record<string, MacroMessageDescriptor>;
+export type ErrorKeyMap = Record<string, MessageDescriptor>;
 
 export const useTranslateFormFieldError = <T extends ErrorKeyMap>(
   errorMap: T,

@@ -8,19 +8,12 @@ type User = GetCurrentAuthenticatedUserSuccessResponse;
 
 export const userApi = {
   createUser: async (userToCreate: z.infer<typeof createUserSchema>) => {
-    const response = await axios.post<User>(
-      `${AUTH_API_BASE_URL}/users`,
-      userToCreate,
-    );
-
-    return response.data;
+    return await axios.post<User>(`${AUTH_API_BASE_URL}/users`, userToCreate);
   },
   updateUser: async (idOfUser: User["id"], userToUpdate: Partial<User>) => {
-    const response = await axios.patch<User>(
+    return await axios.patch<User>(
       `${AUTH_API_BASE_URL}/users/${idOfUser}`,
       userToUpdate,
     );
-
-    return response.data;
   },
 };

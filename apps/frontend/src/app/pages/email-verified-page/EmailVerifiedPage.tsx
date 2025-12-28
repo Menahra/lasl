@@ -37,7 +37,7 @@ export const EmailVerifiedPage = () => {
             <Trans>Your email has been successfully verified.</Trans>
           </Skeleton>
         </p>
-        <p className="EmailVerifiedPageRedirectHint">
+        <p className="EmailVerifiedPageRedirectHint" aria-live="polite">
           <Skeleton loading={isLoading} width={330} height={18}>
             <Trans>Redirecting you to the app in a few seconds...</Trans>
           </Skeleton>

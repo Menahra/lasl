@@ -3,9 +3,10 @@ import {
   type UserErrorKey,
 } from "@lasl/app-contracts/errors/user";
 import { USER_PASSWORD_MIN_LENGTH } from "@lasl/app-contracts/schemas/user";
-import { type MacroMessageDescriptor, msg } from "@lingui/core/macro";
+import type { MessageDescriptor } from "@lingui/core";
+import { msg } from "@lingui/core/macro";
 
-export const userErrorMessages: Record<UserErrorKey, MacroMessageDescriptor> = {
+export const userErrorMessages: Record<UserErrorKey, MessageDescriptor> = {
   [USER_ERRORS.emailInvalid]: msg`Please enter a valid email address`,
   [USER_ERRORS.firstNameRequired]: msg`First name is required`,
   [USER_ERRORS.lastNameRequired]: msg`Last name is required`,

@@ -22,7 +22,9 @@ const AuthenticationContext = createContext<
 >(undefined);
 
 export const AuthenticationProvider = (props: PropsWithChildren) => {
-  const { data: user, isLoading } = useGetCurrentUser();
+  const { data, isLoading } = useGetCurrentUser();
+  const user = data?.data;
+
   const loginMutation = usePostLogin();
   const logoutMutation = usePostLogout();
 

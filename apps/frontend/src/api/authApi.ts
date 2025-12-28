@@ -57,13 +57,10 @@ export const authApi = {
   },
 
   getCurrentUser: async () => {
-    const response =
-      await axios.post<GetCurrentAuthenticatedUserSuccessResponse>(
-        `${AUTH_API_BASE_URL}/users/me`,
-        {},
-        { withCredentials: true },
-      );
-
-    return response.data;
+    return await axios.post<GetCurrentAuthenticatedUserSuccessResponse>(
+      `${AUTH_API_BASE_URL}/users/me`,
+      {},
+      { withCredentials: true },
+    );
   },
 };

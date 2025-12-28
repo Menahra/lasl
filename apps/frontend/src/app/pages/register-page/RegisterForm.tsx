@@ -3,6 +3,8 @@ import { createUserSchema } from "@lasl/app-contracts/schemas/user";
 import { useLingui as useRuntimeLingui } from "@lingui/react";
 import { Trans } from "@lingui/react/macro";
 import { useRouter } from "@tanstack/react-router";
+import { isAxiosError } from "axios";
+import { StatusCodes } from "http-status-codes";
 import { useForm } from "react-hook-form";
 import { userApi } from "@/src/api/userApi.ts";
 import {
@@ -40,9 +42,10 @@ export const RegisterForm = () => {
       await userApi.createUser(data);
       navigate({ to: ROUTE_SIGN_UP_SUCCESS });
     } catch (error) {
-      // ERROR HANDLING --> email already in use
-      // OTHER ERRORS
-      console.error(error);
+      if (isAxiosError(error) && error.status === StatusCodes.CONFLICT) {
+        // setCallout(Error already exists)
+      }
+      // setCallout(Unknown error please try again later)
     }
   };
 
