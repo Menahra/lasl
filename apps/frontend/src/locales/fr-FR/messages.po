@@ -83,6 +83,10 @@ msgstr ""
 msgid "An open, community-driven platform for learning Modern Standard Arabic. Explore Nahw, Sarf, Balagha, and more — with content you can help improve."
 msgstr ""
 
+#: src/app/pages/register-page/RegisterForm.tsx:76
+msgid "An unexpected error occurred. Please try again."
+msgstr ""
+
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:151
 msgid "Appropriate technical and organizational measures are implemented to protect personal data against accidental or unlawful loss, alteration, or unauthorized access."
 msgstr ""
@@ -103,6 +107,10 @@ msgstr ""
 msgid "Back to Home"
 msgstr ""
 
+#: src/app/pages/register-success-page/RegisterSuccessPage.tsx:43
+msgid "Back to Registration"
+msgstr ""
+
 #. placeholder {0}: PROJECT_INFORMATION.name
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:34
 msgid "By accessing or using {0}, you agree to be bound by these Terms of Service and all applicable laws and regulations. If you do not agree with any of these terms, you are prohibited from using this platform."
@@ -112,12 +120,16 @@ msgstr ""
 msgid "By continuing, you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>."
 msgstr ""
 
-#: src/app/pages/register-page/RegisterForm.tsx:62
+#: src/app/pages/register-page/RegisterForm.tsx:100
 msgid "By signing up, you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>."
 msgstr ""
 
 #: src/app/pages/landing-page/LandingPage.tsx:95
 msgid "Carefully organized lessons covering grammar, morphology, and rhetoric progressively."
+msgstr ""
+
+#: src/app/pages/register-success-page/RegisterSuccessPage.tsx:21
+msgid "Check Your Email"
 msgstr ""
 
 #: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:71
@@ -165,11 +177,15 @@ msgstr ""
 msgid "Content and works created by the site operator on this website are subject to copyright law. Duplication, processing, distribution, or any form of commercialization requires prior written consent."
 msgstr ""
 
+#: src/app/pages/email-verified-page/EmailVerifiedPage.tsx:48
+msgid "Continue to App"
+msgstr ""
+
 #: src/app/pages/imprint-page/ImprintPage.tsx:108
 msgid "Copyright"
 msgstr ""
 
-#: src/app/pages/register-page/RegisterForm.tsx:82
+#: src/app/pages/register-page/RegisterForm.tsx:120
 msgid "Create Account"
 msgstr ""
 
@@ -201,6 +217,10 @@ msgstr ""
 msgid "Data We Collect"
 msgstr ""
 
+#: src/app/pages/register-success-page/RegisterSuccessPage.tsx:34
+msgid "Didn't receive the email? Check your spam folder or try signing up again."
+msgstr ""
+
 #: src/app/pages/login-page/LoginForm.tsx:63
 msgid "Don't have an account yet?"
 msgstr ""
@@ -208,6 +228,10 @@ msgstr ""
 #: src/app/pages/login-page/LoginForm.tsx:42
 #: src/app/pages/register-page/registerFormFields.ts:32
 msgid "Email"
+msgstr ""
+
+#: src/app/pages/email-verified-page/EmailVerifiedPage.tsx:32
+msgid "Email Verified!"
 msgstr ""
 
 #: src/app/pages/register-page/registerFormFields.ts:21
@@ -227,7 +251,7 @@ msgstr ""
 msgid "First Name"
 msgstr ""
 
-#: src/shared/formErrors.ts:10
+#: src/shared/formErrors.ts:11
 msgid "First name is required"
 msgstr ""
 
@@ -288,7 +312,7 @@ msgstr ""
 msgid "Last Name"
 msgstr ""
 
-#: src/shared/formErrors.ts:11
+#: src/shared/formErrors.ts:12
 msgid "Last name is required"
 msgstr ""
 
@@ -387,31 +411,31 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: src/shared/formErrors.ts:12
+#: src/shared/formErrors.ts:13
 msgid "Password confirmation is required"
 msgstr ""
 
-#: src/shared/formErrors.ts:17
+#: src/shared/formErrors.ts:18
 msgid "Password is required"
 msgstr ""
 
-#: src/shared/formErrors.ts:14
+#: src/shared/formErrors.ts:15
 msgid "Password must be at least {USER_PASSWORD_MIN_LENGTH} characters long"
 msgstr ""
 
-#: src/shared/formErrors.ts:13
+#: src/shared/formErrors.ts:14
 msgid "Password must contain at least one lowercase letter"
 msgstr ""
 
-#: src/shared/formErrors.ts:16
+#: src/shared/formErrors.ts:17
 msgid "Password must contain at least one number"
 msgstr ""
 
-#: src/shared/formErrors.ts:18
+#: src/shared/formErrors.ts:19
 msgid "Password must contain at least one uppercase letter"
 msgstr ""
 
-#: src/shared/formErrors.ts:15
+#: src/shared/formErrors.ts:16
 msgid "Passwords do not match"
 msgstr ""
 
@@ -424,7 +448,7 @@ msgstr ""
 msgid "Personal data is processed exclusively within the European Union. No transfer of personal data to third countries takes place."
 msgstr ""
 
-#: src/shared/formErrors.ts:9
+#: src/shared/formErrors.ts:10
 msgid "Please enter a valid email address"
 msgstr ""
 
@@ -443,6 +467,10 @@ msgstr ""
 
 #: src/app/pages/landing-page/LandingPage.tsx:158
 msgid "Ready to Begin Your Arabic Journey?"
+msgstr ""
+
+#: src/app/pages/email-verified-page/EmailVerifiedPage.tsx:42
+msgid "Redirecting you to the app in a few seconds..."
 msgstr ""
 
 #: src/app/layouts/main-layout/footer/Footer.tsx:67
@@ -569,6 +597,10 @@ msgstr ""
 msgid "These Terms shall be governed by the laws of Germany, excluding its conflict-of-law provisions."
 msgstr ""
 
+#: src/app/pages/register-page/RegisterForm.tsx:69
+msgid "This email is already registered. <0>Sign in instead</0>"
+msgstr ""
+
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:133
 msgid "This limitation of liability does not apply in cases of intent, gross negligence, or where liability is mandatory under applicable consumer protection laws."
 msgstr ""
@@ -656,6 +688,10 @@ msgstr ""
 msgid "We store personal data only for as long as necessary to fulfill the purposes for which it was collected."
 msgstr ""
 
+#: src/app/pages/register-success-page/RegisterSuccessPage.tsx:26
+msgid "We've sent a verification link to your email address. Please click the link to verify your account."
+msgstr ""
+
 #: src/app/pages/login-page/LoginForm.tsx:28
 msgid "Welcome back"
 msgstr ""
@@ -679,6 +715,10 @@ msgstr ""
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:85
 msgid "You are responsible for safeguarding the password that you use to access the platform and for any activities or actions under your password."
+msgstr ""
+
+#: src/app/pages/email-verified-page/EmailVerifiedPage.tsx:37
+msgid "Your email has been successfully verified."
 msgstr ""
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:66

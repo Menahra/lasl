@@ -52,8 +52,9 @@ export const RegisterForm = () => {
     } catch (error) {
       if (isAxiosError(error) && error.status === StatusCodes.CONFLICT) {
         setRegistrationError("duplicate");
+      } else {
+        setRegistrationError("unknown");
       }
-      setRegistrationError("unknown");
     }
   };
 
