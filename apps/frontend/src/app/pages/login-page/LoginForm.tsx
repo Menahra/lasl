@@ -118,13 +118,15 @@ export const LoginForm = () => {
             loading={isLoading}
             error={translateFormFieldError(errors.password)}
           />
-          <TextLink
-            to={ROUTE_FORGOT_PASSWORD}
-            variant="accent"
-            className="LoginFormForgotPasswordLink"
-          >
-            <Trans>Forgot Password?</Trans>
-          </TextLink>
+          <Skeleton loading={isLoading} width={120} height={14}>
+            <TextLink
+              to={ROUTE_FORGOT_PASSWORD}
+              variant="accent"
+              className="LoginFormForgotPasswordLink"
+            >
+              <Trans>Forgot Password?</Trans>
+            </TextLink>
+          </Skeleton>
         </div>
         <Skeleton loading={isLoading} width="100%" height={40}>
           <Button

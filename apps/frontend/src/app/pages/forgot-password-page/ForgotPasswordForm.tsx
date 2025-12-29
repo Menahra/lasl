@@ -2,8 +2,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { userEmailSchema } from "@lasl/app-contracts/schemas/user";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
+import { Link as TanstackRouterLink } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { ROUTE_LOGIN } from "@/src/app/routes/login.tsx";
 import { Button } from "@/src/shared/components/button/Button.tsx";
 import { FormInputField } from "@/src/shared/components/form-input-field/FormInputField.tsx";
 import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
@@ -85,9 +87,11 @@ export const ForgotPasswordForm = () => {
 
       <div className="ForgotPasswordFormBackButton">
         <Skeleton loading={isLoading} width={150} height={26}>
-          <Button align="center" variant="text" startIcon={<ArrowLeftIcon />}>
-            <Trans>Back to sign in</Trans>
-          </Button>
+          <TanstackRouterLink to={ROUTE_LOGIN}>
+            <Button align="center" variant="text" startIcon={<ArrowLeftIcon />}>
+              <Trans>Back to sign in</Trans>
+            </Button>
+          </TanstackRouterLink>
         </Skeleton>
       </div>
     </div>

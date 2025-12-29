@@ -3,6 +3,7 @@ import { screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { ForgotPasswordForm } from "@/src/app/pages/forgot-password-page/ForgotPasswordForm.tsx";
+import { ROUTE_LOGIN } from "@/src/app/routes/login.tsx";
 import { userErrorMessages } from "@/src/shared/formErrors.ts";
 import { setI18nLoading } from "@/tests/unit-integration/__mocks__/i18nContextMock.ts";
 import { renderWithProviders } from "@/tests/unit-integration/__wrappers__/renderWithProviders.tsx";
@@ -28,6 +29,9 @@ describe("ForgotPasswordForm", () => {
   const renderForm = () =>
     renderWithProviders(ForgotPasswordForm, {
       i18n: true,
+      router: {
+        pathPattern: "/forgot",
+      },
     });
 
   const user = userEvent.setup();
@@ -110,5 +114,15 @@ describe("ForgotPasswordForm", () => {
     });
     await user.click(button);
     expect(button).toBeDisabled();
+  });
+
+  it("renders a link back to the sign in page", async () => {
+    await renderForm();
+
+    const backLink = screen.getByRole("link", {
+      name: /back to sign in/i,
+    });
+
+    expect(backLink).toHaveAttribute("href", ROUTE_LOGIN);
   });
 });
