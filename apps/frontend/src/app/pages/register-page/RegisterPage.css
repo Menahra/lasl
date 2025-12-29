@@ -9,7 +9,7 @@
 }
 
 .RegisterPageMain {
-  width: 448px;
+  width: var(--container-md);
   border: 2px solid var(--color-border);
   background-color: var(--color-surface);
   border-radius: var(--radius-lg);
