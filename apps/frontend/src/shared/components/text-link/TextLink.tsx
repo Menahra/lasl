@@ -2,6 +2,7 @@ import type { LinkComponentProps as TanstackRouterLinkComponentProps } from "@ta
 import { Link as TanstackRouterLink } from "@tanstack/react-router";
 import type { PropsWithChildren } from "react";
 import "./TextLink.css";
+import clsx from "clsx";
 
 const TextLinkVariants = {
   primary: "TextLink--primay",
@@ -9,13 +10,19 @@ const TextLinkVariants = {
 };
 
 type TextLinkProps = PropsWithChildren & {
+  className?: string;
   variant: keyof typeof TextLinkVariants;
 } & Pick<TanstackRouterLinkComponentProps, "to">;
 
-export const TextLink = ({ variant, to, children }: TextLinkProps) => {
+export const TextLink = ({
+  className,
+  variant,
+  to,
+  children,
+}: TextLinkProps) => {
   return (
     <TanstackRouterLink
-      className={`TextLink ${TextLinkVariants[variant]}`}
+      className={clsx("TextLink", TextLinkVariants[variant], className)}
       to={to}
     >
       {children}

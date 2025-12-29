@@ -9,6 +9,7 @@ import { isAxiosError } from "axios";
 import { StatusCodes } from "http-status-codes";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { ROUTE_FORGOT_PASSWORD } from "@/src/app/routes/forgot-password.tsx";
 import { ROUTE_HOME } from "@/src/app/routes/index.tsx";
 import { ROUTE_SIGN_UP } from "@/src/app/routes/register.tsx";
 import { Button } from "@/src/shared/components/button/Button.tsx";
@@ -103,15 +104,24 @@ export const LoginForm = () => {
           loading={isLoading}
           error={translateFormFieldError(errors.email)}
         />
-        <FormInputField
-          {...register("password")}
-          id="password"
-          type="password"
-          placeholder={linguiTranslator`Enter your password`}
-          label={linguiTranslator`Password`}
-          loading={isLoading}
-          error={translateFormFieldError(errors.password)}
-        />
+        <div className="LoginFormPasswordWrapper">
+          <FormInputField
+            {...register("password")}
+            id="password"
+            type="password"
+            placeholder={linguiTranslator`Enter your password`}
+            label={linguiTranslator`Password`}
+            loading={isLoading}
+            error={translateFormFieldError(errors.password)}
+          />
+          <TextLink
+            to={ROUTE_FORGOT_PASSWORD}
+            variant="accent"
+            className="LoginFormForgotPasswordLink"
+          >
+            <Trans>Forgot Password?</Trans>
+          </TextLink>
+        </div>
         <Skeleton loading={isLoading} width="100%" height={40}>
           <Button
             type="submit"

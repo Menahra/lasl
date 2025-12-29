@@ -1,6 +1,7 @@
 import type { createSessionSchema } from "@lasl/app-contracts/schemas/session";
 import type {
   CreateSessionSuccessResponse,
+  ForgotPasswordSuccessResponse,
   GetCurrentAuthenticatedUserSuccessResponse,
   LogoutSuccessResponse,
   RefreshSessionSuccessResponse,
@@ -53,6 +54,18 @@ export const authApi = {
     const { data } = await axios.post<LogoutSuccessResponse>(
       `${AUTH_API_BASE_URL}/sessions/logout`,
       {},
+      { withCredentials: true },
+    );
+
+    return data;
+  },
+
+  forgotPassword: async (
+    email: GetCurrentAuthenticatedUserSuccessResponse["email"],
+  ) => {
+    const { data } = await axios.post<ForgotPasswordSuccessResponse>(
+      `${AUTH_API_BASE_URL}/users/forgotpassword`,
+      { email },
       { withCredentials: true },
     );
 
