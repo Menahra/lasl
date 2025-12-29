@@ -94,7 +94,11 @@ export const LoginForm = () => {
           </Callout>
         </Skeleton>
       ) : undefined}
-      <form onSubmit={handleSubmit(onSubmit)} className="LoginForm">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="LoginForm"
+        noValidate={true}
+      >
         <FormInputField
           {...register("email")}
           id="email"

@@ -58,7 +58,11 @@ export const ForgotPasswordForm = () => {
           </p>
         </Skeleton>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)} className="ForgotPasswordForm">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="ForgotPasswordForm"
+        noValidate={true}
+      >
         <FormInputField
           {...register("email")}
           id="email"
