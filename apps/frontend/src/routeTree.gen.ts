@@ -15,9 +15,11 @@ import { Route as RegisterRouteImport } from './app/routes/register'
 import { Route as PrivacyRouteImport } from './app/routes/privacy'
 import { Route as LoginRouteImport } from './app/routes/login'
 import { Route as ImprintRouteImport } from './app/routes/imprint'
-import { Route as ForgotPasswordRouteImport } from './app/routes/forgot-password'
 import { Route as EmailVerifiedRouteImport } from './app/routes/email-verified'
+import { Route as ForgotPasswordRouteRouteImport } from './app/routes/forgot-password/route'
 import { Route as IndexRouteImport } from './app/routes/index'
+import { Route as ForgotPasswordIndexRouteImport } from './app/routes/forgot-password/index'
+import { Route as ForgotPasswordSentRouteImport } from './app/routes/forgot-password/sent'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -49,14 +51,14 @@ const ImprintRoute = ImprintRouteImport.update({
   path: '/imprint',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
-  id: '/forgot-password',
-  path: '/forgot-password',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const EmailVerifiedRoute = EmailVerifiedRouteImport.update({
   id: '/email-verified',
   path: '/email-verified',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRouteRoute = ForgotPasswordRouteRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -64,81 +66,101 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ForgotPasswordIndexRoute = ForgotPasswordIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ForgotPasswordRouteRoute,
+} as any)
+const ForgotPasswordSentRoute = ForgotPasswordSentRouteImport.update({
+  id: '/sent',
+  path: '/sent',
+  getParentRoute: () => ForgotPasswordRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/forgot-password': typeof ForgotPasswordRouteRouteWithChildren
   '/email-verified': typeof EmailVerifiedRoute
-  '/forgot-password': typeof ForgotPasswordRoute
   '/imprint': typeof ImprintRoute
   '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
   '/register-success': typeof RegisterSuccessRoute
   '/terms': typeof TermsRoute
+  '/forgot-password/sent': typeof ForgotPasswordSentRoute
+  '/forgot-password/': typeof ForgotPasswordIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/email-verified': typeof EmailVerifiedRoute
-  '/forgot-password': typeof ForgotPasswordRoute
   '/imprint': typeof ImprintRoute
   '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
   '/register-success': typeof RegisterSuccessRoute
   '/terms': typeof TermsRoute
+  '/forgot-password/sent': typeof ForgotPasswordSentRoute
+  '/forgot-password': typeof ForgotPasswordIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/forgot-password': typeof ForgotPasswordRouteRouteWithChildren
   '/email-verified': typeof EmailVerifiedRoute
-  '/forgot-password': typeof ForgotPasswordRoute
   '/imprint': typeof ImprintRoute
   '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
   '/register-success': typeof RegisterSuccessRoute
   '/terms': typeof TermsRoute
+  '/forgot-password/sent': typeof ForgotPasswordSentRoute
+  '/forgot-password/': typeof ForgotPasswordIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/email-verified'
     | '/forgot-password'
+    | '/email-verified'
     | '/imprint'
     | '/login'
     | '/privacy'
     | '/register'
     | '/register-success'
     | '/terms'
+    | '/forgot-password/sent'
+    | '/forgot-password/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/email-verified'
-    | '/forgot-password'
     | '/imprint'
     | '/login'
     | '/privacy'
     | '/register'
     | '/register-success'
     | '/terms'
+    | '/forgot-password/sent'
+    | '/forgot-password'
   id:
     | '__root__'
     | '/'
-    | '/email-verified'
     | '/forgot-password'
+    | '/email-verified'
     | '/imprint'
     | '/login'
     | '/privacy'
     | '/register'
     | '/register-success'
     | '/terms'
+    | '/forgot-password/sent'
+    | '/forgot-password/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ForgotPasswordRouteRoute: typeof ForgotPasswordRouteRouteWithChildren
   EmailVerifiedRoute: typeof EmailVerifiedRoute
-  ForgotPasswordRoute: typeof ForgotPasswordRoute
   ImprintRoute: typeof ImprintRoute
   LoginRoute: typeof LoginRoute
   PrivacyRoute: typeof PrivacyRoute
@@ -191,18 +213,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ImprintRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/forgot-password': {
-      id: '/forgot-password'
-      path: '/forgot-password'
-      fullPath: '/forgot-password'
-      preLoaderRoute: typeof ForgotPasswordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/email-verified': {
       id: '/email-verified'
       path: '/email-verified'
       fullPath: '/email-verified'
       preLoaderRoute: typeof EmailVerifiedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -212,13 +234,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/forgot-password/': {
+      id: '/forgot-password/'
+      path: '/'
+      fullPath: '/forgot-password/'
+      preLoaderRoute: typeof ForgotPasswordIndexRouteImport
+      parentRoute: typeof ForgotPasswordRouteRoute
+    }
+    '/forgot-password/sent': {
+      id: '/forgot-password/sent'
+      path: '/sent'
+      fullPath: '/forgot-password/sent'
+      preLoaderRoute: typeof ForgotPasswordSentRouteImport
+      parentRoute: typeof ForgotPasswordRouteRoute
+    }
   }
 }
 
+interface ForgotPasswordRouteRouteChildren {
+  ForgotPasswordSentRoute: typeof ForgotPasswordSentRoute
+  ForgotPasswordIndexRoute: typeof ForgotPasswordIndexRoute
+}
+
+const ForgotPasswordRouteRouteChildren: ForgotPasswordRouteRouteChildren = {
+  ForgotPasswordSentRoute: ForgotPasswordSentRoute,
+  ForgotPasswordIndexRoute: ForgotPasswordIndexRoute,
+}
+
+const ForgotPasswordRouteRouteWithChildren =
+  ForgotPasswordRouteRoute._addFileChildren(ForgotPasswordRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ForgotPasswordRouteRoute: ForgotPasswordRouteRouteWithChildren,
   EmailVerifiedRoute: EmailVerifiedRoute,
-  ForgotPasswordRoute: ForgotPasswordRoute,
   ImprintRoute: ImprintRoute,
   LoginRoute: LoginRoute,
   PrivacyRoute: PrivacyRoute,

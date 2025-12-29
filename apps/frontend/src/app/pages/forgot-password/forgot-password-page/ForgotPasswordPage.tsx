@@ -1,4 +1,4 @@
-import { ForgotPasswordForm } from "@/src/app/pages/forgot-password-page/ForgotPasswordForm.tsx";
+import { ForgotPasswordForm } from "@/src/app/pages/forgot-password/forgot-password-page/ForgotPasswordForm.tsx";
 import { BrandLogo } from "@/src/shared/components/brand-logo/BrandLogo.tsx";
 import { LanguageSelect } from "@/src/shared/components/language-select/LanguageSelect.tsx";
 import { LightDarkModeButton } from "@/src/shared/components/light-dark-mode-button/LightDarkModeButton.tsx";

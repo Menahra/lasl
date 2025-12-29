@@ -1,7 +1,7 @@
 import "@/tests/unit-integration/__mocks__/i18nContextMock.ts";
 import { screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { ForgotPasswordPage } from "@/src/app/pages/forgot-password-page/ForgotPasswordPage.tsx";
+import { ForgotPasswordPage } from "@/src/app/pages/forgot-password/forgot-password-page/ForgotPasswordPage.tsx";
 import { PROJECT_INFORMATION } from "@/src/shared/constants.ts";
 import { renderWithProviders } from "@/tests/unit-integration/__wrappers__/renderWithProviders.tsx";
 

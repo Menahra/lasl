@@ -9,7 +9,7 @@ import { isAxiosError } from "axios";
 import { StatusCodes } from "http-status-codes";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { ROUTE_FORGOT_PASSWORD } from "@/src/app/routes/forgot-password.tsx";
+import { ROUTE_FORGOT_PASSWORD } from "@/src/app/routes/forgot-password/index.tsx";
 import { ROUTE_HOME } from "@/src/app/routes/index.tsx";
 import { ROUTE_SIGN_UP } from "@/src/app/routes/register.tsx";
 import { Button } from "@/src/shared/components/button/Button.tsx";

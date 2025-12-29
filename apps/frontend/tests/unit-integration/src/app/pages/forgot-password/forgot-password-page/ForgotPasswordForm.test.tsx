@@ -2,7 +2,7 @@ import "@/tests/unit-integration/__mocks__/i18nContextMock.ts";
 import { screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { ForgotPasswordForm } from "@/src/app/pages/forgot-password-page/ForgotPasswordForm.tsx";
+import { ForgotPasswordForm } from "@/src/app/pages/forgot-password/forgot-password-page/ForgotPasswordForm.tsx";
 import { ROUTE_LOGIN } from "@/src/app/routes/login.tsx";
 import { userErrorMessages } from "@/src/shared/formErrors.ts";
 import { setI18nLoading } from "@/tests/unit-integration/__mocks__/i18nContextMock.ts";
