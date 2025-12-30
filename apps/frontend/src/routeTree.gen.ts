@@ -21,6 +21,7 @@ import { Route as ForgotPasswordRouteRouteImport } from './app/routes/forgot-pas
 import { Route as IndexRouteImport } from './app/routes/index'
 import { Route as ResetPasswordIndexRouteImport } from './app/routes/reset-password/index'
 import { Route as ForgotPasswordIndexRouteImport } from './app/routes/forgot-password/index'
+import { Route as ResetPasswordSentRouteImport } from './app/routes/reset-password/sent'
 import { Route as ForgotPasswordSentRouteImport } from './app/routes/forgot-password/sent'
 import { Route as ResetPasswordIdPasswordResetCodeIndexRouteImport } from './app/routes/reset-password/$id/$passwordResetCode/index'
 
@@ -84,6 +85,11 @@ const ForgotPasswordIndexRoute = ForgotPasswordIndexRouteImport.update({
   path: '/',
   getParentRoute: () => ForgotPasswordRouteRoute,
 } as any)
+const ResetPasswordSentRoute = ResetPasswordSentRouteImport.update({
+  id: '/sent',
+  path: '/sent',
+  getParentRoute: () => ResetPasswordRouteRoute,
+} as any)
 const ForgotPasswordSentRoute = ForgotPasswordSentRouteImport.update({
   id: '/sent',
   path: '/sent',
@@ -108,6 +114,7 @@ export interface FileRoutesByFullPath {
   '/register-success': typeof RegisterSuccessRoute
   '/terms': typeof TermsRoute
   '/forgot-password/sent': typeof ForgotPasswordSentRoute
+  '/reset-password/sent': typeof ResetPasswordSentRoute
   '/forgot-password/': typeof ForgotPasswordIndexRoute
   '/reset-password/': typeof ResetPasswordIndexRoute
   '/reset-password/$id/$passwordResetCode': typeof ResetPasswordIdPasswordResetCodeIndexRoute
@@ -122,6 +129,7 @@ export interface FileRoutesByTo {
   '/register-success': typeof RegisterSuccessRoute
   '/terms': typeof TermsRoute
   '/forgot-password/sent': typeof ForgotPasswordSentRoute
+  '/reset-password/sent': typeof ResetPasswordSentRoute
   '/forgot-password': typeof ForgotPasswordIndexRoute
   '/reset-password': typeof ResetPasswordIndexRoute
   '/reset-password/$id/$passwordResetCode': typeof ResetPasswordIdPasswordResetCodeIndexRoute
@@ -139,6 +147,7 @@ export interface FileRoutesById {
   '/register-success': typeof RegisterSuccessRoute
   '/terms': typeof TermsRoute
   '/forgot-password/sent': typeof ForgotPasswordSentRoute
+  '/reset-password/sent': typeof ResetPasswordSentRoute
   '/forgot-password/': typeof ForgotPasswordIndexRoute
   '/reset-password/': typeof ResetPasswordIndexRoute
   '/reset-password/$id/$passwordResetCode/': typeof ResetPasswordIdPasswordResetCodeIndexRoute
@@ -157,6 +166,7 @@ export interface FileRouteTypes {
     | '/register-success'
     | '/terms'
     | '/forgot-password/sent'
+    | '/reset-password/sent'
     | '/forgot-password/'
     | '/reset-password/'
     | '/reset-password/$id/$passwordResetCode'
@@ -171,6 +181,7 @@ export interface FileRouteTypes {
     | '/register-success'
     | '/terms'
     | '/forgot-password/sent'
+    | '/reset-password/sent'
     | '/forgot-password'
     | '/reset-password'
     | '/reset-password/$id/$passwordResetCode'
@@ -187,6 +198,7 @@ export interface FileRouteTypes {
     | '/register-success'
     | '/terms'
     | '/forgot-password/sent'
+    | '/reset-password/sent'
     | '/forgot-password/'
     | '/reset-password/'
     | '/reset-password/$id/$passwordResetCode/'
@@ -291,6 +303,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ForgotPasswordIndexRouteImport
       parentRoute: typeof ForgotPasswordRouteRoute
     }
+    '/reset-password/sent': {
+      id: '/reset-password/sent'
+      path: '/sent'
+      fullPath: '/reset-password/sent'
+      preLoaderRoute: typeof ResetPasswordSentRouteImport
+      parentRoute: typeof ResetPasswordRouteRoute
+    }
     '/forgot-password/sent': {
       id: '/forgot-password/sent'
       path: '/sent'
@@ -322,11 +341,13 @@ const ForgotPasswordRouteRouteWithChildren =
   ForgotPasswordRouteRoute._addFileChildren(ForgotPasswordRouteRouteChildren)
 
 interface ResetPasswordRouteRouteChildren {
+  ResetPasswordSentRoute: typeof ResetPasswordSentRoute
   ResetPasswordIndexRoute: typeof ResetPasswordIndexRoute
   ResetPasswordIdPasswordResetCodeIndexRoute: typeof ResetPasswordIdPasswordResetCodeIndexRoute
 }
 
 const ResetPasswordRouteRouteChildren: ResetPasswordRouteRouteChildren = {
+  ResetPasswordSentRoute: ResetPasswordSentRoute,
   ResetPasswordIndexRoute: ResetPasswordIndexRoute,
   ResetPasswordIdPasswordResetCodeIndexRoute:
     ResetPasswordIdPasswordResetCodeIndexRoute,

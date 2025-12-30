@@ -1,11 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { userPasswordWithConfirmationAndRefinementSchema } from "@lasl/app-contracts/schemas/user";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { type NavigateOptions, useRouter } from "@tanstack/react-router";
+import { useRouter } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
-import { ROUTE_FORGOT_PASSWORD_SENT } from "@/src/app/routes/forgot-password/sent.tsx";
 import { Route } from "@/src/app/routes/reset-password/$id/$passwordResetCode/index.tsx";
+import { ROUTE_RESET_PASSWORD_SENT } from "@/src/app/routes/reset-password/sent.tsx";
 import { Button } from "@/src/shared/components/button/Button.tsx";
 import { FormInputField } from "@/src/shared/components/form-input-field/FormInputField.tsx";
 import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
@@ -19,10 +19,10 @@ type ResetPasswordSchema = z.infer<
   typeof userPasswordWithConfirmationAndRefinementSchema
 >;
 
-// biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok here
 export const ResetPasswordForm = () => {
   const { isLoading } = useI18nContext();
   const { t: linguiTranslator } = useLingui();
+  const { navigate } = useRouter();
   const translateFormFieldError = useTranslateFormFieldError(userErrorMessages);
   const resetPasswordMutation = usePostResetPassword();
 
@@ -30,6 +30,9 @@ export const ResetPasswordForm = () => {
 
   const onSubmit = async (data: ResetPasswordSchema) => {
     await resetPasswordMutation.mutateAsync({ id, passwordResetCode, ...data });
+    navigate({
+      to: ROUTE_RESET_PASSWORD_SENT,
+    });
   };
 
   const {

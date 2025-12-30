@@ -3,6 +3,7 @@ import { screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ResetPasswordForm } from "@/src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx";
+import { ROUTE_RESET_PASSWORD_SENT } from "@/src/app/routes/reset-password/sent.tsx";
 import { renderWithProviders } from "@/tests/unit-integration/__wrappers__/renderWithProviders.tsx";
 
 vi.mock(
@@ -26,6 +27,21 @@ vi.mock("@/src/shared/hooks/api/useAuthentication.ts", () => ({
     isPending: false,
   }),
 }));
+
+const navigateMock = vi.fn();
+vi.mock("@tanstack/react-router", async (importOriginalTanstackRouter) => {
+  const actual =
+    await importOriginalTanstackRouter<
+      typeof import("@tanstack/react-router")
+    >();
+
+  return {
+    ...actual,
+    useRouter: () => ({
+      navigate: navigateMock,
+    }),
+  };
+});
 
 describe("ResetPasswordForm", () => {
   beforeEach(() => {
@@ -84,5 +100,26 @@ describe("ResetPasswordForm", () => {
       password: "Password123!",
       passwordConfirmation: "Password123!",
     });
+  });
+
+  it("navigates to reset password sent page after successful submit", async () => {
+    await renderResetPasswordForm();
+
+    await user.type(screen.getByLabelText(/^password$/i), "Password123!");
+    await user.type(screen.getByLabelText(/confirm password/i), "Password123!");
+
+    await user.click(screen.getByRole("button", { name: /reset password/i }));
+    expect(mutateAsyncMock).toHaveBeenCalledWith({
+      id: "user-123",
+      passwordResetCode: "reset-code-abc",
+      password: "Password123!",
+      passwordConfirmation: "Password123!",
+    });
+
+    expect(navigateMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        to: ROUTE_RESET_PASSWORD_SENT,
+      }),
+    );
   });
 });
