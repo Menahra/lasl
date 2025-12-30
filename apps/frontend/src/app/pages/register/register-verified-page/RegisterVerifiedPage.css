@@ -39,7 +39,8 @@
   font-size: var(--font-size-2xl);
 }
 
-.RegisterVerifiedPageText, .RegisterVerifiedPageSpamHint {
+.RegisterVerifiedPageText,
+.RegisterVerifiedPageSpamHint {
   text-align: center;
 }
 

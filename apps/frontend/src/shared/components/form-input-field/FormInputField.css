@@ -27,5 +27,5 @@
 
 .FormInputFieldError {
   color: var(--color-error);
-  font-size: var(--font-size-xs);  
+  font-size: var(--font-size-xs);
 }
