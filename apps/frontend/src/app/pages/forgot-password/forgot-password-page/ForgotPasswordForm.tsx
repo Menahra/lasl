@@ -2,9 +2,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { userEmailSchema } from "@lasl/app-contracts/schemas/user";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
-import { Link as TanstackRouterLink } from "@tanstack/react-router";
+import {
+  type NavigateOptions,
+  Link as TanstackRouterLink,
+  useRouter,
+} from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { ROUTE_FORGOT_PASSWORD_SENT } from "@/src/app/routes/forgot-password/sent.tsx";
 import { ROUTE_LOGIN } from "@/src/app/routes/login.tsx";
 import { Button } from "@/src/shared/components/button/Button.tsx";
 import { FormInputField } from "@/src/shared/components/form-input-field/FormInputField.tsx";
@@ -23,11 +28,16 @@ type ForgotPasswordSchema = z.infer<typeof forgotPasswordSchema>;
 export const ForgotPasswordForm = () => {
   const { isLoading } = useI18nContext();
   const { t: linguiTranslator } = useLingui();
+  const { navigate } = useRouter();
   const translateFormFieldError = useTranslateFormFieldError(userErrorMessages);
   const forgotPasswordMutation = usePostForgotPassword();
 
   const onSubmit = async (data: ForgotPasswordSchema) => {
     await forgotPasswordMutation.mutateAsync(data.email);
+    navigate({
+      to: ROUTE_FORGOT_PASSWORD_SENT,
+      state: { email: data.email },
+    } as NavigateOptions);
   };
 
   const {

@@ -36,38 +36,48 @@ export const ForgotPasswordSentPage = () => {
             <EnvelopeClosedIcon />
           </div>
           <h1 className="ForgotPasswordSentPageTitle">
-            <Trans>Check your email</Trans>
+            <Skeleton loading={isLoading} width={180} height={40}>
+              <Trans>Check your email</Trans>
+            </Skeleton>
           </h1>
-          <p className="ForgotPasswordSentPageDescription">
-            <Trans>
-              If an account exists for {userEmail}, we have sent password reset
-              instructions.
-            </Trans>
-          </p>
+          <Skeleton loading={isLoading} width="100%" height={20}>
+            <p className="ForgotPasswordSentPageDescription">
+              <Trans>
+                If an account exists for {userEmail}, we have sent password
+                reset instructions.
+              </Trans>
+            </p>
+          </Skeleton>
         </div>
         <div className="ForgotPasswordSentPageCard">
           <p className="ForgotPasswordSentPageSpamHint">
-            <Trans>
-              Didn't receive the email? Check your spam folder or try again with
-              a different email address.
-            </Trans>
+            <Skeleton loading={isLoading} width="100%" height={14}>
+              <Trans>
+                Didn't receive the email? Check your spam folder or try again
+                with a different email address.
+              </Trans>
+            </Skeleton>
           </p>
           <div className="ForgotPasswordSentPageButtons">
-            <TanstackRouterLink to={ROUTE_FORGOT_PASSWORD}>
-              <Button fullWidth={true} variant="secondary" align="center">
-                <Trans>Try another email</Trans>
-              </Button>
-            </TanstackRouterLink>
-            <TanstackRouterLink to={ROUTE_LOGIN}>
-              <Button
-                fullWidth={true}
-                variant="text"
-                align="center"
-                startIcon={<ArrowLeftIcon />}
-              >
-                <Trans>Back to sign in</Trans>
-              </Button>
-            </TanstackRouterLink>
+            <Skeleton loading={isLoading} width="100%" height={36}>
+              <TanstackRouterLink to={ROUTE_FORGOT_PASSWORD}>
+                <Button fullWidth={true} variant="secondary" align="center">
+                  <Trans>Try another email</Trans>
+                </Button>
+              </TanstackRouterLink>
+            </Skeleton>
+            <Skeleton loading={isLoading} width={140} height={32}>
+              <TanstackRouterLink to={ROUTE_LOGIN}>
+                <Button
+                  fullWidth={true}
+                  variant="text"
+                  align="center"
+                  startIcon={<ArrowLeftIcon />}
+                >
+                  <Trans>Back to sign in</Trans>
+                </Button>
+              </TanstackRouterLink>
+            </Skeleton>
           </div>
         </div>
       </main>
