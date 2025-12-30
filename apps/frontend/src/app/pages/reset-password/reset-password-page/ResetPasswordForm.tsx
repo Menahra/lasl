@@ -23,7 +23,6 @@ type ResetPasswordSchema = z.infer<
 export const ResetPasswordForm = () => {
   const { isLoading } = useI18nContext();
   const { t: linguiTranslator } = useLingui();
-  const { navigate } = useRouter();
   const translateFormFieldError = useTranslateFormFieldError(userErrorMessages);
   const resetPasswordMutation = usePostResetPassword();
 
@@ -31,10 +30,6 @@ export const ResetPasswordForm = () => {
 
   const onSubmit = async (data: ResetPasswordSchema) => {
     await resetPasswordMutation.mutateAsync({ id, passwordResetCode, ...data });
-    navigate({
-      to: ROUTE_FORGOT_PASSWORD_SENT,
-      state: { email: data.email },
-    } as NavigateOptions);
   };
 
   const {

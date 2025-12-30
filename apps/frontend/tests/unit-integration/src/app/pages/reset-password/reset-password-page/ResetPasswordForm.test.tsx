@@ -1,0 +1,88 @@
+import "@/tests/unit-integration/__mocks__/i18nContextMock.ts";
+import { screen } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { ResetPasswordForm } from "@/src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx";
+import { renderWithProviders } from "@/tests/unit-integration/__wrappers__/renderWithProviders.tsx";
+
+vi.mock(
+  "@/src/app/routes/reset-password/$id/$passwordResetCode/index.tsx",
+  () => ({
+    // biome-ignore lint/style/useNamingConvention: given by module
+    Route: {
+      useParams: () => ({
+        id: "user-123",
+        passwordResetCode: "reset-code-abc",
+      }),
+    },
+  }),
+);
+
+const mutateAsyncMock = vi.fn();
+
+vi.mock("@/src/shared/hooks/api/useAuthentication.ts", () => ({
+  usePostResetPassword: () => ({
+    mutateAsync: mutateAsyncMock,
+    isPending: false,
+  }),
+}));
+
+describe("ResetPasswordForm", () => {
+  beforeEach(() => {
+    mutateAsyncMock.mockReset();
+  });
+
+  const renderResetPasswordForm = () =>
+    renderWithProviders(ResetPasswordForm, {
+      i18n: true,
+      query: true,
+      router: {
+        pathPattern: "resetpassword",
+      },
+    });
+  const user = userEvent.setup();
+
+  it("renders password fields and submit button", async () => {
+    await renderResetPasswordForm();
+
+    expect(screen.getAllByLabelText(/password/i)).toHaveLength(2);
+    expect(screen.getByLabelText(/confirm password/i)).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /reset password/i }),
+    ).toBeInTheDocument();
+  });
+
+  it("shows validation errors when passwords do not match", async () => {
+    await renderResetPasswordForm();
+
+    await user.type(screen.getByLabelText(/^password$/i), "Password123!");
+    await user.type(
+      screen.getByLabelText(/confirm password/i),
+      "Different123!",
+    );
+
+    await user.click(screen.getByRole("button", { name: /reset password/i }));
+
+    expect(
+      await screen.findByText(/passwords do not match/i),
+    ).toBeInTheDocument();
+
+    expect(mutateAsyncMock).not.toHaveBeenCalled();
+  });
+
+  it("submits correct payload on valid form", async () => {
+    await renderResetPasswordForm();
+
+    await user.type(screen.getByLabelText(/^password$/i), "Password123!");
+    await user.type(screen.getByLabelText(/confirm password/i), "Password123!");
+
+    await user.click(screen.getByRole("button", { name: /reset password/i }));
+
+    expect(mutateAsyncMock).toHaveBeenCalledWith({
+      id: "user-123",
+      passwordResetCode: "reset-code-abc",
+      password: "Password123!",
+      passwordConfirmation: "Password123!",
+    });
+  });
+});
