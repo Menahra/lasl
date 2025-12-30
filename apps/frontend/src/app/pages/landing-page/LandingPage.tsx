@@ -25,11 +25,11 @@ export const LandingPage = () => {
   return (
     <MainLayout>
       <section className="LandingPageTitleSection">
-        <span className="LandingPageTitleArabic">
+        <h1 className="LandingPageTitleArabic">
           <Skeleton loading={isLoading} width={320} height={80}>
             العربية الفصحى
           </Skeleton>
-        </span>
+        </h1>
 
         <h2 className="LandingPageSubTitle">
           <Skeleton loading={isLoading} width={485} height={45}>

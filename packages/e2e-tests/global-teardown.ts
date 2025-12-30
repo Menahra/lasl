@@ -4,7 +4,7 @@ import path from "node:path";
 import process from "node:process";
 import { config as dotenvConfig } from "dotenv";
 
-dotenvConfig({ path: path.resolve(process.cwd(), "../../.env.e2e") });
+dotenvConfig({ path: path.resolve(process.cwd(), "../../.env.dev") });
 dotenvConfig();
 
 const globalTeardown = () => {

@@ -5,7 +5,7 @@ import process from "node:process";
 import { config as dotenvConfig } from "dotenv";
 import { StatusCodes } from "http-status-codes";
 
-const envFile = "../../.env.e2e";
+const envFile = "../../.env.dev";
 
 dotenvConfig({ path: path.resolve(process.cwd(), envFile) });
 dotenvConfig();

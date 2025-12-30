@@ -6,8 +6,7 @@ test("can access the application", async ({ page }) => {
   // Wait for the page to load
   await page.waitForLoadState("networkidle");
 
-  // Take a screenshot for verification
-  await page.screenshot({ path: "homepage.png" });
-
-  console.log("✅ Successfully loaded the application");
+  await expect(
+    page.getByRole("heading", { name: "العربية الفصحى" }),
+  ).toBeVisible();
 });
