@@ -48,6 +48,7 @@ jobs:
         env:
           DOPPLER_TOKEN_AUTHENTICATION_SERVICE: ${{ secrets.DOPPLER_TOKEN_AUTHENTICATION_SERVICE }}
           DOPPLER_TOKEN_API_GATEWAY: ${{ secrets.DOPPLER_TOKEN_API_GATEWAY }}
+          DOPPLER_TOKEN_FRONTEND: ${{ secrets.DOPPLER_TOKEN_FRONTEND }}
         run: |
           docker compose up -d
           echo "Waiting for containers to start..."
