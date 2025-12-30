@@ -7,6 +7,10 @@
     "dist"
   ],
   "exports": {
+    ".": {
+      "types": "./dist/empty.d.ts",
+      "import": "./dist/empty.js"
+    },
     "./locales": {
       "import": "./dist/locales.js",
       "types": "./dist/locales.d.ts"
