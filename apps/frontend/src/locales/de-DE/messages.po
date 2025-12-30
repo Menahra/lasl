@@ -75,7 +75,7 @@ msgstr ""
 msgid "All content, features, and functionality on {0}, including but not limited to text, graphics, logos, and software, are the exclusive property of {1} and are protected by international copyright, trademark, and other intellectual property laws."
 msgstr ""
 
-#: src/app/pages/register-page/RegisterPage.tsx:40
+#: src/app/pages/register/register-page/RegisterPage.tsx:40
 msgid "Already have an Account? <0>Sign In</0>"
 msgstr ""
 
@@ -83,7 +83,8 @@ msgstr ""
 msgid "An open, community-driven platform for learning Modern Standard Arabic. Explore Nahw, Sarf, Balagha, and more — with content you can help improve."
 msgstr ""
 
-#: src/app/pages/register-page/RegisterForm.tsx:84
+#: src/app/pages/register/register-page/RegisterForm.tsx:84
+#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:81
 msgid "An unexpected error occurred. Please try again."
 msgstr ""
 
@@ -107,8 +108,13 @@ msgstr ""
 msgid "Back to Home"
 msgstr ""
 
-#: src/app/pages/register-success-page/RegisterSuccessPage.tsx:43
+#: src/app/pages/register/register-success-page/RegisterSuccessPage.tsx:43
 msgid "Back to Registration"
+msgstr ""
+
+#: src/app/pages/forgot-password/forgot-password-page/ForgotPasswordForm.tsx:102
+#: src/app/pages/forgot-password/forgot-password-sent-page/ForgotPasswordSentPage.tsx:77
+msgid "Back to sign in"
 msgstr ""
 
 #. placeholder {0}: PROJECT_INFORMATION.name
@@ -120,7 +126,7 @@ msgstr ""
 msgid "By continuing, you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>."
 msgstr ""
 
-#: src/app/pages/register-page/RegisterForm.tsx:109
+#: src/app/pages/register/register-page/RegisterForm.tsx:109
 msgid "By signing up, you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>."
 msgstr ""
 
@@ -128,8 +134,16 @@ msgstr ""
 msgid "Carefully organized lessons covering grammar, morphology, and rhetoric progressively."
 msgstr ""
 
-#: src/app/pages/register-success-page/RegisterSuccessPage.tsx:21
+#: src/app/pages/forgot-password/forgot-password-sent-page/ForgotPasswordSentPage.tsx:40
+msgid "Check your email"
+msgstr ""
+
+#: src/app/pages/register/register-success-page/RegisterSuccessPage.tsx:21
 msgid "Check Your Email"
+msgstr ""
+
+#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:101
+msgid "Choose a strong password for your account"
 msgstr ""
 
 #: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:71
@@ -148,11 +162,13 @@ msgstr ""
 msgid "Community-Driven Content"
 msgstr ""
 
-#: src/app/pages/register-page/registerFormFields.ts:45
+#: src/app/pages/register/register-page/registerFormFields.ts:45
+#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:125
 msgid "Confirm Password"
 msgstr ""
 
-#: src/app/pages/register-page/registerFormFields.ts:46
+#: src/app/pages/register/register-page/registerFormFields.ts:46
+#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:124
 msgid "Confirm your password"
 msgstr ""
 
@@ -177,7 +193,7 @@ msgstr ""
 msgid "Content and works created by the site operator on this website are subject to copyright law. Duplication, processing, distribution, or any form of commercialization requires prior written consent."
 msgstr ""
 
-#: src/app/pages/email-verified-page/EmailVerifiedPage.tsx:48
+#: src/app/pages/register/register-verified-page/RegisterVerifiedPage.tsx:48
 msgid "Continue to App"
 msgstr ""
 
@@ -185,11 +201,11 @@ msgstr ""
 msgid "Copyright"
 msgstr ""
 
-#: src/app/pages/register-page/RegisterForm.tsx:129
+#: src/app/pages/register/register-page/RegisterForm.tsx:129
 msgid "Create Account"
 msgstr ""
 
-#: src/app/pages/register-page/RegisterPage.tsx:33
+#: src/app/pages/register/register-page/RegisterPage.tsx:33
 msgid "Create your Account"
 msgstr "Erstelle Deinen Account"
 
@@ -217,42 +233,60 @@ msgstr ""
 msgid "Data We Collect"
 msgstr ""
 
-#: src/app/pages/register-success-page/RegisterSuccessPage.tsx:34
+#: src/app/pages/forgot-password/forgot-password-sent-page/ForgotPasswordSentPage.tsx:55
+msgid "Didn't receive the email? Check your spam folder or try again with a different email address."
+msgstr ""
+
+#: src/app/pages/register/register-success-page/RegisterSuccessPage.tsx:34
 msgid "Didn't receive the email? Check your spam folder or try signing up again."
 msgstr ""
 
-#: src/app/pages/login-page/LoginForm.tsx:128
+#: src/app/pages/login-page/LoginForm.tsx:144
 msgid "Don't have an account yet?"
 msgstr ""
 
-#: src/app/pages/login-page/LoginForm.tsx:102
-#: src/app/pages/register-page/registerFormFields.ts:32
+#: src/app/pages/forgot-password/forgot-password-page/ForgotPasswordForm.tsx:83
+#: src/app/pages/login-page/LoginForm.tsx:107
+#: src/app/pages/register/register-page/registerFormFields.ts:32
 msgid "Email"
 msgstr ""
 
-#: src/app/pages/email-verified-page/EmailVerifiedPage.tsx:32
+#: src/app/pages/register/register-verified-page/RegisterVerifiedPage.tsx:32
 msgid "Email Verified!"
 msgstr ""
 
-#: src/app/pages/register-page/registerFormFields.ts:21
+#: src/app/pages/forgot-password/forgot-password-page/ForgotPasswordForm.tsx:67
+msgid "Enter your email and we'll send you reset instructions"
+msgstr ""
+
+#: src/app/pages/register/register-page/registerFormFields.ts:21
 msgid "Enter your first name"
 msgstr ""
 
-#: src/app/pages/register-page/registerFormFields.ts:27
+#: src/app/pages/register/register-page/registerFormFields.ts:27
 msgid "Enter your last name"
 msgstr ""
 
-#: src/app/pages/login-page/LoginForm.tsx:110
-#: src/app/pages/register-page/registerFormFields.ts:39
+#: src/app/pages/login-page/LoginForm.tsx:116
+#: src/app/pages/register/register-page/registerFormFields.ts:39
+#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:114
 msgid "Enter your password"
 msgstr ""
 
-#: src/app/pages/register-page/registerFormFields.ts:20
+#: src/app/pages/register/register-page/registerFormFields.ts:20
 msgid "First Name"
 msgstr ""
 
 #: src/shared/formErrors.ts:11
 msgid "First name is required"
+msgstr ""
+
+#: src/app/pages/forgot-password/forgot-password-page/ForgotPasswordForm.tsx:62
+msgid "Forgot password?"
+msgstr ""
+
+#: src/app/pages/login-page/LoginForm.tsx:127
+msgid "Forgot Password?"
 msgstr ""
 
 #: src/shared/components/brand-logo/BrandLogo.tsx:24
@@ -265,6 +299,10 @@ msgstr ""
 
 #: src/app/pages/imprint-page/ImprintPage.tsx:62
 msgid "However, we are not obligated to monitor transmitted or stored third-party information or to actively investigate circumstances that indicate illegal activity."
+msgstr ""
+
+#: src/app/pages/forgot-password/forgot-password-sent-page/ForgotPasswordSentPage.tsx:45
+msgid "If an account exists for {userEmail}, we have sent password reset instructions."
 msgstr ""
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:142
@@ -296,7 +334,7 @@ msgstr ""
 msgid "Introduction"
 msgstr ""
 
-#: src/app/pages/login-page/LoginForm.tsx:91
+#: src/app/pages/login-page/LoginForm.tsx:92
 msgid "Invalid Email or password. Please try again"
 msgstr ""
 
@@ -312,7 +350,7 @@ msgstr ""
 msgid "Language"
 msgstr ""
 
-#: src/app/pages/register-page/registerFormFields.ts:26
+#: src/app/pages/register/register-page/registerFormFields.ts:26
 msgid "Last Name"
 msgstr ""
 
@@ -410,8 +448,9 @@ msgstr ""
 msgid "Open the GitHub repository in a new browser tab."
 msgstr ""
 
-#: src/app/pages/login-page/LoginForm.tsx:111
-#: src/app/pages/register-page/registerFormFields.ts:38
+#: src/app/pages/login-page/LoginForm.tsx:117
+#: src/app/pages/register/register-page/registerFormFields.ts:38
+#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:115
 msgid "Password"
 msgstr ""
 
@@ -439,6 +478,10 @@ msgstr ""
 msgid "Password must contain at least one uppercase letter"
 msgstr ""
 
+#: src/app/pages/reset-password/reset-password-sent-page/ResetPasswordSentPage.tsx:32
+msgid "Password reset!"
+msgstr ""
+
 #: src/shared/formErrors.ts:16
 msgid "Passwords do not match"
 msgstr ""
@@ -456,7 +499,7 @@ msgstr ""
 msgid "Please enter a valid email address"
 msgstr ""
 
-#: src/app/pages/login-page/LoginForm.tsx:89
+#: src/app/pages/login-page/LoginForm.tsx:90
 msgid "Please verify your email first"
 msgstr ""
 
@@ -477,8 +520,12 @@ msgstr ""
 msgid "Ready to Begin Your Arabic Journey?"
 msgstr ""
 
-#: src/app/pages/email-verified-page/EmailVerifiedPage.tsx:42
+#: src/app/pages/register/register-verified-page/RegisterVerifiedPage.tsx:42
 msgid "Redirecting you to the app in a few seconds..."
+msgstr ""
+
+#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:135
+msgid "Reset password"
 msgstr ""
 
 #: src/app/layouts/main-layout/footer/Footer.tsx:67
@@ -511,21 +558,33 @@ msgstr ""
 msgid "Search..."
 msgstr ""
 
+#: src/app/pages/forgot-password/forgot-password-page/ForgotPasswordForm.tsx:93
+msgid "Send reset link"
+msgstr ""
+
 #: src/app/pages/imprint-page/ImprintPage.tsx:14
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:15
 msgid "Service Provider"
 msgstr ""
 
+#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:96
+msgid "Set new password"
+msgstr ""
+
 #: src/app/pages/landing-page/LandingPage.tsx:59
-#: src/app/pages/login-page/LoginForm.tsx:121
+#: src/app/pages/login-page/LoginForm.tsx:137
 msgid "Sign In"
 msgstr ""
 
-#: src/app/pages/login-page/LoginForm.tsx:77
+#: src/app/pages/login-page/LoginForm.tsx:78
 msgid "Sign in to enhance your learning"
 msgstr ""
 
-#: src/app/pages/login-page/LoginForm.tsx:131
+#: src/app/pages/reset-password/reset-password-sent-page/ResetPasswordSentPage.tsx:45
+msgid "Sign in with new password"
+msgstr ""
+
+#: src/app/pages/login-page/LoginForm.tsx:147
 msgid "Sign Up"
 msgstr ""
 
@@ -537,8 +596,9 @@ msgstr ""
 msgid "Structured Curriculum"
 msgstr ""
 
-#: src/app/pages/login-page/LoginForm.tsx:101
-#: src/app/pages/register-page/registerFormFields.ts:33
+#: src/app/pages/forgot-password/forgot-password-page/ForgotPasswordForm.tsx:82
+#: src/app/pages/login-page/LoginForm.tsx:106
+#: src/app/pages/register/register-page/registerFormFields.ts:33
 msgid "student@example.com"
 msgstr ""
 
@@ -606,12 +666,16 @@ msgstr ""
 msgid "These Terms shall be governed by the laws of Germany, excluding its conflict-of-law provisions."
 msgstr ""
 
-#: src/app/pages/register-page/RegisterForm.tsx:77
+#: src/app/pages/register/register-page/RegisterForm.tsx:77
 msgid "This email is already registered. <0>Sign in instead</0>"
 msgstr ""
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:133
 msgid "This limitation of liability does not apply in cases of intent, gross negligence, or where liability is mandatory under applicable consumer protection laws."
+msgstr ""
+
+#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:83
+msgid "This password reset link is invalid or has expired."
 msgstr ""
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:26
@@ -640,6 +704,10 @@ msgstr ""
 #. placeholder {0}: PROJECT_INFORMATION.name
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:125
 msgid "To the extent permitted by applicable law, {0} shall not be liable for any indirect, incidental, special, or consequential damages arising out of or in connection with the use or inability to use the service."
+msgstr ""
+
+#: src/app/pages/forgot-password/forgot-password-sent-page/ForgotPasswordSentPage.tsx:65
+msgid "Try another email"
 msgstr ""
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:161
@@ -697,11 +765,11 @@ msgstr ""
 msgid "We store personal data only for as long as necessary to fulfill the purposes for which it was collected."
 msgstr ""
 
-#: src/app/pages/register-success-page/RegisterSuccessPage.tsx:26
+#: src/app/pages/register/register-success-page/RegisterSuccessPage.tsx:26
 msgid "We've sent a verification link to your email address. Please click the link to verify your account."
 msgstr ""
 
-#: src/app/pages/login-page/LoginForm.tsx:72
+#: src/app/pages/login-page/LoginForm.tsx:73
 msgid "Welcome back"
 msgstr ""
 
@@ -726,8 +794,16 @@ msgstr ""
 msgid "You are responsible for safeguarding the password that you use to access the platform and for any activities or actions under your password."
 msgstr ""
 
-#: src/app/pages/email-verified-page/EmailVerifiedPage.tsx:37
+#: src/app/pages/forgot-password/forgot-password-sent-page/ForgotPasswordSentPage.tsx:21
+msgid "your email"
+msgstr ""
+
+#: src/app/pages/register/register-verified-page/RegisterVerifiedPage.tsx:37
 msgid "Your email has been successfully verified."
+msgstr ""
+
+#: src/app/pages/reset-password/reset-password-sent-page/ResetPasswordSentPage.tsx:37
+msgid "Your password has been successfully updated."
 msgstr ""
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:66
