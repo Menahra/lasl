@@ -1,7 +1,7 @@
 import "@/tests/unit-integration/__mocks__/i18nContextMock.ts";
 import { act, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { EmailVerifiedPage } from "@/src/app/pages/email-verified-page/EmailVerifiedPage.tsx";
+import { RegisterVerifiedPage } from "@/src/app/pages/register/register-verified-page/RegisterVerifiedPage.tsx";
 import { renderWithProviders } from "@/tests/unit-integration/__wrappers__/renderWithProviders.tsx";
 
 const navigateMock = vi.fn();
@@ -19,7 +19,7 @@ vi.mock("@tanstack/react-router", async (importOriginalTanstackRouter) => {
   };
 });
 
-describe("EmailVerifiedPage", () => {
+describe("RegisterVerifiedPage", () => {
   afterEach(() => {
     act(() => {
       vi.runAllTimers();
@@ -29,16 +29,16 @@ describe("EmailVerifiedPage", () => {
     vi.useRealTimers();
   });
 
-  const renderEmailVerifiedPage = () =>
-    renderWithProviders(EmailVerifiedPage, {
+  const renderRegisterVerifiedPage = () =>
+    renderWithProviders(RegisterVerifiedPage, {
       i18n: true,
       router: {
-        pathPattern: "/emailverified",
+        pathPattern: "/registerverified",
       },
     });
 
   it("renders success message", async () => {
-    await renderEmailVerifiedPage();
+    await renderRegisterVerifiedPage();
     vi.useFakeTimers();
 
     expect(screen.getByText(/email verified!/i)).toBeInTheDocument();
@@ -47,14 +47,14 @@ describe("EmailVerifiedPage", () => {
   });
 
   it("informs the user about the upcoming redirect", async () => {
-    await renderEmailVerifiedPage();
+    await renderRegisterVerifiedPage();
     vi.useFakeTimers();
 
     expect(screen.getByText(/redirecting you to the app/i)).toBeInTheDocument();
   });
 
   it("renders a continue button linking to the app", async () => {
-    await renderEmailVerifiedPage();
+    await renderRegisterVerifiedPage();
     vi.useFakeTimers();
 
     const button = screen.getByRole("button", {
@@ -65,7 +65,7 @@ describe("EmailVerifiedPage", () => {
   });
 
   it("automatically redirects to home after 7 seconds", async () => {
-    await renderEmailVerifiedPage();
+    await renderRegisterVerifiedPage();
     vi.useFakeTimers();
 
     // Not redirected immediately
@@ -86,7 +86,7 @@ describe("EmailVerifiedPage", () => {
   });
 
   it("cleans up the redirect timer on unmount", async () => {
-    const { unmount } = await renderEmailVerifiedPage();
+    const { unmount } = await renderRegisterVerifiedPage();
     vi.useFakeTimers();
 
     unmount();

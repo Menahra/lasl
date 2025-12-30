@@ -1,5 +1,5 @@
 import { Trans } from "@lingui/react/macro";
-import { RegisterForm } from "@/src/app/pages/register-page/RegisterForm.tsx";
+import { RegisterForm } from "@/src/app/pages/register/register-page/RegisterForm.tsx";
 import { ROUTE_LOGIN } from "@/src/app/routes/login.tsx";
 import { BrandLogo } from "@/src/shared/components/brand-logo/BrandLogo.tsx";
 import { LanguageSelect } from "@/src/shared/components/language-select/LanguageSelect.tsx";

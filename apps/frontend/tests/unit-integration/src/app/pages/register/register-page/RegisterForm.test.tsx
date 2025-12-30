@@ -11,8 +11,9 @@ import {
   type Mock,
   vi,
 } from "vitest";
-import { RegisterForm } from "@/src/app/pages/register-page/RegisterForm.tsx";
+import { RegisterForm } from "@/src/app/pages/register/register-page/RegisterForm.tsx";
 import { ROUTE_PRIVACY_POLICY } from "@/src/app/routes/privacy.tsx";
+import { ROUTE_SIGN_UP_SUCCESS } from "@/src/app/routes/register/success.tsx";
 import { ROUTE_TERMS_OF_SERVICE } from "@/src/app/routes/terms.tsx";
 import { useCreateUser } from "@/src/shared/hooks/api/useCreateUser.ts";
 import { setI18nLoading } from "@/tests/unit-integration/__mocks__/i18nContextMock.ts";
@@ -131,7 +132,7 @@ describe("RegisterForm", () => {
       passwordConfirmation: "Password123!",
     });
 
-    expect(navigateMock).toHaveBeenCalledWith({ to: "/register-success" });
+    expect(navigateMock).toHaveBeenCalledWith({ to: ROUTE_SIGN_UP_SUCCESS });
   });
 
   it("shows duplicate error if API responds with 409", async () => {

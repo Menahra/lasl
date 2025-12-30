@@ -6,9 +6,9 @@ import { ROUTE_HOME } from "@/src/app/routes/index.tsx";
 import { Button } from "@/src/shared/components/button/Button.tsx";
 import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
 import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
-import "./EmailVerifiedPage.css";
+import "./RegisterVerifiedPage.css";
 
-export const EmailVerifiedPage = () => {
+export const RegisterVerifiedPage = () => {
   const { navigate } = useRouter();
   const { isLoading } = useI18nContext();
 
@@ -22,22 +22,22 @@ export const EmailVerifiedPage = () => {
   }, [navigate]);
 
   return (
-    <div className="EmailVerifiedPage">
-      <div className="EmailVerifiedPageContainer">
-        <div className="EmailVerifiedPageIconContainer">
+    <div className="RegisterVerifiedPage">
+      <div className="RegisterVerifiedPageContainer">
+        <div className="RegisterVerifiedPageIconContainer">
           <CheckCircledIcon />
         </div>
-        <h3 className="EmailVerifiedPageTitle">
+        <h3 className="RegisterVerifiedPageTitle">
           <Skeleton loading={isLoading} width={220} height={26}>
             <Trans>Email Verified!</Trans>
           </Skeleton>
         </h3>
-        <p className="EmailVerifiedPageText">
+        <p className="RegisterVerifiedPageText">
           <Skeleton loading={isLoading} width={300} height={20}>
             <Trans>Your email has been successfully verified.</Trans>
           </Skeleton>
         </p>
-        <p className="EmailVerifiedPageRedirectHint" aria-live="polite">
+        <p className="RegisterVerifiedPageRedirectHint" aria-live="polite">
           <Skeleton loading={isLoading} width={330} height={18}>
             <Trans>Redirecting you to the app in a few seconds...</Trans>
           </Skeleton>

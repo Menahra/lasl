@@ -11,7 +11,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { ROUTE_FORGOT_PASSWORD } from "@/src/app/routes/forgot-password/index.tsx";
 import { ROUTE_HOME } from "@/src/app/routes/index.tsx";
-import { ROUTE_SIGN_UP } from "@/src/app/routes/register.tsx";
+import { ROUTE_SIGN_UP } from "@/src/app/routes/register/index.tsx";
 import { Button } from "@/src/shared/components/button/Button.tsx";
 import { Callout } from "@/src/shared/components/callout/Callout.tsx";
 import { FormInputField } from "@/src/shared/components/form-input-field/FormInputField.tsx";

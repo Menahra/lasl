@@ -1,7 +1,7 @@
 import { Trans } from "@lingui/react/macro";
 import { EnvelopeClosedIcon } from "@radix-ui/react-icons";
 import { Link as TanstackRouterLink } from "@tanstack/react-router";
-import { ROUTE_SIGN_UP } from "@/src/app/routes/register.tsx";
+import { ROUTE_SIGN_UP } from "@/src/app/routes/register/index.tsx";
 import { Button } from "@/src/shared/components/button/Button.tsx";
 import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
 import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";

@@ -2,7 +2,7 @@ import "@/tests/unit-integration/__mocks__/i18nContextMock.ts";
 import { screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 import { LoginForm } from "@/src/app/pages/login-page/LoginForm.tsx";
-import { ROUTE_SIGN_UP } from "@/src/app/routes/register.tsx";
+import { ROUTE_SIGN_UP } from "@/src/app/routes/register/index.tsx";
 import { setI18nLoading } from "@/tests/unit-integration/__mocks__/i18nContextMock.ts";
 import { renderWithProviders } from "@/tests/unit-integration/__wrappers__/renderWithProviders.tsx";
 

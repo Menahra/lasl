@@ -12,7 +12,7 @@ import { MainLayout } from "@/src/app/layouts/main-layout/MainLayout.tsx";
 import { LandingPageFeatureCard } from "@/src/app/pages/landing-page/LandingPageFeatureCard.tsx";
 import { LandingPageHighlightCard } from "@/src/app/pages/landing-page/LandingPageHighlightCard.tsx";
 import { ROUTE_LOGIN } from "@/src/app/routes/login.tsx";
-import { ROUTE_SIGN_UP } from "@/src/app/routes/register.tsx";
+import { ROUTE_SIGN_UP } from "@/src/app/routes/register/index.tsx";
 import { Button } from "@/src/shared/components/button/Button.tsx";
 import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
 import { PROJECT_INFORMATION } from "@/src/shared/constants.ts";

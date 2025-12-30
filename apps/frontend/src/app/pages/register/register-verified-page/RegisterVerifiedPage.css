@@ -1,4 +1,4 @@
-.EmailVerifiedPage {
+.RegisterVerifiedPage {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -6,7 +6,7 @@
   width: 100vw;
 }
 
-.EmailVerifiedPageContainer {
+.RegisterVerifiedPageContainer {
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
@@ -17,7 +17,7 @@
   padding: var(--space-lg);
 }
 
-.EmailVerifiedPageIconContainer {
+.RegisterVerifiedPageIconContainer {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -27,22 +27,22 @@
   height: var(--size-3xl);
   width: var(--size-3xl);
 }
-.EmailVerifiedPageIconContainer > svg {
+.RegisterVerifiedPageIconContainer > svg {
   height: var(--size-xl);
   width: var(--size-xl);
   color: var(--success-500);
 }
 
-.EmailVerifiedPageTitle {
+.RegisterVerifiedPageTitle {
   margin: 0 auto;
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-2xl);
 }
 
-.EmailVerifiedPageText, .EmailVerifiedPageSpamHint {
+.RegisterVerifiedPageText, .RegisterVerifiedPageSpamHint {
   text-align: center;
 }
 
-.EmailVerifiedPageSpamHint {
+.RegisterVerifiedPageSpamHint {
   font-size: var(--font-size-sm);
 }

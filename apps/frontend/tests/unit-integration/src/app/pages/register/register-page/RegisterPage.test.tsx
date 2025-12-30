@@ -1,7 +1,7 @@
 import "@/tests/unit-integration/__mocks__/i18nContextMock.ts";
 import { screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
-import { RegisterPage } from "@/src/app/pages/register-page/RegisterPage.tsx";
+import { RegisterPage } from "@/src/app/pages/register/register-page/RegisterPage.tsx";
 import { PROJECT_INFORMATION } from "@/src/shared/constants.ts";
 import { setI18nLoading } from "@/tests/unit-integration/__mocks__/i18nContextMock.ts";
 import { renderWithProviders } from "@/tests/unit-integration/__wrappers__/renderWithProviders.tsx";
