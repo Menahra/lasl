@@ -19,7 +19,8 @@ RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store pnpm install --frozen-lo
 
 ARG DOPPLER_TOKEN
 ENV DOPPLER_TOKEN=$DOPPLER_TOKEN
-RUN doppler run --command="pnpm --filter frontend... run build"
+RUN pnpm --filter "frontend^..." run build
+RUN doppler run --command="pnpm --filter frontend run build"
 
 FROM nginx:alpine AS frontend
 COPY --from=build /usr/src/app/apps/frontend/dist /usr/share/nginx/html
