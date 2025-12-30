@@ -1,6 +1,7 @@
 import "@/tests/unit-integration/__mocks__/i18nContextMock.ts";
 import { screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
+import { StatusCodes } from "http-status-codes";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ResetPasswordForm } from "@/src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx";
 import { ROUTE_RESET_PASSWORD_SENT } from "@/src/app/routes/reset-password/sent.tsx";
@@ -20,7 +21,6 @@ vi.mock(
 );
 
 const mutateAsyncMock = vi.fn();
-
 vi.mock("@/src/shared/hooks/api/useAuthentication.ts", () => ({
   usePostResetPassword: () => ({
     mutateAsync: mutateAsyncMock,
@@ -121,5 +121,41 @@ describe("ResetPasswordForm", () => {
         to: ROUTE_RESET_PASSWORD_SENT,
       }),
     );
+  });
+
+  it("shows unknown error if api responds with 500", async () => {
+    mutateAsyncMock.mockRejectedValueOnce({
+      isAxiosError: true,
+      response: { status: StatusCodes.INTERNAL_SERVER_ERROR },
+    });
+    await renderResetPasswordForm();
+
+    await user.type(screen.getByLabelText(/^password$/i), "Password123!");
+    await user.type(screen.getByLabelText(/confirm password/i), "Password123!");
+
+    expect(
+      screen.queryByText(/An unexpected error occurred/i),
+    ).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: /reset password/i }));
+    expect(screen.getByText(/An unexpected error occurred./i)).toBeVisible();
+  });
+
+  it("shows invalid code for other errors", async () => {
+    mutateAsyncMock.mockRejectedValueOnce({
+      isAxiosError: true,
+      response: { status: StatusCodes.BAD_REQUEST },
+    });
+    await renderResetPasswordForm();
+
+    await user.type(screen.getByLabelText(/^password$/i), "Password123!");
+    await user.type(screen.getByLabelText(/confirm password/i), "Password123!");
+
+    expect(
+      screen.queryByText(/password reset link is invalid/i),
+    ).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: /reset password/i }));
+    expect(screen.getByText(/password reset link is invalid/i)).toBeVisible();
   });
 });
