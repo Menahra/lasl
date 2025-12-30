@@ -1,10 +1,15 @@
 import type { createSessionSchema } from "@lasl/app-contracts/schemas/session";
 import type {
+  resetPasswordParamsSchema,
+  userPasswordWithConfirmationAndRefinementSchema,
+} from "@lasl/app-contracts/schemas/user";
+import type {
   CreateSessionSuccessResponse,
   ForgotPasswordSuccessResponse,
   GetCurrentAuthenticatedUserSuccessResponse,
   LogoutSuccessResponse,
   RefreshSessionSuccessResponse,
+  ResetPasswordSuccessResponse,
 } from "@lasl/authentication-service";
 import axios from "axios";
 import type { z } from "zod";
@@ -66,6 +71,20 @@ export const authApi = {
     const { data } = await axios.post<ForgotPasswordSuccessResponse>(
       `${AUTH_API_BASE_URL}/users/forgotpassword`,
       { email },
+      { withCredentials: true },
+    );
+
+    return data;
+  },
+
+  resetPassword: async (
+    input: z.infer<typeof resetPasswordParamsSchema> &
+      z.infer<typeof userPasswordWithConfirmationAndRefinementSchema>,
+  ) => {
+    const { id, passwordResetCode, ...body } = input;
+    const { data } = await axios.post<ResetPasswordSuccessResponse>(
+      `${AUTH_API_BASE_URL}/users/resetpassword/${id}/${passwordResetCode}`,
+      { body },
       { withCredentials: true },
     );
 

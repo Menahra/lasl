@@ -58,3 +58,8 @@ export const createUserSchema = z
   })
   .extend(userPasswordWithConfirmationSchema.shape)
   .superRefine(passwordMatchRefinement);
+
+export const resetPasswordParamsSchema = z.object({
+  id: z.string(),
+  passwordResetCode: z.string(),
+});

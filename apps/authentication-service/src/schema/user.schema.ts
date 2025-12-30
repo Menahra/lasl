@@ -2,6 +2,7 @@ import { SUPPORTED_LOCALES } from "@lasl/app-contracts/locales";
 import {
   createUserSchema,
   passwordMatchRefinement,
+  resetPasswordParamsSchema,
   userEmailSchema,
   userPasswordWithConfirmationSchema,
 } from "@lasl/app-contracts/schemas/user";
@@ -38,10 +39,7 @@ export const forgotPasswordInputSchema = z.object({
   }),
 });
 export const resetPasswordInputSchema = z.object({
-  params: z.object({
-    id: z.string(),
-    passwordResetCode: z.string(),
-  }),
+  params: resetPasswordParamsSchema,
   body: userPasswordWithConfirmationSchema.superRefine(passwordMatchRefinement),
 });
 

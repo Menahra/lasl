@@ -47,8 +47,19 @@ export const usePostLogout = () => {
 
 export const usePostForgotPassword = () => {
   return useMutation({
-    mutationFn: (params: Parameters<typeof authApi.forgotPassword>[0]) =>
-      authApi.forgotPassword(params),
+    mutationFn: authApi.forgotPassword,
+  });
+};
+
+export const usePostResetPassword = () => {
+  return useMutation({
+    mutationFn: authApi.resetPassword,
+    onSettled: () => {
+      accessTokenManager.clearAccessToken();
+
+      const queryClient = useQueryClient();
+      queryClient.removeQueries({ queryKey: authKeys.all });
+    },
   });
 };
 
