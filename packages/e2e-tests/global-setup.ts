@@ -1,13 +1,23 @@
 /** biome-ignore-all lint/suspicious/noConsole: ok in this file */
 import { execSync } from "node:child_process";
+import { existsSync } from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { config as dotenvConfig } from "dotenv";
 import { StatusCodes } from "http-status-codes";
 
-const envFile = "../../.env.dev";
+const possibleEnvFiles = [
+  path.resolve(process.cwd(), "../../.env"),
+  path.resolve(process.cwd(), "../../.env.dev"),
+  path.resolve(process.cwd(), "../../.env.local"),
+];
 
-dotenvConfig({ path: path.resolve(process.cwd(), envFile) });
+for (const envFile of possibleEnvFiles) {
+  if (existsSync(envFile)) {
+    dotenvConfig({ path: envFile });
+    break;
+  }
+}
 dotenvConfig();
 
 const globalSetup = async () => {
@@ -20,13 +30,10 @@ const globalSetup = async () => {
   } else {
     console.debug("🐳 Starting Docker containers...");
     try {
-      execSync(
-        `docker compose --env-file ${envFile} -f ${composeFile} up -d --build`,
-        {
-          stdio: "inherit",
-          cwd: process.cwd(),
-        },
-      );
+      execSync(`docker compose -f ${composeFile} up -d --build`, {
+        stdio: "inherit",
+        cwd: process.cwd(),
+      });
     } catch (error) {
       console.error("Failed to start Docker containers:", error);
       throw error;

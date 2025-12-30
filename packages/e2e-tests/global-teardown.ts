@@ -1,10 +1,22 @@
 /** biome-ignore-all lint/suspicious/noConsole: ok in global file for debug info */
 import { execSync } from "node:child_process";
+import { existsSync } from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { config as dotenvConfig } from "dotenv";
 
-dotenvConfig({ path: path.resolve(process.cwd(), "../../.env.dev") });
+const possibleEnvFiles = [
+  path.resolve(process.cwd(), "../../.env"),
+  path.resolve(process.cwd(), "../../.env.dev"),
+  path.resolve(process.cwd(), "../../.env.local"),
+];
+
+for (const envFile of possibleEnvFiles) {
+  if (existsSync(envFile)) {
+    dotenvConfig({ path: envFile });
+    break;
+  }
+}
 dotenvConfig();
 
 const globalTeardown = () => {
