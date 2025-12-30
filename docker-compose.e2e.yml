@@ -1,0 +1,113 @@
+services:
+  authentication-service:
+    build:
+      context: .
+      dockerfile: apps/authentication-service/Dockerfile
+    container_name: authentication_service_e2e
+    image: authentication-service:latest
+    environment:
+      PORT: 3000
+      NODE_ENV: test
+      DOPPLER_TOKEN: ${DOPPLER_TOKEN_AUTHENTICATION_SERVICE_TEST}
+      # Override any prod-specific configs for testing
+      LOG_LEVEL: debug
+    entrypoint: ["doppler", "run", "--"]
+    command: ["pnpm", "start"]
+    depends_on:
+      authentication-service-mongodb:
+        condition: service_healthy
+    networks:
+      - e2e-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+
+  authentication-service-mongodb:
+    build:
+      context: ./apps/authentication-service-mongodb
+      dockerfile: Dockerfile
+    container_name: authentication_service_mongodb_e2e
+    environment:
+      DOPPLER_TOKEN: ${DOPPLER_TOKEN_AUTHENTICATION_SERVICE_TEST}
+    # Use tmpfs for faster I/O in tests (data doesn't need to persist)
+    tmpfs:
+      - /data/db
+    networks:
+      - e2e-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: apps/api-gateway/Dockerfile
+    container_name: api_gateway_e2e
+    image: api-gateway:latest
+    environment:
+      PORT: 3000
+      NODE_ENV: test
+      DOPPLER_TOKEN: ${DOPPLER_TOKEN_API_GATEWAY_TEST}
+      LOG_LEVEL: debug
+      # Point to test auth service
+      AUTHENTICATION_SERVICE_URL: http://authentication-service:3000
+    entrypoint: ["doppler", "run", "--"]
+    command: ["pnpm", "start"]
+    depends_on:
+      authentication-service:
+        condition: service_healthy
+    ports:
+      - "8080:3000"
+    networks:
+      - e2e-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+
+  frontend:
+    build:
+      context: .
+      dockerfile: apps/frontend/Dockerfile
+      args:
+        DOPPLER_TOKEN: ${DOPPLER_TOKEN_FRONTEND_TEST}
+    container_name: frontend_e2e
+    image: frontend:latest
+    environment:
+      NODE_ENV: test
+      # Point to test API gateway
+      VITE_API_URL: http://localhost:8080
+    ports:
+      - "3000:80"
+    depends_on:
+      api-gateway:
+        condition: service_healthy
+    networks:
+      - e2e-network
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "--no-verbose",
+          "--tries=1",
+          "--spider",
+          "http://localhost:80/",
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+
+networks:
+  e2e-network:
+    driver: bridge
+# No volumes defined - we want fresh state for each test run
