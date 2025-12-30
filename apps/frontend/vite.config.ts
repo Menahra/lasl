@@ -30,14 +30,14 @@ export default defineConfig(() => {
     build: {
       sourcemap: true,
       rollupOptions: {
-        external: ["tests/unit-integration/**/*"],
+        external: ["test/**/*"],
       },
     },
     test: {
       environment: "happy-dom",
       globals: false,
-      setupFiles: "./tests/unit-integration/vitest.setup.ts",
-      include: ["tests/unit-integration/**/*.test.ts*"],
+      setupFiles: "./test/vitest.setup.ts",
+      include: ["test/**/*.test.ts*"],
       coverage: {
         provider: "v8" as const,
         reporter: ["text", "lcov"],
