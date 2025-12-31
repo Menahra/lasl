@@ -1,3 +1,4 @@
+import { authApiRoutes } from "@lasl/app-contracts/api/auth";
 import {
   setupFastifyTestEnvironment,
   teardownFastifyTestEnvironment,
@@ -10,13 +11,11 @@ import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { buildApp } from "@/src/app.ts";
 import * as sessionService from "@/src/service/auth.service.ts";
 import * as userService from "@/src/service/user.service.ts";
-import { getApiVersionPathPrefix } from "@/src/util/api.path.util.ts";
 import * as jwtUtil from "@/src/util/jwt.util.ts";
 
 describe("auth routes", () => {
   let app: FastifyInstance;
-  const apiPathPrefix = getApiVersionPathPrefix(1);
-  const sessionsEndpoint = `${apiPathPrefix}/sessions`;
+  const sessionsEndpoint = authApiRoutes.session.create();
 
   beforeAll(async () => {
     app = await setupFastifyTestEnvironment({ buildApp, useMongo: true });
@@ -133,7 +132,7 @@ describe("auth routes", () => {
   });
 
   describe("POST /sessions/refresh", () => {
-    const refreshEndpoint = `${apiPathPrefix}/sessions/refresh`;
+    const refreshEndpoint = authApiRoutes.session.refresh();
 
     const mockSession = {
       _id: new mongoose.Types.ObjectId(),
@@ -280,7 +279,7 @@ describe("auth routes", () => {
   });
 
   describe("POST /sessions/logout", () => {
-    const logoutEndpoint = `${apiPathPrefix}/sessions/logout`;
+    const logoutEndpoint = authApiRoutes.session.logout();
 
     const mockSession = {
       valid: true,

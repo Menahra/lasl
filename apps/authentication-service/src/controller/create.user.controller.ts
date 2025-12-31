@@ -1,9 +1,9 @@
+import { authApiRoutes } from "@lasl/app-contracts/api/auth";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import { Error as MongooseError } from "mongoose";
 import type { CreateUserInput } from "../schema/user.schema.ts";
 import { createUser } from "../service/user.service.ts";
-import { getApiVersionPathPrefix } from "../util/api.path.util.ts";
 import { loadHtmlTemplate } from "../util/html.template.loader.util.ts";
 
 const typegooseDuplicateErrorCode = 11_000;
@@ -22,7 +22,7 @@ export const createUserHandler = async (
     const { protocol } = req;
     const origin = `${protocol}://${host}`;
 
-    const verifyUrl = `${origin}${getApiVersionPathPrefix(1)}/users/verify/${user._id}/${user.verificationCode}`;
+    const verifyUrl = `${origin}${authApiRoutes.user.verify(user._id.toString(), user.verificationCode)}`;
 
     const emailHtml = await loadHtmlTemplate("verification-email", {
       userName: user.firstName,

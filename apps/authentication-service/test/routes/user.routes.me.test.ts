@@ -1,3 +1,4 @@
+import { authApiRoutes } from "@lasl/app-contracts/api/auth";
 import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "@lasl/app-contracts/locales";
 import {
   setupFastifyTestEnvironment,
@@ -10,7 +11,6 @@ import mongoose from "mongoose";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { buildApp } from "@/src/app.ts";
 import { UserModel } from "@/src/model/user.model.ts";
-import { getApiVersionPathPrefix } from "@/src/util/api.path.util.ts";
 import {
   mockUserData,
   mockUserDataWithSettings,
@@ -25,8 +25,7 @@ vi.mock("@/src/util/jwt.util.ts", () => ({
 
 describe("user routes me", () => {
   let app: FastifyInstance;
-  const apiPathPrefix = getApiVersionPathPrefix(1);
-  const currentUserEndpoint = `${apiPathPrefix}/users/me`;
+  const currentUserEndpoint = authApiRoutes.user.me();
 
   const mockUser = {
     ...mockUserData,

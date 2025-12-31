@@ -58,6 +58,7 @@ describe("User service", () => {
 
   it("should create a user and return 200", async () => {
     (createUser as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+      _id: new mongoose.Types.ObjectId().toString(),
       firstName: mockUserInputData.firstName,
       email: mockUserInputData.email,
       verificationCode: "Test245",

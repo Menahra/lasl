@@ -7,7 +7,6 @@ import { fastifySwaggerPlugin } from "./plugins/swagger.ts";
 import { authRoutes } from "./routes/auth.routes.ts";
 import { healthRoutes } from "./routes/health.routes.ts";
 import { userRoutes } from "./routes/user.routes.ts";
-import { getApiVersionPathPrefix } from "./util/api.path.util.ts";
 import { fastifyMailerPlugin } from "./util/mailer.util.ts";
 
 export const buildApp = async () => {
@@ -35,15 +34,9 @@ export const buildApp = async () => {
   await fastify.register(fastifySwaggerPlugin);
   await fastify.register(fastifyCookiePlugin);
 
-  fastify.register(healthRoutes, {
-    prefix: getApiVersionPathPrefix(1),
-  });
-  fastify.register(userRoutes, {
-    prefix: getApiVersionPathPrefix(1),
-  });
-  fastify.register(authRoutes, {
-    prefix: getApiVersionPathPrefix(1),
-  });
+  fastify.register(healthRoutes);
+  fastify.register(userRoutes);
+  fastify.register(authRoutes);
 
   return fastify;
 };

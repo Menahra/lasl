@@ -1,7 +1,7 @@
+import { authApiRoutes } from "@lasl/app-contracts/api/auth";
 import type { FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import { z } from "zod";
-import { REFRESH_SESSION_ROUTE } from "@/src/constants/auth.routes.constants.ts";
 import {
   createSessionConflictResponseSchema,
   createSessionForbiddenResponseSchema,
@@ -23,7 +23,7 @@ import { createSessionJsonSchema } from "../schema/session.schema.ts";
 // biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok in controller with schema definition
 export const authRoutes = (fastifyInstance: FastifyInstance) => {
   fastifyInstance.post(
-    "/sessions",
+    authApiRoutes.session.create(),
     {
       schema: {
         summary: "Create a new session",
@@ -67,7 +67,7 @@ export const authRoutes = (fastifyInstance: FastifyInstance) => {
   );
 
   fastifyInstance.post(
-    REFRESH_SESSION_ROUTE,
+    authApiRoutes.session.refresh(),
     {
       preHandler: deserializeSession,
       schema: {
@@ -87,7 +87,7 @@ export const authRoutes = (fastifyInstance: FastifyInstance) => {
   );
 
   fastifyInstance.post(
-    "/sessions/logout",
+    authApiRoutes.session.logout(),
     {
       preHandler: deserializeSession,
       schema: {

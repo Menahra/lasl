@@ -1,9 +1,9 @@
+import { authApiRoutes } from "@lasl/app-contracts/api/auth";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import { nanoid } from "nanoid";
 import type { ForgotPasswordInput } from "../schema/user.schema.ts";
 import { findUserByEmail } from "../service/user.service.ts";
-import { getApiVersionPathPrefix } from "../util/api.path.util.ts";
 import { loadHtmlTemplate } from "../util/html.template.loader.util.ts";
 
 // biome-ignore lint/complexity/noExcessiveLinesPerFunction: acceptable here
@@ -27,7 +27,7 @@ export const forgotPasswordHandler = async (
         user.passwordResetCode = passwordResetCode;
         await user.save();
 
-        const resetPasswordUrl = `${origin}${getApiVersionPathPrefix(1)}/users/resetpassword/${user._id}/${user.passwordResetCode}`;
+        const resetPasswordUrl = `${origin}${authApiRoutes.user.resetPassword(user._id.toString(), user.passwordResetCode)}`;
 
         const passwordResetEmailHtml = await loadHtmlTemplate(
           "password-reset-email",
@@ -51,7 +51,7 @@ export const forgotPasswordHandler = async (
           "Password reset requested for not yet verified user",
         );
 
-        const verifyUrl = `${origin}${getApiVersionPathPrefix(1)}/users/verify/${user._id}/${user.verificationCode}`;
+        const verifyUrl = `${origin}${authApiRoutes.user.verify(user._id.toString(), user.verificationCode)}`;
 
         const passwordResetWithoutVerifiedHtml = await loadHtmlTemplate(
           "password-reset-unverified-email",

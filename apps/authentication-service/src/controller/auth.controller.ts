@@ -1,8 +1,8 @@
 import process from "node:process";
+import { authApiRoutes } from "@lasl/app-contracts/api/auth";
 import { vagueSessionErrorMessage } from "@lasl/app-contracts/schemas/session";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { StatusCodes } from "http-status-codes";
-import { REFRESH_SESSION_ROUTE } from "@/src/constants/auth.routes.constants.ts";
 import { REFRESH_COOKIE_NAME } from "@/src/middleware/authentication.hook.ts";
 import type { CreateSessionInputSchemaType } from "@/src/schema/session.schema.ts";
 import {
@@ -10,12 +10,11 @@ import {
   signRefreshToken,
 } from "@/src/service/auth.service.ts";
 import { findUserByEmail, findUserById } from "@/src/service/user.service.ts";
-import { getApiVersionPathPrefix } from "@/src/util/api.path.util.ts";
 
 // biome-ignore lint/style/noMagicNumbers: ok in formula
 const REFRESH_TOKEN_VALIDITY = 60 * 60 * 24 * 7;
 
-const fullRefreshSessionRoute = `${getApiVersionPathPrefix(1)}${REFRESH_SESSION_ROUTE}`;
+const fullRefreshSessionRoute = authApiRoutes.session.refresh();
 
 export const createSessionHandler = async (
   // biome-ignore lint/style/useNamingConvention: naming from fastify

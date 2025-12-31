@@ -18,6 +18,10 @@ export const authApiRoutes = {
       `${versionPrefix(version)}/users/verify/${id}/${code}`,
     me: (version: AuthApiVersion = "v1") =>
       `${versionPrefix(version)}/users/me`,
+    forgotPassword: (version: AuthApiVersion = "v1") =>
+      `${versionPrefix(version)}/users/forgotpassword`,
+    resetPassword: (id: string, code: string, version: AuthApiVersion = "v1") =>
+      `${versionPrefix(version)}/users/resetpassword/${id}/${code}`,
   },
   session: {
     create: (version: AuthApiVersion = "v1") =>
@@ -26,5 +30,10 @@ export const authApiRoutes = {
       `${versionPrefix(version)}/sessions/refresh`,
     logout: (version: AuthApiVersion = "v1") =>
       `${versionPrefix(version)}/sessions/logout`,
+  },
+
+  miscellaneous: {
+    health: (version: AuthApiVersion = "v1") =>
+      `${versionPrefix(version)}/healthcheck`,
   },
 };

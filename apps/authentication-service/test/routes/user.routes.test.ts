@@ -1,3 +1,4 @@
+import { authApiRoutes } from "@lasl/app-contracts/api/auth";
 import {
   setupFastifyTestEnvironment,
   teardownFastifyTestEnvironment,
@@ -9,14 +10,13 @@ import mongoose from "mongoose";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { buildApp } from "@/src/app.ts";
 import * as userService from "@/src/service/user.service.ts";
-import { getApiVersionPathPrefix } from "@/src/util/api.path.util.ts";
 import { mockUserInputData } from "../__mocks__/user.mock.ts";
 
 describe("user routes", () => {
   let app: FastifyInstance;
-  const apiPathPrefix = getApiVersionPathPrefix(1);
 
   const mockDbUser = {
+    _id: new mongoose.Types.ObjectId().toString(),
     firstName: mockUserInputData.firstName,
     email: mockUserInputData.email,
     verificationCode: "Test1234",
@@ -31,7 +31,7 @@ describe("user routes", () => {
   });
 
   describe("create user route", () => {
-    const postUsersEndpointPath = `${apiPathPrefix}/users`;
+    const postUsersEndpointPath = authApiRoutes.user.create();
 
     it("should create a user and return 200", async () => {
       // @ts-expect-error correct that ts complains here
@@ -107,7 +107,10 @@ describe("user routes", () => {
   });
 
   describe("verify code route", () => {
-    const verifyCodePath = `${apiPathPrefix}/users/verify/${new mongoose.Types.ObjectId().toHexString()}/${mockDbUser.verificationCode}`;
+    const verifyCodePath = authApiRoutes.user.verify(
+      new mongoose.Types.ObjectId().toHexString(),
+      mockDbUser.verificationCode,
+    );
     it("should verify user and return 200", async () => {
       // @ts-expect-error correct that ts complains here
       vi.spyOn(userService, "findUserById").mockResolvedValueOnce({
@@ -136,7 +139,7 @@ describe("user routes", () => {
       checkSwaggerDoc({
         fastifyInstance: app,
         endpointMethod: "get",
-        endpointPath: `${apiPathPrefix}/users/verify/{id}/{verificationCode}`,
+        endpointPath: authApiRoutes.user.verify("{id}", "{verificationCode}"),
         endpointStatusCode: statusCode,
         endpointContentType: "application/json",
         endpointResponseType: {
@@ -147,7 +150,7 @@ describe("user routes", () => {
   });
 
   describe("POST /users/forgotpassword", () => {
-    const forgotPasswordPath = `${apiPathPrefix}/users/forgotpassword`;
+    const forgotPasswordPath = authApiRoutes.user.forgotPassword();
     it("should trigger forgot password flow and return 200", async () => {
       // @ts-expect-error correct that ts complains here
       vi.spyOn(userService, "findUserByEmail").mockResolvedValueOnce({
@@ -184,7 +187,10 @@ describe("user routes", () => {
 
   describe("POST /users/resetpassword/:id/:passwordResetCode", () => {
     const mockResetCode = "Test928";
-    const resetPasswordPath = `${apiPathPrefix}/users/resetpassword/${new mongoose.Types.ObjectId().toHexString()}/${mockResetCode}`;
+    const resetPasswordPath = authApiRoutes.user.resetPassword(
+      new mongoose.Types.ObjectId().toHexString(),
+      mockResetCode,
+    );
 
     it("should reset user password and return 200", async () => {
       // @ts-expect-error correct that ts complains here
@@ -218,7 +224,10 @@ describe("user routes", () => {
       checkSwaggerDoc({
         fastifyInstance: app,
         endpointMethod: "post",
-        endpointPath: `${apiPathPrefix}/users/resetpassword/{id}/{passwordResetCode}`,
+        endpointPath: authApiRoutes.user.resetPassword(
+          "{id}",
+          "{passwordResetCode}",
+        ),
         endpointStatusCode: statusCode,
         endpointContentType: "application/json",
         endpointResponseType: {

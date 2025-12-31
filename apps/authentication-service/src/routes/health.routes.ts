@@ -1,4 +1,5 @@
 import process from "node:process";
+import { authApiRoutes } from "@lasl/app-contracts/api/auth";
 import type { FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import { z } from "zod";
@@ -6,7 +7,7 @@ import { healthcheckSuccessResponseSchema } from "@/src/routes/health.routes.sch
 
 export const healthRoutes = (fastifyInstance: FastifyInstance) => {
   fastifyInstance.get(
-    "/healthcheck",
+    authApiRoutes.miscellaneous.health(),
     {
       schema: {
         summary: "Healthcheck Endpoint",

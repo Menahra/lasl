@@ -1,3 +1,4 @@
+import { authApiRoutes } from "@lasl/app-contracts/api/auth";
 import {
   setupFastifyTestEnvironment,
   teardownFastifyTestEnvironment,
@@ -7,13 +8,11 @@ import type { FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { buildApp } from "@/src/app.ts";
-import { getApiVersionPathPrefix } from "@/src/util/api.path.util.ts";
 
 describe("health routes", () => {
   let app: FastifyInstance;
 
-  const apiPathPrefix = getApiVersionPathPrefix(1);
-  const healthEndpointPath = `${apiPathPrefix}/healthcheck`;
+  const healthEndpointPath = authApiRoutes.miscellaneous.health();
 
   beforeAll(async () => {
     app = await setupFastifyTestEnvironment({ buildApp, useMongo: true });

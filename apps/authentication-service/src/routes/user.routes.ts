@@ -1,3 +1,4 @@
+import { authApiRoutes } from "@lasl/app-contracts/api/auth";
 import type { FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import z from "zod";
@@ -45,7 +46,7 @@ const UserSwaggerTag = "User";
 // biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok in controller with schema definition
 export const userRoutes = (fastifyInstance: FastifyInstance) => {
   fastifyInstance.post(
-    "/users",
+    authApiRoutes.user.create(),
     {
       schema: {
         summary: "Create New Users",
@@ -75,7 +76,7 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
 
   fastifyInstance.get(
     // biome-ignore lint/security/noSecrets: this is a route, not a secret
-    "/users/verify/:id/:verificationCode",
+    authApiRoutes.user.verify(":id", ":verificationCode"),
     {
       schema: {
         summary: "Verify a specific user",
@@ -104,7 +105,7 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
   );
 
   fastifyInstance.post(
-    "/users/forgotpassword",
+    authApiRoutes.user.forgotPassword(),
     {
       schema: {
         summary: "User forgot the password",
@@ -122,7 +123,7 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
 
   fastifyInstance.post(
     // biome-ignore lint/security/noSecrets: this is a route, not a secret
-    "/users/resetpassword/:id/:passwordResetCode",
+    authApiRoutes.user.resetPassword(":id", ":passwordResetCode"),
     {
       schema: {
         summary: "Reset the current password",
@@ -149,7 +150,7 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
   );
 
   fastifyInstance.get(
-    "/users/me",
+    authApiRoutes.user.me(),
     {
       preHandler: deserializeUser,
       schema: {
@@ -177,7 +178,7 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
   );
 
   fastifyInstance.patch(
-    "/users/me",
+    authApiRoutes.user.me(),
     {
       preHandler: deserializeUser<{
         // biome-ignore lint/style/useNamingConvention: property name come from fastify
