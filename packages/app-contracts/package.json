@@ -1,6 +1,6 @@
 {
   "name": "@lasl/app-contracts",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "type": "module",
   "files": [
@@ -22,6 +22,18 @@
     "./errors/user": {
       "import": "./dist/schemas/user.errors.js",
       "types": "./dist/schemas/user.errors.d.ts"
+    },
+    "./api/auth": {
+      "import": "./dist/api/auth.api.js",
+      "types": "./dist/api/auth.api.d.ts"
+    },
+    "./routes/auth": {
+      "import": "./dist/routes/auth.routes.js",
+      "types": "./dist/routes/auth.routes.d.ts"
+    },
+    "./routes/legal": {
+      "import": "./dist/routes/legal.routes.js",
+      "types": "./dist/routes/leagal.routes.d.ts"
     }
   },
   "scripts": {
