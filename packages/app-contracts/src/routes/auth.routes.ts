@@ -13,4 +13,4 @@ export const authRoutes = {
   resetPassword: (id: string, passwordResetCode: string) =>
     `/reset-password/${id}/${passwordResetCode}`,
   resetPasswordSent: "/reset-password/sent",
-};
+} as const;
