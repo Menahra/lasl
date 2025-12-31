@@ -30,6 +30,7 @@
     "docker:clean:networks": "docker network prune -f"
   },
   "devDependencies": {
+    "@lasl/app-contracts": "workspace:*",
     "@playwright/test": "^1.57.0",
     "dotenv": "^17.2.3",
     "http-status-codes": "^2.3.0"

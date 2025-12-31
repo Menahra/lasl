@@ -6,6 +6,16 @@
     "rules": {
       "correctness": {
         "noNodejsModules": "off"
+      },
+      "performance": {
+        "noNamespaceImport": "off",
+        "useTopLevelRegex": "off"
+      },
+      "security": {
+        "noSecrets": "off"
+      },
+      "style": {
+        "noMagicNumbers": "off"
       }
     }
   }
