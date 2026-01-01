@@ -24,663 +24,663 @@ msgstr ""
 #: src/app/pages/imprint-page/ImprintPage.tsx:42
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:34
 msgid "{0} {1}<0/>{2} {3}<1/>{4} {5}<2/>{6}"
-msgstr ""
+msgstr "{0} {1}<0/>{2} {3}<1/>{4} {5}<2/>{6}"
 
 #. placeholder {0}: PROJECT_INFORMATION.name
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:152
 msgid "{0} may revise these Terms of Service at any time without notice. By using this platform, you agree to be bound by the current version of these Terms of Service."
-msgstr ""
+msgstr "{0} kann diese Nutzungsbedingungen jederzeit ohne vorherige Ankündigung ändern. Durch die Nutzung dieser Plattform erklären Sie sich mit der jeweils aktuellen Version dieser Nutzungsbedingungen einverstanden."
 
 #. placeholder {0}: PROJECT_INFORMATION.name
 #: src/app/layouts/main-layout/footer/Footer.tsx:83
 msgid "© {currentYear} {0}. All rights reserved."
-msgstr ""
+msgstr "© {currentYear} {0}. Alle Rechte vorbehalten."
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:116
 msgid "<0>Account data is retained for the duration of the account</0><1>Learning progress data is deleted when the account is deleted</1><2>Technical and log data is retained for a limited period for security purposes</2>"
-msgstr ""
+msgstr "<0>Kontodaten werden für die Dauer des Benutzerkontos gespeichert</0><1>Lernfortschrittsdaten werden bei Löschung des Kontos entfernt</1><2>Technische Daten und Protokolldaten werden aus Sicherheitsgründen nur für einen begrenzten Zeitraum gespeichert</2>"
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:53
 msgid "<0>Identity data (such as name and email address)</0><1>Usage data (information about how you use the platform)</1><2>Technical data (such as IP address, browser type, and device information)</2>"
-msgstr ""
+msgstr "<0>Identitätsdaten (z. B. Name und E-Mail-Adresse)</0><1>Nutzungsdaten (Informationen darüber, wie Sie die Plattform verwenden)</1><2>Technische Daten (z. B. IP-Adresse, Browsertyp und Geräteinformationen)</2>"
 
 #. placeholder {0}: PROJECT_INFORMATION.name
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:58
 msgid "<0>Modify or copy the materials</0><1>Use the materials for any commercial purpose</1><2>Attempt to reverse engineer any software contained on {0}</2><3>Remove any copyright or proprietary notations from the materials</3><4>Transfer the materials to another person or \"mirror\" the materials on any other server</4>"
-msgstr ""
+msgstr "<0>Die Materialien zu verändern oder zu kopieren</0><1>Die Materialien für kommerzielle Zwecke zu nutzen</1><2>Zu versuchen, Software auf {0} zu dekompilieren oder zurückzuentwickeln</2><3>Urheberrechts- oder Eigentumsvermerke aus den Materialien zu entfernen</3><4>Die Materialien an Dritte weiterzugeben oder auf anderen Servern zu spiegeln</4>"
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:87
 msgid "<0>Performance of a contract (Art. 6(1)(b) GDPR), where processing is necessary to provide user accounts and learning services</0><1>Legitimate interests (Art. 6(1)(f) GDPR), in particular to ensure the security and stability of the platform</1><2>Legal obligations (Art. 6(1)(c) GDPR), where processing is required by applicable law</2><3>Consent (Art. 6(1)(a) GDPR), where you have explicitly given consent</3>"
-msgstr ""
+msgstr "<0>Vertragserfüllung (Art. 6 Abs. 1 lit. b DSGVO), soweit die Verarbeitung zur Bereitstellung von Benutzerkonten und Lernangeboten erforderlich ist</0><1>Berechtigte Interessen (Art. 6 Abs. 1 lit. f DSGVO), insbesondere zur Gewährleistung der Sicherheit und Stabilität der Plattform</1><2>Rechtliche Verpflichtungen (Art. 6 Abs. 1 lit. c DSGVO), sofern die Verarbeitung gesetzlich vorgeschrieben ist</2><3>Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), sofern Sie diese ausdrücklich erteilt haben</3>"
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:69
 msgid "<0>Providing and maintaining the platform</0><1>Tracking learning progress and personalizing the experience</1><2>Improving the platform and developing new features</2><3>Ensuring security and preventing misuse</3><4>Complying with legal obligations</4>"
-msgstr ""
+msgstr "<0>Bereitstellung und Betrieb der Plattform</0><1>Erfassung des Lernfortschritts und Personalisierung der Nutzererfahrung</1><2>Verbesserung der Plattform und Entwicklung neuer Funktionen</2><3>Gewährleistung der Sicherheit und Verhinderung von Missbrauch</3><4>Einhaltung gesetzlicher Verpflichtungen</4>"
 
 #: src/app/pages/landing-page/LandingPage.tsx:145
 msgid "Accessible Everywhere"
-msgstr ""
+msgstr "Überall zugänglich"
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:32
 msgid "Agreement to Terms"
-msgstr ""
+msgstr "Zustimmung zu den Nutzungsbedingungen"
 
 #: src/app/pages/landing-page/LandingPage.tsx:105
 msgid "All content is stored as JSON documents that contributors can edit and improve."
-msgstr ""
+msgstr "Alle Inhalte werden als JSON-Dokumente gespeichert und können von Mitwirkenden bearbeitet und verbessert werden."
 
 #. placeholder {0}: PROJECT_INFORMATION.name
 #. placeholder {1}: PROJECT_INFORMATION.name
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:103
 msgid "All content, features, and functionality on {0}, including but not limited to text, graphics, logos, and software, are the exclusive property of {1} and are protected by international copyright, trademark, and other intellectual property laws."
-msgstr ""
+msgstr "Alle Inhalte, Funktionen und Bestandteile auf {0}, einschließlich, aber nicht beschränkt auf Texte, Grafiken, Logos und Software, sind ausschließliches Eigentum von {1} und durch internationale Urheber-, Marken- und andere Schutzrechte des geistigen Eigentums geschützt."
 
 #: src/app/pages/register/register-page/RegisterPage.tsx:40
 msgid "Already have an Account? <0>Sign In</0>"
-msgstr ""
+msgstr "Sie haben bereits ein Konto? <0>Anmelden</0>"
 
 #: src/app/pages/landing-page/LandingPage.tsx:41
 msgid "An open, community-driven platform for learning Modern Standard Arabic. Explore Nahw, Sarf, Balagha, and more — with content you can help improve."
-msgstr ""
+msgstr "Eine offene, gemeinschaftsgetriebene Plattform zum Lernen des modernen Hocharabisch. Entdecken Sie Nahw, Sarf, Balagha und mehr – mit Inhalten, die Sie selbst mitgestalten können."
 
 #: src/app/pages/register/register-page/RegisterForm.tsx:84
 #: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:81
 msgid "An unexpected error occurred. Please try again."
-msgstr ""
+msgstr "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:151
 msgid "Appropriate technical and organizational measures are implemented to protect personal data against accidental or unlawful loss, alteration, or unauthorized access."
-msgstr ""
+msgstr "Es werden geeignete technische und organisatorische Maßnahmen ergriffen, um personenbezogene Daten vor versehentlichem oder unrechtmäßigem Verlust, Veränderung oder unbefugtem Zugriff zu schützen."
 
 #: src/app/pages/landing-page/LandingPage.tsx:74
 msgid "Arabic Grammar & Syntax"
-msgstr ""
+msgstr "Arabische Grammatik & Syntax"
 
 #: src/app/pages/imprint-page/ImprintPage.tsx:56
 msgid "As the service provider, we are responsible for our own content on these pages in accordance with applicable laws."
-msgstr ""
+msgstr "Als Diensteanbieter sind wir gemäß den geltenden Gesetzen für eigene Inhalte auf diesen Seiten verantwortlich."
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:177
 msgid "Automated Decision-Making"
-msgstr ""
+msgstr "Automatisierte Entscheidungsfindung"
 
 #: src/app/layouts/legal-document-layout/LegalDocumentLayout.tsx:29
 msgid "Back to Home"
-msgstr ""
+msgstr "Zurück zur Startseite"
 
 #: src/app/pages/register/register-success-page/RegisterSuccessPage.tsx:43
 msgid "Back to Registration"
-msgstr ""
+msgstr "Zurück zur Registrierung"
 
 #: src/app/pages/forgot-password/forgot-password-page/ForgotPasswordForm.tsx:102
 #: src/app/pages/forgot-password/forgot-password-sent-page/ForgotPasswordSentPage.tsx:77
 msgid "Back to sign in"
-msgstr ""
+msgstr "Zurück zur Anmeldung"
 
 #. placeholder {0}: PROJECT_INFORMATION.name
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:34
 msgid "By accessing or using {0}, you agree to be bound by these Terms of Service and all applicable laws and regulations. If you do not agree with any of these terms, you are prohibited from using this platform."
-msgstr ""
+msgstr "Durch den Zugriff auf oder die Nutzung von {0} erklären Sie sich mit diesen Nutzungsbedingungen sowie allen anwendbaren Gesetzen und Vorschriften einverstanden. Wenn Sie diesen Bedingungen nicht zustimmen, ist Ihnen die Nutzung dieser Plattform untersagt."
 
 #: src/app/pages/login-page/LoginPage.tsx:36
 msgid "By continuing, you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>."
-msgstr ""
+msgstr "Durch die Fortsetzung erklären Sie sich mit unseren <0>Nutzungsbedingungen</0> und unserer <1>Datenschutzerklärung</1> einverstanden."
 
 #: src/app/pages/register/register-page/RegisterForm.tsx:109
 msgid "By signing up, you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>."
-msgstr ""
+msgstr "Mit der Registrierung erklären Sie sich mit unseren <0>Nutzungsbedingungen</0> und unserer <1>Datenschutzerklärung</1> einverstanden."
 
 #: src/app/pages/landing-page/LandingPage.tsx:95
 msgid "Carefully organized lessons covering grammar, morphology, and rhetoric progressively."
-msgstr ""
+msgstr "Sorgfältig strukturierte Lektionen zu Grammatik, Morphologie und Rhetorik in aufbauender Reihenfolge."
 
 #: src/app/pages/forgot-password/forgot-password-sent-page/ForgotPasswordSentPage.tsx:40
 msgid "Check your email"
-msgstr ""
+msgstr "Überprüfen Sie Ihre E-Mails"
 
 #: src/app/pages/register/register-success-page/RegisterSuccessPage.tsx:21
 msgid "Check Your Email"
-msgstr ""
+msgstr "Überprüfen Sie Ihre E-Mails"
 
 #: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:101
 msgid "Choose a strong password for your account"
-msgstr ""
+msgstr "Wählen Sie ein sicheres Passwort für Ihr Konto"
 
 #: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:71
 msgid "Close menu"
-msgstr ""
+msgstr "Menü schließen"
 
 #: src/app/pages/landing-page/LandingPage.tsx:135
 msgid "Collaborative Learning"
-msgstr ""
+msgstr "Gemeinschaftliches Lernen"
 
 #: src/app/pages/landing-page/LandingPageFeatureCard.tsx:30
 msgid "Coming Soon"
-msgstr ""
+msgstr "Demnächst verfügbar"
 
 #: src/app/pages/landing-page/LandingPage.tsx:103
 msgid "Community-Driven Content"
-msgstr ""
+msgstr "Community-getriebene Inhalte"
 
 #: src/app/pages/register/register-page/registerFormFields.ts:45
 #: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:125
 msgid "Confirm Password"
-msgstr ""
+msgstr "Passwort Bestätigen"
 
 #: src/app/pages/register/register-page/registerFormFields.ts:46
 #: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:124
 msgid "Confirm your password"
-msgstr ""
+msgstr "Bestätigen Sie Ihr Passwort"
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:140
 msgid "Consumer Rights"
-msgstr ""
+msgstr "Verbraucherrechte"
 
 #: src/app/pages/imprint-page/ImprintPage.tsx:28
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:186
 msgid "Contact"
-msgstr ""
+msgstr "Kontakt"
 
 #: src/app/layouts/main-layout/footer/Footer.tsx:74
 msgid "Contact Form??"
-msgstr ""
+msgstr "Kontaktformular??"
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:189
 msgid "Contact Us"
-msgstr ""
+msgstr "Kontaktieren Sie uns"
 
 #: src/app/pages/imprint-page/ImprintPage.tsx:110
 msgid "Content and works created by the site operator on this website are subject to copyright law. Duplication, processing, distribution, or any form of commercialization requires prior written consent."
-msgstr ""
+msgstr "Die vom Betreiber dieser Website erstellten Inhalte und Werke unterliegen dem Urheberrecht. Vervielfältigung, Bearbeitung, Verbreitung oder jede Art der Verwertung außerhalb der Grenzen des Urheberrechts bedürfen der vorherigen schriftlichen Zustimmung."
 
 #: src/app/pages/register/register-verified-page/RegisterVerifiedPage.tsx:48
 msgid "Continue to App"
-msgstr ""
+msgstr "Zur App fortfahren"
 
 #: src/app/pages/imprint-page/ImprintPage.tsx:108
 msgid "Copyright"
-msgstr ""
+msgstr "Urheberrecht"
 
 #: src/app/pages/register/register-page/RegisterForm.tsx:129
 msgid "Create Account"
-msgstr ""
+msgstr "Konto erstellen"
 
 #: src/app/pages/register/register-page/RegisterPage.tsx:33
 msgid "Create your Account"
-msgstr "Erstelle Deinen Account"
+msgstr "Erstellen Sie Ihr Konto"
 
 #: src/app/pages/landing-page/LandingPage.tsx:175
 msgid "Create Your Free Account"
-msgstr ""
+msgstr "Erstellen Sie Ihr kostenloses Konto"
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:26
 msgid "Data Controller"
-msgstr ""
+msgstr "Verantwortlicher"
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:108
 msgid "Data Retention"
-msgstr ""
+msgstr "Speicherdauer"
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:149
 msgid "Data Security"
-msgstr ""
+msgstr "Datensicherheit"
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:129
 msgid "Data Sharing and Recipients"
-msgstr ""
+msgstr "Teilen von Daten und Empfänger"
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:46
 msgid "Data We Collect"
-msgstr ""
+msgstr "Erhobene Daten"
 
 #: src/app/pages/forgot-password/forgot-password-sent-page/ForgotPasswordSentPage.tsx:55
 msgid "Didn't receive the email? Check your spam folder or try again with a different email address."
-msgstr ""
+msgstr "Keine E-Mail erhalten? Überprüfe den Spamordner oder probiere eine andere E-Mail Adresse."
 
 #: src/app/pages/register/register-success-page/RegisterSuccessPage.tsx:34
 msgid "Didn't receive the email? Check your spam folder or try signing up again."
-msgstr ""
+msgstr "Keine E-Mail erhalten? Überprüfe den Spamordner oder versuche es erneut."
 
 #: src/app/pages/login-page/LoginForm.tsx:144
 msgid "Don't have an account yet?"
-msgstr ""
+msgstr "Noch kein Konto verhanden?"
 
 #: src/app/pages/forgot-password/forgot-password-page/ForgotPasswordForm.tsx:83
 #: src/app/pages/login-page/LoginForm.tsx:107
 #: src/app/pages/register/register-page/registerFormFields.ts:32
 msgid "Email"
-msgstr ""
+msgstr "E-Mail-Adresse"
 
 #: src/app/pages/register/register-verified-page/RegisterVerifiedPage.tsx:32
 msgid "Email Verified!"
-msgstr ""
+msgstr "E-Mail-Adresse bestätigt!"
 
 #: src/app/pages/forgot-password/forgot-password-page/ForgotPasswordForm.tsx:67
 msgid "Enter your email and we'll send you reset instructions"
-msgstr ""
+msgstr "Geben Sie Ihre E-Mail-Adresse ein, wir senden Ihnen Anweisungen zum Zurücksetzen"
 
 #: src/app/pages/register/register-page/registerFormFields.ts:21
 msgid "Enter your first name"
-msgstr ""
+msgstr "Geben Sie Ihren Vornamen ein"
 
 #: src/app/pages/register/register-page/registerFormFields.ts:27
 msgid "Enter your last name"
-msgstr ""
+msgstr "Gib Sie Ihren Nachnamen ein"
 
 #: src/app/pages/login-page/LoginForm.tsx:116
 #: src/app/pages/register/register-page/registerFormFields.ts:39
 #: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:114
 msgid "Enter your password"
-msgstr ""
+msgstr "Geben Sie Ihr Passwort ein"
 
 #: src/app/pages/register/register-page/registerFormFields.ts:20
 msgid "First Name"
-msgstr ""
+msgstr "Vorname"
 
 #: src/shared/formErrors.ts:11
 msgid "First name is required"
-msgstr ""
+msgstr "Vorname erforderlich"
 
 #: src/app/pages/forgot-password/forgot-password-page/ForgotPasswordForm.tsx:62
 msgid "Forgot password?"
-msgstr ""
+msgstr "Passwort vergessen?"
 
 #: src/app/pages/login-page/LoginForm.tsx:127
 msgid "Forgot Password?"
-msgstr ""
+msgstr "Passwort vergessen?"
 
 #: src/shared/components/brand-logo/BrandLogo.tsx:24
 msgid "Go to homepage"
-msgstr ""
+msgstr "Zur Startseite"
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:160
 msgid "Governing Law and Jurisdiction"
-msgstr ""
+msgstr "Anwendbares Recht und Gerichtsstand"
 
 #: src/app/pages/imprint-page/ImprintPage.tsx:62
 msgid "However, we are not obligated to monitor transmitted or stored third-party information or to actively investigate circumstances that indicate illegal activity."
-msgstr ""
+msgstr "Wir sind jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder aktiv nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen."
 
 #: src/app/pages/forgot-password/forgot-password-sent-page/ForgotPasswordSentPage.tsx:45
 msgid "If an account exists for {userEmail}, we have sent password reset instructions."
-msgstr ""
+msgstr "Sofern ein Konto für {userEmail} existiert, haben wir Anweisungen zum Zurücksetzen des Passworts versendet."
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:142
 msgid "If you are a consumer residing in the European Union, you benefit from mandatory consumer protection rights under applicable EU and national laws. Nothing in these Terms limits or excludes those rights."
-msgstr ""
+msgstr "Wenn Sie Verbraucher mit Wohnsitz in der Europäischen Union sind, profitieren Sie von den zwingenden Verbraucherschutzrechten nach EU- und nationalem Recht. Diese Nutzungsbedingungen schränken diese Rechte nicht ein."
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:169
 msgid "If you are a consumer, this choice of law does not deprive you of the protection afforded by mandatory provisions of the law of your country of residence."
-msgstr ""
+msgstr "Wenn Sie Verbraucher sind, entzieht Ihnen diese Rechtswahl nicht den Schutz zwingender Bestimmungen des Rechts Ihres Wohnsitzstaates."
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:188
 msgid "If you have any questions about this Privacy Policy or the processing of your personal data, please contact us. There is no dedicated privacy email available yet."
-msgstr ""
+msgstr "Wenn Sie Fragen zu dieser Datenschutzerklärung oder zur Verarbeitung Ihrer personenbezogenen Daten haben, kontaktieren Sie uns bitte. Eine spezielle Datenschutz-E-Mail-Adresse steht derzeit noch nicht zur Verfügung."
 
 #: src/app/layouts/main-layout/footer/Footer.tsx:58
 #: src/app/pages/imprint-page/ImprintPage.tsx:11
 msgid "Imprint"
-msgstr ""
+msgstr "Impressum"
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:101
 msgid "Intellectual Property"
-msgstr ""
+msgstr "Geistiges Eigentum"
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:140
 msgid "International Data Transfers"
-msgstr ""
+msgstr "Internationale Datenübermittlungen"
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:14
 msgid "Introduction"
-msgstr ""
+msgstr "Einleitung"
 
 #: src/app/pages/login-page/LoginForm.tsx:92
 msgid "Invalid Email or password. Please try again"
-msgstr ""
+msgstr "Ungültige E-Mail-Adresse oder Passwort. Bitte versuchen Sie es erneut."
 
 #: src/app/pages/landing-page/LandingPage.tsx:137
 msgid "Join a community of learners and contributors passionate about Arabic."
-msgstr ""
+msgstr "Werden Sie Teil einer Community von Lernenden und Mitwirkenden mit Begeisterung für die arabische Sprache."
 
 #: src/app/pages/landing-page/LandingPage.tsx:163
 msgid "Join learners and contributors shaping the future of Arabic language education."
-msgstr ""
+msgstr "Schließen Sie sich Lernenden und Mitwirkenden an, die die Zukunft der arabischen Sprachbildung gestalten."
 
 #: src/shared/components/language-select/LanguageSelect.tsx:66
 msgid "Language"
-msgstr ""
+msgstr "Sprache"
 
 #: src/app/pages/register/register-page/registerFormFields.ts:26
 msgid "Last Name"
-msgstr ""
+msgstr "Nachname"
 
 #: src/shared/formErrors.ts:12
 msgid "Last name is required"
-msgstr ""
+msgstr "Nachname erforderlich"
 
 #. placeholder {0}: i18n.date(lastUpdate)
 #: src/app/layouts/legal-document-layout/LegalDocumentLayout.tsx:36
 msgid "Last updated: {0}"
-msgstr ""
+msgstr "Zuletzt aktualisiert: {0}"
 
 #: src/app/pages/landing-page/LandingPage.tsx:126
 msgid "Learn in English, with German, French, and more languages coming soon."
-msgstr ""
+msgstr "Lernen Sie auf Englisch – Deutsch, Französisch und weitere Sprachen folgen in Kürze."
 
 #: src/app/pages/landing-page/LandingPage.tsx:147
 msgid "Learn on any device with a responsive, accessible design."
-msgstr ""
+msgstr "Lernen Sie auf jedem Gerät mit einem responsiven und barrierearmen Design."
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:112
 msgid "Learning Content"
-msgstr ""
+msgstr "Lerninhalte"
 
 #: src/app/layouts/main-layout/footer/Footer.tsx:37
 msgid "Legal"
-msgstr ""
+msgstr "Rechtliches"
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:79
 msgid "Legal Basis for Processing"
-msgstr ""
+msgstr "Rechtsgrundlage der Verarbeitung"
 
 #: src/app/pages/imprint-page/ImprintPage.tsx:88
 msgid "Liability for Content"
-msgstr ""
+msgstr "Haftung für Inhalte"
 
 #: src/app/pages/imprint-page/ImprintPage.tsx:98
 msgid "Liability for Links"
-msgstr ""
+msgstr "Haftung für Links"
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:123
 msgid "Limitation of Liability"
-msgstr ""
+msgstr "Haftungsbeschränkung"
 
 #: src/app/layouts/main-layout/header/AuthButton.tsx:17
 msgid "Login"
-msgstr ""
+msgstr "Anmelden"
 
 #: src/app/layouts/main-layout/header/AuthButton.tsx:26
 msgid "Logout"
-msgstr ""
+msgstr "Abmelden"
 
 #: src/app/pages/landing-page/LandingPage.tsx:36
 msgid "Master Classical Arabic (Fusha)"
-msgstr ""
+msgstr "Beherrschen Sie klassisches Arabisch (Fusha)"
 
 #: src/app/layouts/main-layout/footer/Footer.tsx:27
 msgid "Master فصحى, the standard arabic language used in the Qur'an, literature, and news."
-msgstr ""
+msgstr "Meistern Sie فصحى, die standardisierte arabische Sprache des Korans, der Literatur und der Nachrichten."
 
 #: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:63
 msgid "Menu"
-msgstr ""
+msgstr "Menü"
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:150
 msgid "Modifications"
-msgstr ""
+msgstr "Änderungen"
 
 #: src/app/pages/landing-page/LandingPage.tsx:78
 msgid "Morphology & Word Patterns"
-msgstr ""
+msgstr "Morphologie & Wortmuster"
 
 #: src/app/pages/landing-page/LandingPage.tsx:124
 msgid "Multi-Language Interface"
-msgstr ""
+msgstr "Mehrsprachige Benutzeroberfläche"
 
 #: src/app/pages/imprint-page/ImprintPage.tsx:79
 msgid "Non-Commercial Notice"
-msgstr ""
+msgstr "Hinweis zur Nichtkommerzialität"
 
 #: src/app/pages/imprint-page/ImprintPage.tsx:69
 msgid "Obligations to remove or block the use of information under general laws remain unaffected. Liability in this regard is only possible from the point in time at which a specific infringement becomes known. Upon becoming aware of such violations, we will remove the content immediately."
-msgstr ""
+msgstr "Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben unberührt. Eine Haftung ist erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden entsprechender Rechtsverletzungen werden wir die Inhalte umgehend entfernen."
 
 #: src/app/pages/landing-page/LandingPage.tsx:114
 msgid "Open & Transparent"
-msgstr ""
+msgstr "Offen & transparent"
 
 #: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:51
 msgid "Open menu"
-msgstr ""
+msgstr "Menü öffnen"
 
 #: src/app/layouts/main-layout/header/GitHubButton.tsx:31
 #: src/app/layouts/main-layout/header/GitHubButton.tsx:32
 msgid "Open the GitHub repository in a new browser tab."
-msgstr ""
+msgstr "GitHub-Repository in einem neuen Browser-Tab öffnen."
 
 #: src/app/pages/login-page/LoginForm.tsx:117
 #: src/app/pages/register/register-page/registerFormFields.ts:38
 #: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:115
 msgid "Password"
-msgstr ""
+msgstr "Passwort"
 
 #: src/shared/formErrors.ts:13
 msgid "Password confirmation is required"
-msgstr ""
+msgstr "Passwortbestätigung erforderlich"
 
 #: src/shared/formErrors.ts:18
 msgid "Password is required"
-msgstr ""
+msgstr "Passwort erforderlich"
 
 #: src/shared/formErrors.ts:15
 msgid "Password must be at least {USER_PASSWORD_MIN_LENGTH} characters long"
-msgstr ""
+msgstr "Das Passwort muss mindestens {USER_PASSWORD_MIN_LENGTH} Zeichen lang sein"
 
 #: src/shared/formErrors.ts:14
 msgid "Password must contain at least one lowercase letter"
-msgstr ""
+msgstr "Das Passwort muss mindestens einen Kleinbuchstaben enthalten"
 
 #: src/shared/formErrors.ts:17
 msgid "Password must contain at least one number"
-msgstr ""
+msgstr "Das Passwort muss mindestens eine Zahl enthalten"
 
 #: src/shared/formErrors.ts:19
 msgid "Password must contain at least one uppercase letter"
-msgstr ""
+msgstr "Das Passwort muss mindestens einen Großbuchstaben enthalten"
 
 #: src/app/pages/reset-password/reset-password-sent-page/ResetPasswordSentPage.tsx:32
 msgid "Password reset!"
-msgstr ""
+msgstr "Passwort zurückgesetzt!"
 
 #: src/shared/formErrors.ts:16
 msgid "Passwords do not match"
-msgstr ""
+msgstr "Passwörter stimmen nicht überein"
 
 #. placeholder {0}: PROJECT_INFORMATION.name
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:50
 msgid "Permission is granted to temporarily access the materials on{0} for personal, non-commercial use only. This is the grant of a license, not a transfer of title, and under this license you may not:"
-msgstr ""
+msgstr "Es wird die Erlaubnis erteilt, die Materialien auf {0} ausschließlich vorübergehend für den persönlichen, nichtkommerziellen Gebrauch zu nutzen. Dies stellt eine Lizenz dar, keine Eigentumsübertragung. Unter dieser Lizenz ist es nicht gestattet:"
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:142
 msgid "Personal data is processed exclusively within the European Union. No transfer of personal data to third countries takes place."
-msgstr ""
+msgstr "Die Verarbeitung personenbezogener Daten erfolgt ausschließlich innerhalb der Europäischen Union. Eine Übermittlung in Drittländer findet nicht statt."
 
 #: src/shared/formErrors.ts:10
 msgid "Please enter a valid email address"
-msgstr ""
+msgstr "Bitte geben Sie eine gültige E-Mail-Adresse ein"
 
 #: src/app/pages/login-page/LoginForm.tsx:90
 msgid "Please verify your email first"
-msgstr ""
+msgstr "Bitte bestätigen Sie zunächst Ihre E-Mail-Adresse"
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:176
 msgid "Privacy and Data Protection"
-msgstr ""
+msgstr "Datenschutz und Privatsphäre"
 
 #: src/app/layouts/main-layout/footer/Footer.tsx:44
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:11
 msgid "Privacy Policy"
-msgstr ""
+msgstr "Datenschutzerklärung"
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:64
 msgid "Purposes of Processing"
-msgstr ""
+msgstr "Zwecke der Verarbeitung"
 
 #: src/app/pages/landing-page/LandingPage.tsx:158
 msgid "Ready to Begin Your Arabic Journey?"
-msgstr ""
+msgstr "Bereit, Ihre Reise in die arabische Sprache zu beginnen?"
 
 #: src/app/pages/register/register-verified-page/RegisterVerifiedPage.tsx:42
 msgid "Redirecting you to the app in a few seconds..."
-msgstr ""
+msgstr "Sie werden in wenigen Sekunden zur App weitergeleitet..."
 
 #: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:135
 msgid "Reset password"
-msgstr ""
+msgstr "Passwort zurücksetzen"
 
 #: src/app/layouts/main-layout/footer/Footer.tsx:67
 msgid "Resources"
-msgstr ""
+msgstr "Ressourcen"
 
 #: src/app/pages/imprint-page/ImprintPage.tsx:54
 msgid "Responsibility for Content"
-msgstr ""
+msgstr "Verantwortung für Inhalte"
 
 #: src/app/pages/imprint-page/ImprintPage.tsx:37
 msgid "Responsible for Content"
-msgstr ""
+msgstr "Inhaltlich verantwortlich"
 
 #: src/app/pages/imprint-page/ImprintPage.tsx:39
 msgid "Responsible for content according to § 55 Abs. 2 RStV:"
-msgstr ""
+msgstr "Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:"
 
 #: src/app/pages/landing-page/LandingPage.tsx:82
 msgid "Rhetoric & Eloquence"
-msgstr ""
+msgstr "Rhetorik & Sprachgewandtheit"
 
 #: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:81
 #: src/app/layouts/main-layout/header/Header.tsx:38
 msgid "Search in all pages"
-msgstr ""
+msgstr "Auf allen Seiten suchen"
 
 #: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:86
 #: src/app/layouts/main-layout/header/Header.tsx:43
 msgid "Search..."
-msgstr ""
+msgstr "Suchen..."
 
 #: src/app/pages/forgot-password/forgot-password-page/ForgotPasswordForm.tsx:93
 msgid "Send reset link"
-msgstr ""
+msgstr "Link zum Zurücksetzen senden"
 
 #: src/app/pages/imprint-page/ImprintPage.tsx:14
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:15
 msgid "Service Provider"
-msgstr ""
+msgstr "Diensteanbieter"
 
 #: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:96
 msgid "Set new password"
-msgstr ""
+msgstr "Neues Passwort festlegen"
 
 #: src/app/pages/landing-page/LandingPage.tsx:59
 #: src/app/pages/login-page/LoginForm.tsx:137
 msgid "Sign In"
-msgstr ""
+msgstr "Anmelden"
 
 #: src/app/pages/login-page/LoginForm.tsx:78
 msgid "Sign in to enhance your learning"
-msgstr ""
+msgstr "Melden Sie sich an, um Ihr Lernen zu vertiefen"
 
 #: src/app/pages/reset-password/reset-password-sent-page/ResetPasswordSentPage.tsx:45
 msgid "Sign in with new password"
-msgstr ""
+msgstr "Mit neuem Passwort anmelden"
 
 #: src/app/pages/login-page/LoginForm.tsx:147
 msgid "Sign Up"
-msgstr ""
+msgstr "Registrieren"
 
 #: src/app/pages/landing-page/LandingPage.tsx:52
 msgid "Start Learning Free"
-msgstr ""
+msgstr "Kostenlos lernen"
 
 #: src/app/pages/landing-page/LandingPage.tsx:93
 msgid "Structured Curriculum"
-msgstr ""
+msgstr "Strukturierter Lehrplan"
 
 #: src/app/pages/forgot-password/forgot-password-page/ForgotPasswordForm.tsx:82
 #: src/app/pages/login-page/LoginForm.tsx:106
 #: src/app/pages/register/register-page/registerFormFields.ts:33
 msgid "student@example.com"
-msgstr ""
+msgstr "student@beispiel.de"
 
 #: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:111
 msgid "Support this project on Ko-Fi"
-msgstr ""
+msgstr "Unterstützen Sie dieses Projekt auf Ko-Fi"
 
 #: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:116
 msgid "Surface language"
-msgstr ""
+msgstr "Oberflächensprache"
 
 #: src/shared/components/light-dark-mode-button/LightDarkModeButton.tsx:29
 #: src/shared/components/light-dark-mode-button/LightDarkModeButton.tsx:30
 msgid "Switch to dark mode"
-msgstr ""
+msgstr "In den Dunkelmodus wechseln"
 
 #: src/shared/components/light-dark-mode-button/LightDarkModeButton.tsx:24
 #: src/shared/components/light-dark-mode-button/LightDarkModeButton.tsx:25
 msgid "Switch to light mode"
-msgstr ""
+msgstr "In den Hellmodus wechseln"
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:92
 msgid "Termination"
-msgstr ""
+msgstr "Beendigung"
 
 #: src/app/layouts/main-layout/footer/Footer.tsx:51
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:12
 msgid "Terms of Service"
-msgstr ""
+msgstr "Nutzungsbedingungen"
 
 #: src/app/pages/imprint-page/ImprintPage.tsx:90
 msgid "The contents of this website have been created with the greatest possible care. However, no guarantee is given for the accuracy, completeness, or timeliness of the content."
-msgstr ""
+msgstr "Die Inhalte dieser Website wurden mit größtmöglicher Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte wird jedoch keine Gewähr übernommen."
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:28
 msgid "The data controller responsible for the processing of personal data within the meaning of the GDPR is:"
-msgstr ""
+msgstr "Verantwortlicher für die Verarbeitung personenbezogener Daten im Sinne der DSGVO ist:"
 
 #. placeholder {0}: PROJECT_INFORMATION.name
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:114
 msgid "The language learning materials provided on {0} are for educational purposes. While we strive for accuracy, we make no guarantees about the completeness or accuracy of the content. Users should verify important information independently."
-msgstr ""
+msgstr "Die auf {0} bereitgestellten Lernmaterialien dienen ausschließlich Bildungszwecken. Trotz sorgfältiger Erstellung übernehmen wir keine Gewähr für Vollständigkeit oder Richtigkeit. Wichtige Informationen sollten eigenständig überprüft werden."
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:178
 msgid "The processing of personal data is governed by our <0>Privacy Policy</0>, which explains how we collect, use, and protect your personal information in accordance with the General Data Protection Regulation (GDPR)."
-msgstr ""
+msgstr "Die Verarbeitung personenbezogener Daten richtet sich nach unserer <0>Datenschutzerklärung</0>, in der erläutert wird, wie wir Ihre personenbezogenen Daten gemäß der Datenschutz-Grundverordnung (DSGVO) erheben, verwenden und schützen."
 
 #: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:122
 msgid "Theme"
-msgstr ""
+msgstr "Design"
 
 #: src/app/pages/imprint-page/ImprintPage.tsx:30
 msgid "There is currently no direct email contact available. Please use the contact options provided within the platform."
-msgstr ""
+msgstr "Derzeit steht keine direkte E-Mail-Kontaktmöglichkeit zur Verfügung. Bitte nutzen Sie die innerhalb der Plattform angebotenen Kontaktmöglichkeiten."
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:191
 msgid "There is no E-Mail available yet. Stay tuned."
-msgstr ""
+msgstr "Derzeit steht noch keine E-Mail-Adresse zur Verfügung."
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:42
 msgid "These Terms apply upon registration and continued use of the service."
-msgstr ""
+msgstr "Diese Nutzungsbedingungen gelten ab der Registrierung und für die fortgesetzte Nutzung des Dienstes."
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:163
 msgid "These Terms shall be governed by the laws of Germany, excluding its conflict-of-law provisions."
-msgstr ""
+msgstr "Diese Nutzungsbedingungen unterliegen dem Recht der Bundesrepublik Deutschland unter Ausschluss des Kollisionsrechts."
 
 #: src/app/pages/register/register-page/RegisterForm.tsx:77
 msgid "This email is already registered. <0>Sign in instead</0>"
-msgstr ""
+msgstr "Diese E-Mail-Adresse ist bereits registriert. <0>Stattdessen anmelden</0>"
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:133
 msgid "This limitation of liability does not apply in cases of intent, gross negligence, or where liability is mandatory under applicable consumer protection laws."
-msgstr ""
+msgstr "Diese Haftungsbeschränkung gilt nicht bei Vorsatz, grober Fahrlässigkeit oder in Fällen zwingender gesetzlicher Haftung nach Verbraucherschutzrecht."
 
 #: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:83
 msgid "This password reset link is invalid or has expired."
-msgstr ""
+msgstr "Dieser Link zum Zurücksetzen des Passworts ist ungültig oder abgelaufen."
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:26
 msgid "This project is operated as a non-commercial, experimental hobby project."
-msgstr ""
+msgstr "Dieses Projekt wird als nichtkommerzielles, experimentelles Hobbyprojekt betrieben."
 
 #. placeholder {0}: PROJECT_INFORMATION.author.firstName
 #. placeholder {1}: PROJECT_INFORMATION.author.lastName
@@ -691,125 +691,125 @@ msgstr ""
 #. placeholder {6}: PROJECT_INFORMATION.author.address.country
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:17
 msgid "This service is provided by {0} {1}, with his registered address at {2} {3}, {4} {5} ({6})."
-msgstr ""
+msgstr "Dieser Dienst wird bereitgestellt von {0} {1}, mit eingetragener Anschrift in {2} {3}, {4} {5} ({6})."
 
 #: src/app/pages/imprint-page/ImprintPage.tsx:81
 msgid "This website is operated as a private, non-commercial hobby project. No commercial services are offered. No intention of profit exists."
-msgstr ""
+msgstr "Diese Website wird als privates, nichtkommerzielles Hobbyprojekt betrieben. Es werden keine kommerziellen Dienstleistungen angeboten. Eine Gewinnerzielungsabsicht besteht nicht."
 
 #: src/app/pages/imprint-page/ImprintPage.tsx:100
 msgid "This website may contain links to external third-party websites. We have no influence over the contents of those websites and therefore assume no liability for external content."
-msgstr ""
+msgstr "Diese Website kann Links zu externen Webseiten Dritter enthalten. Auf deren Inhalte haben wir keinen Einfluss und übernehmen daher keine Haftung für externe Inhalte."
 
 #. placeholder {0}: PROJECT_INFORMATION.name
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:125
 msgid "To the extent permitted by applicable law, {0} shall not be liable for any indirect, incidental, special, or consequential damages arising out of or in connection with the use or inability to use the service."
-msgstr ""
+msgstr "Soweit gesetzlich zulässig, haftet {0} nicht für indirekte, zufällige, besondere oder Folgeschäden, die aus der Nutzung oder der Unmöglichkeit der Nutzung des Dienstes entstehen."
 
 #: src/app/pages/forgot-password/forgot-password-sent-page/ForgotPasswordSentPage.tsx:65
 msgid "Try another email"
-msgstr ""
+msgstr "Andere E-Mail-Adresse versuchen"
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:161
 msgid "Under the GDPR, you have the right to access, correct, delete, or restrict the processing of your personal data. You also have the right to data portability and to object to certain processing activities."
-msgstr ""
+msgstr "Nach der DSGVO haben Sie das Recht auf Auskunft, Berichtigung, Löschung oder Einschränkung der Verarbeitung Ihrer personenbezogenen Daten. Zudem haben Sie das Recht auf Datenübertragbarkeit sowie ein Widerspruchsrecht."
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:48
 msgid "Use License"
-msgstr ""
+msgstr "Nutzungslizenz"
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:75
 msgid "User Accounts"
-msgstr ""
+msgstr "Benutzerkonten"
 
 #: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:99
 msgid "View source code on GitHub"
-msgstr ""
+msgstr "Quellcode auf GitHub ansehen"
 
 #: src/app/pages/landing-page/LandingPage.tsx:116
 msgid "View, suggest changes, and contribute to the learning materials directly."
-msgstr ""
+msgstr "Lernmaterialien ansehen, Änderungsvorschläge machen und direkt mitwirken."
 
 #: src/app/layouts/main-layout/header/DonateButton.tsx:31
 #: src/app/layouts/main-layout/header/DonateButton.tsx:32
 msgid "Visit Ko-Fi to support this project with a donation."
-msgstr ""
+msgstr "Besuchen Sie Ko-Fi, um dieses Projekt mit einer Spende zu unterstützen."
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:48
 msgid "We collect and process the following categories of data:"
-msgstr ""
+msgstr "Wir erheben und verarbeiten die folgenden Datenkategorien:"
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:131
 msgid "We do not sell or rent personal data. Personal data is not shared with third parties, except where required by law or where technical service providers are used to operate the platform under data processing agreements."
-msgstr ""
+msgstr "Wir verkaufen oder vermieten keine personenbezogenen Daten. Eine Weitergabe erfolgt nur, sofern dies gesetzlich erforderlich ist oder technische Dienstleister im Rahmen von Auftragsverarbeitungsverträgen eingesetzt werden."
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:179
 msgid "We do not use automated decision-making or profiling within the meaning of Art. 22 GDPR."
-msgstr ""
+msgstr "Wir nutzen keine automatisierte Entscheidungsfindung oder Profiling im Sinne von Art. 22 DSGVO."
 
 #. placeholder {0}: PROJECT_INFORMATION.name
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:94
 msgid "We may suspend or terminate your access to {0} immediately, without prior notice, if you breach these Terms or applicable laws."
-msgstr ""
+msgstr "Wir können Ihren Zugriff auf {0} bei Verstoß gegen diese Nutzungsbedingungen oder geltendes Recht jederzeit und ohne vorherige Ankündigung sperren oder beenden."
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:81
 msgid "We process personal data on the following legal bases in accordance with Art. 6 GDPR:"
-msgstr ""
+msgstr "Die Verarbeitung personenbezogener Daten erfolgt auf folgenden Rechtsgrundlagen gemäß Art. 6 DSGVO:"
 
 #. placeholder {0}: PROJECT_INFORMATION.name
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:16
 msgid "We respect your privacy and are committed to protecting your personal data. This Privacy Policy explains how we collect, use, and protect your personal data when you use {0}, as well as your rights under the General Data Protection Regulation (GDPR)."
-msgstr ""
+msgstr "Wir respektieren Ihre Privatsphäre und verpflichten uns zum Schutz Ihrer personenbezogenen Daten. Diese Datenschutzerklärung erläutert, wie wir Ihre Daten bei der Nutzung von {0} erheben, verwenden und schützen sowie welche Rechte Ihnen nach der DSGVO zustehen."
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:110
 msgid "We store personal data only for as long as necessary to fulfill the purposes for which it was collected."
-msgstr ""
+msgstr "Personenbezogene Daten werden nur so lange gespeichert, wie es für die jeweiligen Verarbeitungszwecke erforderlich ist."
 
 #: src/app/pages/register/register-success-page/RegisterSuccessPage.tsx:26
 msgid "We've sent a verification link to your email address. Please click the link to verify your account."
-msgstr ""
+msgstr "Wir haben einen Bestätigungslink an Ihre E-Mail-Adresse gesendet. Bitte klicken Sie auf den Link, um Ihr Konto zu verifizieren."
 
 #: src/app/pages/login-page/LoginForm.tsx:73
 msgid "Welcome back"
-msgstr ""
+msgstr "Willkommen zurück"
 
 #: src/app/pages/landing-page/LandingPage.tsx:68
 msgid "What You Will Learn"
-msgstr ""
+msgstr "Was Sie lernen werden"
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:77
 msgid "When you create an account with us, you must provide accurate, complete, and current information. Failure to do so constitutes a breach of the Terms, which may result in immediate termination of your account."
-msgstr ""
+msgstr "Bei der Erstellung eines Kontos müssen Sie korrekte, vollständige und aktuelle Angaben machen. Andernfalls liegt ein Verstoß gegen diese Nutzungsbedingungen vor, der zur sofortigen Kündigung des Kontos führen kann."
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:169
 msgid "Where processing is based on consent, you may withdraw your consent at any time. You also have the right to lodge a complaint with a supervisory authority."
-msgstr ""
+msgstr "Soweit die Verarbeitung auf Ihrer Einwilligung beruht, können Sie diese jederzeit widerrufen. Zudem haben Sie das Recht, sich bei einer Aufsichtsbehörde zu beschweren."
 
 #. placeholder {0}: PROJECT_INFORMATION.name
 #: src/app/pages/landing-page/LandingPage.tsx:88
 msgid "Why {0}?"
-msgstr ""
+msgstr "Warum {0}?"
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:85
 msgid "You are responsible for safeguarding the password that you use to access the platform and for any activities or actions under your password."
-msgstr ""
+msgstr "Sie sind dafür verantwortlich, Ihr Passwort zu schützen und für alle Aktivitäten verantwortlich, die unter Verwendung Ihres Passworts erfolgen."
 
 #: src/app/pages/forgot-password/forgot-password-sent-page/ForgotPasswordSentPage.tsx:21
 msgid "your email"
-msgstr ""
+msgstr "Ihre E-Mail-Adresse"
 
 #: src/app/pages/register/register-verified-page/RegisterVerifiedPage.tsx:37
 msgid "Your email has been successfully verified."
-msgstr ""
+msgstr "Ihre E-Mail-Adresse wurde erfolgreich bestätigt."
 
 #: src/app/pages/reset-password/reset-password-sent-page/ResetPasswordSentPage.tsx:37
 msgid "Your password has been successfully updated."
-msgstr ""
+msgstr "Ihr Passwort wurde erfolgreich aktualisiert."
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:66
 msgid "Your personal data is used for the following purposes:"
-msgstr ""
+msgstr "Ihre personenbezogenen Daten werden zu folgenden Zwecken verwendet:"
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:159
 msgid "Your Rights"
-msgstr ""
+msgstr "Ihre Rechte"

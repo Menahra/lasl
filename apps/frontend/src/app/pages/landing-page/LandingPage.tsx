@@ -168,7 +168,7 @@ export const LandingPage = () => {
           </p>
           <Skeleton loading={isLoading} width={170} height={50}>
             <TanstackRouterLink
-              to={ROUTE_LOGIN}
+              to={ROUTE_SIGN_UP}
               className="LandingPageAuthActionWrapper"
             >
               <Button variant="primary">
