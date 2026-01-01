@@ -8,11 +8,15 @@ export class BaseHeader {
   }
 
   async toggleTheme() {
-    await this.page.getByRole("button", { name: /theme/i }).click();
+    await this.page
+      .locator("header")
+      .getByRole("button", { name: /theme/i })
+      .click();
   }
 
   async changeLanguage(newLanguage: SupportedLocale) {
     await this.page
+      .locator("header")
       .getByRole("combobox", { name: /language/i })
       .selectOption(newLanguage);
   }

@@ -1,3 +1,4 @@
+import { authRoutes } from "@lasl/app-contracts/routes/auth";
 import { expect, test } from "@playwright/test";
 
 test.describe("User Registration", () => {
@@ -7,16 +8,17 @@ test.describe("User Registration", () => {
     const email = `test-${Date.now()}@example.com`;
     const password = "SecurePassword123!";
 
-    // Fill registration form
-    await page.fill('[name="email"]', email);
-    await page.fill('[name="password"]', password);
-    await page.fill('[name="confirmPassword"]', password);
-    await page.click('button[type="submit"]');
+    await page.getByRole("textbox", { name: /first name/i }).fill("John");
+    await page.getByRole("textbox", { name: /last name/i }).fill("Doe");
+    await page.getByRole("textbox", { name: /email/i }).fill(email);
+    await page.getByRole("textbox", { name: /password/i }).fill(password);
+    await page
+      .getByRole("textbox", { name: /confirm password/i })
+      .fill(password);
+    await page.getByRole("button", { name: /create account/i }).click();
 
-    // Should show success message
     await expect(page.locator("text=Check your email")).toBeVisible();
 
-    // Should be on verification pending page
-    await expect(page).toHaveURL(/\/verify-email/);
+    await expect(page).toHaveURL(authRoutes.registerSuccess);
   });
 });
