@@ -122,11 +122,6 @@ test.describe("Header", () => {
     }) => {
       await page.goto(authRoutes.home);
 
-      const menuButton = page
-        .locator("header")
-        .getByRole("button", { name: /menu/i });
-      await menuButton.waitFor({ state: "visible" });
-
       const appHeader = new AppHeader(page);
       await appHeader.navigateToLogin();
 
@@ -135,11 +130,6 @@ test.describe("Header", () => {
 
     test("logo navigates to home (mobile drawer)", async ({ page }) => {
       await page.goto(legalRoutes.imprint);
-
-      const menuButton = page
-        .locator("header")
-        .getByRole("button", { name: /menu/i });
-      await menuButton.waitFor({ state: "visible" });
 
       const appHeader = new AppHeader(page);
       await appHeader.navigateToHome();
@@ -152,11 +142,6 @@ test.describe("Header", () => {
     }) => {
       await page.goto(authRoutes.home);
 
-      const menuButton = page
-        .locator("header")
-        .getByRole("button", { name: /menu/i });
-      await menuButton.waitFor({ state: "visible" });
-
       const appHeader = new AppHeader(page);
       await appHeader.expectOpenSourceLink();
     });
@@ -166,11 +151,6 @@ test.describe("Header", () => {
     }) => {
       await page.goto(authRoutes.home);
 
-      const menuButton = page
-        .locator("header")
-        .getByRole("button", { name: /menu/i });
-      await menuButton.waitFor({ state: "visible" });
-
       const appHeader = new AppHeader(page);
       await appHeader.expectDonationLink();
     });
@@ -179,11 +159,6 @@ test.describe("Header", () => {
       page,
     }) => {
       await page.goto(authRoutes.home);
-
-      const menuButton = page
-        .locator("header")
-        .getByRole("button", { name: /menu/i });
-      await menuButton.waitFor({ state: "visible" });
 
       const appHeader = new AppHeader(page);
 
@@ -196,11 +171,6 @@ test.describe("Header", () => {
     test("can toggle theme via button (mobile drawer)", async ({ page }) => {
       await page.emulateMedia({ colorScheme: "light" });
       await page.goto(authRoutes.home);
-
-      const menuButton = page
-        .locator("header")
-        .getByRole("button", { name: /menu/i });
-      await menuButton.waitFor({ state: "visible" });
 
       const appHeader = new AppHeader(page);
 

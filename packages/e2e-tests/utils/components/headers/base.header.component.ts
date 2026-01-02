@@ -15,6 +15,10 @@ export class BaseHeader {
     this.drawer = page.locator("dialog") ?? this.headerRoot;
   }
 
+  protected async waitUntilReady() {
+    await this.headerRoot.waitFor({ state: "visible" });
+  }
+
   protected async closeDrawer() {
     const drawer = this.page.getByRole("dialog");
 
@@ -58,6 +62,8 @@ export class BaseHeader {
   protected async withHeaderRoot<T>(
     action: (root: Locator) => Promise<T>,
   ): Promise<T> {
+    await this.waitUntilReady();
+
     const drawerOpened = await this.ensureDrawerOpen();
     const root = drawerOpened ? this.drawer : this.headerRoot;
 
