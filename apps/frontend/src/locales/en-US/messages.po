@@ -146,7 +146,7 @@ msgstr "Check Your Email"
 msgid "Choose a strong password for your account"
 msgstr "Choose a strong password for your account"
 
-#: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:71
+#: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:72
 msgid "Close menu"
 msgstr "Close menu"
 
@@ -395,11 +395,11 @@ msgstr "Liability for Links"
 msgid "Limitation of Liability"
 msgstr "Limitation of Liability"
 
-#: src/app/layouts/main-layout/header/AuthButton.tsx:17
+#: src/app/layouts/main-layout/header/AuthButton.tsx:26
 msgid "Login"
 msgstr "Login"
 
-#: src/app/layouts/main-layout/header/AuthButton.tsx:26
+#: src/app/layouts/main-layout/header/AuthButton.tsx:37
 msgid "Logout"
 msgstr "Logout"
 
@@ -411,7 +411,7 @@ msgstr "Master Classical Arabic (Fusha)"
 msgid "Master فصحى, the standard arabic language used in the Qur'an, literature, and news."
 msgstr "Master فصحى, the standard arabic language used in the Qur'an, literature, and news."
 
-#: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:63
+#: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:64
 msgid "Menu"
 msgstr "Menu"
 
@@ -439,7 +439,7 @@ msgstr "Obligations to remove or block the use of information under general laws
 msgid "Open & Transparent"
 msgstr "Open & Transparent"
 
-#: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:51
+#: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:52
 msgid "Open menu"
 msgstr "Open menu"
 
@@ -548,12 +548,12 @@ msgstr "Responsible for content according to § 55 Abs. 2 RStV:"
 msgid "Rhetoric & Eloquence"
 msgstr "Rhetoric & Eloquence"
 
-#: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:81
+#: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:82
 #: src/app/layouts/main-layout/header/Header.tsx:38
 msgid "Search in all pages"
 msgstr "Search in all pages"
 
-#: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:86
+#: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:87
 #: src/app/layouts/main-layout/header/Header.tsx:43
 msgid "Search..."
 msgstr "Search..."
@@ -602,11 +602,11 @@ msgstr "Structured Curriculum"
 msgid "student@example.com"
 msgstr "student@example.com"
 
-#: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:111
+#: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:112
 msgid "Support this project on Ko-Fi"
 msgstr "Support this project on Ko-Fi"
 
-#: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:116
+#: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:117
 msgid "Surface language"
 msgstr "Surface language"
 
@@ -646,7 +646,7 @@ msgstr "The language learning materials provided on {0} are for educational purp
 msgid "The processing of personal data is governed by our <0>Privacy Policy</0>, which explains how we collect, use, and protect your personal information in accordance with the General Data Protection Regulation (GDPR)."
 msgstr "The processing of personal data is governed by our <0>Privacy Policy</0>, which explains how we collect, use, and protect your personal information in accordance with the General Data Protection Regulation (GDPR)."
 
-#: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:122
+#: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:123
 msgid "Theme"
 msgstr "Theme"
 
@@ -722,7 +722,7 @@ msgstr "Use License"
 msgid "User Accounts"
 msgstr "User Accounts"
 
-#: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:99
+#: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:100
 msgid "View source code on GitHub"
 msgstr "View source code on GitHub"
 
