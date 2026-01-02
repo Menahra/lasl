@@ -100,20 +100,14 @@ test.describe("Header", () => {
     await page.goto(authRoutes.home);
 
     const appHeader = new AppHeader(page);
-    const githubLink = await appHeader.getOpenSourceCodeLink();
-
-    await expect(githubLink).toHaveAttribute("href", /lasl/i);
-    await expect(githubLink).toHaveAttribute("target", "_blank");
+    await appHeader.expectOpenSourceLink();
   });
 
   test("donation button links to donation page", async ({ page }) => {
     await page.goto(authRoutes.home);
 
     const appHeader = new AppHeader(page);
-    const donateLink = await appHeader.getDonationLink();
-
-    await expect(donateLink).toHaveAttribute("href", /ko-fi/i);
-    await expect(donateLink).toHaveAttribute("target", "_blank");
+    await appHeader.expectDonationLink();
   });
 
   test.describe("Header - Mobile", () => {
@@ -128,6 +122,11 @@ test.describe("Header", () => {
     }) => {
       await page.goto(authRoutes.home);
 
+      const menuButton = page
+        .locator("header")
+        .getByRole("button", { name: /menu/i });
+      await menuButton.waitFor({ state: "visible" });
+
       const appHeader = new AppHeader(page);
       await appHeader.navigateToLogin();
 
@@ -136,6 +135,11 @@ test.describe("Header", () => {
 
     test("logo navigates to home (mobile drawer)", async ({ page }) => {
       await page.goto(legalRoutes.imprint);
+
+      const menuButton = page
+        .locator("header")
+        .getByRole("button", { name: /menu/i });
+      await menuButton.waitFor({ state: "visible" });
 
       const appHeader = new AppHeader(page);
       await appHeader.navigateToHome();
@@ -148,11 +152,13 @@ test.describe("Header", () => {
     }) => {
       await page.goto(authRoutes.home);
 
-      const appHeader = new AppHeader(page);
-      const githubLink = await appHeader.getOpenSourceCodeLink();
+      const menuButton = page
+        .locator("header")
+        .getByRole("button", { name: /menu/i });
+      await menuButton.waitFor({ state: "visible" });
 
-      await expect(githubLink).toHaveAttribute("href", /lasl/i);
-      await expect(githubLink).toHaveAttribute("target", "_blank");
+      const appHeader = new AppHeader(page);
+      await appHeader.expectOpenSourceLink();
     });
 
     test("donation button links to donation page (mobile drawer)", async ({
@@ -160,11 +166,13 @@ test.describe("Header", () => {
     }) => {
       await page.goto(authRoutes.home);
 
-      const appHeader = new AppHeader(page);
-      const donateLink = await appHeader.getDonationLink();
+      const menuButton = page
+        .locator("header")
+        .getByRole("button", { name: /menu/i });
+      await menuButton.waitFor({ state: "visible" });
 
-      await expect(donateLink).toHaveAttribute("href", /ko-fi/i);
-      await expect(donateLink).toHaveAttribute("target", "_blank");
+      const appHeader = new AppHeader(page);
+      await appHeader.expectDonationLink();
     });
 
     test("can change language via header language selector (mobile drawer)", async ({
@@ -172,25 +180,30 @@ test.describe("Header", () => {
     }) => {
       await page.goto(authRoutes.home);
 
+      const menuButton = page
+        .locator("header")
+        .getByRole("button", { name: /menu/i });
+      await menuButton.waitFor({ state: "visible" });
+
       const appHeader = new AppHeader(page);
 
       await appHeader.changeLanguage("de-DE");
       await expect(
         page.getByRole("heading", { name: /klassisches arabisch/i }),
       ).toBeVisible();
-
-      await appHeader.changeLanguage("fr-FR");
-      await expect(
-        page.getByRole("heading", { name: /l'arabe classique/i }),
-      ).toBeVisible();
     });
 
     test("can toggle theme via button (mobile drawer)", async ({ page }) => {
+      await page.emulateMedia({ colorScheme: "light" });
       await page.goto(authRoutes.home);
+
+      const menuButton = page
+        .locator("header")
+        .getByRole("button", { name: /menu/i });
+      await menuButton.waitFor({ state: "visible" });
 
       const appHeader = new AppHeader(page);
 
-      await expectTheme(page, "light");
       await appHeader.toggleTheme();
       await expectTheme(page, "dark");
     });

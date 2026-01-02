@@ -11,7 +11,7 @@ test.describe("User Registration", () => {
     await page.getByRole("textbox", { name: /first name/i }).fill("John");
     await page.getByRole("textbox", { name: /last name/i }).fill("Doe");
     await page.getByRole("textbox", { name: /email/i }).fill(email);
-    await page.getByRole("textbox", { name: /password/i }).fill(password);
+    await page.getByRole("textbox", { name: /^password$/i }).fill(password);
     await page
       .getByRole("textbox", { name: /confirm password/i })
       .fill(password);
