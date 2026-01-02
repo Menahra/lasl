@@ -9,6 +9,10 @@ import {
 } from "@/src/shared/constants.ts";
 import { renderWithProviders } from "@/test/__wrappers__/renderWithProviders.tsx";
 
+vi.mock("@/src/shared/hooks/useAuthenticationContext.tsx", () => ({
+  useAuthenticationContext: vi.fn(() => ({ user: {} })),
+}));
+
 describe("HeaderDrawer", () => {
   let searchValue = "";
   const setSearchValue = vi.fn((value: string) => {
@@ -30,19 +34,22 @@ describe("HeaderDrawer", () => {
       ),
       {
         i18n: true,
+        router: {
+          pathPattern: "/header-drawer",
+        },
       },
     );
 
   const user = userEvent.setup();
 
-  it("renders trigger button", () => {
-    renderDrawer();
+  it("renders trigger button", async () => {
+    await renderDrawer();
     const trigger = screen.getByRole("button", { name: /Open menu/i });
     expect(trigger).toBeInTheDocument();
   });
 
   it("opens and closes the drawer", async () => {
-    renderDrawer();
+    await renderDrawer();
 
     const trigger = screen.getByRole("button", { name: /open menu/i });
     await user.click(trigger);
@@ -58,7 +65,7 @@ describe("HeaderDrawer", () => {
   });
 
   it("renders search input and updates value", async () => {
-    renderDrawer();
+    await renderDrawer();
 
     await user.click(screen.getByRole("button", { name: /open menu/i }));
 
@@ -70,7 +77,7 @@ describe("HeaderDrawer", () => {
   });
 
   it("renders GitHub and Ko-Fi buttons with correct hrefs", async () => {
-    renderDrawer();
+    await renderDrawer();
 
     await user.click(screen.getByRole("button", { name: /open menu/i }));
 
@@ -86,18 +93,27 @@ describe("HeaderDrawer", () => {
   });
 
   it("renders the language select combobox", async () => {
-    renderDrawer();
+    await renderDrawer();
     await user.click(screen.getByRole("button", { name: /open menu/i }));
 
     expect(screen.getByRole("combobox", { name: "Language" })).toBeVisible();
   });
 
   it("renders theme toggle button", async () => {
-    renderDrawer();
+    await renderDrawer();
 
     await user.click(screen.getByRole("button", { name: /open menu/i }));
 
     const themeButton = screen.getByRole("button", { name: /Switch to dark/i });
     expect(themeButton).toBeInTheDocument();
+  });
+
+  it("renders auth button", async () => {
+    await renderDrawer();
+
+    await user.click(screen.getByRole("button", { name: /open menu/i }));
+
+    const loginButton = screen.getByRole("button", { name: /logout/i });
+    expect(loginButton).toBeVisible();
   });
 });

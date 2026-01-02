@@ -64,6 +64,7 @@ export const LanguageSelect = ({ className }: LanguageSelectProps) => {
           // biome-ignore lint/security/noSecrets: classname and not a secret
           className={clsx("LanguageSelectTrigger", className)}
           aria-label={t`Language`}
+          data-testid="language-selector"
         >
           <GlobeIcon />
           <SelectValue>{SUPPORTED_LOCALES_LABELS[currentLocale]}</SelectValue>

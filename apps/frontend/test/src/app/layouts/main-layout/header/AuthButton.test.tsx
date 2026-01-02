@@ -1,8 +1,10 @@
+import "@/test/__mocks__/i18nContextMock.ts";
 import { screen } from "@testing-library/react";
-import { describe, expect, it, type Mock, vi } from "vitest";
+import { beforeEach, describe, expect, it, type Mock, vi } from "vitest";
 import { AuthButton } from "@/src/app/layouts/main-layout/header/AuthButton.tsx";
 import { ROUTE_HOME } from "@/src/app/routes/index.tsx";
 import { ROUTE_LOGIN } from "@/src/app/routes/login.tsx";
+import { setI18nLoading } from "@/test/__mocks__/i18nContextMock.ts";
 import { renderWithProviders } from "@/test/__wrappers__/renderWithProviders.tsx";
 
 vi.mock("@/src/shared/hooks/useAuthenticationContext.tsx", () => ({
@@ -20,6 +22,8 @@ describe("AuthButton", () => {
       },
     });
 
+  beforeEach(() => setI18nLoading(false));
+
   it("renders login button linking to login page if user is not authenticated", async () => {
     (useAuthenticationContext as Mock).mockReturnValue({
       user: null,
@@ -27,7 +31,7 @@ describe("AuthButton", () => {
 
     await renderAuthButton();
 
-    expect(screen.getByText(/login/i)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /login/i })).toBeInTheDocument();
 
     const link = screen.getByRole("link");
     expect(link).toHaveAttribute("href", ROUTE_LOGIN);
@@ -40,9 +44,16 @@ describe("AuthButton", () => {
 
     await renderAuthButton();
 
-    expect(screen.getByText(/logout/i)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /logout/i })).toBeInTheDocument();
 
     const link = screen.getByRole("link");
     expect(link).toHaveAttribute("href", ROUTE_HOME);
+  });
+
+  it("renders no button if i18n is loading", async () => {
+    setI18nLoading(true);
+    await renderAuthButton();
+
+    expect(screen.queryByRole("button")).not.toBeInTheDocument();
   });
 });

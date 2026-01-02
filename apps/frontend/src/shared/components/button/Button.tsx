@@ -13,7 +13,7 @@ const ButtonAlignments = {
   end: "Button--alignEnd",
 } as const;
 
-type ButtonProps = PropsWithChildren<{
+export type ButtonProps = PropsWithChildren<{
   startIcon?: ReactNode;
   endIcon?: ReactNode;
   variant?: keyof typeof ButtonVariants;

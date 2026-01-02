@@ -16,6 +16,7 @@ import {
   MagnifyingGlassIcon,
 } from "@radix-ui/react-icons";
 import KoFiLogo from "@/assets/icons/ko-fi.svg?react";
+import { AuthButton } from "@/src/app/layouts/main-layout/header/AuthButton.tsx";
 import { Button } from "@/src/shared/components/button/Button.tsx";
 import { ExternalLink } from "@/src/shared/components/external-link/ExternalLink.tsx";
 import { InputField } from "@/src/shared/components/input-field/InputField.tsx";
@@ -124,6 +125,7 @@ export const HeaderDrawer = ({
             <Skeleton loading={isLoading} width="100%" height={28}>
               <LightDarkModeButton />
             </Skeleton>
+            <AuthButton fullWidth={true} align="center" />
           </div>
         </DialogContent>
       </DialogPortal>
