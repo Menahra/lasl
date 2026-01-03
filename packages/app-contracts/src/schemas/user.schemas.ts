@@ -63,3 +63,8 @@ export const resetPasswordParamsSchema = z.object({
   id: z.string(),
   passwordResetCode: z.string(),
 });
+
+export const createAuthUserSchema = createUserSchema.omit({
+  passwordConfirmation: true,
+});
+export type CreateAuthUser = z.infer<typeof createAuthUserSchema>;
