@@ -1,5 +1,5 @@
 import process from "node:process";
-import z from "zod";
+import { z } from "zod";
 
 // biome-ignore lint/style/useExportsLast: needed before schema
 export const ENVIRONMENT = {

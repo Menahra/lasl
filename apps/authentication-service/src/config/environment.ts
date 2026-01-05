@@ -1,5 +1,5 @@
 import process from "node:process";
-import z from "zod";
+import { z } from "zod";
 import { ENVIRONMENT } from "@/src/constants/environment.constants.ts";
 
 const defaultPort = 3000;
@@ -16,6 +16,7 @@ const environmentSchema = z.object({
     .number()
     .default(defaultApplicationHostPort),
   [ENVIRONMENT.resendApiKey]: z.string().min(1),
+  [ENVIRONMENT.nodeEnv]: z.enum(["development", "test", "production"]),
 });
 
 type EnvironmentKey = keyof typeof ENVIRONMENT;

@@ -7,7 +7,7 @@ import { fastifySwaggerPlugin } from "./plugins/swagger.ts";
 import { authRoutes } from "./routes/auth.routes.ts";
 import { healthRoutes } from "./routes/health.routes.ts";
 import { userRoutes } from "./routes/user.routes.ts";
-import { fastifyMailerPlugin } from "./util/mailer.util.ts";
+import { fastifyMailerPlugin } from "./util/mailer/mailer.util.ts";
 
 export const buildApp = async () => {
   const fastify = Fastify({

@@ -34,6 +34,7 @@
     "@types/json-schema": "^7.0.15",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^25.0.2",
+    "@types/nodemailer": "^7.0.4",
     "json-schema": "^0.4.0",
     "mongodb-memory-server": "^10.4.1",
     "standard-version": "^9.5.0",
@@ -56,6 +57,7 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.0.1",
     "nanoid": "^5.1.6",
+    "nodemailer": "^7.0.12",
     "resend": "^6.6.0",
     "zod": "^4.2.0"
   }

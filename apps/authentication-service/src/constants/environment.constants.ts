@@ -14,4 +14,5 @@ export const ENVIRONMENT = {
   mongoUri: "MONGO_URI",
   port: "PORT",
   resendApiKey: "RESEND_API_KEY",
+  nodeEnv: "NODE_ENV",
 } as const;

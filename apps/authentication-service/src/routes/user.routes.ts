@@ -1,7 +1,7 @@
 import { authApiRoutes } from "@lasl/app-contracts/api/auth";
 import type { FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
-import z from "zod";
+import { z } from "zod";
 import { updateUserHandler } from "@/src/controller/update.user.controller.ts";
 import {
   createUserBadRequestResponseSchema,

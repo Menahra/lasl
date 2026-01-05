@@ -11,3 +11,4 @@ vi.stubEnv(ENVIRONMENT.applicationHostPort, "8080");
 // mongo uri might be overridden by fastify setup
 vi.stubEnv(ENVIRONMENT.mongoUri, "MONGO_DB_URI");
 vi.stubEnv(ENVIRONMENT.resendApiKey, "some_api_key");
+vi.stubEnv(ENVIRONMENT.nodeEnv, "test");
