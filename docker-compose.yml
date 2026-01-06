@@ -18,13 +18,8 @@ services:
       context: ./apps/authentication-service-mongodb
       dockerfile: Dockerfile
     container_name: authentication_service_mongodb_instance
-    ports:
-      # Map host port for direct access (e.g., via MongoDB Compass)
-      - "${DB_HOST_PORT:-27017}:27017"
     environment:
       DOPPLER_TOKEN: ${DOPPLER_TOKEN_AUTHENTICATION_SERVICE}
-    volumes:
-      - mongo_data:/data/db
 
   api-gateway:
     build:
@@ -54,6 +49,3 @@ services:
       - "3000:80"
     depends_on:
       - api-gateway
-
-volumes:
-  mongo_data:

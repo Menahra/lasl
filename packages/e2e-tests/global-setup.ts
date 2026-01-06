@@ -1,73 +1,71 @@
 /** biome-ignore-all lint/suspicious/noConsole: ok in this file */
 import { execSync } from "node:child_process";
-import { existsSync } from "node:fs";
-import path from "node:path";
 import process from "node:process";
-import { config as dotenvConfig } from "dotenv";
 import { StatusCodes } from "http-status-codes";
-
-const possibleEnvFiles = [
-  path.resolve(process.cwd(), "../../.env"),
-  path.resolve(process.cwd(), "../../.env.dev"),
-  path.resolve(process.cwd(), "../../.env.local"),
-];
-
-for (const envFile of possibleEnvFiles) {
-  if (existsSync(envFile)) {
-    dotenvConfig({ path: envFile });
-    break;
-  }
-}
-dotenvConfig();
 
 const globalSetup = async () => {
   const reuseContainers = process.env.REUSE_CONTAINERS === "true";
-  const composeFile =
-    process.env.DOCKER_COMPOSE_FILE || "../../docker-compose.e2e.yml";
 
   if (reuseContainers) {
-    console.debug("♻️  Reusing existing Docker containers...");
+    console.log("♻️  Reusing existing Docker containers...");
   } else {
-    console.debug("🐳 Starting Docker containers...");
+    console.log("🐳 Starting Docker containers for e2e tests...");
     try {
-      execSync(`docker compose -f ${composeFile} up -d --build`, {
+      // Use the npm script from root package.json
+      execSync("pnpm docker:test", {
         stdio: "inherit",
-        cwd: process.cwd(),
+        cwd: "../../", // Run from monorepo root
       });
     } catch (error) {
-      console.error("Failed to start Docker containers:", error);
+      console.error("❌ Failed to start Docker containers:", error);
       throw error;
     }
   }
 
   // Wait for services to be healthy
-  console.debug("⏳ Waiting for services to be ready...");
-  await waitForService(process.env.BASE_URL || "http://localhost:3000");
-  await waitForService(process.env.API_URL || "http://localhost:8080");
+  console.log("⏳ Waiting for services to be ready...");
 
-  console.debug("✅ All services are ready!");
+  const baseUrl = process.env.BASE_URL || "http://localhost:3000";
+  const apiUrl = process.env.API_URL || "http://localhost:8080";
+
+  await waitForService(baseUrl, "Frontend");
+  await waitForService(apiUrl, "API Gateway");
+
+  console.log("✅ All services are ready!");
 };
 
-const GLOBAL_TIMEOUT = 12_000;
+const GLOBAL_TIMEOUT = 120_000; // 2 minutes for docker compose up
 const RETRY_INTERVAL = 1000;
-async function waitForService(url: string, timeout = GLOBAL_TIMEOUT) {
+
+async function waitForService(
+  url: string,
+  serviceName: string,
+  timeout = GLOBAL_TIMEOUT,
+): Promise<void> {
   const start = Date.now();
+
+  console.log(`   Checking ${serviceName} at ${url}...`);
 
   while (Date.now() - start < timeout) {
     try {
       // biome-ignore lint/performance/noAwaitInLoops: ok in start up
       const response = await fetch(url);
+
+      // Consider service ready if it responds (even with 404)
       if (response.ok || response.status === StatusCodes.NOT_FOUND) {
-        console.debug(`✓ Service at ${url} is ready`);
+        console.log(`   ✓ ${serviceName} is ready`);
         return;
       }
     } catch (_error) {
       // Service not ready yet, continue waiting
     }
+
     await new Promise((resolve) => setTimeout(resolve, RETRY_INTERVAL));
   }
 
-  throw new Error(`Service at ${url} did not become ready within ${timeout}ms`);
+  throw new Error(
+    `${serviceName} at ${url} did not become ready within ${timeout / 1000}s`,
+  );
 }
 
 // biome-ignore lint/style/noDefaultExport: ok here

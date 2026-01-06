@@ -6,7 +6,7 @@ test.describe("User Login", () => {
     const user = {
       firstName: "John",
       lastName: "Doe",
-      email: `test-${Date.now()}-${Math.random()}@example.com`,
+      email: `something-${Date.now()}-${Math.random()}@domain.com`,
       password: "SecurePassword123!",
     } as const;
     await page.goto(authRoutes.register);
@@ -43,7 +43,7 @@ test.describe("User Login", () => {
     const user = {
       firstName: "John",
       lastName: "Doe",
-      email: `test-${Date.now()}-${Math.random()}@example.com`,
+      email: `something-${Date.now()}-${Math.random()}@domain.com`,
       password: "SecurePassword123!",
     } as const;
     await page.goto(authRoutes.register);

@@ -1,0 +1,8 @@
+services:
+  authentication-service-mongodb:
+    volumes:
+      - mongo_data:/data/db
+    restart: unless-stopped
+
+volumes:
+  mongo_data:

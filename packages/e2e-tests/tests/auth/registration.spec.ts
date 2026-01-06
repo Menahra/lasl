@@ -5,7 +5,7 @@ test.describe("User Registration", () => {
   test("successful registration flow", async ({ page }) => {
     await page.goto(authRoutes.register);
 
-    const email = `test-${Date.now()}@example.com`;
+    const email = `something-${Date.now()}@domain.com`;
     const password = "SecurePassword123!";
 
     await page.getByRole("textbox", { name: /first name/i }).fill("John");
@@ -25,7 +25,7 @@ test.describe("User Registration", () => {
   test("submit button is disabled while registering", async ({ page }) => {
     await page.goto(authRoutes.register);
 
-    const email = `test-${Date.now()}@example.com`;
+    const email = `something-${Date.now()}@domain.com`;
     const password = "SecurePassword123!";
 
     await page.getByRole("textbox", { name: /first name/i }).fill("John");
@@ -47,7 +47,7 @@ test.describe("User Registration", () => {
     const user = {
       firstName: "John",
       lastName: "Doe",
-      email: `test-${Date.now()}@example.com`,
+      email: `something-${Date.now()}@domain.com`,
       password: "SecurePassword123!",
     } as const;
 
