@@ -38,6 +38,10 @@ describe("User service", () => {
     body: mockUserData,
     server: {
       sendMail: vi.fn(),
+      config: {
+        // biome-ignore lint/style/useNamingConvention: coming from env
+        FRONTEND_BASE_URL: "someUrl",
+      },
     },
     headers: {},
     log: { error: vi.fn() },

@@ -12,3 +12,4 @@ vi.stubEnv(ENVIRONMENT.applicationHostPort, "8080");
 vi.stubEnv(ENVIRONMENT.mongoUri, "MONGO_DB_URI");
 vi.stubEnv(ENVIRONMENT.resendApiKey, "some_api_key");
 vi.stubEnv(ENVIRONMENT.nodeEnv, "test");
+vi.stubEnv(ENVIRONMENT.frontendBaseUrl, "http://localhost:80");
