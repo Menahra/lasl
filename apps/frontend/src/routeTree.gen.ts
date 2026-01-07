@@ -21,10 +21,10 @@ import { Route as ResetPasswordIndexRouteImport } from './app/routes/reset-passw
 import { Route as RegisterIndexRouteImport } from './app/routes/register/index'
 import { Route as ForgotPasswordIndexRouteImport } from './app/routes/forgot-password/index'
 import { Route as ResetPasswordSentRouteImport } from './app/routes/reset-password/sent'
-import { Route as RegisterVerifiedRouteImport } from './app/routes/register/verified'
 import { Route as RegisterSuccessRouteImport } from './app/routes/register/success'
 import { Route as ForgotPasswordSentRouteImport } from './app/routes/forgot-password/sent'
 import { Route as ResetPasswordIdPasswordResetCodeIndexRouteImport } from './app/routes/reset-password/$id/$passwordResetCode/index'
+import { Route as RegisterVerifyIdVerificationCodeIndexRouteImport } from './app/routes/register/verify/$id/$verificationCode/index'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -86,11 +86,6 @@ const ResetPasswordSentRoute = ResetPasswordSentRouteImport.update({
   path: '/sent',
   getParentRoute: () => ResetPasswordRouteRoute,
 } as any)
-const RegisterVerifiedRoute = RegisterVerifiedRouteImport.update({
-  id: '/verified',
-  path: '/verified',
-  getParentRoute: () => RegisterRouteRoute,
-} as any)
 const RegisterSuccessRoute = RegisterSuccessRouteImport.update({
   id: '/success',
   path: '/success',
@@ -107,6 +102,12 @@ const ResetPasswordIdPasswordResetCodeIndexRoute =
     path: '/$id/$passwordResetCode/',
     getParentRoute: () => ResetPasswordRouteRoute,
   } as any)
+const RegisterVerifyIdVerificationCodeIndexRoute =
+  RegisterVerifyIdVerificationCodeIndexRouteImport.update({
+    id: '/verify/$id/$verificationCode/',
+    path: '/verify/$id/$verificationCode/',
+    getParentRoute: () => RegisterRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -119,12 +120,12 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/forgot-password/sent': typeof ForgotPasswordSentRoute
   '/register/success': typeof RegisterSuccessRoute
-  '/register/verified': typeof RegisterVerifiedRoute
   '/reset-password/sent': typeof ResetPasswordSentRoute
   '/forgot-password/': typeof ForgotPasswordIndexRoute
   '/register/': typeof RegisterIndexRoute
   '/reset-password/': typeof ResetPasswordIndexRoute
   '/reset-password/$id/$passwordResetCode': typeof ResetPasswordIdPasswordResetCodeIndexRoute
+  '/register/verify/$id/$verificationCode': typeof RegisterVerifyIdVerificationCodeIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -134,12 +135,12 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/forgot-password/sent': typeof ForgotPasswordSentRoute
   '/register/success': typeof RegisterSuccessRoute
-  '/register/verified': typeof RegisterVerifiedRoute
   '/reset-password/sent': typeof ResetPasswordSentRoute
   '/forgot-password': typeof ForgotPasswordIndexRoute
   '/register': typeof RegisterIndexRoute
   '/reset-password': typeof ResetPasswordIndexRoute
   '/reset-password/$id/$passwordResetCode': typeof ResetPasswordIdPasswordResetCodeIndexRoute
+  '/register/verify/$id/$verificationCode': typeof RegisterVerifyIdVerificationCodeIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -153,12 +154,12 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/forgot-password/sent': typeof ForgotPasswordSentRoute
   '/register/success': typeof RegisterSuccessRoute
-  '/register/verified': typeof RegisterVerifiedRoute
   '/reset-password/sent': typeof ResetPasswordSentRoute
   '/forgot-password/': typeof ForgotPasswordIndexRoute
   '/register/': typeof RegisterIndexRoute
   '/reset-password/': typeof ResetPasswordIndexRoute
   '/reset-password/$id/$passwordResetCode/': typeof ResetPasswordIdPasswordResetCodeIndexRoute
+  '/register/verify/$id/$verificationCode/': typeof RegisterVerifyIdVerificationCodeIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -173,12 +174,12 @@ export interface FileRouteTypes {
     | '/terms'
     | '/forgot-password/sent'
     | '/register/success'
-    | '/register/verified'
     | '/reset-password/sent'
     | '/forgot-password/'
     | '/register/'
     | '/reset-password/'
     | '/reset-password/$id/$passwordResetCode'
+    | '/register/verify/$id/$verificationCode'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -188,12 +189,12 @@ export interface FileRouteTypes {
     | '/terms'
     | '/forgot-password/sent'
     | '/register/success'
-    | '/register/verified'
     | '/reset-password/sent'
     | '/forgot-password'
     | '/register'
     | '/reset-password'
     | '/reset-password/$id/$passwordResetCode'
+    | '/register/verify/$id/$verificationCode'
   id:
     | '__root__'
     | '/'
@@ -206,12 +207,12 @@ export interface FileRouteTypes {
     | '/terms'
     | '/forgot-password/sent'
     | '/register/success'
-    | '/register/verified'
     | '/reset-password/sent'
     | '/forgot-password/'
     | '/register/'
     | '/reset-password/'
     | '/reset-password/$id/$passwordResetCode/'
+    | '/register/verify/$id/$verificationCode/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -311,13 +312,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResetPasswordSentRouteImport
       parentRoute: typeof ResetPasswordRouteRoute
     }
-    '/register/verified': {
-      id: '/register/verified'
-      path: '/verified'
-      fullPath: '/register/verified'
-      preLoaderRoute: typeof RegisterVerifiedRouteImport
-      parentRoute: typeof RegisterRouteRoute
-    }
     '/register/success': {
       id: '/register/success'
       path: '/success'
@@ -339,6 +333,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResetPasswordIdPasswordResetCodeIndexRouteImport
       parentRoute: typeof ResetPasswordRouteRoute
     }
+    '/register/verify/$id/$verificationCode/': {
+      id: '/register/verify/$id/$verificationCode/'
+      path: '/verify/$id/$verificationCode'
+      fullPath: '/register/verify/$id/$verificationCode'
+      preLoaderRoute: typeof RegisterVerifyIdVerificationCodeIndexRouteImport
+      parentRoute: typeof RegisterRouteRoute
+    }
   }
 }
 
@@ -357,14 +358,15 @@ const ForgotPasswordRouteRouteWithChildren =
 
 interface RegisterRouteRouteChildren {
   RegisterSuccessRoute: typeof RegisterSuccessRoute
-  RegisterVerifiedRoute: typeof RegisterVerifiedRoute
   RegisterIndexRoute: typeof RegisterIndexRoute
+  RegisterVerifyIdVerificationCodeIndexRoute: typeof RegisterVerifyIdVerificationCodeIndexRoute
 }
 
 const RegisterRouteRouteChildren: RegisterRouteRouteChildren = {
   RegisterSuccessRoute: RegisterSuccessRoute,
-  RegisterVerifiedRoute: RegisterVerifiedRoute,
   RegisterIndexRoute: RegisterIndexRoute,
+  RegisterVerifyIdVerificationCodeIndexRoute:
+    RegisterVerifyIdVerificationCodeIndexRoute,
 }
 
 const RegisterRouteRouteWithChildren = RegisterRouteRoute._addFileChildren(

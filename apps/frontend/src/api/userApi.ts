@@ -15,6 +15,13 @@ export const userApi = {
 
     return data;
   },
+  verifyUser: async (idOfUser: User["id"], verificationCode: string) => {
+    const { data } = await axios.get(
+      `${AUTH_API_BASE_URL}/users/${idOfUser}/${verificationCode}`,
+    );
+
+    return data;
+  },
   updateUser: async (idOfUser: User["id"], userToUpdate: Partial<User>) => {
     const { data } = await axios.patch<User>(
       `${AUTH_API_BASE_URL}/users/${idOfUser}`,

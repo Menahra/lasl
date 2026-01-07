@@ -1,4 +1,4 @@
-.RegisterVerifiedPage {
+.RegisterVerifyPage {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -6,7 +6,7 @@
   width: 100vw;
 }
 
-.RegisterVerifiedPageContainer {
+.RegisterVerifyPageContainer {
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
@@ -17,33 +17,43 @@
   padding: var(--space-lg);
 }
 
-.RegisterVerifiedPageIconContainer {
+.RegisterVerifyPageIconContainer {
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto;
   border-radius: 50%;
-  background-color: var(--success-50);
   height: var(--size-3xl);
   width: var(--size-3xl);
 }
-.RegisterVerifiedPageIconContainer > svg {
+.RegisterVerifyPageIconContainer > svg {
   height: var(--size-xl);
   width: var(--size-xl);
+}
+.RegisterVerifyPageIconContainerSuccess {
+  background-color: var(--success-50);
+}
+.RegisterVerifyPageIconContainerSuccess > svg {
   color: var(--success-500);
 }
+.RegisterVerifyPageIconContainerFailure {
+  background-color: var(--error-50);
+}
+.RegisterVerifyPageIconContainerFailure > svg {
+  color: var(--error-500);
+}
 
-.RegisterVerifiedPageTitle {
+.RegisterVerifyPageTitle {
   margin: 0 auto;
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-2xl);
 }
 
-.RegisterVerifiedPageText,
-.RegisterVerifiedPageSpamHint {
+.RegisterVerifyPageText,
+.RegisterVerifyPageSpamHint {
   text-align: center;
 }
 
-.RegisterVerifiedPageSpamHint {
+.RegisterVerifyPageSpamHint {
   font-size: var(--font-size-sm);
 }
