@@ -9,7 +9,11 @@ describe("authRoutes", () => {
   it("register routes", () => {
     expect(authRoutes.register).toBe("/register");
     expect(authRoutes.registerSuccess).toBe("/register/success");
-    expect(authRoutes.registerVerified).toBe("/register/verified");
+  });
+  it("register verify dynamic route", () => {
+    expect(authRoutes.registerVerify("123", "ABC")).toBe(
+      "/register/verify/123/ABC",
+    );
   });
 
   it("login route", () => {

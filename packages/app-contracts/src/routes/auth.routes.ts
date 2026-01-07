@@ -3,7 +3,8 @@ export const authRoutes = {
 
   register: "/register",
   registerSuccess: "/register/success",
-  registerVerified: "/register/verified",
+  registerVerify: (id: string, verificationCode: string) =>
+    `/register/verify/${id}/${verificationCode}`,
 
   login: "/login",
 
