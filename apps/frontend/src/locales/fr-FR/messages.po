@@ -193,7 +193,7 @@ msgstr "Nous contacter"
 msgid "Content and works created by the site operator on this website are subject to copyright law. Duplication, processing, distribution, or any form of commercialization requires prior written consent."
 msgstr "Le contenu et les œuvres créés par l'exploitant du site sur ce site Web sont soumis au droit d'auteur. La duplication, le traitement, la distribution ou toute forme de commercialisation nécessite un consentement écrit préalable."
 
-#: src/app/pages/register/register-verified-page/RegisterVerifiedPage.tsx:48
+#: src/app/pages/register/register-verify-page/RegisterVerifyPage.tsx:24
 msgid "Continue to App"
 msgstr "Continuer vers l'application"
 
@@ -251,7 +251,7 @@ msgstr "Vous n'avez pas encore de compte ?"
 msgid "Email"
 msgstr "E-mail"
 
-#: src/app/pages/register/register-verified-page/RegisterVerifiedPage.tsx:32
+#: src/app/pages/register/register-verify-page/RegisterVerifyPage.tsx:18
 msgid "Email Verified!"
 msgstr "E-mail vérifié !"
 
@@ -520,7 +520,7 @@ msgstr "Finalités du traitement"
 msgid "Ready to Begin Your Arabic Journey?"
 msgstr "Prêt à commencer votre parcours en arabe ?"
 
-#: src/app/pages/register/register-verified-page/RegisterVerifiedPage.tsx:42
+#: src/app/pages/register/register-verify-page/RegisterVerifyPage.tsx:116
 msgid "Redirecting you to the app in a few seconds..."
 msgstr "Redirection vers l'application dans quelques secondes..."
 
@@ -646,6 +646,10 @@ msgstr "Les supports d'apprentissage des langues fournis sur {0} sont à des fin
 msgid "The processing of personal data is governed by our <0>Privacy Policy</0>, which explains how we collect, use, and protect your personal information in accordance with the General Data Protection Regulation (GDPR)."
 msgstr "Le traitement des données personnelles est régi par notre <0>Politique de confidentialité</0>, qui explique comment nous collectons, utilisons et protégeons vos informations personnelles conformément au Règlement général sur la protection des données (RGPD)."
 
+#: src/app/pages/register/register-verify-page/RegisterVerifyPage.tsx:35
+msgid "The verification link is invalid or has expired. Please try signing up again."
+msgstr "Le lien de vérification n'est pas valide ou a expiré. Veuillez réessayer de vous inscrire."
+
 #: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:123
 msgid "Theme"
 msgstr "Thème"
@@ -706,6 +710,10 @@ msgstr "Ce site Web peut contenir des liens vers des sites Web tiers externes. N
 msgid "To the extent permitted by applicable law, {0} shall not be liable for any indirect, incidental, special, or consequential damages arising out of or in connection with the use or inability to use the service."
 msgstr "Dans la mesure permise par la loi applicable, {0} ne sera pas responsable de tout dommage indirect, accessoire, spécial ou consécutif découlant de ou en relation avec l'utilisation ou l'impossibilité d'utiliser le service."
 
+#: src/app/pages/register/register-verify-page/RegisterVerifyPage.tsx:44
+msgid "Try again"
+msgstr "Réessayer"
+
 #: src/app/pages/forgot-password/forgot-password-sent-page/ForgotPasswordSentPage.tsx:65
 msgid "Try another email"
 msgstr "Essayer un autre e-mail"
@@ -721,6 +729,10 @@ msgstr "Licence d'utilisation"
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:75
 msgid "User Accounts"
 msgstr "Comptes utilisateurs"
+
+#: src/app/pages/register/register-verify-page/RegisterVerifyPage.tsx:33
+msgid "Verification Failed!"
+msgstr "Échec de la vérification!"
 
 #: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:100
 msgid "View source code on GitHub"
@@ -798,7 +810,7 @@ msgstr "Vous êtes responsable de la protection du mot de passe que vous utilise
 msgid "your email"
 msgstr "votre e-mail"
 
-#: src/app/pages/register/register-verified-page/RegisterVerifiedPage.tsx:37
+#: src/app/pages/register/register-verify-page/RegisterVerifyPage.tsx:19
 msgid "Your email has been successfully verified."
 msgstr "Votre e-mail a été vérifié avec succès."
 

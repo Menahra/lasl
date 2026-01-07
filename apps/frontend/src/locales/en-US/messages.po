@@ -193,7 +193,7 @@ msgstr "Contact Us"
 msgid "Content and works created by the site operator on this website are subject to copyright law. Duplication, processing, distribution, or any form of commercialization requires prior written consent."
 msgstr "Content and works created by the site operator on this website are subject to copyright law. Duplication, processing, distribution, or any form of commercialization requires prior written consent."
 
-#: src/app/pages/register/register-verified-page/RegisterVerifiedPage.tsx:48
+#: src/app/pages/register/register-verify-page/RegisterVerifyPage.tsx:24
 msgid "Continue to App"
 msgstr "Continue to App"
 
@@ -251,7 +251,7 @@ msgstr "Don't have an account yet?"
 msgid "Email"
 msgstr "Email"
 
-#: src/app/pages/register/register-verified-page/RegisterVerifiedPage.tsx:32
+#: src/app/pages/register/register-verify-page/RegisterVerifyPage.tsx:18
 msgid "Email Verified!"
 msgstr "Email Verified!"
 
@@ -520,7 +520,7 @@ msgstr "Purposes of Processing"
 msgid "Ready to Begin Your Arabic Journey?"
 msgstr "Ready to Begin Your Arabic Journey?"
 
-#: src/app/pages/register/register-verified-page/RegisterVerifiedPage.tsx:42
+#: src/app/pages/register/register-verify-page/RegisterVerifyPage.tsx:116
 msgid "Redirecting you to the app in a few seconds..."
 msgstr "Redirecting you to the app in a few seconds..."
 
@@ -646,6 +646,10 @@ msgstr "The language learning materials provided on {0} are for educational purp
 msgid "The processing of personal data is governed by our <0>Privacy Policy</0>, which explains how we collect, use, and protect your personal information in accordance with the General Data Protection Regulation (GDPR)."
 msgstr "The processing of personal data is governed by our <0>Privacy Policy</0>, which explains how we collect, use, and protect your personal information in accordance with the General Data Protection Regulation (GDPR)."
 
+#: src/app/pages/register/register-verify-page/RegisterVerifyPage.tsx:35
+msgid "The verification link is invalid or has expired. Please try signing up again."
+msgstr "The verification link is invalid or has expired. Please try signing up again."
+
 #: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:123
 msgid "Theme"
 msgstr "Theme"
@@ -706,6 +710,10 @@ msgstr "This website may contain links to external third-party websites. We have
 msgid "To the extent permitted by applicable law, {0} shall not be liable for any indirect, incidental, special, or consequential damages arising out of or in connection with the use or inability to use the service."
 msgstr "To the extent permitted by applicable law, {0} shall not be liable for any indirect, incidental, special, or consequential damages arising out of or in connection with the use or inability to use the service."
 
+#: src/app/pages/register/register-verify-page/RegisterVerifyPage.tsx:44
+msgid "Try again"
+msgstr "Try again"
+
 #: src/app/pages/forgot-password/forgot-password-sent-page/ForgotPasswordSentPage.tsx:65
 msgid "Try another email"
 msgstr "Try another email"
@@ -721,6 +729,10 @@ msgstr "Use License"
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:75
 msgid "User Accounts"
 msgstr "User Accounts"
+
+#: src/app/pages/register/register-verify-page/RegisterVerifyPage.tsx:33
+msgid "Verification Failed!"
+msgstr "Verification Failed!"
 
 #: src/app/layouts/main-layout/header/drawer/HeaderDrawer.tsx:100
 msgid "View source code on GitHub"
@@ -798,7 +810,7 @@ msgstr "You are responsible for safeguarding the password that you use to access
 msgid "your email"
 msgstr "your email"
 
-#: src/app/pages/register/register-verified-page/RegisterVerifiedPage.tsx:37
+#: src/app/pages/register/register-verify-page/RegisterVerifyPage.tsx:19
 msgid "Your email has been successfully verified."
 msgstr "Your email has been successfully verified."
 
