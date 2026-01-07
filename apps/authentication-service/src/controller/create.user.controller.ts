@@ -1,4 +1,4 @@
-import { authApiRoutes } from "@lasl/app-contracts/api/auth";
+import { authRoutes } from "@lasl/app-contracts/routes/auth";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import { Error as MongooseError } from "mongoose";
@@ -13,16 +13,17 @@ export const createUserHandler = async (
   req: FastifyRequest<{ Body: CreateUserInput["body"] }>,
   reply: FastifyReply,
 ) => {
-  const { body } = req;
+  const {
+    body,
+    server: {
+      config: { FRONTEND_BASE_URL },
+    },
+  } = req;
 
   try {
     const user = await createUser(body);
 
-    const { host } = req.headers;
-    const { protocol } = req;
-    const origin = `${protocol}://${host}`;
-
-    const verifyUrl = `${origin}${authApiRoutes.user.verify(user._id.toString(), user.verificationCode)}`;
+    const verifyUrl = `${FRONTEND_BASE_URL}${authRoutes.registerVerify(user._id.toString(), user.verificationCode)}`;
 
     const emailHtml = await loadHtmlTemplate("verification-email", {
       userName: user.firstName,

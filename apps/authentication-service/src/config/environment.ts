@@ -8,6 +8,7 @@ const defaultApplicationHostPort = 8080;
 const environmentSchema = z.object({
   [ENVIRONMENT.port]: z.coerce.number().default(defaultPort),
   [ENVIRONMENT.mongoUri]: z.string().min(1),
+  [ENVIRONMENT.frontendBaseUrl]: z.string().min(1),
   [ENVIRONMENT.jwtAccessPrivateKey]: z.string().min(1),
   [ENVIRONMENT.jwtAccessPublicKey]: z.string().min(1),
   [ENVIRONMENT.jwtRefreshPrivateKey]: z.string().min(1),
