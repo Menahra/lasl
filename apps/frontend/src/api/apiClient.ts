@@ -7,11 +7,11 @@ import { accessTokenManager } from "@/src/utils/accessTokenManager.ts";
 
 // biome-ignore lint/complexity/useLiteralKeys: needed for typescript
 const API_BASE_URL = import.meta.env["VITE_API_URL"];
-const AUTH_API_BASE_URL = `${API_BASE_URL}/auth/api/v1`;
+const AUTH_API_URL = "/auth/api/v1";
 
 const apiClient = axios.create({
   // biome-ignore lint/style/useNamingConvention: naming from axios
-  baseURL: AUTH_API_BASE_URL,
+  baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -53,9 +53,14 @@ apiClient.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
+    // don't retry if:
+    // 1. not a 401 error
+    // 2. already retried
+    // 3. it's the refresh endpoint itself (prevents infinite loop)
     if (
       error.response?.status !== StatusCodes.UNAUTHORIZED ||
-      originalRequest._retry
+      originalRequest._retry ||
+      originalRequest.url?.includes("/sessions/refresh")
     ) {
       return Promise.reject(error);
     }
@@ -97,4 +102,4 @@ apiClient.interceptors.response.use(
   },
 );
 
-export { AUTH_API_BASE_URL, apiClient };
+export { API_BASE_URL, AUTH_API_URL, apiClient };

@@ -1,36 +1,27 @@
-import axios from "axios";
-import { beforeEach, describe, expect, it, type Mock, vi } from "vitest";
-import { AUTH_API_BASE_URL } from "@/src/api/apiClient.ts";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { authApi } from "@/src/api/authApi.ts";
 import { accessTokenManager } from "@/src/utils/accessTokenManager.ts";
 
-vi.mock("axios", () => {
-  const mockAxiosInstance = {
-    interceptors: {
-      request: { use: vi.fn() },
-      response: { use: vi.fn() },
-    },
+// Mock the apiClient module
+vi.mock("@/src/api/apiClient.ts", () => ({
+  apiClient: {
     post: vi.fn(),
     get: vi.fn(),
-  };
+  },
+  // biome-ignore-start lint/style/useNamingConvention: ok here
+  API_BASE_URL: "http://localhost:3000",
+  AUTH_API_URL: "/auth/api/v1",
+  // biome-ignore-end lint/style/useNamingConvention: ok here
+}));
 
-  return {
-    default: {
-      create: vi.fn(() => mockAxiosInstance),
-      post: vi.fn(),
-      get: vi.fn(),
-    },
-  };
-});
+import { apiClient } from "@/src/api/apiClient.ts";
+
 vi.mock("@/src/utils/accessTokenManager.ts", () => ({
   accessTokenManager: {
     setAccessToken: vi.fn(),
     clearAccessToken: vi.fn(),
   },
 }));
-
-const mockAxiosPost = axios.post as Mock;
-const mockAxiosGet = axios.get as Mock;
 
 describe("authApi", () => {
   beforeEach(() => {
@@ -39,7 +30,7 @@ describe("authApi", () => {
 
   describe("createSession", () => {
     it("posts to /sessions, saves token, and returns it", async () => {
-      mockAxiosPost.mockResolvedValue({
+      vi.mocked(apiClient.post).mockResolvedValue({
         data: { accessToken: "abc123" },
       });
 
@@ -48,41 +39,39 @@ describe("authApi", () => {
         password: "password",
       });
 
-      expect(mockAxiosPost).toHaveBeenCalledWith(
-        `${AUTH_API_BASE_URL}/sessions`,
+      expect(apiClient.post).toHaveBeenCalledWith(
+        "/auth/api/v1/sessions",
         {
           email: "test@example.com",
           password: "password",
         },
         { withCredentials: true },
       );
-
       expect(accessTokenManager.setAccessToken).toHaveBeenCalledWith("abc123");
       expect(result).toBe("abc123");
     });
 
     it("clears token and throws on error", async () => {
       const error = new Error("fail");
-      mockAxiosPost.mockRejectedValue(error);
+      vi.mocked(apiClient.post).mockRejectedValue(error);
 
       await expect(
         authApi.createSession({ email: "x", password: "y" }),
       ).rejects.toThrow("fail");
-
       expect(accessTokenManager.clearAccessToken).toHaveBeenCalled();
     });
   });
 
   describe("postRefreshToken", () => {
     it("calls refresh endpoint and updates access token", async () => {
-      mockAxiosPost.mockResolvedValue({
+      vi.mocked(apiClient.post).mockResolvedValue({
         data: { accessToken: "newToken" },
       });
 
       const token = await authApi.postRefreshToken();
 
-      expect(mockAxiosPost).toHaveBeenCalledWith(
-        `${AUTH_API_BASE_URL}/sessions/refresh`,
+      expect(apiClient.post).toHaveBeenCalledWith(
+        "/auth/api/v1/sessions/refresh",
         {},
         { withCredentials: true },
       );
@@ -94,24 +83,23 @@ describe("authApi", () => {
 
     it("clears access token on failure", async () => {
       const error = new Error("refresh failed");
-      mockAxiosPost.mockRejectedValue(error);
+      vi.mocked(apiClient.post).mockRejectedValue(error);
 
       await expect(authApi.postRefreshToken()).rejects.toThrow(
         "refresh failed",
       );
-
       expect(accessTokenManager.clearAccessToken).toHaveBeenCalled();
     });
   });
 
   describe("logout", () => {
     it("posts to logout endpoint", async () => {
-      mockAxiosPost.mockResolvedValue({ data: {} });
+      vi.mocked(apiClient.post).mockResolvedValue({ data: {} });
 
       await authApi.logout();
 
-      expect(mockAxiosPost).toHaveBeenCalledWith(
-        `${AUTH_API_BASE_URL}/sessions/logout`,
+      expect(apiClient.post).toHaveBeenCalledWith(
+        "/auth/api/v1/sessions/logout",
         {},
         { withCredentials: true },
       );
@@ -119,20 +107,15 @@ describe("authApi", () => {
   });
 
   describe("getCurrentUser", () => {
-    it("posts to /users/me and returns user data", async () => {
+    it("gets from /users/me and returns user data", async () => {
       const user = { id: 1, name: "Jane" };
-
-      mockAxiosGet.mockResolvedValue({
+      vi.mocked(apiClient.get).mockResolvedValue({
         data: user,
       });
 
       const result = await authApi.getCurrentUser();
 
-      expect(mockAxiosGet).toHaveBeenCalledWith(
-        `${AUTH_API_BASE_URL}/users/me`,
-        {},
-      );
-
+      expect(apiClient.get).toHaveBeenCalledWith("/auth/api/v1/users/me");
       expect(result).toEqual(user);
     });
   });

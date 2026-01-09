@@ -11,9 +11,8 @@ import type {
   RefreshSessionSuccessResponse,
   ResetPasswordSuccessResponse,
 } from "@lasl/authentication-service";
-import axios from "axios";
 import type { z } from "zod";
-import { AUTH_API_BASE_URL } from "@/src/api/apiClient.ts";
+import { AUTH_API_URL, apiClient } from "@/src/api/apiClient.ts";
 import { accessTokenManager } from "@/src/utils/accessTokenManager.ts";
 
 export const authApi = {
@@ -21,8 +20,8 @@ export const authApi = {
     sessionParameters: z.infer<typeof createSessionSchema>,
   ) => {
     try {
-      const response = await axios.post<CreateSessionSuccessResponse>(
-        `${AUTH_API_BASE_URL}/sessions`,
+      const response = await apiClient.post<CreateSessionSuccessResponse>(
+        `${AUTH_API_URL}/sessions`,
         sessionParameters,
         { withCredentials: true },
       );
@@ -39,8 +38,8 @@ export const authApi = {
 
   postRefreshToken: async () => {
     try {
-      const response = await axios.post<RefreshSessionSuccessResponse>(
-        `${AUTH_API_BASE_URL}/sessions/refresh`,
+      const response = await apiClient.post<RefreshSessionSuccessResponse>(
+        `${AUTH_API_URL}/sessions/refresh`,
         {},
         { withCredentials: true },
       );
@@ -56,8 +55,8 @@ export const authApi = {
   },
 
   logout: async () => {
-    const { data } = await axios.post<LogoutSuccessResponse>(
-      `${AUTH_API_BASE_URL}/sessions/logout`,
+    const { data } = await apiClient.post<LogoutSuccessResponse>(
+      `${AUTH_API_URL}/sessions/logout`,
       {},
       { withCredentials: true },
     );
@@ -68,8 +67,8 @@ export const authApi = {
   forgotPassword: async (
     email: GetCurrentAuthenticatedUserSuccessResponse["email"],
   ) => {
-    const { data } = await axios.post<ForgotPasswordSuccessResponse>(
-      `${AUTH_API_BASE_URL}/users/forgotpassword`,
+    const { data } = await apiClient.post<ForgotPasswordSuccessResponse>(
+      `${AUTH_API_URL}/users/forgotpassword`,
       { email },
       { withCredentials: true },
     );
@@ -82,8 +81,8 @@ export const authApi = {
       z.infer<typeof userPasswordWithConfirmationAndRefinementSchema>,
   ) => {
     const { id, passwordResetCode, ...body } = input;
-    const { data } = await axios.post<ResetPasswordSuccessResponse>(
-      `${AUTH_API_BASE_URL}/users/resetpassword/${id}/${passwordResetCode}`,
+    const { data } = await apiClient.post<ResetPasswordSuccessResponse>(
+      `${AUTH_API_URL}/users/resetpassword/${id}/${passwordResetCode}`,
       { body },
       { withCredentials: true },
     );
@@ -93,9 +92,8 @@ export const authApi = {
 
   getCurrentUser: async () => {
     const { data } =
-      await axios.get<GetCurrentAuthenticatedUserSuccessResponse>(
-        `${AUTH_API_BASE_URL}/users/me`,
-        {},
+      await apiClient.get<GetCurrentAuthenticatedUserSuccessResponse>(
+        `${AUTH_API_URL}/users/me`,
       );
 
     return data;
