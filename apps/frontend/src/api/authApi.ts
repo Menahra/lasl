@@ -93,10 +93,9 @@ export const authApi = {
 
   getCurrentUser: async () => {
     const { data } =
-      await axios.post<GetCurrentAuthenticatedUserSuccessResponse>(
+      await axios.get<GetCurrentAuthenticatedUserSuccessResponse>(
         `${AUTH_API_BASE_URL}/users/me`,
         {},
-        { withCredentials: true },
       );
 
     return data;

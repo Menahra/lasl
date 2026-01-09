@@ -18,6 +18,7 @@ vi.mock("axios", () => {
     default: {
       create: vi.fn(() => mockAxiosInstance),
       post: vi.fn(),
+      get: vi.fn(),
     },
   };
 });
@@ -29,6 +30,7 @@ vi.mock("@/src/utils/accessTokenManager.ts", () => ({
 }));
 
 const mockAxiosPost = axios.post as Mock;
+const mockAxiosGet = axios.get as Mock;
 
 describe("authApi", () => {
   beforeEach(() => {
@@ -120,16 +122,15 @@ describe("authApi", () => {
     it("posts to /users/me and returns user data", async () => {
       const user = { id: 1, name: "Jane" };
 
-      mockAxiosPost.mockResolvedValue({
+      mockAxiosGet.mockResolvedValue({
         data: user,
       });
 
       const result = await authApi.getCurrentUser();
 
-      expect(mockAxiosPost).toHaveBeenCalledWith(
+      expect(mockAxiosGet).toHaveBeenCalledWith(
         `${AUTH_API_BASE_URL}/users/me`,
         {},
-        { withCredentials: true },
       );
 
       expect(result).toEqual(user);
