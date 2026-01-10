@@ -1,6 +1,9 @@
 import { Trans } from "@lingui/react/macro";
 import { EnterIcon, ExitIcon } from "@radix-ui/react-icons";
-import { Link as TanstackRouterLink } from "@tanstack/react-router";
+import {
+  Link as TanstackRouterLink,
+  useNavigate,
+} from "@tanstack/react-router";
 import { ROUTE_HOME } from "@/src/app/routes/index.tsx";
 import { ROUTE_LOGIN } from "@/src/app/routes/login.tsx";
 import {
@@ -8,6 +11,7 @@ import {
   type ButtonProps,
 } from "@/src/shared/components/button/Button.tsx";
 import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
+import { usePostLogout } from "@/src/shared/hooks/api/useAuthentication.ts";
 import { useAuthenticationContext } from "@/src/shared/hooks/useAuthenticationContext.tsx";
 import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
 import "./AuthButton.css";
@@ -17,6 +21,17 @@ type AuthButtonProps = Omit<ButtonProps, "variant" | "startIcon" | "endIcon">;
 export const AuthButton = (props: AuthButtonProps) => {
   const { user } = useAuthenticationContext();
   const { isLoading } = useI18nContext();
+  const navigate = useNavigate();
+  const { isPending, mutateAsync } = usePostLogout();
+
+  const onLogoutClick = async () => {
+    try {
+      await mutateAsync();
+      navigate({ to: ROUTE_HOME });
+    } catch (_error) {
+      console.error("An error occured during logout");
+    }
+  };
 
   if (!user) {
     return (
@@ -32,11 +47,17 @@ export const AuthButton = (props: AuthButtonProps) => {
 
   return (
     <Skeleton loading={isLoading} width={90} height={38}>
-      <TanstackRouterLink to={ROUTE_HOME} className="AuthButton">
-        <Button {...props} startIcon={<ExitIcon />} variant="text">
+      <span className="AuthButton">
+        <Button
+          {...props}
+          startIcon={<ExitIcon />}
+          variant="text"
+          loading={isPending}
+          onClick={onLogoutClick}
+        >
           <Trans>Logout</Trans>
         </Button>
-      </TanstackRouterLink>
+      </span>
     </Skeleton>
   );
 };
