@@ -1,9 +1,11 @@
 import process from "node:process";
-import { authApiRoutes } from "@lasl/app-contracts/api/auth";
+import {
+  authApiRoutes,
+  REFRESH_TOKEN_COOKIE_NAME,
+} from "@lasl/app-contracts/api/auth";
 import { vagueSessionErrorMessage } from "@lasl/app-contracts/schemas/session";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { StatusCodes } from "http-status-codes";
-import { REFRESH_COOKIE_NAME } from "@/src/middleware/authentication.hook.ts";
 import type { CreateSessionInputSchemaType } from "@/src/schema/session.schema.ts";
 import {
   signAccessToken,
@@ -48,7 +50,7 @@ export const createSessionHandler = async (
     const refreshToken = await signRefreshToken(user._id, req.log);
 
     return reply
-      .setCookie(REFRESH_COOKIE_NAME, refreshToken, {
+      .setCookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken, {
         httpOnly: true,
         // biome-ignore lint/complexity/useLiteralKeys: otherwise ts complains
         secure: process.env["NODE_ENV"] === "production",
@@ -117,7 +119,7 @@ export const logoutHandler = async (
     session.valid = false;
     await session.save();
 
-    reply.clearCookie(REFRESH_COOKIE_NAME, {
+    reply.clearCookie(REFRESH_TOKEN_COOKIE_NAME, {
       path: fullRefreshSessionRoute,
     });
 
