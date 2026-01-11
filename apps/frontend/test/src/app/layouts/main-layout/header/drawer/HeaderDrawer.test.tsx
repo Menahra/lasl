@@ -37,6 +37,7 @@ describe("HeaderDrawer", () => {
         router: {
           pathPattern: "/header-drawer",
         },
+        query: true,
       },
     );
 

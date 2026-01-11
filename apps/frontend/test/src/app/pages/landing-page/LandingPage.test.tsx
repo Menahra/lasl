@@ -16,6 +16,7 @@ describe("LandingPage", () => {
       router: {
         pathPattern: "/test",
       },
+      query: true,
     });
 
   it("renders without crashing", async () => {

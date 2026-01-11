@@ -23,6 +23,7 @@ vi.mock("@/src/api/authApi", () => ({
 vi.mock("@/src/utils/accessTokenManager", () => ({
   accessTokenManager: {
     getAccessToken: vi.fn(),
+    setAccessToken: vi.fn(),
     clearAccessToken: vi.fn(),
   },
 }));
@@ -65,6 +66,9 @@ describe("useAuth hooks", () => {
     });
     expect(invalidateQueries).toHaveBeenCalledWith({
       queryKey: authKeys.user(),
+    });
+    expect(accessTokenManager.setAccessToken).toHaveBeenCalledWith({
+      accessToken: "abc",
     });
   });
 

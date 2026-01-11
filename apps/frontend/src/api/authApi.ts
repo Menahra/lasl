@@ -27,11 +27,10 @@ export const authApi = {
       );
       const { accessToken } = response.data;
 
-      accessTokenManager.setAccessToken(accessToken);
       return accessToken;
     } catch (error) {
       // need to set up proper logging for frontend
-      accessTokenManager.clearAccessToken();
+      console.error("An Error occured during login");
       throw error;
     }
   },

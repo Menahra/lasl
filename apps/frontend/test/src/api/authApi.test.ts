@@ -47,7 +47,7 @@ describe("authApi", () => {
         },
         { withCredentials: true },
       );
-      expect(accessTokenManager.setAccessToken).toHaveBeenCalledWith("abc123");
+
       expect(result).toBe("abc123");
     });
 
@@ -58,7 +58,6 @@ describe("authApi", () => {
       await expect(
         authApi.createSession({ email: "x", password: "y" }),
       ).rejects.toThrow("fail");
-      expect(accessTokenManager.clearAccessToken).toHaveBeenCalled();
     });
   });
 
