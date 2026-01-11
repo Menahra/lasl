@@ -1,8 +1,8 @@
+import { AUTHENTICATION_TYPE } from "@lasl/app-contracts/api/auth";
 import axios from "axios";
 import { StatusCodes } from "http-status-codes";
 import { authApi } from "@/src/api/authApi.ts";
 import { ROUTE_LOGIN } from "@/src/app/routes/login.tsx";
-import { AUTHENTICATION_TYPE } from "@/src/shared/constants.ts";
 import { accessTokenManager } from "@/src/utils/accessTokenManager.ts";
 
 // biome-ignore lint/complexity/useLiteralKeys: needed for typescript

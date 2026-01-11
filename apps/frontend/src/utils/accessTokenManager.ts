@@ -1,4 +1,4 @@
-import { ACCESS_TOKEN_NAME } from "@/src/shared/constants.ts";
+import { ACCESS_TOKEN_NAME } from "@lasl/app-contracts/api/auth";
 
 export const accessTokenManager = {
   getAccessToken: () => localStorage.getItem(ACCESS_TOKEN_NAME),

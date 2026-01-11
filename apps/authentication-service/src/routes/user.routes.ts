@@ -1,4 +1,7 @@
-import { authApiRoutes } from "@lasl/app-contracts/api/auth";
+import {
+  AUTHENTICATION_TYPE,
+  authApiRoutes,
+} from "@lasl/app-contracts/api/auth";
 import type { FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import { z } from "zod";
@@ -156,9 +159,7 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
       schema: {
         summary: "Get the current authenticated user",
         tags: [UserSwaggerTag],
-        description:
-          // biome-ignore lint/security/noSecrets: this is a description, not a secret
-          "Send the authorization header in format 'Bearer {accessToken}' and receive the user information",
+        description: `Send the authorization header in format '${AUTHENTICATION_TYPE} {accessToken}' and receive the user information`,
         headers: {
           type: "object",
           properties: { authorization: { type: "string" } },
@@ -187,8 +188,7 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
       schema: {
         summary: "Update the current authenticated user",
         tags: [UserSwaggerTag],
-        description:
-          "Send the authorization header in Bearer format and the update options to update the current authenticated user",
+        description: `Send the authorization header in ${AUTHENTICATION_TYPE} format and the update options to update the current authenticated user`,
         headers: {
           type: "object",
           properties: { authorization: { type: "string" } },

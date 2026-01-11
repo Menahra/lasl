@@ -1,5 +1,5 @@
+import { ACCESS_TOKEN_NAME } from "@lasl/app-contracts/api/auth";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { ACCESS_TOKEN_NAME } from "@/src/shared/constants.ts";
 import { accessTokenManager } from "@/src/utils/accessTokenManager.ts";
 
 describe("accessTokenManager", () => {

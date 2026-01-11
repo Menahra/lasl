@@ -1,3 +1,7 @@
+import {
+  AUTHENTICATION_TYPE,
+  REFRESH_TOKEN_COOKIE_NAME,
+} from "@lasl/app-contracts/api/auth";
 import type {
   FastifyReply,
   FastifyRequest,
@@ -12,9 +16,6 @@ import { verifyJsonWebToken } from "@/src/util/jwt.util.ts";
 import type { UserJsonWebTokenPayload } from "../model/user.model.ts";
 import { findSessionById } from "../service/auth.service.ts";
 
-// biome-ignore lint/security/noSecrets: not a secret
-export const REFRESH_COOKIE_NAME = "refreshToken";
-
 // biome-ignore lint/suspicious/useAwait: needed for preHandler functionality in fastify
 export const deserializeUser = async <
   R extends RouteGenericInterface = RouteGenericInterface,
@@ -24,7 +25,7 @@ export const deserializeUser = async <
 ) => {
   const authorizationHeader = req.headers.authorization;
 
-  if (!authorizationHeader?.startsWith("Bearer ")) {
+  if (!authorizationHeader?.startsWith(`${AUTHENTICATION_TYPE} `)) {
     return reply
       .status(StatusCodes.UNAUTHORIZED)
       .send({ message: "Missing or malformed token" });
@@ -54,7 +55,7 @@ export const deserializeSession = async (
   req: FastifyRequest,
   reply: FastifyReply,
 ) => {
-  const refreshToken = req.cookies[REFRESH_COOKIE_NAME];
+  const refreshToken = req.cookies[REFRESH_TOKEN_COOKIE_NAME];
 
   if (!refreshToken) {
     return reply

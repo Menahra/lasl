@@ -1,8 +1,8 @@
+import { ACCESS_TOKEN_NAME } from "@lasl/app-contracts/api/auth";
 import { HttpResponse, http } from "msw";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { API_BASE_URL, AUTH_API_URL, apiClient } from "@/src/api/apiClient.ts";
 import * as authApi from "@/src/api/authApi.ts";
-import { ACCESS_TOKEN_NAME } from "@/src/shared/constants.ts";
 import { mockPostRefreshNewAccessToken } from "@/test/__msw__/authMocks.ts";
 import { server, setupMockServiceWorker } from "@/test/__msw__/setupMsw.ts";
 

@@ -1,4 +1,7 @@
-import { authApiRoutes } from "@lasl/app-contracts/api/auth";
+import {
+  authApiRoutes,
+  REFRESH_TOKEN_COOKIE_NAME,
+} from "@lasl/app-contracts/api/auth";
 import type { FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import { z } from "zod";
@@ -37,12 +40,8 @@ export const authRoutes = (fastifyInstance: FastifyInstance) => {
             headers: {
               "Set-Cookie": {
                 type: "string",
-                description:
-                  // biome-ignore lint/security/noSecrets: not a secret
-                  "HTTP-only cookie named `refreshToken` used for session renewal.",
-                example:
-                  // biome-ignore lint/security/noSecrets: not a secret
-                  "refreshToken=abc123; HttpOnly; Path=/api/v1/sessions/refresh; Max-Age=604800",
+                description: `HTTP-only cookie named '${REFRESH_TOKEN_COOKIE_NAME}' used for session renewal.`,
+                example: `${REFRESH_TOKEN_COOKIE_NAME}=abc123; HttpOnly; Path=/api/v1/sessions/refresh; Max-Age=604800`,
               },
             },
             content: {
