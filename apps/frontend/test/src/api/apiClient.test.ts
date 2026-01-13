@@ -1,4 +1,7 @@
-import { ACCESS_TOKEN_NAME } from "@lasl/app-contracts/api/auth";
+import {
+  ACCESS_TOKEN_NAME,
+  AUTHENTICATION_TYPE,
+} from "@lasl/app-contracts/api/auth";
 import { HttpResponse, http } from "msw";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { API_BASE_URL, AUTH_API_URL, apiClient } from "@/src/api/apiClient.ts";
@@ -38,7 +41,9 @@ describe("apiClient integration with cookie-based refresh token", () => {
     server.use(
       http.get(`${API_BASE_URL}/protected`, ({ request }) => {
         const auth = request.headers.get("Authorization");
-        if (auth === `Bearer ${mockPostRefreshNewAccessToken}`) {
+        if (
+          auth === `${AUTHENTICATION_TYPE} ${mockPostRefreshNewAccessToken}`
+        ) {
           return HttpResponse.json({ data: "retried success" });
         }
         return HttpResponse.json({ message: "Unauthorized" }, { status: 401 });
@@ -78,7 +83,9 @@ describe("apiClient integration with cookie-based refresh token", () => {
     server.use(
       http.get(`${API_BASE_URL}/protected`, ({ request }) => {
         const auth = request.headers.get("Authorization");
-        if (auth === `Bearer ${mockPostRefreshNewAccessToken}`) {
+        if (
+          auth === `${AUTHENTICATION_TYPE} ${mockPostRefreshNewAccessToken}`
+        ) {
           return HttpResponse.json({ data: "retried" });
         }
         return HttpResponse.json({ message: "Unauthorized" }, { status: 401 });

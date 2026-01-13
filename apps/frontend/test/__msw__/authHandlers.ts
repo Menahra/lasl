@@ -1,3 +1,4 @@
+import { AUTHENTICATION_TYPE } from "@lasl/app-contracts/api/auth";
 import { HttpResponse, http } from "msw";
 import { API_BASE_URL, AUTH_API_URL } from "@/src/api/apiClient.ts";
 
@@ -8,7 +9,7 @@ export const mockAuthenticationHandlers = [
   // Simulate a protected endpoint
   http.get(`${API_BASE_URL}/${AUTH_API_URL}/protected`, ({ request }) => {
     const auth = request.headers.get("Authorization");
-    if (auth === `Bearer ${mockAccessToken}`) {
+    if (auth === `${AUTHENTICATION_TYPE} ${mockAccessToken}`) {
       return HttpResponse.json({ data: "secure data" }, { status: 200 });
     }
 
