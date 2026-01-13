@@ -1,8 +1,10 @@
 import { authRoutes } from "@lasl/app-contracts/routes/auth";
 import { expect, test } from "@playwright/test";
+import { getVerificationLink } from "@/utils/mailer/getVerificationLink.ts";
+import { waitForEmail } from "@/utils/mailer/waitForEmail.ts";
 
 test.describe("Authentication Flow", () => {
-  test("user can register and verify email", async ({ page }) => {
+  test("user can register and verify email", async ({ page, request }) => {
     const user = {
       firstName: "John",
       lastName: "Doe",
@@ -26,5 +28,12 @@ test.describe("Authentication Flow", () => {
     await page.getByRole("button", { name: /create account/i }).click();
 
     await expect(page.locator("text=Check your email")).toBeVisible();
+
+    const message = await waitForEmail(request, user.email);
+    const verificationLink = await getVerificationLink(request, message.ID);
+
+    await page.goto(verificationLink);
+
+    await expect(page.getByText(/email verified/i)).toBeVisible();
   });
 });
