@@ -8,6 +8,8 @@ import type { FastifyReply, FastifyRequest } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import type { CreateSessionInputSchemaType } from "@/src/schema/session.schema.ts";
 import {
+  createSession,
+  findSessionById,
   signAccessToken,
   signRefreshToken,
 } from "@/src/service/auth.service.ts";
@@ -46,8 +48,10 @@ export const createSessionHandler = async (
         .send({ message: vagueSessionErrorMessage });
     }
 
-    const accessToken = signAccessToken(user, req.log);
-    const refreshToken = await signRefreshToken(user._id, req.log);
+    const session = await createSession(user._id, req.log);
+
+    const accessToken = signAccessToken(user, session, req.log);
+    const refreshToken = signRefreshToken(session, req.log);
 
     return reply
       .setCookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken, {
@@ -92,7 +96,7 @@ export const refreshAccessTokenHandler = async (
         .send({ message: "Could not refresh access token" });
     }
 
-    const accessToken = signAccessToken(user, req.log);
+    const accessToken = signAccessToken(user, session, req.log);
 
     return reply.status(StatusCodes.OK).send({ accessToken });
   } catch (error) {
@@ -108,7 +112,15 @@ export const logoutHandler = async (
   reply: FastifyReply,
 ) => {
   try {
-    const { session } = req;
+    const { sessionId } = req;
+
+    if (!sessionId) {
+      return reply
+        .status(StatusCodes.UNAUTHORIZED)
+        .send({ message: "Logout failed" });
+    }
+
+    const session = await findSessionById(sessionId);
 
     if (!session) {
       return reply
@@ -127,6 +139,7 @@ export const logoutHandler = async (
       .status(StatusCodes.OK)
       .send({ message: "Logged out successfully" });
   } catch (error) {
+    console.error(error);
     req.log.error(error, "Unable to logout");
     return reply
       .status(StatusCodes.UNAUTHORIZED)

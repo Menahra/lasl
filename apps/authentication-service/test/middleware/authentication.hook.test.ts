@@ -1,3 +1,4 @@
+import { AUTHENTICATION_TYPE } from "@lasl/app-contracts/api/auth";
 import { StatusCodes } from "http-status-codes";
 import { describe, expect, it, type Mock, vi } from "vitest";
 import {
@@ -42,12 +43,12 @@ describe("authentication hook middleware", () => {
       });
     });
 
-    it("should assign req.user when token is valid", () => {
-      const fakePayload = { id: "user1", email: "test@example.com" };
+    it("should assign req.userId when token is valid", () => {
+      const fakePayload = { sub: "user1", session: "test@example.com" };
       (verifyJsonWebToken as Mock).mockReturnValue(fakePayload);
 
       const req = {
-        headers: { authorization: "Bearer validtoken" },
+        headers: { authorization: `${AUTHENTICATION_TYPE} validtoken` },
         log: { warn: vi.fn() },
       };
       const reply = { status: vi.fn() };
@@ -56,7 +57,7 @@ describe("authentication hook middleware", () => {
       deserializeUser(req, reply);
 
       // @ts-expect-error ok in test context
-      expect(req.user).toEqual(fakePayload);
+      expect(req.userId).toEqual(fakePayload.sub);
       expect(reply.status).not.toHaveBeenCalled(); // No error
     });
 
@@ -66,7 +67,7 @@ describe("authentication hook middleware", () => {
       });
 
       const req = {
-        headers: { authorization: "Bearer invalidtoken" },
+        headers: { authorization: `${AUTHENTICATION_TYPE} invalidtoken` },
         log: { warn: vi.fn() },
       };
 

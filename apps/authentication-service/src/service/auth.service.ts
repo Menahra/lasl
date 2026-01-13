@@ -1,10 +1,13 @@
 import type { DocumentType } from "@typegoose/typegoose";
 import type { FastifyBaseLogger } from "fastify";
 import type { Types } from "mongoose";
-import { JWT_ACCESS_PRIVATE_KEY_NAME } from "@/src/constants/jwt.constants.ts";
+import {
+  JWT_ACCESS_PRIVATE_KEY_NAME,
+  JWT_REFRESH_PRIVATE_KEY_NAME,
+} from "@/src/constants/jwt.constants.ts";
 import type { User } from "@/src/model/user.model.ts";
 import { signJsonWebToken } from "@/src/util/jwt.util.ts";
-import { SessionModel } from "../model/session.model.ts";
+import { type Session, SessionModel } from "../model/session.model.ts";
 
 export const createSession = async (
   userId: Types.ObjectId,
@@ -20,12 +23,21 @@ export const createSession = async (
 
 export const findSessionById = (id: string) => SessionModel.findById(id);
 
+export type AccessTokenJsonWebTokenPayload = {
+  sub: string;
+  session: string;
+};
+
 export const signAccessToken = (
   user: DocumentType<User>,
+  session: DocumentType<Session>,
   logger: FastifyBaseLogger,
 ) => {
   try {
-    const payload = user.getJsonWebTokenPayload();
+    const payload = {
+      sub: user._id.toString(),
+      session: session._id.toString(),
+    };
 
     return signJsonWebToken(
       payload,
@@ -42,27 +54,25 @@ export const signAccessToken = (
   }
 };
 
-export const signRefreshToken = async (
-  userId: Parameters<typeof createSession>[0],
+export type RefreshTokenJsonWebTokenPayload = {
+  session: string;
+};
+
+export const signRefreshToken = (
+  session: DocumentType<Session>,
   logger: FastifyBaseLogger,
 ) => {
   try {
-    const session = await createSession(userId, logger);
-
     return signJsonWebToken(
-      { session: session._id },
-      // biome-ignore lint/security/noSecrets: key name is no secret
-      "jwtRefreshPrivateKey",
+      { session: session._id.toString() },
+      JWT_REFRESH_PRIVATE_KEY_NAME,
       {
         expiresIn: "30d",
       },
       logger,
     );
   } catch (error) {
-    logger.error(
-      error,
-      `Could not sign resresh token for user with id: ${userId}`,
-    );
+    logger.error(error, "Could not sign resresh token");
     throw new Error(`Failed to sign refresh token: ${error}`);
   }
 };

@@ -20,7 +20,10 @@ import {
   logoutHandler,
   refreshAccessTokenHandler,
 } from "../controller/auth.controller.ts";
-import { deserializeSession } from "../middleware/authentication.hook.ts";
+import {
+  deserializeSession,
+  deserializeUser,
+} from "../middleware/authentication.hook.ts";
 import { createSessionJsonSchema } from "../schema/session.schema.ts";
 
 // biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok in controller with schema definition
@@ -88,7 +91,7 @@ export const authRoutes = (fastifyInstance: FastifyInstance) => {
   fastifyInstance.post(
     authApiRoutes.session.logout(),
     {
-      preHandler: deserializeSession,
+      preHandler: deserializeUser,
       schema: {
         summary: "Logout the current session",
         description:

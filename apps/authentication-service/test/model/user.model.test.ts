@@ -289,17 +289,4 @@ describe("User Model", () => {
       expect(isValid).toBe(false);
     });
   });
-
-  describe("getJsonWebTokenPayload", () => {
-    it("should only include email, id, firstName and lastName of the user", async () => {
-      const user = new UserModel(mockUserData);
-      const savedUser = await user.save();
-
-      const jsonWebTokenPayload = savedUser.getJsonWebTokenPayload();
-      const expectedKeys = ["id", "email", "firstName", "lastName", "settings"];
-      const actualKeys = Object.keys(jsonWebTokenPayload);
-
-      expect(actualKeys.sort()).toEqual(expectedKeys.sort());
-    });
-  });
 });

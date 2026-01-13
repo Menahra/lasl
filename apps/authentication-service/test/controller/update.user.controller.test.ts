@@ -4,7 +4,15 @@ import {
 } from "@lasl/test-utils-fastify/setup-utils";
 import { StatusCodes } from "http-status-codes";
 import mongoose from "mongoose";
-import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
+import {
+  afterAll,
+  afterEach,
+  beforeAll,
+  describe,
+  expect,
+  it,
+  vi,
+} from "vitest";
 import { buildApp } from "@/src/app.ts";
 import { updateUserHandler } from "@/src/controller/update.user.controller.ts";
 import { UserModel } from "@/src/model/user.model.ts";
@@ -17,6 +25,10 @@ describe("update user controller", () => {
 
   afterAll(async () => {
     await teardownFastifyTestEnvironment();
+  });
+
+  afterEach(async () => {
+    await UserModel.deleteMany();
   });
 
   it("should respond with 404 if there is no current authenticated user", async () => {
@@ -34,9 +46,9 @@ describe("update user controller", () => {
   });
 
   it("should respond with 404 if user cannot be found in database", async () => {
-    const id = new mongoose.Types.ObjectId().toString();
+    const secondId = new mongoose.Types.ObjectId().toString();
     const req = {
-      user: { ...mockUserDataWithSettings, id },
+      userId: secondId,
       log: { error: vi.fn() },
     };
     const reply = {
@@ -49,17 +61,19 @@ describe("update user controller", () => {
 
     expect(reply.status).toHaveBeenCalledWith(StatusCodes.NOT_FOUND);
     expect(reply.send).toHaveBeenCalledWith({
-      message: `Failed to update user with id ${id}`,
+      message: `User with id ${secondId} not found`,
     });
   });
 
   it("should respond with 400 if user is found but cannot be updated", async () => {
     const error = new Error("some error");
     vi.spyOn(UserModel, "findByIdAndUpdate").mockRejectedValueOnce(error);
+    const user = await UserModel.create(mockUserDataWithSettings);
+    vi.spyOn(user, "save").mockRejectedValueOnce(error);
+    vi.spyOn(UserModel, "findById").mockResolvedValueOnce(user);
     const userUpdate = { firstName: "Gunther" };
-    const id = "someId";
     const req = {
-      user: { ...mockUserDataWithSettings, id },
+      userId: user._id.toString(),
       body: userUpdate,
       log: { error: vi.fn() },
     };
@@ -77,7 +91,7 @@ describe("update user controller", () => {
     });
     expect(req.log.error).toHaveBeenCalledWith(
       error,
-      `An error occurred during update for user: ${id}`,
+      `An error occurred during update for user: ${user._id.toString()}`,
     );
   });
 
@@ -85,7 +99,7 @@ describe("update user controller", () => {
     const user = await UserModel.create(mockUserDataWithSettings);
     const userUpdate = { firstName: "Gunther" };
     const req = {
-      user: { ...mockUserDataWithSettings, id: user._id.toString() },
+      userId: user._id.toString(),
       body: userUpdate,
       log: { error: vi.fn() },
     };

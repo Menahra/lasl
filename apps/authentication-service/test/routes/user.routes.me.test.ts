@@ -1,4 +1,7 @@
-import { authApiRoutes } from "@lasl/app-contracts/api/auth";
+import {
+  AUTHENTICATION_TYPE,
+  authApiRoutes,
+} from "@lasl/app-contracts/api/auth";
 import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "@lasl/app-contracts/locales";
 import {
   setupFastifyTestEnvironment,
@@ -8,19 +11,24 @@ import { checkSwaggerDoc } from "@lasl/test-utils-fastify/swagger-doc-utils";
 import type { FastifyBaseLogger, FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import mongoose from "mongoose";
-import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
+import {
+  afterAll,
+  afterEach,
+  beforeAll,
+  describe,
+  expect,
+  it,
+  vi,
+} from "vitest";
 import { buildApp } from "@/src/app.ts";
 import { UserModel } from "@/src/model/user.model.ts";
-import {
-  mockUserData,
-  mockUserDataWithSettings,
-} from "@/test/__mocks__/user.mock.ts";
+import { mockUserData } from "@/test/__mocks__/user.mock.ts";
 
 const mockUserId = new mongoose.Types.ObjectId().toString();
 
 vi.mock("@/src/util/jwt.util.ts", () => ({
   signJsonWebToken: vi.fn(),
-  verifyJsonWebToken: () => ({ id: mockUserId, ...mockUserDataWithSettings }),
+  verifyJsonWebToken: () => ({ sub: mockUserId }),
 }));
 
 describe("user routes me", () => {
@@ -55,6 +63,10 @@ describe("user routes me", () => {
 
   afterAll(async () => {
     await teardownFastifyTestEnvironment();
+  });
+
+  afterEach(async () => {
+    await UserModel.deleteMany();
   });
 
   it.each([
@@ -109,13 +121,17 @@ describe("user routes me", () => {
   );
 
   it("should return the current authenticated user", async () => {
+    await UserModel.create({
+      ...mockUser,
+      _id: mockUserId,
+    });
     const token = "test234";
 
     const response = await app.inject({
       method: "GET",
       url: currentUserEndpoint,
       headers: {
-        authorization: `Bearer ${token}`,
+        authorization: `${AUTHENTICATION_TYPE} ${token}`,
       },
     });
 
@@ -150,7 +166,7 @@ describe("user routes me", () => {
       method: "PATCH",
       url: currentUserEndpoint,
       headers: {
-        authorization: `Bearer ${token}`,
+        authorization: `${AUTHENTICATION_TYPE} ${token}`,
       },
       body: update,
     });

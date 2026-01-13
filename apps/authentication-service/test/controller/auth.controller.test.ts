@@ -1,13 +1,22 @@
+import {
+  setupFastifyTestEnvironment,
+  teardownFastifyTestEnvironment,
+} from "@lasl/test-utils-fastify/setup-utils";
 import { StatusCodes } from "http-status-codes";
-import { describe, expect, it, vi } from "vitest";
+import mongoose from "mongoose";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
+import { buildApp } from "@/src/app.ts";
 import {
   createSessionHandler,
   logoutHandler,
   refreshAccessTokenHandler,
 } from "@/src/controller/auth.controller.ts";
+import { SessionModel } from "@/src/model/session.model.ts";
+import { UserModel } from "@/src/model/user.model.ts";
 import * as authService from "@/src/service/auth.service.ts";
 import * as userService from "@/src/service/user.service.ts";
 import * as jwtUtil from "@/src/util/jwt.util.ts";
+import { mockUserData } from "@/test/__mocks__/user.mock.ts";
 
 const mockReply = () => {
   const reply = {
@@ -19,16 +28,21 @@ const mockReply = () => {
 };
 
 describe("createSessionHandler", () => {
+  const userId = new mongoose.Types.ObjectId();
   const mockUser = {
-    _id: "user123",
+    _id: userId,
     email: "test@example.com",
     verified: true,
     validatePassword: vi.fn().mockReturnValue(true),
-    getJsonWebTokenPayload: () => ({
-      id: "user123",
-      email: "test@example.com",
-    }),
   };
+
+  beforeAll(async () => {
+    await setupFastifyTestEnvironment({ buildApp, useMongo: true });
+  });
+
+  afterAll(async () => {
+    await teardownFastifyTestEnvironment();
+  });
 
   it("should create session and return tokens", async () => {
     vi.spyOn(userService, "findUserByEmail").mockResolvedValueOnce(
@@ -38,7 +52,7 @@ describe("createSessionHandler", () => {
     vi.spyOn(authService, "signAccessToken").mockReturnValue(
       "access.token.here",
     );
-    vi.spyOn(authService, "signRefreshToken").mockResolvedValue(
+    vi.spyOn(authService, "signRefreshToken").mockReturnValue(
       "refresh.token.here",
     );
 
@@ -63,6 +77,7 @@ describe("createSessionHandler", () => {
         path: "/api/v1/sessions/refresh",
         sameSite: "strict",
         maxAge: 60 * 60 * 24 * 7,
+        secure: false,
       }),
     );
 
@@ -249,60 +264,79 @@ describe("refreshAccessTokenHandler", () => {
       message: "Could not refresh access token",
     });
   });
+});
 
-  describe("logoutHandler", () => {
-    it("should invalidate session, clear cookie, and return success", async () => {
-      const mockSave = vi.fn();
-      const mockSession = { valid: true, save: mockSave };
+describe("logoutHandler", () => {
+  beforeAll(async () => {
+    await setupFastifyTestEnvironment({ buildApp, useMongo: true });
+  });
 
-      const req = {
-        session: mockSession,
-        log: { error: vi.fn() },
-      };
+  afterAll(async () => {
+    await teardownFastifyTestEnvironment();
+  });
 
-      const send = vi.fn().mockReturnThis();
-      const clearCookie = vi.fn().mockReturnThis();
-      const status = vi.fn(() => ({ send }));
-      const reply = { status, clearCookie };
-
-      // @ts-expect-error ok in test
-      await logoutHandler(req, reply);
-
-      expect(mockSession.valid).toBe(false);
-      expect(mockSave).toHaveBeenCalled();
-
-      expect(clearCookie).toHaveBeenCalledWith("refreshToken", {
-        path: "/api/v1/sessions/refresh",
-      });
-
-      expect(status).toHaveBeenCalledWith(StatusCodes.OK);
-      expect(send).toHaveBeenCalledWith({ message: "Logged out successfully" });
+  it("should invalidate session, clear cookie, and return success", async () => {
+    const user = await UserModel.create(mockUserData);
+    const session = await SessionModel.create({
+      valid: true,
+      user: user._id,
     });
 
-    it("should return 401 and log if logout fails", async () => {
-      const req = {
-        session: {
-          valid: true,
-          save: vi.fn().mockRejectedValue(new Error("DB error")),
-        },
-        log: { error: vi.fn() },
-      };
+    const req = {
+      sessionId: session._id.toString(),
+      log: { error: vi.fn() },
+    };
 
-      const send = vi.fn().mockReturnThis();
-      const clearCookie = vi.fn().mockReturnThis();
-      const status = vi.fn(() => ({ send }));
-      const reply = { status, clearCookie };
+    const send = vi.fn().mockReturnThis();
+    const clearCookie = vi.fn().mockReturnThis();
+    const status = vi.fn(() => ({ send }));
+    const reply = { status, clearCookie };
 
-      // @ts-expect-error ok in test
-      await logoutHandler(req, reply);
+    vi.spyOn(authService, "findSessionById").mockResolvedValue(session);
 
-      expect(req.log.error).toHaveBeenCalledWith(
-        expect.any(Error),
-        "Unable to logout",
-      );
+    // @ts-expect-error ok in test
+    await logoutHandler(req, reply);
 
-      expect(status).toHaveBeenCalledWith(StatusCodes.UNAUTHORIZED);
-      expect(send).toHaveBeenCalledWith({ message: "Logout failed" });
+    const updatedSession = await authService.findSessionById(
+      session._id.toString(),
+    );
+
+    expect(updatedSession?.valid).toBe(false);
+
+    expect(clearCookie).toHaveBeenCalledWith("refreshToken", {
+      path: "/api/v1/sessions/refresh",
     });
+
+    expect(status).toHaveBeenCalledWith(StatusCodes.OK);
+    expect(send).toHaveBeenCalledWith({ message: "Logged out successfully" });
+  });
+
+  it("should return 401 and log if logout fails", async () => {
+    const sessionId = "session123";
+    const session = {
+      valid: true,
+      save: vi.fn().mockRejectedValue(new Error("DB error")),
+    };
+
+    // @ts-expect-error ok in test
+    vi.spyOn(authService, "findSessionById").mockResolvedValue(session);
+
+    const req = { sessionId, log: { error: vi.fn() } };
+
+    const send = vi.fn().mockReturnThis();
+    const clearCookie = vi.fn().mockReturnThis();
+    const status = vi.fn(() => ({ send }));
+    const reply = { status, clearCookie };
+
+    // @ts-expect-error ok in test
+    await logoutHandler(req, reply);
+
+    expect(req.log.error).toHaveBeenCalledWith(
+      expect.any(Error),
+      "Unable to logout",
+    );
+
+    expect(status).toHaveBeenCalledWith(StatusCodes.UNAUTHORIZED);
+    expect(send).toHaveBeenCalledWith({ message: "Logout failed" });
   });
 });

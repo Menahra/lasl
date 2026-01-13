@@ -3,7 +3,7 @@ import type { FastifyBaseLogger } from "fastify";
 import mongoose from "mongoose";
 import { afterEach, describe, expect, it, type Mock, vi } from "vitest";
 import { JWT_ACCESS_PRIVATE_KEY_NAME } from "@/src/constants/jwt.constants.ts";
-import { SessionModel } from "@/src/model/session.model.ts";
+import { type Session, SessionModel } from "@/src/model/session.model.ts";
 import type { User } from "@/src/model/user.model.ts";
 import {
   createSession,
@@ -107,12 +107,15 @@ describe("Auth Service", () => {
 
       const result = signAccessToken(
         mockUser as DocumentType<User>,
+        mockSession as DocumentType<Session>,
         mockLogger,
       );
 
       expect(signJsonWebToken).toHaveBeenCalledWith(
-        // @ts-expect-error expected here
-        mockUser.getJsonWebTokenPayload?.(),
+        {
+          session: mockSession._id,
+          sub: mockUser._id?.toString(),
+        },
         JWT_ACCESS_PRIVATE_KEY_NAME,
         {
           expiresIn: "15m",
@@ -130,7 +133,11 @@ describe("Auth Service", () => {
       });
 
       expect(() =>
-        signAccessToken(mockUser as DocumentType<User>, mockLogger),
+        signAccessToken(
+          mockUser as DocumentType<User>,
+          mockSession as DocumentType<Session>,
+          mockLogger,
+        ),
       ).toThrow("Failed to sign access token: Error: JWT error");
 
       expect(mockLogger.error).toHaveBeenCalledWith(
@@ -141,13 +148,13 @@ describe("Auth Service", () => {
   });
 
   describe("signRefreshToken", () => {
-    it("should create session and sign refresh token", async () => {
-      (SessionModel.create as Mock).mockResolvedValue(mockSession);
+    it("should sign refresh token", () => {
       (signJsonWebToken as Mock).mockReturnValue("refresh-token");
 
-      const result = await signRefreshToken(mockUserId, mockLogger);
-
-      expect(SessionModel.create).toHaveBeenCalledWith({ user: mockUserId });
+      const result = signRefreshToken(
+        mockSession as DocumentType<Session>,
+        mockLogger,
+      );
 
       expect(signJsonWebToken).toHaveBeenCalledWith(
         { session: mockSession._id },
@@ -161,37 +168,19 @@ describe("Auth Service", () => {
       expect(result).toBe("refresh-token");
     });
 
-    it("should log and throw if session creation fails", async () => {
-      const error = new Error("DB error");
-      (SessionModel.create as Mock).mockRejectedValue(error);
-
-      await expect(signRefreshToken(mockUserId, mockLogger)).rejects.toThrow(
-        "Failed to sign refresh token: Error: Failed to create session: Error: DB error",
-      );
-
-      expect(mockLogger.error).toHaveBeenNthCalledWith(
-        2,
-        expect.objectContaining({
-          message: "Failed to create session: Error: DB error",
-        }),
-        `Could not sign resresh token for user with id: ${mockUserId}`,
-      );
-    });
-
-    it("should log and throw if JWT signing fails", async () => {
-      (SessionModel.create as Mock).mockResolvedValue(mockSession);
+    it("should log and throw if JWT signing fails", () => {
       const error = new Error("JWT signing failed");
       (signJsonWebToken as Mock).mockImplementation(() => {
         throw error;
       });
 
-      await expect(signRefreshToken(mockUserId, mockLogger)).rejects.toThrow(
-        "Failed to sign refresh token: Error: JWT signing failed",
-      );
+      expect(() =>
+        signRefreshToken(mockSession as DocumentType<Session>, mockLogger),
+      ).toThrow("Failed to sign refresh token: Error: JWT signing failed");
 
       expect(mockLogger.error).toHaveBeenCalledWith(
         error,
-        `Could not sign resresh token for user with id: ${mockUserId}`,
+        "Could not sign resresh token",
       );
     });
   });

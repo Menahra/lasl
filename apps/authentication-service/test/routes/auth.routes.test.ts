@@ -1,4 +1,7 @@
-import { authApiRoutes } from "@lasl/app-contracts/api/auth";
+import {
+  AUTHENTICATION_TYPE,
+  authApiRoutes,
+} from "@lasl/app-contracts/api/auth";
 import {
   setupFastifyTestEnvironment,
   teardownFastifyTestEnvironment,
@@ -299,8 +302,8 @@ describe("auth routes", () => {
       const response = await app.inject({
         method: "POST",
         url: logoutEndpoint,
-        cookies: {
-          refreshToken: "valid.refresh.token",
+        headers: {
+          authorization: `${AUTHENTICATION_TYPE} test`,
         },
       });
 
@@ -320,17 +323,19 @@ describe("auth routes", () => {
       expect(cookie).toContain("Path=/api/v1/sessions/refresh");
     });
 
-    it("should return 401 if refresh token is missing", async () => {
+    it("should return 401 if access token is missing", async () => {
       const response = await app.inject({
         method: "POST",
         url: logoutEndpoint,
       });
 
       expect(response.statusCode).toBe(StatusCodes.UNAUTHORIZED);
-      expect(response.json()).toEqual({ message: "Missing refresh token" });
+      expect(response.json()).toEqual({
+        message: "Missing or malformed token",
+      });
     });
 
-    it("should return 401 if refresh token is invalid", async () => {
+    it("should return 401 if access token is invalid", async () => {
       vi.spyOn(jwtUtil, "verifyJsonWebToken").mockImplementationOnce(() => {
         throw new Error("Invalid JWT");
       });
@@ -338,8 +343,8 @@ describe("auth routes", () => {
       const response = await app.inject({
         method: "POST",
         url: logoutEndpoint,
-        cookies: {
-          refreshToken: "invalid.token",
+        headers: {
+          authorization: `${AUTHENTICATION_TYPE} test`,
         },
       });
 
@@ -357,13 +362,13 @@ describe("auth routes", () => {
       const response = await app.inject({
         method: "POST",
         url: logoutEndpoint,
-        cookies: {
-          refreshToken: "valid.token",
+        headers: {
+          authorization: `${AUTHENTICATION_TYPE} test`,
         },
       });
 
       expect(response.statusCode).toBe(StatusCodes.UNAUTHORIZED);
-      expect(response.json()).toEqual({ message: "Invalid session" });
+      expect(response.json()).toEqual({ message: "Logout failed" });
     });
 
     it("should return 401 if session.save throws an error", async () => {
@@ -373,7 +378,7 @@ describe("auth routes", () => {
       };
 
       vi.spyOn(jwtUtil, "verifyJsonWebToken").mockReturnValueOnce({
-        session: "mockSessionId",
+        sub: "mockSessionId",
       });
 
       vi.spyOn(sessionService, "findSessionById").mockResolvedValueOnce(
@@ -384,8 +389,8 @@ describe("auth routes", () => {
       const response = await app.inject({
         method: "POST",
         url: logoutEndpoint,
-        cookies: {
-          refreshToken: "valid.token",
+        headers: {
+          authorization: `${AUTHENTICATION_TYPE} test`,
         },
       });
 

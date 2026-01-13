@@ -13,8 +13,11 @@ import {
   JWT_REFRESH_PUBLIC_KEY_NAME,
 } from "@/src/constants/jwt.constants.ts";
 import { verifyJsonWebToken } from "@/src/util/jwt.util.ts";
-import type { UserJsonWebTokenPayload } from "../model/user.model.ts";
-import { findSessionById } from "../service/auth.service.ts";
+import {
+  type AccessTokenJsonWebTokenPayload,
+  findSessionById,
+  type RefreshTokenJsonWebTokenPayload,
+} from "../service/auth.service.ts";
 
 // biome-ignore lint/suspicious/useAwait: needed for preHandler functionality in fastify
 export const deserializeUser = async <
@@ -34,12 +37,14 @@ export const deserializeUser = async <
   const accessToken = authorizationHeader.split(" ")[1];
 
   try {
-    const decoded = verifyJsonWebToken<UserJsonWebTokenPayload>(
+    const { sub, session } = verifyJsonWebToken<AccessTokenJsonWebTokenPayload>(
       accessToken,
       JWT_ACCESS_PUBLIC_KEY_NAME,
       req.log,
     );
-    req.user = decoded;
+
+    req.userId = sub;
+    req.sessionId = session;
   } catch (error) {
     req.log.warn(
       error,
@@ -63,7 +68,7 @@ export const deserializeSession = async (
       .send({ message: "Missing refresh token" });
   }
   try {
-    const decoded = verifyJsonWebToken<{ session: string }>(
+    const decoded = verifyJsonWebToken<RefreshTokenJsonWebTokenPayload>(
       refreshToken,
       JWT_REFRESH_PUBLIC_KEY_NAME,
       req.log,

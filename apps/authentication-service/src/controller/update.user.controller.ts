@@ -2,6 +2,8 @@ import type { FastifyReply, FastifyRequest } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import { UserModel } from "@/src/model/user.model.ts";
 import type { UpdateUserInput } from "@/src/schema/user.schema.ts";
+import { serializeUser } from "@/src/serializer/user.serializer.ts";
+import { removeUndefinedDeep } from "@/src/util/object.util.ts";
 
 export const updateUserHandler = async (
   req: FastifyRequest<{
@@ -10,35 +12,31 @@ export const updateUserHandler = async (
   }>,
   reply: FastifyReply,
 ) => {
-  const { user, body } = req;
+  const { userId, body } = req;
 
-  if (!user) {
+  if (!userId) {
     return reply.status(StatusCodes.NOT_FOUND).send({
       message: "User not found",
     });
   }
 
   try {
-    const updatedUser = await UserModel.findByIdAndUpdate(
-      user.id,
-      { $set: body },
-      { new: true, runValidators: true },
-    );
+    const userDoc = await UserModel.findById(userId);
 
-    if (!updatedUser) {
+    if (!userDoc) {
       return reply.status(StatusCodes.NOT_FOUND).send({
-        message: `Failed to update user with id ${user.id}`,
+        message: `User with id ${userId} not found`,
       });
     }
 
-    const newUser = updatedUser.getJsonWebTokenPayload();
+    const updateWithoutUndefined = removeUndefinedDeep(body);
+    userDoc.set(updateWithoutUndefined);
 
-    return reply.status(StatusCodes.OK).send(newUser);
+    const updatedUser = await userDoc.save();
+
+    return reply.status(StatusCodes.OK).send(serializeUser(updatedUser));
   } catch (error) {
-    req.log.error(
-      error,
-      `An error occurred during update for user: ${user.id}`,
-    );
+    req.log.error(error, `An error occurred during update for user: ${userId}`);
     return reply.status(StatusCodes.BAD_REQUEST).send({
       message: "Failed to update user",
     });
