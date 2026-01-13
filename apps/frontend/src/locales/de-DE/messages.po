@@ -395,11 +395,11 @@ msgstr "Haftung für Links"
 msgid "Limitation of Liability"
 msgstr "Haftungsbeschränkung"
 
-#: src/app/layouts/main-layout/header/AuthButton.tsx:26
+#: src/app/layouts/main-layout/header/AuthButton.tsx:41
 msgid "Login"
 msgstr "Anmelden"
 
-#: src/app/layouts/main-layout/header/AuthButton.tsx:37
+#: src/app/layouts/main-layout/header/AuthButton.tsx:58
 msgid "Logout"
 msgstr "Abmelden"
 
