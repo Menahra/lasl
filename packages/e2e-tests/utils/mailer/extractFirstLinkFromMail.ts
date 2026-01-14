@@ -1,7 +1,7 @@
 import type { APIRequestContext } from "@playwright/test";
 import type { MailpitMessage } from "@/utils/mailer/types.ts";
 
-export const getVerificationLink = async (
+export const extractFirstLinkFromMail = async (
   request: APIRequestContext,
   messageId: string,
 ) => {

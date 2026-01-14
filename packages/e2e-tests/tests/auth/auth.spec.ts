@@ -1,6 +1,6 @@
 import { authRoutes } from "@lasl/app-contracts/routes/auth";
 import { expect, test } from "@playwright/test";
-import { getVerificationLink } from "@/utils/mailer/getVerificationLink.ts";
+import { extractFirstLinkFromMail } from "@/utils/mailer/extractFirstLinkFromMail.ts";
 import { waitForEmail } from "@/utils/mailer/waitForEmail.ts";
 
 test.describe("Authentication Flow", () => {
@@ -30,7 +30,10 @@ test.describe("Authentication Flow", () => {
     await expect(page.locator("text=Check your email")).toBeVisible();
 
     const message = await waitForEmail(request, user.email);
-    const verificationLink = await getVerificationLink(request, message.ID);
+    const verificationLink = await extractFirstLinkFromMail(
+      request,
+      message.ID,
+    );
 
     await page.goto(verificationLink);
 
