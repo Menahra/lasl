@@ -41,7 +41,7 @@ export const createSessionHandler = async (
         .send({ message: "Please verify your email" });
     }
 
-    const passwordIsValid = user.validatePassword(password);
+    const passwordIsValid = await user.validatePassword(password);
     if (!passwordIsValid) {
       return reply
         .status(StatusCodes.FORBIDDEN)
