@@ -1,4 +1,4 @@
-import { authApiRoutes } from "@lasl/app-contracts/api/auth";
+import { authRoutes } from "@lasl/app-contracts/routes/auth";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import { nanoid } from "nanoid";
@@ -12,13 +12,14 @@ export const forgotPasswordHandler = async (
   req: FastifyRequest<{ Body: ForgotPasswordInput["body"] }>,
   reply: FastifyReply,
 ) => {
-  const { email } = req.body;
+  const {
+    body: { email },
+    server: {
+      config: { FRONTEND_BASE_URL },
+    },
+  } = req;
 
   try {
-    const host = req.headers.host;
-    const protocol = req.protocol;
-    const origin = `${protocol}://${host}`;
-
     const user = await findUserByEmail(email);
 
     if (user) {
@@ -27,7 +28,7 @@ export const forgotPasswordHandler = async (
         user.passwordResetCode = passwordResetCode;
         await user.save();
 
-        const resetPasswordUrl = `${origin}${authApiRoutes.user.resetPassword(user._id.toString(), user.passwordResetCode)}`;
+        const resetPasswordUrl = `${FRONTEND_BASE_URL}${authRoutes.resetPassword(user._id.toString(), user.passwordResetCode)}`;
 
         const passwordResetEmailHtml = await loadHtmlTemplate(
           "password-reset-email",
@@ -51,7 +52,7 @@ export const forgotPasswordHandler = async (
           "Password reset requested for not yet verified user",
         );
 
-        const verifyUrl = `${origin}${authApiRoutes.user.verify(user._id.toString(), user.verificationCode)}`;
+        const verifyUrl = `${FRONTEND_BASE_URL}${authRoutes.registerVerify(user._id.toString(), user.verificationCode)}`;
 
         const passwordResetWithoutVerifiedHtml = await loadHtmlTemplate(
           "password-reset-unverified-email",

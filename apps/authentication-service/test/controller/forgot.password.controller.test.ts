@@ -26,8 +26,6 @@ const mockReq = (
 ): Parameters<typeof forgotPasswordHandler>[0] => {
   return {
     body: { email: "user@example.com" },
-    headers: { host: "localhost:3000" },
-    protocol: "http",
     log: {
       info: vi.fn(),
       debug: vi.fn(),
@@ -35,6 +33,10 @@ const mockReq = (
     },
     server: {
       sendMail: vi.fn(),
+      config: {
+        // biome-ignore lint/style/useNamingConvention: coming from env
+        FRONTEND_BASE_URL: "http://test.de",
+      },
     },
     ...overrides,
   } as unknown as Parameters<typeof forgotPasswordHandler>[0];
