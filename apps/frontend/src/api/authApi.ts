@@ -82,7 +82,7 @@ export const authApi = {
     const { id, passwordResetCode, ...body } = input;
     const { data } = await apiClient.post<ResetPasswordSuccessResponse>(
       `${AUTH_API_URL}/users/resetpassword/${id}/${passwordResetCode}`,
-      { body },
+      { ...body },
       { withCredentials: true },
     );
 
