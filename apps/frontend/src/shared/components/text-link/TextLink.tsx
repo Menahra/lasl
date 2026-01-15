@@ -1,11 +1,11 @@
 import type { LinkComponentProps as TanstackRouterLinkComponentProps } from "@tanstack/react-router";
 import { Link as TanstackRouterLink } from "@tanstack/react-router";
+import clsx from "clsx";
 import type { PropsWithChildren } from "react";
 import "./TextLink.css";
-import clsx from "clsx";
 
 const TextLinkVariants = {
-  primary: "TextLink--primay",
+  primary: "TextLink--primary",
   accent: "TextLink--accent",
 };
 
