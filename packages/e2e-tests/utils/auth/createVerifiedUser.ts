@@ -1,7 +1,7 @@
 import { authRoutes } from "@lasl/app-contracts/routes/auth";
 import type { APIRequestContext, Page } from "@playwright/test";
 import { extractFirstLinkFromMail } from "@/utils/mailer/extractFirstLinkFromMail.ts";
-import { waitForEmail } from "@/utils/mailer/waitForEmail.ts";
+import { waitForVerificationEmail } from "@/utils/mailer/waitForVerificationMail.ts";
 
 export type TestUserType = {
   email: string;
@@ -21,6 +21,8 @@ export async function createVerifiedUser(
     lastName: "Doe",
   };
 
+  const since = Date.now();
+
   await page.goto(authRoutes.register);
   await page.getByRole("textbox", { name: /first name/i }).fill(user.firstName);
   await page.getByRole("textbox", { name: /last name/i }).fill(user.lastName);
@@ -32,10 +34,12 @@ export async function createVerifiedUser(
 
   await page.getByRole("button", { name: /create account/i }).click();
 
-  const message = await waitForEmail(request, user.email);
+  const message = await waitForVerificationEmail(request, user.email, since);
   const link = await extractFirstLinkFromMail(request, message.ID);
 
   await page.goto(link);
+
+  await page.getByText(/email verified/i).waitFor();
 
   return user;
 }

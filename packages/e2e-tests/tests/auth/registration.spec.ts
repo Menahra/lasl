@@ -87,6 +87,8 @@ test.describe("User Registration", () => {
     expect(page).not.toHaveURL(authRoutes.registerSuccess);
     await expect(page.getByText(/already registered/i)).toBeVisible();
 
-    await expect(page.getByRole("link", { name: /Sign in/i })).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: /sign in instead/i }),
+    ).toBeVisible();
   });
 });

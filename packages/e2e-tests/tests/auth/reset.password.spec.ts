@@ -5,7 +5,7 @@ import {
   type TestUserType,
 } from "@/utils/auth/createVerifiedUser.ts";
 import { extractFirstLinkFromMail } from "@/utils/mailer/extractFirstLinkFromMail.ts";
-import { waitForEmail } from "@/utils/mailer/waitForEmail.ts";
+import { waitForPasswordResetEmail } from "@/utils/mailer/waitForResetEmail.ts";
 
 test.describe("reset password flow", () => {
   let user: TestUserType;
@@ -25,25 +25,31 @@ test.describe("reset password flow", () => {
 
   test("old password is invalid after reset", async ({ page, request }) => {
     await page.goto(authRoutes.forgotPassword);
+    const beforeResetLinkSentTime = Date.now();
     await page.getByRole("textbox", { name: /email/i }).fill(user.email);
     await page.getByRole("button", { name: /send reset link/i }).click();
 
-    const message = await waitForEmail(request, user.email);
+    const message = await waitForPasswordResetEmail(
+      request,
+      user.email,
+      beforeResetLinkSentTime,
+    );
     const resetLink = await extractFirstLinkFromMail(request, message.ID);
 
     const newPassword = "NewPassword123!";
     await page.goto(resetLink);
+    await page.getByRole("textbox", { name: /^password$/i }).fill(newPassword);
     await page
-      .getByRole("textbox", { name: /new password/i })
+      .getByRole("textbox", { name: /confirm password/i })
       .fill(newPassword);
-    await page.getByRole("button", { name: /save/i }).click();
+    await page.getByRole("button", { name: /reset password/i }).click();
 
     await page.goto(authRoutes.login);
     await page.getByRole("textbox", { name: /email/i }).fill(user.email);
     await page.getByRole("textbox", { name: /password/i }).fill(user.password);
     await page.getByRole("button", { name: /sign in/i }).click();
 
-    await expect(page.getByText(/invalid credentials/i)).toBeVisible();
+    await expect(page.getByText(/invalid email or password/i)).toBeVisible();
   });
 
   test("password reset does not reveal account existence", async ({ page }) => {

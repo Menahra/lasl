@@ -6,7 +6,12 @@ import type {
 
 export const waitForEmail = async (
   request: APIRequestContext,
-  email: string,
+  options: {
+    to: string;
+    subjectIncludes?: string;
+    bodyIncludes?: string;
+    since?: number;
+  },
   timeoutMs = 10_000,
 ): Promise<MailpitMessageSummary> => {
   const start = Date.now();
@@ -17,16 +22,31 @@ export const waitForEmail = async (
 
     const data = (await res.json()) as MailpitMessagesResponse;
 
-    const message = data.messages.find((msg) =>
-      msg.To.some((to) => to.Address === email),
-    );
+    const message = data.messages.find((msg) => {
+      if (!msg.To.some((to) => to.Address === options.to)) {
+        return false;
+      }
+
+      if (
+        options.subjectIncludes &&
+        !msg.Subject.includes(options.subjectIncludes)
+      ) {
+        return false;
+      }
+
+      if (options.since && new Date(msg.Created).getTime() < options.since) {
+        return false;
+      }
+
+      return true;
+    });
 
     if (message) {
       return message;
     }
 
-    await new Promise((r) => setTimeout(r, 500));
+    await new Promise((resolve) => setTimeout(resolve, 500));
   }
 
-  throw new Error(`Email not received for ${email}`);
+  throw new Error(`Email not received for ${options.to}`);
 };
