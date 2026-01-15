@@ -65,7 +65,7 @@ describe("TextLink", () => {
     );
 
     const link = screen.getByRole("link");
-    expect(link).toHaveClass("TextLink--primay");
+    expect(link).toHaveClass("TextLink--primary");
   });
 
   it("applies accent variant class", () => {
