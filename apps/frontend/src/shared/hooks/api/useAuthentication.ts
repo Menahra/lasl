@@ -61,12 +61,11 @@ export const usePostForgotPassword = () => {
 };
 
 export const usePostResetPassword = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: authApi.resetPassword,
     onSettled: () => {
       accessTokenManager.clearAccessToken();
-
-      const queryClient = useQueryClient();
       queryClient.removeQueries({ queryKey: authKeys.all });
     },
   });
