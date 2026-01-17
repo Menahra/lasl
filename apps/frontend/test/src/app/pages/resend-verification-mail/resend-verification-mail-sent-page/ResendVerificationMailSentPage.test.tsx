@@ -82,7 +82,7 @@ describe("ResendVerificationMailSentPage", () => {
     await renderPage();
 
     const link = screen.getByRole("link", {
-      name: /back to login/i,
+      name: /back to sign in/i,
     });
 
     expect(link).toHaveAttribute("href", ROUTE_LOGIN);

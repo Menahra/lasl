@@ -63,7 +63,7 @@ describe("ResendVerificationMailPage", () => {
     await renderPage();
 
     expect(
-      screen.getByRole("button", { name: /back to login/i }),
+      screen.getByRole("button", { name: /back to sign in/i }),
     ).toBeInTheDocument();
   });
 
@@ -72,7 +72,7 @@ describe("ResendVerificationMailPage", () => {
     await renderPage();
 
     expect(
-      screen.queryByRole("button", { name: /back to login/i }),
+      screen.queryByRole("button", { name: /back to sign in/i }),
     ).not.toBeInTheDocument();
   });
 });
