@@ -18,6 +18,8 @@ export const authApiRoutes = {
       `${versionPrefix(version)}/users/verify/${id}/${code}`,
     me: (version: AuthApiVersion = "v1") =>
       `${versionPrefix(version)}/users/me`,
+    resendVerificationMail: (version: AuthApiVersion = "v1") =>
+      `${versionPrefix(version)}/users/resendverificationmail`,
     forgotPassword: (version: AuthApiVersion = "v1") =>
       `${versionPrefix(version)}/users/forgotpassword`,
     resetPassword: (id: string, code: string, version: AuthApiVersion = "v1") =>

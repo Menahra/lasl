@@ -5,6 +5,8 @@ export const authRoutes = {
   registerSuccess: "/register/success",
   registerVerify: (id: string, verificationCode: string) =>
     `/register/verify/${id}/${verificationCode}`,
+  resendVerificationMail: "/resend-verification-mail",
+  resendVerificationMailSent: "/resend-verification-mail/sent",
 
   login: "/login",
 
