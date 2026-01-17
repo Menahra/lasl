@@ -3,7 +3,6 @@ import { screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { ResendVerificationMailForm } from "@/src/app/pages/resend-verification-mail/resend-verification-mail-page/ResendVerificationMailForm.tsx";
-import { ROUTE_FORGOT_PASSWORD_SENT } from "@/src/app/routes/forgot-password/sent.tsx";
 import { ROUTE_RESEND_VERIFICATION_MAIL_SENT } from "@/src/app/routes/resend-verification-mail/sent.tsx";
 import { userErrorMessages } from "@/src/shared/formErrors.ts";
 import { setI18nLoading } from "@/test/__mocks__/i18nContextMock.ts";

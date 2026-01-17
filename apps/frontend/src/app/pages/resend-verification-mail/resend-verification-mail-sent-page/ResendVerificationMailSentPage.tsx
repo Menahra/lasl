@@ -34,8 +34,8 @@ export const ResendVerificationMailSentPage = () => {
         <p className="ResendVerificationMailSentPageText">
           <Skeleton loading={isLoading} width={300} height={20}>
             <Trans>
-              We've sent a new verification link to {userEmail}. Please click
-              the link in the mail to verify your account.
+              If an account exists for {userEmail}, we have sent a new
+              verification email.
             </Trans>
           </Skeleton>
         </p>
