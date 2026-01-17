@@ -33,6 +33,11 @@ export const verifyUserInputSchema = z.object({
     verificationCode: z.string(),
   }),
 });
+export const resendVerificationMailInputSchema = z.object({
+  body: z.object({
+    email: userEmailSchema,
+  }),
+});
 export const forgotPasswordInputSchema = z.object({
   body: z.object({
     email: userEmailSchema,
@@ -57,6 +62,10 @@ export const verifyUserInputJsonSchema = z.toJSONSchema(
   verifyUserInputSchema.shape.params,
   { target: ZOD_JSON_SCHEMA_TARGET },
 );
+export const resendVerificationMailInputJsonSchema = z.toJSONSchema(
+  resendVerificationMailInputSchema.shape.body,
+  { target: ZOD_JSON_SCHEMA_TARGET },
+);
 export const forgotPasswordInputJsonSchema = z.toJSONSchema(
   forgotPasswordInputSchema.shape.body,
   { target: ZOD_JSON_SCHEMA_TARGET },
@@ -73,5 +82,8 @@ export const resetPasswordBodyInputJsonSchema = z.toJSONSchema(
 export type CreateUserInput = z.infer<typeof createUserInputSchema>;
 export type UpdateUserInput = z.infer<typeof updateUserInputSchema>;
 export type VerifyUserInput = z.infer<typeof verifyUserInputSchema>;
+export type ResendVerificationMailInput = z.infer<
+  typeof resendVerificationMailInputSchema
+>;
 export type ForgotPasswordInput = z.infer<typeof forgotPasswordInputSchema>;
 export type ResetPasswordInput = z.infer<typeof resetPasswordInputSchema>;
