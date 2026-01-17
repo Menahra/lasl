@@ -39,7 +39,7 @@ export const ResendVerificationMailPage = () => {
               variant="secondary"
               startIcon={<ArrowLeftIcon />}
             >
-              <Trans>Back to Login</Trans>
+              <Trans>Back to sign in</Trans>
             </Button>
           </TanstackRouterLink>
         </Skeleton>

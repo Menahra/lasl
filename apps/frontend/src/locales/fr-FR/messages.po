@@ -84,6 +84,7 @@ msgid "An open, community-driven platform for learning Modern Standard Arabic. E
 msgstr "Une plateforme ouverte et communautaire pour apprendre l'arabe standard moderne. Explorez Nahw, Sarf, Balagha, et plus encore — avec du contenu que vous pouvez aider à améliorer."
 
 #: src/app/pages/register/register-page/RegisterForm.tsx:84
+#: src/app/pages/resend-verification-mail/resend-verification-mail-page/ResendVerificationMailForm.tsx:64
 #: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:81
 msgid "An unexpected error occurred. Please try again."
 msgstr "Une erreur inattendue s'est produite. Veuillez réessayer."
@@ -108,12 +109,14 @@ msgstr "Prise de décision automatisée"
 msgid "Back to Home"
 msgstr "Retour à l'accueil"
 
-#: src/app/pages/register/register-success-page/RegisterSuccessPage.tsx:43
+#: src/app/pages/register/register-success-page/RegisterSuccessPage.tsx:44
 msgid "Back to Registration"
 msgstr "Retour à l'inscription"
 
 #: src/app/pages/forgot-password/forgot-password-page/ForgotPasswordForm.tsx:102
 #: src/app/pages/forgot-password/forgot-password-sent-page/ForgotPasswordSentPage.tsx:77
+#: src/app/pages/resend-verification-mail/resend-verification-mail-page/ResendVerificationMailPage.tsx:42
+#: src/app/pages/resend-verification-mail/resend-verification-mail-sent-page/ResendVerificationMailSentPage.tsx:52
 msgid "Back to sign in"
 msgstr "Retour à la connexion"
 
@@ -138,7 +141,8 @@ msgstr "Des leçons soigneusement organisées couvrant progressivement la gramma
 msgid "Check your email"
 msgstr "Vérifiez vos e-mails"
 
-#: src/app/pages/register/register-success-page/RegisterSuccessPage.tsx:21
+#: src/app/pages/register/register-success-page/RegisterSuccessPage.tsx:22
+#: src/app/pages/resend-verification-mail/resend-verification-mail-sent-page/ResendVerificationMailSentPage.tsx:31
 msgid "Check Your Email"
 msgstr "Vérifiez vos e-mails"
 
@@ -237,7 +241,11 @@ msgstr "Données que nous collectons"
 msgid "Didn't receive the email? Check your spam folder or try again with a different email address."
 msgstr "Vous n'avez pas reçu l'e-mail ? Vérifiez votre dossier spam ou réessayez avec une autre adresse e-mail."
 
-#: src/app/pages/register/register-success-page/RegisterSuccessPage.tsx:34
+#: src/app/pages/resend-verification-mail/resend-verification-mail-sent-page/ResendVerificationMailSentPage.tsx:44
+msgid "Didn't receive the email? Check your spam folder or try again."
+msgstr "Vous n'avez pas reçu l'e-mail ? Vérifiez votre dossier spam ou réessayez."
+
+#: src/app/pages/register/register-success-page/RegisterSuccessPage.tsx:35
 msgid "Didn't receive the email? Check your spam folder or try signing up again."
 msgstr "Vous n'avez pas reçu l'e-mail ? Vérifiez votre dossier spam ou réessayez de vous inscrire."
 
@@ -248,12 +256,21 @@ msgstr "Vous n'avez pas encore de compte ?"
 #: src/app/pages/forgot-password/forgot-password-page/ForgotPasswordForm.tsx:83
 #: src/app/pages/login-page/LoginForm.tsx:107
 #: src/app/pages/register/register-page/registerFormFields.ts:32
+#: src/app/pages/resend-verification-mail/resend-verification-mail-page/ResendVerificationMailForm.tsx:78
 msgid "Email"
 msgstr "E-mail"
 
 #: src/app/pages/register/register-verify-page/RegisterVerifyPage.tsx:18
 msgid "Email Verified!"
 msgstr "E-mail vérifié !"
+
+#: src/app/pages/resend-verification-mail/resend-verification-mail-page/ResendVerificationMailForm.tsx:79
+msgid "Enter your email"
+msgstr "Entrez votre adresse e-mail"
+
+#: src/app/pages/resend-verification-mail/resend-verification-mail-page/ResendVerificationMailPage.tsx:27
+msgid "Enter your email address and we'll send you a new verification link."
+msgstr "Entrez votre adresse e-mail et nous vous enverrons un nouveau lien de vérification."
 
 #: src/app/pages/forgot-password/forgot-password-page/ForgotPasswordForm.tsx:67
 msgid "Enter your email and we'll send you reset instructions"
@@ -300,6 +317,10 @@ msgstr "Droit applicable et juridiction"
 #: src/app/pages/imprint-page/ImprintPage.tsx:62
 msgid "However, we are not obligated to monitor transmitted or stored third-party information or to actively investigate circumstances that indicate illegal activity."
 msgstr "Cependant, nous ne sommes pas obligés de surveiller les informations transmises ou stockées par des tiers ou d'enquêter activement sur des circonstances indiquant une activité illégale."
+
+#: src/app/pages/resend-verification-mail/resend-verification-mail-sent-page/ResendVerificationMailSentPage.tsx:36
+msgid "If an account exists for {userEmail}, we have sent a new verification email."
+msgstr "Si un compte existe pour {userEmail}, nous avons envoyé un nouvel e-mail de vérification."
 
 #: src/app/pages/forgot-password/forgot-password-sent-page/ForgotPasswordSentPage.tsx:45
 msgid "If an account exists for {userEmail}, we have sent password reset instructions."
@@ -524,6 +545,15 @@ msgstr "Prêt à commencer votre parcours en arabe ?"
 msgid "Redirecting you to the app in a few seconds..."
 msgstr "Redirection vers l'application dans quelques secondes..."
 
+#: src/app/pages/register/register-success-page/RegisterSuccessPage.tsx:51
+#: src/app/pages/resend-verification-mail/resend-verification-mail-page/ResendVerificationMailForm.tsx:91
+msgid "Resend verification Email"
+msgstr "Renvoyer l'e-mail de vérification"
+
+#: src/app/pages/resend-verification-mail/resend-verification-mail-page/ResendVerificationMailPage.tsx:22
+msgid "Resend Verification Email"
+msgstr "Renvoyer l'e-mail de vérification"
+
 #: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:135
 msgid "Reset password"
 msgstr "Réinitialiser le mot de passe"
@@ -561,6 +591,10 @@ msgstr "Rechercher..."
 #: src/app/pages/forgot-password/forgot-password-page/ForgotPasswordForm.tsx:93
 msgid "Send reset link"
 msgstr "Envoyer le lien de réinitialisation"
+
+#: src/app/pages/resend-verification-mail/resend-verification-mail-sent-page/ResendVerificationMailSentPage.tsx:59
+msgid "Send to a different email"
+msgstr "Envoyer à une autre adresse e-mail"
 
 #: src/app/pages/imprint-page/ImprintPage.tsx:14
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:15
@@ -777,7 +811,7 @@ msgstr "Nous respectons votre vie privée et nous nous engageons à protéger vo
 msgid "We store personal data only for as long as necessary to fulfill the purposes for which it was collected."
 msgstr "Nous conservons les données personnelles uniquement aussi longtemps que nécessaire pour accomplir les finalités pour lesquelles elles ont été collectées."
 
-#: src/app/pages/register/register-success-page/RegisterSuccessPage.tsx:26
+#: src/app/pages/register/register-success-page/RegisterSuccessPage.tsx:27
 msgid "We've sent a verification link to your email address. Please click the link to verify your account."
 msgstr "Nous avons envoyé un lien de vérification à votre adresse e-mail. Veuillez cliquer sur le lien pour vérifier votre compte."
 
@@ -809,6 +843,10 @@ msgstr "Vous êtes responsable de la protection du mot de passe que vous utilise
 #: src/app/pages/forgot-password/forgot-password-sent-page/ForgotPasswordSentPage.tsx:21
 msgid "your email"
 msgstr "votre e-mail"
+
+#: src/app/pages/resend-verification-mail/resend-verification-mail-sent-page/ResendVerificationMailSentPage.tsx:21
+msgid "your email address"
+msgstr "votre adresse e-mail"
 
 #: src/app/pages/register/register-verify-page/RegisterVerifyPage.tsx:19
 msgid "Your email has been successfully verified."

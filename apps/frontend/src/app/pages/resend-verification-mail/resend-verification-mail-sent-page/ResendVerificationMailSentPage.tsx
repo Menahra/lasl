@@ -49,7 +49,7 @@ export const ResendVerificationMailSentPage = () => {
         <Skeleton loading={isLoading} width="100%" height={40}>
           <TanstackRouterLink to={ROUTE_LOGIN}>
             <Button fullWidth={true} align="center" variant="primary">
-              <Trans>Back to Login</Trans>
+              <Trans>Back to sign in</Trans>
             </Button>
           </TanstackRouterLink>
         </Skeleton>
