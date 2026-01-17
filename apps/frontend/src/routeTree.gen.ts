@@ -14,10 +14,12 @@ import { Route as PrivacyRouteImport } from './app/routes/privacy'
 import { Route as LoginRouteImport } from './app/routes/login'
 import { Route as ImprintRouteImport } from './app/routes/imprint'
 import { Route as ResetPasswordRouteRouteImport } from './app/routes/reset-password/route'
+import { Route as ResendVerificationMailRouteRouteImport } from './app/routes/resend-verification-mail/route'
 import { Route as RegisterRouteRouteImport } from './app/routes/register/route'
 import { Route as ForgotPasswordRouteRouteImport } from './app/routes/forgot-password/route'
 import { Route as IndexRouteImport } from './app/routes/index'
 import { Route as ResetPasswordIndexRouteImport } from './app/routes/reset-password/index'
+import { Route as ResendVerificationMailIndexRouteImport } from './app/routes/resend-verification-mail/index'
 import { Route as RegisterIndexRouteImport } from './app/routes/register/index'
 import { Route as ForgotPasswordIndexRouteImport } from './app/routes/forgot-password/index'
 import { Route as ResetPasswordSentRouteImport } from './app/routes/reset-password/sent'
@@ -51,6 +53,12 @@ const ResetPasswordRouteRoute = ResetPasswordRouteRouteImport.update({
   path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResendVerificationMailRouteRoute =
+  ResendVerificationMailRouteRouteImport.update({
+    id: '/resend-verification-mail',
+    path: '/resend-verification-mail',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const RegisterRouteRoute = RegisterRouteRouteImport.update({
   id: '/register',
   path: '/register',
@@ -71,6 +79,12 @@ const ResetPasswordIndexRoute = ResetPasswordIndexRouteImport.update({
   path: '/',
   getParentRoute: () => ResetPasswordRouteRoute,
 } as any)
+const ResendVerificationMailIndexRoute =
+  ResendVerificationMailIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => ResendVerificationMailRouteRoute,
+  } as any)
 const RegisterIndexRoute = RegisterIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -113,6 +127,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/forgot-password': typeof ForgotPasswordRouteRouteWithChildren
   '/register': typeof RegisterRouteRouteWithChildren
+  '/resend-verification-mail': typeof ResendVerificationMailRouteRouteWithChildren
   '/reset-password': typeof ResetPasswordRouteRouteWithChildren
   '/imprint': typeof ImprintRoute
   '/login': typeof LoginRoute
@@ -123,6 +138,7 @@ export interface FileRoutesByFullPath {
   '/reset-password/sent': typeof ResetPasswordSentRoute
   '/forgot-password/': typeof ForgotPasswordIndexRoute
   '/register/': typeof RegisterIndexRoute
+  '/resend-verification-mail/': typeof ResendVerificationMailIndexRoute
   '/reset-password/': typeof ResetPasswordIndexRoute
   '/reset-password/$id/$passwordResetCode': typeof ResetPasswordIdPasswordResetCodeIndexRoute
   '/register/verify/$id/$verificationCode': typeof RegisterVerifyIdVerificationCodeIndexRoute
@@ -138,6 +154,7 @@ export interface FileRoutesByTo {
   '/reset-password/sent': typeof ResetPasswordSentRoute
   '/forgot-password': typeof ForgotPasswordIndexRoute
   '/register': typeof RegisterIndexRoute
+  '/resend-verification-mail': typeof ResendVerificationMailIndexRoute
   '/reset-password': typeof ResetPasswordIndexRoute
   '/reset-password/$id/$passwordResetCode': typeof ResetPasswordIdPasswordResetCodeIndexRoute
   '/register/verify/$id/$verificationCode': typeof RegisterVerifyIdVerificationCodeIndexRoute
@@ -147,6 +164,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/forgot-password': typeof ForgotPasswordRouteRouteWithChildren
   '/register': typeof RegisterRouteRouteWithChildren
+  '/resend-verification-mail': typeof ResendVerificationMailRouteRouteWithChildren
   '/reset-password': typeof ResetPasswordRouteRouteWithChildren
   '/imprint': typeof ImprintRoute
   '/login': typeof LoginRoute
@@ -157,6 +175,7 @@ export interface FileRoutesById {
   '/reset-password/sent': typeof ResetPasswordSentRoute
   '/forgot-password/': typeof ForgotPasswordIndexRoute
   '/register/': typeof RegisterIndexRoute
+  '/resend-verification-mail/': typeof ResendVerificationMailIndexRoute
   '/reset-password/': typeof ResetPasswordIndexRoute
   '/reset-password/$id/$passwordResetCode/': typeof ResetPasswordIdPasswordResetCodeIndexRoute
   '/register/verify/$id/$verificationCode/': typeof RegisterVerifyIdVerificationCodeIndexRoute
@@ -167,6 +186,7 @@ export interface FileRouteTypes {
     | '/'
     | '/forgot-password'
     | '/register'
+    | '/resend-verification-mail'
     | '/reset-password'
     | '/imprint'
     | '/login'
@@ -177,6 +197,7 @@ export interface FileRouteTypes {
     | '/reset-password/sent'
     | '/forgot-password/'
     | '/register/'
+    | '/resend-verification-mail/'
     | '/reset-password/'
     | '/reset-password/$id/$passwordResetCode'
     | '/register/verify/$id/$verificationCode'
@@ -192,6 +213,7 @@ export interface FileRouteTypes {
     | '/reset-password/sent'
     | '/forgot-password'
     | '/register'
+    | '/resend-verification-mail'
     | '/reset-password'
     | '/reset-password/$id/$passwordResetCode'
     | '/register/verify/$id/$verificationCode'
@@ -200,6 +222,7 @@ export interface FileRouteTypes {
     | '/'
     | '/forgot-password'
     | '/register'
+    | '/resend-verification-mail'
     | '/reset-password'
     | '/imprint'
     | '/login'
@@ -210,6 +233,7 @@ export interface FileRouteTypes {
     | '/reset-password/sent'
     | '/forgot-password/'
     | '/register/'
+    | '/resend-verification-mail/'
     | '/reset-password/'
     | '/reset-password/$id/$passwordResetCode/'
     | '/register/verify/$id/$verificationCode/'
@@ -219,6 +243,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ForgotPasswordRouteRoute: typeof ForgotPasswordRouteRouteWithChildren
   RegisterRouteRoute: typeof RegisterRouteRouteWithChildren
+  ResendVerificationMailRouteRoute: typeof ResendVerificationMailRouteRouteWithChildren
   ResetPasswordRouteRoute: typeof ResetPasswordRouteRouteWithChildren
   ImprintRoute: typeof ImprintRoute
   LoginRoute: typeof LoginRoute
@@ -263,6 +288,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResetPasswordRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/resend-verification-mail': {
+      id: '/resend-verification-mail'
+      path: '/resend-verification-mail'
+      fullPath: '/resend-verification-mail'
+      preLoaderRoute: typeof ResendVerificationMailRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/register': {
       id: '/register'
       path: '/register'
@@ -290,6 +322,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/reset-password/'
       preLoaderRoute: typeof ResetPasswordIndexRouteImport
       parentRoute: typeof ResetPasswordRouteRoute
+    }
+    '/resend-verification-mail/': {
+      id: '/resend-verification-mail/'
+      path: '/'
+      fullPath: '/resend-verification-mail/'
+      preLoaderRoute: typeof ResendVerificationMailIndexRouteImport
+      parentRoute: typeof ResendVerificationMailRouteRoute
     }
     '/register/': {
       id: '/register/'
@@ -373,6 +412,20 @@ const RegisterRouteRouteWithChildren = RegisterRouteRoute._addFileChildren(
   RegisterRouteRouteChildren,
 )
 
+interface ResendVerificationMailRouteRouteChildren {
+  ResendVerificationMailIndexRoute: typeof ResendVerificationMailIndexRoute
+}
+
+const ResendVerificationMailRouteRouteChildren: ResendVerificationMailRouteRouteChildren =
+  {
+    ResendVerificationMailIndexRoute: ResendVerificationMailIndexRoute,
+  }
+
+const ResendVerificationMailRouteRouteWithChildren =
+  ResendVerificationMailRouteRoute._addFileChildren(
+    ResendVerificationMailRouteRouteChildren,
+  )
+
 interface ResetPasswordRouteRouteChildren {
   ResetPasswordSentRoute: typeof ResetPasswordSentRoute
   ResetPasswordIndexRoute: typeof ResetPasswordIndexRoute
@@ -393,6 +446,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ForgotPasswordRouteRoute: ForgotPasswordRouteRouteWithChildren,
   RegisterRouteRoute: RegisterRouteRouteWithChildren,
+  ResendVerificationMailRouteRoute:
+    ResendVerificationMailRouteRouteWithChildren,
   ResetPasswordRouteRoute: ResetPasswordRouteRouteWithChildren,
   ImprintRoute: ImprintRoute,
   LoginRoute: LoginRoute,

@@ -44,6 +44,13 @@ export const RegisterSuccessPage = () => {
             </Button>
           </TanstackRouterLink>
         </Skeleton>
+        <Skeleton loading={isLoading} width="100%" height={40}>
+          <TanstackRouterLink to={ROUTE_SIGN_UP}>
+            <Button fullWidth={true} align="center" variant="secondary">
+              <Trans>Resend verification Email</Trans>
+            </Button>
+          </TanstackRouterLink>
+        </Skeleton>
       </div>
     </div>
   );

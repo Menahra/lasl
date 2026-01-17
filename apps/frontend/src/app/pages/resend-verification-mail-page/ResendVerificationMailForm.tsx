@@ -1,0 +1,90 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createUserSchema } from "@lasl/app-contracts/schemas/user";
+import { Trans, useLingui } from "@lingui/react/macro";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import type { z } from "zod";
+import { ROUTE_SIGN_UP_SUCCESS } from "@/src/app/routes/register/success.tsx";
+import { Callout } from "@/src/shared/components/callout/Callout.tsx";
+import { FormInputField } from "@/src/shared/components/form-input-field/FormInputField.tsx";
+import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
+import { userErrorMessages } from "@/src/shared/formErrors.ts";
+import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
+import { useTranslateFormFieldError } from "@/src/shared/hooks/useTranslateFormFieldError.ts";
+import "./ResendVerificationMailForm.css";
+import { Button } from "@/src/shared/components/button/Button.tsx";
+
+const resendVerificationMailSchema = createUserSchema.pick({ email: true });
+type ResendVerificationMailFormValues = z.infer<
+  typeof resendVerificationMailSchema
+>;
+
+export const ResendVerificationMailForm = () => {
+  const [resendVerificationMailError, setResendVerificationMailError] =
+    useState(false);
+  const { isLoading } = useI18nContext();
+  const { t: linguiTranslator } = useLingui();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ResendVerificationMailFormValues>({
+    resolver: zodResolver(resendVerificationMailSchema),
+    mode: "onSubmit",
+  });
+  const translateFormFieldError = useTranslateFormFieldError(userErrorMessages);
+
+  const onSubmit = async (data: ResendVerificationMailFormValues) => {
+    setResendVerificationMailError(false);
+
+    try {
+      await createUserMutation.mutateAsync(data);
+      navigate({ to: ROUTE_SIGN_UP_SUCCESS });
+    } catch (_error) {
+      setResendVerificationMailError(true);
+    }
+  };
+
+  return (
+    <div className="ResendVerificationMailForm">
+      {resendVerificationMailError ? (
+        <Skeleton loading={isLoading} width="100%" height={34}>
+          <Callout
+            severity="error"
+            variant="outlined"
+            onClose={() => setResendVerificationMailError(false)}
+          >
+            <Trans>An unexpected error occurred. Please try again.</Trans>
+          </Callout>
+        </Skeleton>
+      ) : undefined}
+
+      <form
+        className="ResendVerificationMailFormWrapper"
+        onSubmit={handleSubmit(onSubmit)}
+        noValidate={true}
+      >
+        <FormInputField
+          key="email"
+          id="email"
+          type="email"
+          label={linguiTranslator`Email`}
+          placeholder={linguiTranslator`Enter your email`}
+          loading={isLoading}
+          {...register("email")}
+          error={translateFormFieldError(errors.email)}
+        />
+        <Skeleton loading={isLoading} height={48} width="100%">
+          <Button
+            variant="primary"
+            type="submit"
+            align="center"
+            loading={createUserMutation.isPending}
+          >
+            <Trans>Resend verification Email</Trans>
+          </Button>
+        </Skeleton>
+      </form>
+    </div>
+  );
+};

@@ -1,0 +1,49 @@
+.ResendVerificationMailPage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.ResendVerificationMailPageContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-width: var(--container-md);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+}
+
+.ResendVerificationMailPageIconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  border-radius: 50%;
+  background-color: var(--primary-100);
+  height: var(--size-3xl);
+  width: var(--size-3xl);
+}
+.ResendVerificationMailPageIconContainer > svg {
+  height: var(--size-xl);
+  width: var(--size-xl);
+  color: var(--primary-400);
+}
+
+.ResendVerificationMailPageTitle {
+  margin: 0 auto;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-2xl);
+}
+
+.ResendVerificationMailPageText,
+.ResendVerificationMailPageSpamHint {
+  text-align: center;
+}
+
+.ResendVerificationMailPageSpamHint {
+  font-size: var(--font-size-sm);
+}
