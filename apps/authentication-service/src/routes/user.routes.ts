@@ -5,6 +5,7 @@ import {
 import type { FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import { z } from "zod";
+import { resendVerificationMailHandler } from "@/src/controller/resend.verification.mail.controller.ts";
 import { updateUserHandler } from "@/src/controller/update.user.controller.ts";
 import {
   createUserBadRequestResponseSchema,
@@ -15,6 +16,7 @@ import {
   forgotPasswordSuccessResponseSchema,
   getCurrentAuthenticatedUserForbiddenResponseSchema,
   getCurrentAuthenticatedUserSuccessResponseSchema,
+  resendVerificationMailSuccessResponseSchema,
   resetPasswordBadRequestResponseSchema,
   resetPasswordInternalServerErrorResponseSchema,
   resetPasswordNotFoundResponseSchema,
@@ -37,6 +39,7 @@ import { deserializeUser } from "../middleware/authentication.hook.ts";
 import {
   createUserInputJsonSchema,
   forgotPasswordInputJsonSchema,
+  resendVerificationMailInputJsonSchema,
   resetPasswordBodyInputJsonSchema,
   resetPasswordParamsInputJsonSchema,
   type UpdateUserInput,
@@ -105,6 +108,25 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
       },
     },
     verifyUserHandler,
+  );
+
+  fastifyInstance.post(
+    authApiRoutes.user.resendVerificationMail(),
+    {
+      schema: {
+        summary: "User wants to retrieve verification mail again",
+        body: resendVerificationMailInputJsonSchema,
+        description:
+          "If the user did not receive a verification mail, he can request it again",
+        tags: [UserSwaggerTag],
+        response: {
+          [StatusCodes.OK]: z.toJSONSchema(
+            resendVerificationMailSuccessResponseSchema,
+          ),
+        },
+      },
+    },
+    resendVerificationMailHandler,
   );
 
   fastifyInstance.post(

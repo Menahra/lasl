@@ -67,6 +67,13 @@ export type VerifyUserInternalServerErrorResponse = z.infer<
   typeof verifyUserInternalServerErrorResponseSchema
 >;
 
+// Resend Verification Mail Resonse
+export const resendVerificationMailSuccessResponseSchema =
+  genericMessageResponseSchema;
+export type ResendVerificationMailSuccessResponse = z.infer<
+  typeof forgotPasswordSuccessResponseSchema
+>;
+
 // Forgot Password Response
 export const forgotPasswordSuccessResponseSchema = genericMessageResponseSchema;
 export type ForgotPasswordSuccessResponse = z.infer<

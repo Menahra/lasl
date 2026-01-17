@@ -149,6 +149,43 @@ describe("user routes", () => {
     });
   });
 
+  describe("POST resend verification mail", () => {
+    const resendVerificationMailPath =
+      authApiRoutes.user.resendVerificationMail();
+    it("should trigger resend verification mail flow and return 200", async () => {
+      // @ts-expect-error correct that ts complains here
+      vi.spyOn(userService, "findUserByEmail").mockResolvedValueOnce({
+        ...mockDbUser,
+        save: vi.fn(),
+      });
+
+      const response = await app.inject({
+        method: "POST",
+        url: resendVerificationMailPath,
+        payload: { email: "test123@test.de" },
+      });
+
+      expect(response.statusCode).toBe(StatusCodes.OK);
+      expect(response.json()).toEqual({
+        message:
+          "If an unverified user exists for this email a new verification mail has been sent",
+      });
+    });
+
+    it("should include 200 in Swagger documentation", () => {
+      checkSwaggerDoc({
+        fastifyInstance: app,
+        endpointMethod: "post",
+        endpointPath: resendVerificationMailPath,
+        endpointStatusCode: StatusCodes.OK,
+        endpointContentType: "application/json",
+        endpointResponseType: {
+          message: { type: "string", minLength: 1 },
+        },
+      });
+    });
+  });
+
   describe("POST /users/forgotpassword", () => {
     const forgotPasswordPath = authApiRoutes.user.forgotPassword();
     it("should trigger forgot password flow and return 200", async () => {

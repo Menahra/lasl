@@ -40,6 +40,7 @@ export type {
   ForgotPasswordSuccessResponse,
   GetCurrentAuthenticatedUserForbiddenResponse,
   GetCurrentAuthenticatedUserSuccessResponse,
+  ResendVerificationMailSuccessResponse,
   ResetPasswordBadRequestResponse,
   ResetPasswordInternalServerErrorResponse,
   ResetPasswordNotFoundResponse,
