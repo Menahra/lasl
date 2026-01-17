@@ -63,6 +63,17 @@ export const authApi = {
     return data;
   },
 
+  resendVerificationMail: async (
+    email: GetCurrentAuthenticatedUserSuccessResponse["email"],
+  ) => {
+    const { data } = await apiClient.post<ForgotPasswordSuccessResponse>(
+      `${AUTH_API_URL}/users/resendverificationmail`,
+      { email },
+    );
+
+    return data;
+  },
+
   forgotPassword: async (
     email: GetCurrentAuthenticatedUserSuccessResponse["email"],
   ) => {

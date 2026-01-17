@@ -54,6 +54,12 @@ export const usePostLogout = () => {
   });
 };
 
+export const usePostResendVerificationMail = () => {
+  return useMutation({
+    mutationFn: authApi.resendVerificationMail,
+  });
+};
+
 export const usePostForgotPassword = () => {
   return useMutation({
     mutationFn: authApi.forgotPassword,

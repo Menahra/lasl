@@ -1,18 +1,20 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createUserSchema } from "@lasl/app-contracts/schemas/user";
 import { Trans, useLingui } from "@lingui/react/macro";
+import { useRouter } from "@tanstack/react-router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 import { ROUTE_SIGN_UP_SUCCESS } from "@/src/app/routes/register/success.tsx";
+import { Button } from "@/src/shared/components/button/Button.tsx";
 import { Callout } from "@/src/shared/components/callout/Callout.tsx";
 import { FormInputField } from "@/src/shared/components/form-input-field/FormInputField.tsx";
 import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
 import { userErrorMessages } from "@/src/shared/formErrors.ts";
+import { usePostResendVerificationMail } from "@/src/shared/hooks/api/useAuthentication.ts";
 import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
 import { useTranslateFormFieldError } from "@/src/shared/hooks/useTranslateFormFieldError.ts";
 import "./ResendVerificationMailForm.css";
-import { Button } from "@/src/shared/components/button/Button.tsx";
 
 const resendVerificationMailSchema = createUserSchema.pick({ email: true });
 type ResendVerificationMailFormValues = z.infer<
@@ -24,6 +26,7 @@ export const ResendVerificationMailForm = () => {
     useState(false);
   const { isLoading } = useI18nContext();
   const { t: linguiTranslator } = useLingui();
+  const { navigate } = useRouter();
   const {
     register,
     handleSubmit,
@@ -33,12 +36,13 @@ export const ResendVerificationMailForm = () => {
     mode: "onSubmit",
   });
   const translateFormFieldError = useTranslateFormFieldError(userErrorMessages);
+  const resendVerificationMailMutation = usePostResendVerificationMail();
 
   const onSubmit = async (data: ResendVerificationMailFormValues) => {
     setResendVerificationMailError(false);
 
     try {
-      await createUserMutation.mutateAsync(data);
+      await resendVerificationMailMutation.mutateAsync(data.email);
       navigate({ to: ROUTE_SIGN_UP_SUCCESS });
     } catch (_error) {
       setResendVerificationMailError(true);
@@ -79,7 +83,7 @@ export const ResendVerificationMailForm = () => {
             variant="primary"
             type="submit"
             align="center"
-            loading={createUserMutation.isPending}
+            loading={resendVerificationMailMutation.isPending}
           >
             <Trans>Resend verification Email</Trans>
           </Button>
