@@ -1,11 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createUserSchema } from "@lasl/app-contracts/schemas/user";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { useRouter } from "@tanstack/react-router";
+import { type NavigateOptions, useRouter } from "@tanstack/react-router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
-import { ROUTE_SIGN_UP_SUCCESS } from "@/src/app/routes/register/success.tsx";
+import { ROUTE_RESEND_VERIFICATION_MAIL_SENT } from "@/src/app/routes/resend-verification-mail/sent.tsx";
 import { Button } from "@/src/shared/components/button/Button.tsx";
 import { Callout } from "@/src/shared/components/callout/Callout.tsx";
 import { FormInputField } from "@/src/shared/components/form-input-field/FormInputField.tsx";
@@ -43,7 +43,10 @@ export const ResendVerificationMailForm = () => {
 
     try {
       await resendVerificationMailMutation.mutateAsync(data.email);
-      navigate({ to: ROUTE_SIGN_UP_SUCCESS });
+      navigate({
+        to: ROUTE_RESEND_VERIFICATION_MAIL_SENT,
+        state: { email: data.email },
+      } as NavigateOptions);
     } catch (_error) {
       setResendVerificationMailError(true);
     }

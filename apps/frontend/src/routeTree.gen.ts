@@ -23,6 +23,7 @@ import { Route as ResendVerificationMailIndexRouteImport } from './app/routes/re
 import { Route as RegisterIndexRouteImport } from './app/routes/register/index'
 import { Route as ForgotPasswordIndexRouteImport } from './app/routes/forgot-password/index'
 import { Route as ResetPasswordSentRouteImport } from './app/routes/reset-password/sent'
+import { Route as ResendVerificationMailSentRouteImport } from './app/routes/resend-verification-mail/sent'
 import { Route as RegisterSuccessRouteImport } from './app/routes/register/success'
 import { Route as ForgotPasswordSentRouteImport } from './app/routes/forgot-password/sent'
 import { Route as ResetPasswordIdPasswordResetCodeIndexRouteImport } from './app/routes/reset-password/$id/$passwordResetCode/index'
@@ -100,6 +101,12 @@ const ResetPasswordSentRoute = ResetPasswordSentRouteImport.update({
   path: '/sent',
   getParentRoute: () => ResetPasswordRouteRoute,
 } as any)
+const ResendVerificationMailSentRoute =
+  ResendVerificationMailSentRouteImport.update({
+    id: '/sent',
+    path: '/sent',
+    getParentRoute: () => ResendVerificationMailRouteRoute,
+  } as any)
 const RegisterSuccessRoute = RegisterSuccessRouteImport.update({
   id: '/success',
   path: '/success',
@@ -135,6 +142,7 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/forgot-password/sent': typeof ForgotPasswordSentRoute
   '/register/success': typeof RegisterSuccessRoute
+  '/resend-verification-mail/sent': typeof ResendVerificationMailSentRoute
   '/reset-password/sent': typeof ResetPasswordSentRoute
   '/forgot-password/': typeof ForgotPasswordIndexRoute
   '/register/': typeof RegisterIndexRoute
@@ -151,6 +159,7 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/forgot-password/sent': typeof ForgotPasswordSentRoute
   '/register/success': typeof RegisterSuccessRoute
+  '/resend-verification-mail/sent': typeof ResendVerificationMailSentRoute
   '/reset-password/sent': typeof ResetPasswordSentRoute
   '/forgot-password': typeof ForgotPasswordIndexRoute
   '/register': typeof RegisterIndexRoute
@@ -172,6 +181,7 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/forgot-password/sent': typeof ForgotPasswordSentRoute
   '/register/success': typeof RegisterSuccessRoute
+  '/resend-verification-mail/sent': typeof ResendVerificationMailSentRoute
   '/reset-password/sent': typeof ResetPasswordSentRoute
   '/forgot-password/': typeof ForgotPasswordIndexRoute
   '/register/': typeof RegisterIndexRoute
@@ -194,6 +204,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/forgot-password/sent'
     | '/register/success'
+    | '/resend-verification-mail/sent'
     | '/reset-password/sent'
     | '/forgot-password/'
     | '/register/'
@@ -210,6 +221,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/forgot-password/sent'
     | '/register/success'
+    | '/resend-verification-mail/sent'
     | '/reset-password/sent'
     | '/forgot-password'
     | '/register'
@@ -230,6 +242,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/forgot-password/sent'
     | '/register/success'
+    | '/resend-verification-mail/sent'
     | '/reset-password/sent'
     | '/forgot-password/'
     | '/register/'
@@ -351,6 +364,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResetPasswordSentRouteImport
       parentRoute: typeof ResetPasswordRouteRoute
     }
+    '/resend-verification-mail/sent': {
+      id: '/resend-verification-mail/sent'
+      path: '/sent'
+      fullPath: '/resend-verification-mail/sent'
+      preLoaderRoute: typeof ResendVerificationMailSentRouteImport
+      parentRoute: typeof ResendVerificationMailRouteRoute
+    }
     '/register/success': {
       id: '/register/success'
       path: '/success'
@@ -413,11 +433,13 @@ const RegisterRouteRouteWithChildren = RegisterRouteRoute._addFileChildren(
 )
 
 interface ResendVerificationMailRouteRouteChildren {
+  ResendVerificationMailSentRoute: typeof ResendVerificationMailSentRoute
   ResendVerificationMailIndexRoute: typeof ResendVerificationMailIndexRoute
 }
 
 const ResendVerificationMailRouteRouteChildren: ResendVerificationMailRouteRouteChildren =
   {
+    ResendVerificationMailSentRoute: ResendVerificationMailSentRoute,
     ResendVerificationMailIndexRoute: ResendVerificationMailIndexRoute,
   }
 
