@@ -3,6 +3,7 @@ import { screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { RegisterSuccessPage } from "@/src/app/pages/register/register-success-page/RegisterSuccessPage.tsx";
 import { ROUTE_SIGN_UP } from "@/src/app/routes/register/index.tsx";
+import { ROUTE_RESEND_VERIFICATION_MAIL } from "@/src/app/routes/resend-verification-mail/index.tsx";
 import { renderWithProviders } from "@/test/__wrappers__/renderWithProviders.tsx";
 
 const renderPage = () =>
@@ -29,5 +30,13 @@ describe("RegisterSuccessPage", () => {
     await renderPage();
     const loginLink = screen.getByRole("link", { name: /Registration/i });
     expect(loginLink).toHaveAttribute("href", ROUTE_SIGN_UP);
+  });
+
+  it("provides a link to the resend mail page", async () => {
+    await renderPage();
+    const loginLink = screen.getByRole("link", {
+      name: /resend verification/i,
+    });
+    expect(loginLink).toHaveAttribute("href", ROUTE_RESEND_VERIFICATION_MAIL);
   });
 });

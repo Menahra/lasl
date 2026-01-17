@@ -2,6 +2,7 @@ import { Trans } from "@lingui/react/macro";
 import { EnvelopeClosedIcon } from "@radix-ui/react-icons";
 import { Link as TanstackRouterLink } from "@tanstack/react-router";
 import { ROUTE_SIGN_UP } from "@/src/app/routes/register/index.tsx";
+import { ROUTE_RESEND_VERIFICATION_MAIL } from "@/src/app/routes/resend-verification-mail/index.tsx";
 import { Button } from "@/src/shared/components/button/Button.tsx";
 import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
 import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
@@ -45,7 +46,7 @@ export const RegisterSuccessPage = () => {
           </TanstackRouterLink>
         </Skeleton>
         <Skeleton loading={isLoading} width="100%" height={40}>
-          <TanstackRouterLink to={ROUTE_SIGN_UP}>
+          <TanstackRouterLink to={ROUTE_RESEND_VERIFICATION_MAIL}>
             <Button fullWidth={true} align="center" variant="secondary">
               <Trans>Resend verification Email</Trans>
             </Button>
