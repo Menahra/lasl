@@ -10,10 +10,10 @@ export type TestUserType = {
   lastName: string;
 };
 
-export async function createVerifiedUser(
+export const createVerifiedUser = async (
   page: Page,
   request: APIRequestContext,
-) {
+) => {
   const user: TestUserType = {
     email: `e2e-${Date.now()}-${Math.random()}@domain.com`,
     password: "SecurePassword123!",
@@ -42,4 +42,4 @@ export async function createVerifiedUser(
   await page.getByText(/email verified/i).waitFor();
 
   return user;
-}
+};

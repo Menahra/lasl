@@ -43,6 +43,9 @@ test.describe("reset password flow", () => {
       .getByRole("textbox", { name: /confirm password/i })
       .fill(newPassword);
     await page.getByRole("button", { name: /reset password/i }).click();
+    await expect(
+      page.getByText(/password has been successfully updated/i),
+    ).toBeVisible();
 
     await page.goto(authRoutes.login);
     await page.getByRole("textbox", { name: /email/i }).fill(user.email);
@@ -62,5 +65,72 @@ test.describe("reset password flow", () => {
     await page.getByRole("button", { name: /send reset link/i }).click();
 
     await expect(page.getByText(/if an account exists/i)).toBeVisible();
+  });
+
+  test("password reset link cannot be reused", async ({ page, request }) => {
+    await page.goto(authRoutes.forgotPassword);
+    const beforeResetLinkSentTime = Date.now();
+    await page.getByRole("textbox", { name: /email/i }).fill(user.email);
+    await page.getByRole("button", { name: /send reset link/i }).click();
+
+    const message = await waitForPasswordResetEmail(
+      request,
+      user.email,
+      beforeResetLinkSentTime,
+    );
+    const resetLink = await extractFirstLinkFromMail(request, message.ID);
+
+    const newPassword = "NewPassword123!";
+    await page.goto(resetLink);
+    await page.getByRole("textbox", { name: /^password$/i }).fill(newPassword);
+    await page
+      .getByRole("textbox", { name: /confirm password/i })
+      .fill(newPassword);
+    await page.getByRole("button", { name: /reset password/i }).click();
+    await expect(
+      page.getByText(/password has been successfully updated/i),
+    ).toBeVisible();
+
+    await page.goto("/");
+
+    await page.goto(resetLink);
+    await page.getByRole("textbox", { name: /^password$/i }).fill(newPassword);
+    await page
+      .getByRole("textbox", { name: /confirm password/i })
+      .fill(newPassword);
+    await page.getByRole("button", { name: /reset password/i }).click();
+
+    await expect(
+      page.getByText(/password reset link is invalid/i),
+    ).toBeVisible();
+  });
+
+  test("enforces password rules when choosing a new one", async ({
+    page,
+    request,
+  }) => {
+    await page.goto(authRoutes.forgotPassword);
+    const beforeResetLinkSentTime = Date.now();
+    await page.getByRole("textbox", { name: /email/i }).fill(user.email);
+    await page.getByRole("button", { name: /send reset link/i }).click();
+
+    const message = await waitForPasswordResetEmail(
+      request,
+      user.email,
+      beforeResetLinkSentTime,
+    );
+    const resetLink = await extractFirstLinkFromMail(request, message.ID);
+
+    const newPassword = "test1";
+    await page.goto(resetLink);
+    await page.getByRole("textbox", { name: /^password$/i }).fill(newPassword);
+    await page
+      .getByRole("textbox", { name: /confirm password/i })
+      .fill(newPassword);
+    await page.getByRole("button", { name: /reset password/i }).click();
+
+    await expect(
+      page.getByText(/password must be at least 8 characters/i),
+    ).toBeVisible();
   });
 });
