@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import { routeTree } from "@/src/routeTree.gen.ts";
 import {
   AuthenticationProvider,
@@ -19,6 +19,10 @@ const tanstackQueryClient = new QueryClient();
 
 const RouterProviderWithContext = () => {
   const authenticationContext = useAuthenticationContext();
+
+  useEffect(() => {
+    router.invalidate();
+  }, [authenticationContext.isAuthenticated, authenticationContext.isLoading]);
 
   router.update({
     context: { auth: authenticationContext },
