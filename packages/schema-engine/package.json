@@ -19,8 +19,8 @@
     "ajv": "^8.17.1"
   },
   "devDependencies": {
-    "@vitest/coverage-v8": "^4.0.15",
+    "@vitest/coverage-v8": "^4.0.17",
     "tsup": "^8.5.1",
-    "vitest": "^4.0.15"
+    "vitest": "^4.0.17"
   }
 }
