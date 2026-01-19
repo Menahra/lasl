@@ -1,4 +1,4 @@
-import type { createUserSchema } from "@lasl/app-contracts/schemas/user";
+import type { createUserSchemaBase } from "@lasl/app-contracts/schemas/user";
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import type { z } from "zod";
@@ -10,7 +10,7 @@ export type RegisterFormField<T> = {
   placeholder: MessageDescriptor;
 };
 
-export type RegisterFormValues = z.infer<typeof createUserSchema>;
+export type RegisterFormValues = z.infer<typeof createUserSchemaBase>;
 
 export const getRegisterFormFields =
   (): RegisterFormField<RegisterFormValues>[] => [

@@ -1,6 +1,7 @@
 import { SUPPORTED_LOCALES } from "@lasl/app-contracts/locales";
 import {
   createUserSchema,
+  createUserSchemaBase,
   passwordMatchRefinement,
   resetPasswordParamsSchema,
   userEmailSchema,
@@ -14,7 +15,7 @@ export const createUserInputSchema = z.object({
   body: createUserSchema,
 });
 export const updateUserInputSchema = z.object({
-  body: createUserInputSchema.shape.body
+  body: createUserSchemaBase
     .pick({ firstName: true, lastName: true })
     .partial()
     .extend({

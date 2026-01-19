@@ -50,14 +50,17 @@ export const passwordMatchRefinement = <
 export const userPasswordWithConfirmationAndRefinementSchema =
   userPasswordWithConfirmationSchema.superRefine(passwordMatchRefinement);
 
-export const createUserSchema = z
+export const createUserSchemaBase = z
   .object({
     firstName: z.string().nonempty({ error: USER_ERRORS.firstNameRequired }),
     lastName: z.string().nonempty({ error: USER_ERRORS.lastNameRequired }),
     email: userEmailSchema,
   })
-  .extend(userPasswordWithConfirmationSchema.shape)
-  .superRefine(passwordMatchRefinement);
+  .extend(userPasswordWithConfirmationSchema.shape);
+
+export const createUserSchema = createUserSchemaBase.superRefine(
+  passwordMatchRefinement,
+);
 
 export const resetPasswordParamsSchema = z.object({
   id: z.string(),

@@ -1,4 +1,4 @@
-import type { createUserSchema } from "@lasl/app-contracts/schemas/user";
+import type { createUserSchemaBase } from "@lasl/app-contracts/schemas/user";
 import type { GetCurrentAuthenticatedUserSuccessResponse } from "@lasl/authentication-service";
 import type { z } from "zod";
 import { AUTH_API_URL, apiClient } from "@/src/api/apiClient.ts";
@@ -6,7 +6,7 @@ import { AUTH_API_URL, apiClient } from "@/src/api/apiClient.ts";
 export type User = GetCurrentAuthenticatedUserSuccessResponse;
 
 export const userApi = {
-  createUser: async (userToCreate: z.infer<typeof createUserSchema>) => {
+  createUser: async (userToCreate: z.infer<typeof createUserSchemaBase>) => {
     const { data } = await apiClient.post<User>(
       `${AUTH_API_URL}/users`,
       userToCreate,

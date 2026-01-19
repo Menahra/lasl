@@ -1,7 +1,7 @@
 import { SUPPORTED_LOCALES } from "@lasl/app-contracts/locales";
+import { createUserSchemaBase } from "@lasl/app-contracts/schemas/user";
 import { z } from "zod";
 import { genericMessageResponseSchema } from "@/src/routes/common.response.schema.ts";
-import { createUserInputSchema } from "@/src/schema/user.schema.ts";
 
 // Create User Responses
 export const createUserSuccessResponseSchema = genericMessageResponseSchema;
@@ -105,7 +105,7 @@ export type ResetPasswordInternalServerErrorResponse = z.infer<
 
 // Get Current Authenticated User Response
 export const getCurrentAuthenticatedUserSuccessResponseSchema =
-  createUserInputSchema.shape.body
+  createUserSchemaBase
     .pick({
       email: true,
       firstName: true,

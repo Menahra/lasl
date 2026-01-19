@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createUserSchema } from "@lasl/app-contracts/schemas/user";
+import { createUserSchemaBase } from "@lasl/app-contracts/schemas/user";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { type NavigateOptions, useRouter } from "@tanstack/react-router";
 import { useState } from "react";
@@ -16,7 +16,7 @@ import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
 import { useTranslateFormFieldError } from "@/src/shared/hooks/useTranslateFormFieldError.ts";
 import "./ResendVerificationMailForm.css";
 
-const resendVerificationMailSchema = createUserSchema.pick({ email: true });
+const resendVerificationMailSchema = createUserSchemaBase.pick({ email: true });
 type ResendVerificationMailFormValues = z.infer<
   typeof resendVerificationMailSchema
 >;

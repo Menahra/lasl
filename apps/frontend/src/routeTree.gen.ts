@@ -153,8 +153,8 @@ export interface FileRoutesByFullPath {
   '/register/': typeof AuthRegisterIndexRoute
   '/resend-verification-mail/': typeof AuthResendVerificationMailIndexRoute
   '/reset-password/': typeof AuthResetPasswordIndexRoute
-  '/reset-password/$id/$passwordResetCode': typeof AuthResetPasswordIdPasswordResetCodeIndexRoute
-  '/register/verify/$id/$verificationCode': typeof AuthRegisterVerifyIdVerificationCodeIndexRoute
+  '/reset-password/$id/$passwordResetCode/': typeof AuthResetPasswordIdPasswordResetCodeIndexRoute
+  '/register/verify/$id/$verificationCode/': typeof AuthRegisterVerifyIdVerificationCodeIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -216,8 +216,8 @@ export interface FileRouteTypes {
     | '/register/'
     | '/resend-verification-mail/'
     | '/reset-password/'
-    | '/reset-password/$id/$passwordResetCode'
-    | '/register/verify/$id/$verificationCode'
+    | '/reset-password/$id/$passwordResetCode/'
+    | '/register/verify/$id/$verificationCode/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -293,7 +293,7 @@ declare module '@tanstack/react-router' {
     '/_auth': {
       id: '/_auth'
       path: ''
-      fullPath: ''
+      fullPath: '/'
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
@@ -398,14 +398,14 @@ declare module '@tanstack/react-router' {
     '/_auth/reset-password/$id/$passwordResetCode/': {
       id: '/_auth/reset-password/$id/$passwordResetCode/'
       path: '/$id/$passwordResetCode'
-      fullPath: '/reset-password/$id/$passwordResetCode'
+      fullPath: '/reset-password/$id/$passwordResetCode/'
       preLoaderRoute: typeof AuthResetPasswordIdPasswordResetCodeIndexRouteImport
       parentRoute: typeof AuthResetPasswordRouteRoute
     }
     '/_auth/register/verify/$id/$verificationCode/': {
       id: '/_auth/register/verify/$id/$verificationCode/'
       path: '/verify/$id/$verificationCode'
-      fullPath: '/register/verify/$id/$verificationCode'
+      fullPath: '/register/verify/$id/$verificationCode/'
       preLoaderRoute: typeof AuthRegisterVerifyIdVerificationCodeIndexRouteImport
       parentRoute: typeof AuthRegisterRouteRoute
     }
