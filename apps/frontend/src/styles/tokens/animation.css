@@ -15,9 +15,9 @@
 
   /* Common transitions */
   --transition-colors:
-    color var(--duration-normal) var(--ease-in-out), background-color
-    var(--duration-normal) var(--ease-in-out), border-color
-    var(--duration-normal) var(--ease-in-out);
+    color var(--duration-normal) var(--ease-in-out),
+    background-color var(--duration-normal) var(--ease-in-out),
+    border-color var(--duration-normal) var(--ease-in-out);
   --transition-opacity: opacity var(--duration-normal) var(--ease-in-out);
   --transition-transform: transform var(--duration-normal) var(--ease-in-out);
   --transition-all: all var(--duration-normal) var(--ease-in-out);

@@ -69,23 +69,22 @@ describe("JWT Utility", () => {
     ),
   ];
 
-  it.each(malformedKeys)(
-    "signing with malformed key '%s' should throw",
-    (badKey) => {
-      mockedEnvironmentConfig.JWT_ACCESS_PRIVATE_KEY = badKey;
+  it.each(
+    malformedKeys,
+  )("signing with malformed key '%s' should throw", (badKey) => {
+    mockedEnvironmentConfig.JWT_ACCESS_PRIVATE_KEY = badKey;
 
-      expect(() =>
-        jwtUtil.signJsonWebToken(
-          payload,
-          JWT_ACCESS_PRIVATE_KEY_NAME,
-          { expiresIn: "1h" },
-          mockLogger,
-        ),
-      ).toThrowError();
+    expect(() =>
+      jwtUtil.signJsonWebToken(
+        payload,
+        JWT_ACCESS_PRIVATE_KEY_NAME,
+        { expiresIn: "1h" },
+        mockLogger,
+      ),
+    ).toThrowError();
 
-      expect(mockLogger.error).toHaveBeenCalled();
-    },
-  );
+    expect(mockLogger.error).toHaveBeenCalled();
+  });
 
   it("verifies a valid JWT and returns payload", () => {
     const token = jwtUtil.signJsonWebToken(

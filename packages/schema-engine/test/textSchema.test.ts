@@ -97,14 +97,16 @@ describe("text json schema", () => {
       valid: false,
     },
   ];
-  it.each(contentTestData)(
-    "properly validates text content to be of type string",
-    ({ content, valid }) => {
-      expect(
-        validateSchema(content, "http://example.com/text.schema.json"),
-      ).toEqual(valid);
-    },
-  );
+  it.each(
+    contentTestData,
+  )("properly validates text content to be of type string", ({
+    content,
+    valid,
+  }) => {
+    expect(
+      validateSchema(content, "http://example.com/text.schema.json"),
+    ).toEqual(valid);
+  });
 
   it("allows to add optional styling for the individual entries of text schema", () => {
     expect(

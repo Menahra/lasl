@@ -95,22 +95,25 @@ describe("createUserInputSchema password validation", () => {
       messages: [USER_ERRORS.passwordMinLength],
     },
   ];
-  it.each(tooShortPasswordTestData)(
-    "fails when password does contain less than eight characters",
-    ({ password, errorCount, messages }) => {
-      const result = createUserInputSchema.safeParse({
-        body: {
-          ...validUserInput.body,
-          password,
-          passwordConfirmation: password,
-        },
-      });
+  it.each(
+    tooShortPasswordTestData,
+  )("fails when password does contain less than eight characters", ({
+    password,
+    errorCount,
+    messages,
+  }) => {
+    const result = createUserInputSchema.safeParse({
+      body: {
+        ...validUserInput.body,
+        password,
+        passwordConfirmation: password,
+      },
+    });
 
-      expect(result.success).toBeFalsy();
-      expect(result.error?.issues).toHaveLength(errorCount);
-      for (const [index, message] of messages.entries()) {
-        expect(result.error?.issues[index].message).toEqual(message);
-      }
-    },
-  );
+    expect(result.success).toBeFalsy();
+    expect(result.error?.issues).toHaveLength(errorCount);
+    for (const [index, message] of messages.entries()) {
+      expect(result.error?.issues[index].message).toEqual(message);
+    }
+  });
 });
