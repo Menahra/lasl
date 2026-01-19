@@ -49,7 +49,7 @@
     "@fastify/swagger-ui": "^5.2.4",
     "@lasl/app-contracts": "workspace:*",
     "@lasl/test-utils-fastify": "workspace:*",
-    "@typegoose/typegoose": "^12.20.0",
+    "@typegoose/typegoose": "^13.1.0",
     "argon2": "^0.44.0",
     "fastify": "^5.7.1",
     "fastify-plugin": "^5.1.0",
