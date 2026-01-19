@@ -18,10 +18,7 @@ test.describe("Auth route protection", () => {
 
     for (const route of protectedAuthRoutes) {
       // biome-ignore lint/performance/noAwaitInLoops: ok in this scenario
-      await page.evaluate((route) => {
-        window.history.pushState({}, "", route);
-        window.dispatchEvent(new PopStateEvent("popstate"));
-      }, route);
+      await page.goto(route);
       await expect(
         page.getByRole("heading", { name: /العربية الفصحى/i }),
       ).toBeVisible();
