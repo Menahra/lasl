@@ -6,7 +6,7 @@ import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
 import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
 import "./ResendVerificationMailPage.css";
 import { ResendVerificationMailForm } from "@/src/app/pages/resend-verification-mail/resend-verification-mail-page/ResendVerificationMailForm.tsx";
-import { ROUTE_LOGIN } from "@/src/app/routes/login.tsx";
+import { ROUTE_LOGIN } from "@/src/app/routes/_auth/login.tsx";
 
 export const ResendVerificationMailPage = () => {
   const { isLoading } = useI18nContext();

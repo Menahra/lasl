@@ -11,9 +11,9 @@ import {
   getRegisterFormFields,
   type RegisterFormValues,
 } from "@/src/app/pages/register/register-page/registerFormFields.ts";
-import { ROUTE_LOGIN } from "@/src/app/routes/login.tsx";
+import { ROUTE_LOGIN } from "@/src/app/routes/_auth/login.tsx";
+import { ROUTE_SIGN_UP_SUCCESS } from "@/src/app/routes/_auth/register/success.tsx";
 import { ROUTE_PRIVACY_POLICY } from "@/src/app/routes/privacy.tsx";
-import { ROUTE_SIGN_UP_SUCCESS } from "@/src/app/routes/register/success.tsx";
 import { ROUTE_TERMS_OF_SERVICE } from "@/src/app/routes/terms.tsx";
 import { Button } from "@/src/shared/components/button/Button.tsx";
 import { Callout } from "@/src/shared/components/callout/Callout.tsx";

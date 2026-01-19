@@ -1,9 +1,0 @@
-import { authRoutes } from "@lasl/app-contracts/routes/auth";
-import { createFileRoute } from "@tanstack/react-router";
-import { RegisterPage } from "@/src/app/pages/register/register-page/RegisterPage.tsx";
-
-export const ROUTE_SIGN_UP = authRoutes.register;
-
-export const Route = createFileRoute(ROUTE_SIGN_UP)({
-  component: RegisterPage,
-});

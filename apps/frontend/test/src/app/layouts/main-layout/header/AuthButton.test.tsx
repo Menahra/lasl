@@ -3,8 +3,8 @@ import { screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, type Mock, vi } from "vitest";
 import { AuthButton } from "@/src/app/layouts/main-layout/header/AuthButton.tsx";
+import { ROUTE_LOGIN } from "@/src/app/routes/_auth/login.tsx";
 import { ROUTE_HOME } from "@/src/app/routes/index.tsx";
-import { ROUTE_LOGIN } from "@/src/app/routes/login.tsx";
 import { setI18nLoading } from "@/test/__mocks__/i18nContextMock.ts";
 import { renderWithProviders } from "@/test/__wrappers__/renderWithProviders.tsx";
 

@@ -12,8 +12,8 @@ import {
   vi,
 } from "vitest";
 import { RegisterForm } from "@/src/app/pages/register/register-page/RegisterForm.tsx";
+import { ROUTE_SIGN_UP_SUCCESS } from "@/src/app/routes/_auth/register/success.tsx";
 import { ROUTE_PRIVACY_POLICY } from "@/src/app/routes/privacy.tsx";
-import { ROUTE_SIGN_UP_SUCCESS } from "@/src/app/routes/register/success.tsx";
 import { ROUTE_TERMS_OF_SERVICE } from "@/src/app/routes/terms.tsx";
 import { useCreateUser } from "@/src/shared/hooks/api/useCreateUser.ts";
 import { setI18nLoading } from "@/test/__mocks__/i18nContextMock.ts";

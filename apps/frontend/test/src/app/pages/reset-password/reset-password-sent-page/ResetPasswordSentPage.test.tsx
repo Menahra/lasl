@@ -2,7 +2,7 @@ import "@/test/__mocks__/i18nContextMock.ts";
 import { screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { ResetPasswordSentPage } from "@/src/app/pages/reset-password/reset-password-sent-page/ResetPasswordSentPage.tsx";
-import { ROUTE_LOGIN } from "@/src/app/routes/login.tsx";
+import { ROUTE_LOGIN } from "@/src/app/routes/_auth/login.tsx";
 import { setI18nLoading } from "@/test/__mocks__/i18nContextMock.ts";
 import { renderWithProviders } from "@/test/__wrappers__/renderWithProviders.tsx";
 

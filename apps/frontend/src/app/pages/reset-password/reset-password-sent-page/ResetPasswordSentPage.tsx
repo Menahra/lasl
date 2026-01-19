@@ -1,7 +1,7 @@
 import { Trans } from "@lingui/react/macro";
 import { CheckCircledIcon } from "@radix-ui/react-icons";
 import { Link as TanstackRouterLink } from "@tanstack/react-router";
-import { ROUTE_LOGIN } from "@/src/app/routes/login.tsx";
+import { ROUTE_LOGIN } from "@/src/app/routes/_auth/login.tsx";
 import { Button } from "@/src/shared/components/button/Button.tsx";
 import { LanguageSelect } from "@/src/shared/components/language-select/LanguageSelect.tsx";
 import { LightDarkModeButton } from "@/src/shared/components/light-dark-mode-button/LightDarkModeButton.tsx";

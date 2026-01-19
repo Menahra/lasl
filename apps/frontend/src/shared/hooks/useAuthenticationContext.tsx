@@ -7,7 +7,8 @@ import {
   usePostLogout,
 } from "@/src/shared/hooks/api/useAuthentication.ts";
 
-type AuthenticationProviderContext = {
+// biome-ignore lint/style/useExportsLast: needed to define before usage
+export type AuthenticationProviderContext = {
   user: GetCurrentAuthenticatedUserSuccessResponse | undefined;
   isLoading: boolean;
   isAuthenticated: boolean;

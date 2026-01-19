@@ -4,8 +4,8 @@ import {
   Link as TanstackRouterLink,
   useNavigate,
 } from "@tanstack/react-router";
+import { ROUTE_LOGIN } from "@/src/app/routes/_auth/login.tsx";
 import { ROUTE_HOME } from "@/src/app/routes/index.tsx";
-import { ROUTE_LOGIN } from "@/src/app/routes/login.tsx";
 import {
   Button,
   type ButtonProps,

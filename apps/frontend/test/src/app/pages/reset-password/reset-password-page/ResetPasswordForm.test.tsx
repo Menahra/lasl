@@ -4,7 +4,7 @@ import { userEvent } from "@testing-library/user-event";
 import { StatusCodes } from "http-status-codes";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ResetPasswordForm } from "@/src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx";
-import { ROUTE_RESET_PASSWORD_SENT } from "@/src/app/routes/reset-password/sent.tsx";
+import { ROUTE_RESET_PASSWORD_SENT } from "@/src/app/routes/_auth/reset-password/sent.tsx";
 import { renderWithProviders } from "@/test/__wrappers__/renderWithProviders.tsx";
 
 vi.mock(

@@ -5,7 +5,7 @@ import { type NavigateOptions, useRouter } from "@tanstack/react-router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
-import { ROUTE_RESEND_VERIFICATION_MAIL_SENT } from "@/src/app/routes/resend-verification-mail/sent.tsx";
+import { ROUTE_RESEND_VERIFICATION_MAIL_SENT } from "@/src/app/routes/_auth/resend-verification-mail/sent.tsx";
 import { Button } from "@/src/shared/components/button/Button.tsx";
 import { Callout } from "@/src/shared/components/callout/Callout.tsx";
 import { FormInputField } from "@/src/shared/components/form-input-field/FormInputField.tsx";

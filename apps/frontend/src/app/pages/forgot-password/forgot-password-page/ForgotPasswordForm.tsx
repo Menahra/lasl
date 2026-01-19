@@ -9,8 +9,8 @@ import {
 } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { ROUTE_FORGOT_PASSWORD_SENT } from "@/src/app/routes/forgot-password/sent.tsx";
-import { ROUTE_LOGIN } from "@/src/app/routes/login.tsx";
+import { ROUTE_FORGOT_PASSWORD_SENT } from "@/src/app/routes/_auth/forgot-password/sent.tsx";
+import { ROUTE_LOGIN } from "@/src/app/routes/_auth/login.tsx";
 import { Button } from "@/src/shared/components/button/Button.tsx";
 import { FormInputField } from "@/src/shared/components/form-input-field/FormInputField.tsx";
 import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";

@@ -11,23 +11,24 @@
 import { Route as rootRouteImport } from './app/routes/__root'
 import { Route as TermsRouteImport } from './app/routes/terms'
 import { Route as PrivacyRouteImport } from './app/routes/privacy'
-import { Route as LoginRouteImport } from './app/routes/login'
 import { Route as ImprintRouteImport } from './app/routes/imprint'
-import { Route as ResetPasswordRouteRouteImport } from './app/routes/reset-password/route'
-import { Route as ResendVerificationMailRouteRouteImport } from './app/routes/resend-verification-mail/route'
-import { Route as RegisterRouteRouteImport } from './app/routes/register/route'
-import { Route as ForgotPasswordRouteRouteImport } from './app/routes/forgot-password/route'
+import { Route as AuthRouteImport } from './app/routes/_auth'
 import { Route as IndexRouteImport } from './app/routes/index'
-import { Route as ResetPasswordIndexRouteImport } from './app/routes/reset-password/index'
-import { Route as ResendVerificationMailIndexRouteImport } from './app/routes/resend-verification-mail/index'
-import { Route as RegisterIndexRouteImport } from './app/routes/register/index'
-import { Route as ForgotPasswordIndexRouteImport } from './app/routes/forgot-password/index'
-import { Route as ResetPasswordSentRouteImport } from './app/routes/reset-password/sent'
-import { Route as ResendVerificationMailSentRouteImport } from './app/routes/resend-verification-mail/sent'
-import { Route as RegisterSuccessRouteImport } from './app/routes/register/success'
-import { Route as ForgotPasswordSentRouteImport } from './app/routes/forgot-password/sent'
-import { Route as ResetPasswordIdPasswordResetCodeIndexRouteImport } from './app/routes/reset-password/$id/$passwordResetCode/index'
-import { Route as RegisterVerifyIdVerificationCodeIndexRouteImport } from './app/routes/register/verify/$id/$verificationCode/index'
+import { Route as AuthLoginRouteImport } from './app/routes/_auth/login'
+import { Route as AuthResetPasswordRouteRouteImport } from './app/routes/_auth/reset-password/route'
+import { Route as AuthResendVerificationMailRouteRouteImport } from './app/routes/_auth/resend-verification-mail/route'
+import { Route as AuthRegisterRouteRouteImport } from './app/routes/_auth/register/route'
+import { Route as AuthForgotPasswordRouteRouteImport } from './app/routes/_auth/forgot-password/route'
+import { Route as AuthResetPasswordIndexRouteImport } from './app/routes/_auth/reset-password/index'
+import { Route as AuthResendVerificationMailIndexRouteImport } from './app/routes/_auth/resend-verification-mail/index'
+import { Route as AuthRegisterIndexRouteImport } from './app/routes/_auth/register/index'
+import { Route as AuthForgotPasswordIndexRouteImport } from './app/routes/_auth/forgot-password/index'
+import { Route as AuthResetPasswordSentRouteImport } from './app/routes/_auth/reset-password/sent'
+import { Route as AuthResendVerificationMailSentRouteImport } from './app/routes/_auth/resend-verification-mail/sent'
+import { Route as AuthRegisterSuccessRouteImport } from './app/routes/_auth/register/success'
+import { Route as AuthForgotPasswordSentRouteImport } from './app/routes/_auth/forgot-password/sent'
+import { Route as AuthResetPasswordIdPasswordResetCodeIndexRouteImport } from './app/routes/_auth/reset-password/$id/$passwordResetCode/index'
+import { Route as AuthRegisterVerifyIdVerificationCodeIndexRouteImport } from './app/routes/_auth/register/verify/$id/$verificationCode/index'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -39,35 +40,13 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ImprintRoute = ImprintRouteImport.update({
   id: '/imprint',
   path: '/imprint',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ResetPasswordRouteRoute = ResetPasswordRouteRouteImport.update({
-  id: '/reset-password',
-  path: '/reset-password',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ResendVerificationMailRouteRoute =
-  ResendVerificationMailRouteRouteImport.update({
-    id: '/resend-verification-mail',
-    path: '/resend-verification-mail',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const RegisterRouteRoute = RegisterRouteRouteImport.update({
-  id: '/register',
-  path: '/register',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ForgotPasswordRouteRoute = ForgotPasswordRouteRouteImport.update({
-  id: '/forgot-password',
-  path: '/forgot-password',
+const AuthRoute = AuthRouteImport.update({
+  id: '/_auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -75,133 +54,160 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ResetPasswordIndexRoute = ResetPasswordIndexRouteImport.update({
+const AuthLoginRoute = AuthLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthResetPasswordRouteRoute = AuthResetPasswordRouteRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthResendVerificationMailRouteRoute =
+  AuthResendVerificationMailRouteRouteImport.update({
+    id: '/resend-verification-mail',
+    path: '/resend-verification-mail',
+    getParentRoute: () => AuthRoute,
+  } as any)
+const AuthRegisterRouteRoute = AuthRegisterRouteRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthForgotPasswordRouteRoute = AuthForgotPasswordRouteRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthResetPasswordIndexRoute = AuthResetPasswordIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => ResetPasswordRouteRoute,
+  getParentRoute: () => AuthResetPasswordRouteRoute,
 } as any)
-const ResendVerificationMailIndexRoute =
-  ResendVerificationMailIndexRouteImport.update({
+const AuthResendVerificationMailIndexRoute =
+  AuthResendVerificationMailIndexRouteImport.update({
     id: '/',
     path: '/',
-    getParentRoute: () => ResendVerificationMailRouteRoute,
+    getParentRoute: () => AuthResendVerificationMailRouteRoute,
   } as any)
-const RegisterIndexRoute = RegisterIndexRouteImport.update({
+const AuthRegisterIndexRoute = AuthRegisterIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => RegisterRouteRoute,
+  getParentRoute: () => AuthRegisterRouteRoute,
 } as any)
-const ForgotPasswordIndexRoute = ForgotPasswordIndexRouteImport.update({
+const AuthForgotPasswordIndexRoute = AuthForgotPasswordIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => ForgotPasswordRouteRoute,
+  getParentRoute: () => AuthForgotPasswordRouteRoute,
 } as any)
-const ResetPasswordSentRoute = ResetPasswordSentRouteImport.update({
+const AuthResetPasswordSentRoute = AuthResetPasswordSentRouteImport.update({
   id: '/sent',
   path: '/sent',
-  getParentRoute: () => ResetPasswordRouteRoute,
+  getParentRoute: () => AuthResetPasswordRouteRoute,
 } as any)
-const ResendVerificationMailSentRoute =
-  ResendVerificationMailSentRouteImport.update({
+const AuthResendVerificationMailSentRoute =
+  AuthResendVerificationMailSentRouteImport.update({
     id: '/sent',
     path: '/sent',
-    getParentRoute: () => ResendVerificationMailRouteRoute,
+    getParentRoute: () => AuthResendVerificationMailRouteRoute,
   } as any)
-const RegisterSuccessRoute = RegisterSuccessRouteImport.update({
+const AuthRegisterSuccessRoute = AuthRegisterSuccessRouteImport.update({
   id: '/success',
   path: '/success',
-  getParentRoute: () => RegisterRouteRoute,
+  getParentRoute: () => AuthRegisterRouteRoute,
 } as any)
-const ForgotPasswordSentRoute = ForgotPasswordSentRouteImport.update({
+const AuthForgotPasswordSentRoute = AuthForgotPasswordSentRouteImport.update({
   id: '/sent',
   path: '/sent',
-  getParentRoute: () => ForgotPasswordRouteRoute,
+  getParentRoute: () => AuthForgotPasswordRouteRoute,
 } as any)
-const ResetPasswordIdPasswordResetCodeIndexRoute =
-  ResetPasswordIdPasswordResetCodeIndexRouteImport.update({
+const AuthResetPasswordIdPasswordResetCodeIndexRoute =
+  AuthResetPasswordIdPasswordResetCodeIndexRouteImport.update({
     id: '/$id/$passwordResetCode/',
     path: '/$id/$passwordResetCode/',
-    getParentRoute: () => ResetPasswordRouteRoute,
+    getParentRoute: () => AuthResetPasswordRouteRoute,
   } as any)
-const RegisterVerifyIdVerificationCodeIndexRoute =
-  RegisterVerifyIdVerificationCodeIndexRouteImport.update({
+const AuthRegisterVerifyIdVerificationCodeIndexRoute =
+  AuthRegisterVerifyIdVerificationCodeIndexRouteImport.update({
     id: '/verify/$id/$verificationCode/',
     path: '/verify/$id/$verificationCode/',
-    getParentRoute: () => RegisterRouteRoute,
+    getParentRoute: () => AuthRegisterRouteRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/forgot-password': typeof ForgotPasswordRouteRouteWithChildren
-  '/register': typeof RegisterRouteRouteWithChildren
-  '/resend-verification-mail': typeof ResendVerificationMailRouteRouteWithChildren
-  '/reset-password': typeof ResetPasswordRouteRouteWithChildren
   '/imprint': typeof ImprintRoute
-  '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
-  '/forgot-password/sent': typeof ForgotPasswordSentRoute
-  '/register/success': typeof RegisterSuccessRoute
-  '/resend-verification-mail/sent': typeof ResendVerificationMailSentRoute
-  '/reset-password/sent': typeof ResetPasswordSentRoute
-  '/forgot-password/': typeof ForgotPasswordIndexRoute
-  '/register/': typeof RegisterIndexRoute
-  '/resend-verification-mail/': typeof ResendVerificationMailIndexRoute
-  '/reset-password/': typeof ResetPasswordIndexRoute
-  '/reset-password/$id/$passwordResetCode': typeof ResetPasswordIdPasswordResetCodeIndexRoute
-  '/register/verify/$id/$verificationCode': typeof RegisterVerifyIdVerificationCodeIndexRoute
+  '/forgot-password': typeof AuthForgotPasswordRouteRouteWithChildren
+  '/register': typeof AuthRegisterRouteRouteWithChildren
+  '/resend-verification-mail': typeof AuthResendVerificationMailRouteRouteWithChildren
+  '/reset-password': typeof AuthResetPasswordRouteRouteWithChildren
+  '/login': typeof AuthLoginRoute
+  '/forgot-password/sent': typeof AuthForgotPasswordSentRoute
+  '/register/success': typeof AuthRegisterSuccessRoute
+  '/resend-verification-mail/sent': typeof AuthResendVerificationMailSentRoute
+  '/reset-password/sent': typeof AuthResetPasswordSentRoute
+  '/forgot-password/': typeof AuthForgotPasswordIndexRoute
+  '/register/': typeof AuthRegisterIndexRoute
+  '/resend-verification-mail/': typeof AuthResendVerificationMailIndexRoute
+  '/reset-password/': typeof AuthResetPasswordIndexRoute
+  '/reset-password/$id/$passwordResetCode': typeof AuthResetPasswordIdPasswordResetCodeIndexRoute
+  '/register/verify/$id/$verificationCode': typeof AuthRegisterVerifyIdVerificationCodeIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/imprint': typeof ImprintRoute
-  '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
-  '/forgot-password/sent': typeof ForgotPasswordSentRoute
-  '/register/success': typeof RegisterSuccessRoute
-  '/resend-verification-mail/sent': typeof ResendVerificationMailSentRoute
-  '/reset-password/sent': typeof ResetPasswordSentRoute
-  '/forgot-password': typeof ForgotPasswordIndexRoute
-  '/register': typeof RegisterIndexRoute
-  '/resend-verification-mail': typeof ResendVerificationMailIndexRoute
-  '/reset-password': typeof ResetPasswordIndexRoute
-  '/reset-password/$id/$passwordResetCode': typeof ResetPasswordIdPasswordResetCodeIndexRoute
-  '/register/verify/$id/$verificationCode': typeof RegisterVerifyIdVerificationCodeIndexRoute
+  '/login': typeof AuthLoginRoute
+  '/forgot-password/sent': typeof AuthForgotPasswordSentRoute
+  '/register/success': typeof AuthRegisterSuccessRoute
+  '/resend-verification-mail/sent': typeof AuthResendVerificationMailSentRoute
+  '/reset-password/sent': typeof AuthResetPasswordSentRoute
+  '/forgot-password': typeof AuthForgotPasswordIndexRoute
+  '/register': typeof AuthRegisterIndexRoute
+  '/resend-verification-mail': typeof AuthResendVerificationMailIndexRoute
+  '/reset-password': typeof AuthResetPasswordIndexRoute
+  '/reset-password/$id/$passwordResetCode': typeof AuthResetPasswordIdPasswordResetCodeIndexRoute
+  '/register/verify/$id/$verificationCode': typeof AuthRegisterVerifyIdVerificationCodeIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/forgot-password': typeof ForgotPasswordRouteRouteWithChildren
-  '/register': typeof RegisterRouteRouteWithChildren
-  '/resend-verification-mail': typeof ResendVerificationMailRouteRouteWithChildren
-  '/reset-password': typeof ResetPasswordRouteRouteWithChildren
+  '/_auth': typeof AuthRouteWithChildren
   '/imprint': typeof ImprintRoute
-  '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
-  '/forgot-password/sent': typeof ForgotPasswordSentRoute
-  '/register/success': typeof RegisterSuccessRoute
-  '/resend-verification-mail/sent': typeof ResendVerificationMailSentRoute
-  '/reset-password/sent': typeof ResetPasswordSentRoute
-  '/forgot-password/': typeof ForgotPasswordIndexRoute
-  '/register/': typeof RegisterIndexRoute
-  '/resend-verification-mail/': typeof ResendVerificationMailIndexRoute
-  '/reset-password/': typeof ResetPasswordIndexRoute
-  '/reset-password/$id/$passwordResetCode/': typeof ResetPasswordIdPasswordResetCodeIndexRoute
-  '/register/verify/$id/$verificationCode/': typeof RegisterVerifyIdVerificationCodeIndexRoute
+  '/_auth/forgot-password': typeof AuthForgotPasswordRouteRouteWithChildren
+  '/_auth/register': typeof AuthRegisterRouteRouteWithChildren
+  '/_auth/resend-verification-mail': typeof AuthResendVerificationMailRouteRouteWithChildren
+  '/_auth/reset-password': typeof AuthResetPasswordRouteRouteWithChildren
+  '/_auth/login': typeof AuthLoginRoute
+  '/_auth/forgot-password/sent': typeof AuthForgotPasswordSentRoute
+  '/_auth/register/success': typeof AuthRegisterSuccessRoute
+  '/_auth/resend-verification-mail/sent': typeof AuthResendVerificationMailSentRoute
+  '/_auth/reset-password/sent': typeof AuthResetPasswordSentRoute
+  '/_auth/forgot-password/': typeof AuthForgotPasswordIndexRoute
+  '/_auth/register/': typeof AuthRegisterIndexRoute
+  '/_auth/resend-verification-mail/': typeof AuthResendVerificationMailIndexRoute
+  '/_auth/reset-password/': typeof AuthResetPasswordIndexRoute
+  '/_auth/reset-password/$id/$passwordResetCode/': typeof AuthResetPasswordIdPasswordResetCodeIndexRoute
+  '/_auth/register/verify/$id/$verificationCode/': typeof AuthRegisterVerifyIdVerificationCodeIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/imprint'
+    | '/privacy'
+    | '/terms'
     | '/forgot-password'
     | '/register'
     | '/resend-verification-mail'
     | '/reset-password'
-    | '/imprint'
     | '/login'
-    | '/privacy'
-    | '/terms'
     | '/forgot-password/sent'
     | '/register/success'
     | '/resend-verification-mail/sent'
@@ -216,9 +222,9 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/imprint'
-    | '/login'
     | '/privacy'
     | '/terms'
+    | '/login'
     | '/forgot-password/sent'
     | '/register/success'
     | '/resend-verification-mail/sent'
@@ -232,34 +238,31 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/forgot-password'
-    | '/register'
-    | '/resend-verification-mail'
-    | '/reset-password'
+    | '/_auth'
     | '/imprint'
-    | '/login'
     | '/privacy'
     | '/terms'
-    | '/forgot-password/sent'
-    | '/register/success'
-    | '/resend-verification-mail/sent'
-    | '/reset-password/sent'
-    | '/forgot-password/'
-    | '/register/'
-    | '/resend-verification-mail/'
-    | '/reset-password/'
-    | '/reset-password/$id/$passwordResetCode/'
-    | '/register/verify/$id/$verificationCode/'
+    | '/_auth/forgot-password'
+    | '/_auth/register'
+    | '/_auth/resend-verification-mail'
+    | '/_auth/reset-password'
+    | '/_auth/login'
+    | '/_auth/forgot-password/sent'
+    | '/_auth/register/success'
+    | '/_auth/resend-verification-mail/sent'
+    | '/_auth/reset-password/sent'
+    | '/_auth/forgot-password/'
+    | '/_auth/register/'
+    | '/_auth/resend-verification-mail/'
+    | '/_auth/reset-password/'
+    | '/_auth/reset-password/$id/$passwordResetCode/'
+    | '/_auth/register/verify/$id/$verificationCode/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ForgotPasswordRouteRoute: typeof ForgotPasswordRouteRouteWithChildren
-  RegisterRouteRoute: typeof RegisterRouteRouteWithChildren
-  ResendVerificationMailRouteRoute: typeof ResendVerificationMailRouteRouteWithChildren
-  ResetPasswordRouteRoute: typeof ResetPasswordRouteRouteWithChildren
+  AuthRoute: typeof AuthRouteWithChildren
   ImprintRoute: typeof ImprintRoute
-  LoginRoute: typeof LoginRoute
   PrivacyRoute: typeof PrivacyRoute
   TermsRoute: typeof TermsRoute
 }
@@ -280,13 +283,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/imprint': {
       id: '/imprint'
       path: '/imprint'
@@ -294,32 +290,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ImprintRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/reset-password': {
-      id: '/reset-password'
-      path: '/reset-password'
-      fullPath: '/reset-password'
-      preLoaderRoute: typeof ResetPasswordRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/resend-verification-mail': {
-      id: '/resend-verification-mail'
-      path: '/resend-verification-mail'
-      fullPath: '/resend-verification-mail'
-      preLoaderRoute: typeof ResendVerificationMailRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/register': {
-      id: '/register'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof RegisterRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/forgot-password': {
-      id: '/forgot-password'
-      path: '/forgot-password'
-      fullPath: '/forgot-password'
-      preLoaderRoute: typeof ForgotPasswordRouteRouteImport
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -329,150 +304,204 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/reset-password/': {
-      id: '/reset-password/'
+    '/_auth/login': {
+      id: '/_auth/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof AuthLoginRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/reset-password': {
+      id: '/_auth/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof AuthResetPasswordRouteRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/resend-verification-mail': {
+      id: '/_auth/resend-verification-mail'
+      path: '/resend-verification-mail'
+      fullPath: '/resend-verification-mail'
+      preLoaderRoute: typeof AuthResendVerificationMailRouteRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/register': {
+      id: '/_auth/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof AuthRegisterRouteRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/forgot-password': {
+      id: '/_auth/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof AuthForgotPasswordRouteRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/reset-password/': {
+      id: '/_auth/reset-password/'
       path: '/'
       fullPath: '/reset-password/'
-      preLoaderRoute: typeof ResetPasswordIndexRouteImport
-      parentRoute: typeof ResetPasswordRouteRoute
+      preLoaderRoute: typeof AuthResetPasswordIndexRouteImport
+      parentRoute: typeof AuthResetPasswordRouteRoute
     }
-    '/resend-verification-mail/': {
-      id: '/resend-verification-mail/'
+    '/_auth/resend-verification-mail/': {
+      id: '/_auth/resend-verification-mail/'
       path: '/'
       fullPath: '/resend-verification-mail/'
-      preLoaderRoute: typeof ResendVerificationMailIndexRouteImport
-      parentRoute: typeof ResendVerificationMailRouteRoute
+      preLoaderRoute: typeof AuthResendVerificationMailIndexRouteImport
+      parentRoute: typeof AuthResendVerificationMailRouteRoute
     }
-    '/register/': {
-      id: '/register/'
+    '/_auth/register/': {
+      id: '/_auth/register/'
       path: '/'
       fullPath: '/register/'
-      preLoaderRoute: typeof RegisterIndexRouteImport
-      parentRoute: typeof RegisterRouteRoute
+      preLoaderRoute: typeof AuthRegisterIndexRouteImport
+      parentRoute: typeof AuthRegisterRouteRoute
     }
-    '/forgot-password/': {
-      id: '/forgot-password/'
+    '/_auth/forgot-password/': {
+      id: '/_auth/forgot-password/'
       path: '/'
       fullPath: '/forgot-password/'
-      preLoaderRoute: typeof ForgotPasswordIndexRouteImport
-      parentRoute: typeof ForgotPasswordRouteRoute
+      preLoaderRoute: typeof AuthForgotPasswordIndexRouteImport
+      parentRoute: typeof AuthForgotPasswordRouteRoute
     }
-    '/reset-password/sent': {
-      id: '/reset-password/sent'
+    '/_auth/reset-password/sent': {
+      id: '/_auth/reset-password/sent'
       path: '/sent'
       fullPath: '/reset-password/sent'
-      preLoaderRoute: typeof ResetPasswordSentRouteImport
-      parentRoute: typeof ResetPasswordRouteRoute
+      preLoaderRoute: typeof AuthResetPasswordSentRouteImport
+      parentRoute: typeof AuthResetPasswordRouteRoute
     }
-    '/resend-verification-mail/sent': {
-      id: '/resend-verification-mail/sent'
+    '/_auth/resend-verification-mail/sent': {
+      id: '/_auth/resend-verification-mail/sent'
       path: '/sent'
       fullPath: '/resend-verification-mail/sent'
-      preLoaderRoute: typeof ResendVerificationMailSentRouteImport
-      parentRoute: typeof ResendVerificationMailRouteRoute
+      preLoaderRoute: typeof AuthResendVerificationMailSentRouteImport
+      parentRoute: typeof AuthResendVerificationMailRouteRoute
     }
-    '/register/success': {
-      id: '/register/success'
+    '/_auth/register/success': {
+      id: '/_auth/register/success'
       path: '/success'
       fullPath: '/register/success'
-      preLoaderRoute: typeof RegisterSuccessRouteImport
-      parentRoute: typeof RegisterRouteRoute
+      preLoaderRoute: typeof AuthRegisterSuccessRouteImport
+      parentRoute: typeof AuthRegisterRouteRoute
     }
-    '/forgot-password/sent': {
-      id: '/forgot-password/sent'
+    '/_auth/forgot-password/sent': {
+      id: '/_auth/forgot-password/sent'
       path: '/sent'
       fullPath: '/forgot-password/sent'
-      preLoaderRoute: typeof ForgotPasswordSentRouteImport
-      parentRoute: typeof ForgotPasswordRouteRoute
+      preLoaderRoute: typeof AuthForgotPasswordSentRouteImport
+      parentRoute: typeof AuthForgotPasswordRouteRoute
     }
-    '/reset-password/$id/$passwordResetCode/': {
-      id: '/reset-password/$id/$passwordResetCode/'
+    '/_auth/reset-password/$id/$passwordResetCode/': {
+      id: '/_auth/reset-password/$id/$passwordResetCode/'
       path: '/$id/$passwordResetCode'
       fullPath: '/reset-password/$id/$passwordResetCode'
-      preLoaderRoute: typeof ResetPasswordIdPasswordResetCodeIndexRouteImport
-      parentRoute: typeof ResetPasswordRouteRoute
+      preLoaderRoute: typeof AuthResetPasswordIdPasswordResetCodeIndexRouteImport
+      parentRoute: typeof AuthResetPasswordRouteRoute
     }
-    '/register/verify/$id/$verificationCode/': {
-      id: '/register/verify/$id/$verificationCode/'
+    '/_auth/register/verify/$id/$verificationCode/': {
+      id: '/_auth/register/verify/$id/$verificationCode/'
       path: '/verify/$id/$verificationCode'
       fullPath: '/register/verify/$id/$verificationCode'
-      preLoaderRoute: typeof RegisterVerifyIdVerificationCodeIndexRouteImport
-      parentRoute: typeof RegisterRouteRoute
+      preLoaderRoute: typeof AuthRegisterVerifyIdVerificationCodeIndexRouteImport
+      parentRoute: typeof AuthRegisterRouteRoute
     }
   }
 }
 
-interface ForgotPasswordRouteRouteChildren {
-  ForgotPasswordSentRoute: typeof ForgotPasswordSentRoute
-  ForgotPasswordIndexRoute: typeof ForgotPasswordIndexRoute
+interface AuthForgotPasswordRouteRouteChildren {
+  AuthForgotPasswordSentRoute: typeof AuthForgotPasswordSentRoute
+  AuthForgotPasswordIndexRoute: typeof AuthForgotPasswordIndexRoute
 }
 
-const ForgotPasswordRouteRouteChildren: ForgotPasswordRouteRouteChildren = {
-  ForgotPasswordSentRoute: ForgotPasswordSentRoute,
-  ForgotPasswordIndexRoute: ForgotPasswordIndexRoute,
-}
-
-const ForgotPasswordRouteRouteWithChildren =
-  ForgotPasswordRouteRoute._addFileChildren(ForgotPasswordRouteRouteChildren)
-
-interface RegisterRouteRouteChildren {
-  RegisterSuccessRoute: typeof RegisterSuccessRoute
-  RegisterIndexRoute: typeof RegisterIndexRoute
-  RegisterVerifyIdVerificationCodeIndexRoute: typeof RegisterVerifyIdVerificationCodeIndexRoute
-}
-
-const RegisterRouteRouteChildren: RegisterRouteRouteChildren = {
-  RegisterSuccessRoute: RegisterSuccessRoute,
-  RegisterIndexRoute: RegisterIndexRoute,
-  RegisterVerifyIdVerificationCodeIndexRoute:
-    RegisterVerifyIdVerificationCodeIndexRoute,
-}
-
-const RegisterRouteRouteWithChildren = RegisterRouteRoute._addFileChildren(
-  RegisterRouteRouteChildren,
-)
-
-interface ResendVerificationMailRouteRouteChildren {
-  ResendVerificationMailSentRoute: typeof ResendVerificationMailSentRoute
-  ResendVerificationMailIndexRoute: typeof ResendVerificationMailIndexRoute
-}
-
-const ResendVerificationMailRouteRouteChildren: ResendVerificationMailRouteRouteChildren =
+const AuthForgotPasswordRouteRouteChildren: AuthForgotPasswordRouteRouteChildren =
   {
-    ResendVerificationMailSentRoute: ResendVerificationMailSentRoute,
-    ResendVerificationMailIndexRoute: ResendVerificationMailIndexRoute,
+    AuthForgotPasswordSentRoute: AuthForgotPasswordSentRoute,
+    AuthForgotPasswordIndexRoute: AuthForgotPasswordIndexRoute,
   }
 
-const ResendVerificationMailRouteRouteWithChildren =
-  ResendVerificationMailRouteRoute._addFileChildren(
-    ResendVerificationMailRouteRouteChildren,
+const AuthForgotPasswordRouteRouteWithChildren =
+  AuthForgotPasswordRouteRoute._addFileChildren(
+    AuthForgotPasswordRouteRouteChildren,
   )
 
-interface ResetPasswordRouteRouteChildren {
-  ResetPasswordSentRoute: typeof ResetPasswordSentRoute
-  ResetPasswordIndexRoute: typeof ResetPasswordIndexRoute
-  ResetPasswordIdPasswordResetCodeIndexRoute: typeof ResetPasswordIdPasswordResetCodeIndexRoute
+interface AuthRegisterRouteRouteChildren {
+  AuthRegisterSuccessRoute: typeof AuthRegisterSuccessRoute
+  AuthRegisterIndexRoute: typeof AuthRegisterIndexRoute
+  AuthRegisterVerifyIdVerificationCodeIndexRoute: typeof AuthRegisterVerifyIdVerificationCodeIndexRoute
 }
 
-const ResetPasswordRouteRouteChildren: ResetPasswordRouteRouteChildren = {
-  ResetPasswordSentRoute: ResetPasswordSentRoute,
-  ResetPasswordIndexRoute: ResetPasswordIndexRoute,
-  ResetPasswordIdPasswordResetCodeIndexRoute:
-    ResetPasswordIdPasswordResetCodeIndexRoute,
+const AuthRegisterRouteRouteChildren: AuthRegisterRouteRouteChildren = {
+  AuthRegisterSuccessRoute: AuthRegisterSuccessRoute,
+  AuthRegisterIndexRoute: AuthRegisterIndexRoute,
+  AuthRegisterVerifyIdVerificationCodeIndexRoute:
+    AuthRegisterVerifyIdVerificationCodeIndexRoute,
 }
 
-const ResetPasswordRouteRouteWithChildren =
-  ResetPasswordRouteRoute._addFileChildren(ResetPasswordRouteRouteChildren)
+const AuthRegisterRouteRouteWithChildren =
+  AuthRegisterRouteRoute._addFileChildren(AuthRegisterRouteRouteChildren)
+
+interface AuthResendVerificationMailRouteRouteChildren {
+  AuthResendVerificationMailSentRoute: typeof AuthResendVerificationMailSentRoute
+  AuthResendVerificationMailIndexRoute: typeof AuthResendVerificationMailIndexRoute
+}
+
+const AuthResendVerificationMailRouteRouteChildren: AuthResendVerificationMailRouteRouteChildren =
+  {
+    AuthResendVerificationMailSentRoute: AuthResendVerificationMailSentRoute,
+    AuthResendVerificationMailIndexRoute: AuthResendVerificationMailIndexRoute,
+  }
+
+const AuthResendVerificationMailRouteRouteWithChildren =
+  AuthResendVerificationMailRouteRoute._addFileChildren(
+    AuthResendVerificationMailRouteRouteChildren,
+  )
+
+interface AuthResetPasswordRouteRouteChildren {
+  AuthResetPasswordSentRoute: typeof AuthResetPasswordSentRoute
+  AuthResetPasswordIndexRoute: typeof AuthResetPasswordIndexRoute
+  AuthResetPasswordIdPasswordResetCodeIndexRoute: typeof AuthResetPasswordIdPasswordResetCodeIndexRoute
+}
+
+const AuthResetPasswordRouteRouteChildren: AuthResetPasswordRouteRouteChildren =
+  {
+    AuthResetPasswordSentRoute: AuthResetPasswordSentRoute,
+    AuthResetPasswordIndexRoute: AuthResetPasswordIndexRoute,
+    AuthResetPasswordIdPasswordResetCodeIndexRoute:
+      AuthResetPasswordIdPasswordResetCodeIndexRoute,
+  }
+
+const AuthResetPasswordRouteRouteWithChildren =
+  AuthResetPasswordRouteRoute._addFileChildren(
+    AuthResetPasswordRouteRouteChildren,
+  )
+
+interface AuthRouteChildren {
+  AuthForgotPasswordRouteRoute: typeof AuthForgotPasswordRouteRouteWithChildren
+  AuthRegisterRouteRoute: typeof AuthRegisterRouteRouteWithChildren
+  AuthResendVerificationMailRouteRoute: typeof AuthResendVerificationMailRouteRouteWithChildren
+  AuthResetPasswordRouteRoute: typeof AuthResetPasswordRouteRouteWithChildren
+  AuthLoginRoute: typeof AuthLoginRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthForgotPasswordRouteRoute: AuthForgotPasswordRouteRouteWithChildren,
+  AuthRegisterRouteRoute: AuthRegisterRouteRouteWithChildren,
+  AuthResendVerificationMailRouteRoute:
+    AuthResendVerificationMailRouteRouteWithChildren,
+  AuthResetPasswordRouteRoute: AuthResetPasswordRouteRouteWithChildren,
+  AuthLoginRoute: AuthLoginRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ForgotPasswordRouteRoute: ForgotPasswordRouteRouteWithChildren,
-  RegisterRouteRoute: RegisterRouteRouteWithChildren,
-  ResendVerificationMailRouteRoute:
-    ResendVerificationMailRouteRouteWithChildren,
-  ResetPasswordRouteRoute: ResetPasswordRouteRouteWithChildren,
+  AuthRoute: AuthRouteWithChildren,
   ImprintRoute: ImprintRoute,
-  LoginRoute: LoginRoute,
   PrivacyRoute: PrivacyRoute,
   TermsRoute: TermsRoute,
 }

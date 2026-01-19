@@ -1,6 +1,6 @@
 import { Trans } from "@lingui/react/macro";
 import { RegisterForm } from "@/src/app/pages/register/register-page/RegisterForm.tsx";
-import { ROUTE_LOGIN } from "@/src/app/routes/login.tsx";
+import { ROUTE_LOGIN } from "@/src/app/routes/_auth/login.tsx";
 import { BrandLogo } from "@/src/shared/components/brand-logo/BrandLogo.tsx";
 import { LanguageSelect } from "@/src/shared/components/language-select/LanguageSelect.tsx";
 import { LightDarkModeButton } from "@/src/shared/components/light-dark-mode-button/LightDarkModeButton.tsx";

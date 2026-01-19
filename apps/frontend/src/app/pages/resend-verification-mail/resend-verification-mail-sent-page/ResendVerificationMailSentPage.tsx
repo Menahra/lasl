@@ -4,8 +4,8 @@ import {
   Link as TanstackRouterLink,
   useRouterState,
 } from "@tanstack/react-router";
-import { ROUTE_LOGIN } from "@/src/app/routes/login.tsx";
-import { ROUTE_RESEND_VERIFICATION_MAIL } from "@/src/app/routes/resend-verification-mail/index.tsx";
+import { ROUTE_LOGIN } from "@/src/app/routes/_auth/login.tsx";
+import { ROUTE_RESEND_VERIFICATION_MAIL } from "@/src/app/routes/_auth/resend-verification-mail/index.tsx";
 import { Button } from "@/src/shared/components/button/Button.tsx";
 import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
 import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";

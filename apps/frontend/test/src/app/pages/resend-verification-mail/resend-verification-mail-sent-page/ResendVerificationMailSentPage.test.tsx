@@ -2,8 +2,8 @@ import "@/test/__mocks__/i18nContextMock.ts";
 import { screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { ResendVerificationMailSentPage } from "@/src/app/pages/resend-verification-mail/resend-verification-mail-sent-page/ResendVerificationMailSentPage.tsx";
-import { ROUTE_LOGIN } from "@/src/app/routes/login.tsx";
-import { ROUTE_RESEND_VERIFICATION_MAIL } from "@/src/app/routes/resend-verification-mail/index.tsx";
+import { ROUTE_LOGIN } from "@/src/app/routes/_auth/login.tsx";
+import { ROUTE_RESEND_VERIFICATION_MAIL } from "@/src/app/routes/_auth/resend-verification-mail/index.tsx";
 import { setI18nLoading } from "@/test/__mocks__/i18nContextMock.ts";
 import { renderWithProviders } from "@/test/__wrappers__/renderWithProviders.tsx";
 
