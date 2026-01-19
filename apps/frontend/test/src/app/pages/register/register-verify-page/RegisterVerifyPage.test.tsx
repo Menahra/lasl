@@ -25,7 +25,7 @@ vi.mock("@/src/shared/hooks/api/useVerifyUser.ts", () => ({
 }));
 
 vi.mock(
-  "@/src/app/routes/register/verify/$id/$verificationCode/index.tsx",
+  "@/src/app/routes/_auth/register/verify/$id/$verificationCode/index.tsx",
   () => ({
     // biome-ignore lint/style/useNamingConvention: naming from tanstack router
     Route: {

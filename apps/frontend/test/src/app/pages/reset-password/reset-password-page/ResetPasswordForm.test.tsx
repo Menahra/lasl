@@ -8,7 +8,7 @@ import { ROUTE_RESET_PASSWORD_SENT } from "@/src/app/routes/_auth/reset-password
 import { renderWithProviders } from "@/test/__wrappers__/renderWithProviders.tsx";
 
 vi.mock(
-  "@/src/app/routes/reset-password/$id/$passwordResetCode/index.tsx",
+  "@/src/app/routes/_auth/reset-password/$id/$passwordResetCode/index.tsx",
   () => ({
     // biome-ignore lint/style/useNamingConvention: given by module
     Route: {
