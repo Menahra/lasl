@@ -4,6 +4,7 @@ import { defineConfig } from "vitest/config";
 // biome-ignore lint/style/noDefaultExport: needed for vitest
 export default defineConfig({
   test: {
+    globalSetup: ["@lasl/test-utils-fastify/global-setup"],
     setupFiles: ["./test/__utils__/environment.setup.ts"],
   },
   resolve: {

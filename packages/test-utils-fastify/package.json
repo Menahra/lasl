@@ -3,11 +3,17 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "exports": {
     "./setup-utils": {
       "import": "./dist/setup.utils.js",
       "types": "./dist/setup.utils.d.ts"
+    },
+    "./global-setup": {
+      "import": "./dist/global.setup.js",
+      "types": "./dist/global.setup.d.ts"
     },
     "./swagger-doc-utils": {
       "import": "./dist/swagger-doc.utils.js",
@@ -30,6 +36,7 @@
   "packageManager": "pnpm@10.13.1",
   "devDependencies": {
     "@types/json-schema": "^7.0.15",
+    "@types/node": "^25.0.9",
     "fastify": "^5.7.1",
     "http-status-codes": "^2.3.0",
     "json-schema": "^0.4.0",
