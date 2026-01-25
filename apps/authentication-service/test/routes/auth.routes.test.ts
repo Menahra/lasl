@@ -15,6 +15,7 @@ import { buildApp } from "@/src/app.ts";
 import * as sessionService from "@/src/service/auth.service.ts";
 import * as userService from "@/src/service/user.service.ts";
 import * as jwtUtil from "@/src/util/jwt.util.ts";
+import { BYPASS_RATE_LIMIT_HEADER } from "@/test/__utils__/bypass.rate.limit.header.ts";
 
 describe("auth routes", () => {
   let app: FastifyInstance;
@@ -56,6 +57,7 @@ describe("auth routes", () => {
         method: "POST",
         url: sessionsEndpoint,
         payload: validSessionPayload,
+        headers: BYPASS_RATE_LIMIT_HEADER,
       });
 
       expect(response.statusCode).toBe(StatusCodes.OK);
@@ -93,6 +95,7 @@ describe("auth routes", () => {
         method: "POST",
         url: sessionsEndpoint,
         payload: validSessionPayload,
+        headers: BYPASS_RATE_LIMIT_HEADER,
       });
 
       expect(response.statusCode).toBe(StatusCodes.FORBIDDEN);
@@ -172,6 +175,7 @@ describe("auth routes", () => {
         cookies: {
           refreshToken: "valid.refresh.token",
         },
+        headers: BYPASS_RATE_LIMIT_HEADER,
       });
 
       expect(response.statusCode).toBe(StatusCodes.OK);
@@ -182,6 +186,7 @@ describe("auth routes", () => {
       const response = await app.inject({
         method: "POST",
         url: refreshEndpoint,
+        headers: BYPASS_RATE_LIMIT_HEADER,
       });
 
       expect(response.statusCode).toBe(StatusCodes.UNAUTHORIZED);
@@ -205,6 +210,7 @@ describe("auth routes", () => {
         cookies: {
           refreshToken: "valid.refresh.token",
         },
+        headers: BYPASS_RATE_LIMIT_HEADER,
       });
 
       expect(response.statusCode).toBe(StatusCodes.UNAUTHORIZED);
@@ -230,6 +236,7 @@ describe("auth routes", () => {
         cookies: {
           refreshToken: "valid.refresh.token",
         },
+        headers: BYPASS_RATE_LIMIT_HEADER,
       });
 
       expect(response.statusCode).toBe(StatusCodes.UNAUTHORIZED);
@@ -249,6 +256,7 @@ describe("auth routes", () => {
         cookies: {
           refreshToken: "invalid.token",
         },
+        headers: BYPASS_RATE_LIMIT_HEADER,
       });
 
       expect(response.statusCode).toBe(StatusCodes.UNAUTHORIZED);
@@ -303,6 +311,7 @@ describe("auth routes", () => {
         method: "POST",
         url: logoutEndpoint,
         headers: {
+          ...BYPASS_RATE_LIMIT_HEADER,
           authorization: `${AUTHENTICATION_TYPE} test`,
         },
       });
@@ -327,6 +336,7 @@ describe("auth routes", () => {
       const response = await app.inject({
         method: "POST",
         url: logoutEndpoint,
+        headers: BYPASS_RATE_LIMIT_HEADER,
       });
 
       expect(response.statusCode).toBe(StatusCodes.UNAUTHORIZED);
@@ -344,6 +354,7 @@ describe("auth routes", () => {
         method: "POST",
         url: logoutEndpoint,
         headers: {
+          ...BYPASS_RATE_LIMIT_HEADER,
           authorization: `${AUTHENTICATION_TYPE} test`,
         },
       });
@@ -363,6 +374,7 @@ describe("auth routes", () => {
         method: "POST",
         url: logoutEndpoint,
         headers: {
+          ...BYPASS_RATE_LIMIT_HEADER,
           authorization: `${AUTHENTICATION_TYPE} test`,
         },
       });
@@ -390,6 +402,7 @@ describe("auth routes", () => {
         method: "POST",
         url: logoutEndpoint,
         headers: {
+          ...BYPASS_RATE_LIMIT_HEADER,
           authorization: `${AUTHENTICATION_TYPE} test`,
         },
       });

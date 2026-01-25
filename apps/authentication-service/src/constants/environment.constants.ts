@@ -16,4 +16,5 @@ export const ENVIRONMENT = {
   nodeEnv: "NODE_ENV",
   port: "PORT",
   resendApiKey: "RESEND_API_KEY",
+  rateLimitBypassKey: "RATELIMIT_BYPASS_KEY",
 } as const;

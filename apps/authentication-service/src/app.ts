@@ -1,5 +1,6 @@
 import process from "node:process";
 import Fastify from "fastify";
+import { fastifyRateLimitPlugin } from "@/src/plugins/rate.limit.plugin.ts";
 import { connectToMongoDb } from "./database/index.ts";
 import { fastifyCookiePlugin } from "./plugins/cookie.ts";
 import { fastifyEnvironmentPlugin } from "./plugins/environment.ts";
@@ -33,6 +34,7 @@ export const buildApp = async () => {
   await fastify.register(fastifyMailerPlugin);
   await fastify.register(fastifySwaggerPlugin);
   await fastify.register(fastifyCookiePlugin);
+  await fastify.register(fastifyRateLimitPlugin);
 
   fastify.register(healthRoutes);
   fastify.register(userRoutes);

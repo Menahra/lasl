@@ -18,6 +18,12 @@ export const healthRoutes = (fastifyInstance: FastifyInstance) => {
           [StatusCodes.OK]: z.toJSONSchema(healthcheckSuccessResponseSchema),
         },
       },
+      config: {
+        rateLimit: {
+          max: 20,
+          timeWindow: "1 minute",
+        },
+      },
     },
     (_request, reply) => {
       reply.code(StatusCodes.OK).send({

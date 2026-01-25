@@ -27,6 +27,10 @@
       "import": "./dist/api/auth.api.js",
       "types": "./dist/api/auth.api.d.ts"
     },
+    "./api/headers": {
+      "import": "./dist/api/headers.js",
+      "types": "./dist/api/headers.d.ts"
+    },
     "./routes/auth": {
       "import": "./dist/routes/auth.routes.js",
       "types": "./dist/routes/auth.routes.d.ts"

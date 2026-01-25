@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/security/noSecrets: just mock data */
 import { vi } from "vitest";
 import { ENVIRONMENT } from "@/src/constants/environment.constants.ts";
 
@@ -13,3 +12,7 @@ vi.stubEnv(ENVIRONMENT.mongoUri, "MONGO_DB_URI");
 vi.stubEnv(ENVIRONMENT.resendApiKey, "some_api_key");
 vi.stubEnv(ENVIRONMENT.nodeEnv, "test");
 vi.stubEnv(ENVIRONMENT.frontendBaseUrl, "http://localhost:80");
+
+// biome-ignore lint/style/useExportsLast: const is needed in next line
+export const TEST_RATE_LIMIT_BYPASS_KEY = "testBypassKey";
+vi.stubEnv(ENVIRONMENT.rateLimitBypassKey, TEST_RATE_LIMIT_BYPASS_KEY);

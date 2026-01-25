@@ -18,6 +18,7 @@ const environmentSchema = z.object({
     .default(defaultApplicationHostPort),
   [ENVIRONMENT.resendApiKey]: z.string().min(1),
   [ENVIRONMENT.nodeEnv]: z.enum(["development", "test", "production"]),
+  [ENVIRONMENT.rateLimitBypassKey]: z.string().min(1),
 });
 
 type EnvironmentKey = keyof typeof ENVIRONMENT;
