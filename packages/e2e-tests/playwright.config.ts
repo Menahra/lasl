@@ -1,4 +1,5 @@
 import process from "node:process";
+import { BYPASS_RATE_LIMIT_HEADER_NAME } from "@lasl/app-contracts/api/headers";
 import { defineConfig, devices } from "@playwright/test";
 import { config as dotenvConfig } from "dotenv";
 
@@ -19,8 +20,14 @@ export default defineConfig({
   reporter: [["html"], ["list"]],
 
   use: {
-    // biome-ignore lint/style/useNamingConvention: given name
+    // biome-ignore-start lint/style/useNamingConvention: given name
     baseURL: process.env.BASE_URL || "http://localhost:3000",
+
+    extraHTTPHeaders: {
+      [BYPASS_RATE_LIMIT_HEADER_NAME]:
+        process.env.AUTHENTICATION_RATELIMIT_BYPASS_KEY || "",
+    },
+    // biome-ignore-end lint/style/useNamingConvention: given name
 
     trace: "on-first-retry",
 

@@ -99,6 +99,7 @@ jobs:
         working-directory: ${{ env.E2E_TEST_DIR }}
         run: pnpm test
         env:
+          DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN_E2E_TEST_DEV }}
           CI: true
 
       - name: Upload Playwright report

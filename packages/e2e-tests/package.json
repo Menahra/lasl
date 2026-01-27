@@ -11,11 +11,11 @@
     "check:ci": "biome check config fixtures tests utils",
     "check:fix": "biome check --write config fixtures tests utils",
     "check:types": "tsc",
-    "test": "playwright test",
-    "test:ui": "playwright test --ui",
-    "test:headed": "playwright test --headed",
-    "test:debug": "playwright test --debug",
-    "test:report": "playwright show-report"
+    "test": "doppler run -- playwright test",
+    "test:ui": "doppler run -- playwright test --ui",
+    "test:headed": "doppler run -- playwright test --headed",
+    "test:debug": "doppler run -- playwright test --debug",
+    "test:report": "doppler run -- playwright show-report"
   },
   "devDependencies": {
     "@lasl/app-contracts": "workspace:*",
