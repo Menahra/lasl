@@ -1,110 +1,41 @@
-name: CI for Schema-Engine Package
+name: CI for Schema-Engine
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
     paths:
       - "packages/schema-engine/**"
       - "pnpm-lock.yaml"
-      - "biome.json"
-      - "package.json"
+      - "turbo.json"
       - ".github/workflows/schemaEngine.yml"
       - ".github/actions/setup-monorepo/action.yml"
   pull_request:
-    branches:
-      - main
+    branches: [main]
     paths:
       - "packages/schema-engine/**"
       - "pnpm-lock.yaml"
-      - "biome.json"
-      - "package.json"
+      - "turbo.json"
       - ".github/workflows/schemaEngine.yml"
       - ".github/actions/setup-monorepo/action.yml"
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
-env:
-  SCHEMA_ENGINE_PACKAGE_DIR: packages/schema-engine
-  NODE_VERSION: lts/*
-
 jobs:
-  types-check:
-    name: Correct typing
+  validate:
+    name: Validate & Build Schema-Engine
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ${{ env.SCHEMA_ENGINE_PACKAGE_DIR }}
-
     steps:
-      - name: "☁️ Checkout repository"
+      - name: ☁️ Checkout repository
         uses: actions/checkout@v4
-
-      - uses: ./.github/actions/setup-monorepo
         with:
-          node_version: ${{ env.NODE_VERSION }}
+          fetch-depth: 0
 
-      - name: "🔍 Check types"
-        run: pnpm run check:types
+      - name: 🏗️ Setup Monorepo
+        uses: ./.github/actions/setup-monorepo
 
-  lint:
-    name: Code standards
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ${{ env.SCHEMA_ENGINE_PACKAGE_DIR }}
+      - name: 🚀 Turbo Validate
+        run: pnpm turbo run check:ci check:types test:cov build --filter=schema-engine
 
-    steps:
-      - name: "☁️ checkout repository"
-        uses: actions/checkout@v4
-
-      - uses: ./.github/actions/setup-monorepo
-        with:
-          node_version: ${{ env.NODE_VERSION }}
-
-      - name: "🔍 lint code"
-        run: pnpm run check:ci
-
-  test:
-    name: Code reliability
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ${{ env.SCHEMA_ENGINE_PACKAGE_DIR }}
-
-    steps:
-      - name: "☁️ checkout repository"
-        uses: actions/checkout@v4
-
-      - uses: ./.github/actions/setup-monorepo
-        with:
-          node_version: ${{ env.NODE_VERSION }}
-
-      - name: "🧪 test code"
-        run: pnpm run test:cov
-
-      - name: Upload coverage to Codecov
+      - name: 📊 Upload coverage to Codecov
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    needs: [types-check, lint, test]
-    defaults:
-      run:
-        working-directory: ${{ env.SCHEMA_ENGINE_PACKAGE_DIR }}
-
-    steps:
-      - name: "☁️ checkout repository"
-        uses: actions/checkout@v4
-
-      - uses: ./.github/actions/setup-monorepo
-        with:
-          node_version: ${{ env.NODE_VERSION }}
-
-      - name: "🔧 build code"
-        run: pnpm run build
+          directory: packages/schema-engine/coverage
