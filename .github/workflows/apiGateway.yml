@@ -36,7 +36,7 @@ jobs:
         uses: ./.github/actions/setup-monorepo
 
       - name: 🚀 Turbo Check (Lint, Type, Test)
-        run: pnpm turbo run check:ci check:types test --filter=api-gateway
+        run: pnpm turbo run check:ci check:types test --filter=@lasl/api-gateway
 
   docker-build:
     name: Build Docker Image

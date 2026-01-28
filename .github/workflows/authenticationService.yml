@@ -38,7 +38,7 @@ jobs:
         uses: ./.github/actions/setup-monorepo
 
       - name: 🚀 Turbo Validate (Lint, Type, Test)
-        run: pnpm turbo run check:ci check:types test --filter=authentication-service
+        run: pnpm turbo run check:ci check:types test --filter=@lasl/authentication-service
 
   docker-build:
     name: Build Docker Image

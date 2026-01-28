@@ -1,5 +1,5 @@
 {
-  "name": "api-gateway",
+  "name": "@lasl/api-gateway",
   "version": "0.0.1",
   "main": "src/server.ts",
   "type": "module",
