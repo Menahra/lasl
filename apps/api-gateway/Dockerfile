@@ -21,7 +21,7 @@ COPY packages ./packages
 
 RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm --filter api-gateway... run build
-RUN pnpm deploy --filter=api-gateway --prod /prod/api-gateway
+RUN pnpm deploy --filter=@lasl/api-gateway --prod /prod/api-gateway
 
 # ---------- Runtime Stage ----------
 FROM base AS api-gateway

@@ -2,94 +2,56 @@ name: CI for API Gateway
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
     paths:
       - "apps/api-gateway/**"
       - "packages/**"
       - "pnpm-lock.yaml"
-      - "biome.json"
-      - "package.json"
-      - ".github/workflows/apiGateway.yml"
-      - ".github/actions/setup-monorepo/action.yml"
+      - "turbo.json"
+      - ".github/actions/setup-monorepo/**"
   pull_request:
-    branches:
-      - main
+    branches: [main]
     paths:
       - "apps/api-gateway/**"
       - "packages/**"
       - "pnpm-lock.yaml"
-      - "biome.json"
-      - "package.json"
-      - ".github/workflows/authenticationService.yml"
-      - ".github/actions/setup-monorepo/action.yml"
+      - "turbo.json"
+      - ".github/actions/setup-monorepo/**"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  API_GATEWAY_DIR: apps/api-gateway
-  NODE_VERSION: lts/*
-
 jobs:
-  docker-image-build:
-    name: Build Docker Image
+  validate:
+    name: Validate API Gateway
     runs-on: ubuntu-latest
     steps:
-      - name: "☁️ Checkout repository"
+      - name: ☁️ Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🏗️ Setup
+        uses: ./.github/actions/setup-monorepo
+
+      - name: 🚀 Turbo Check (Lint, Type, Test)
+        run: pnpm turbo run check:ci check:types test --filter=@lasl/api-gateway
+
+  docker-build:
+    name: Build Docker Image
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: ☁️ Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
       - name: Trigger docker build
-        run: docker build -f apps/api-gateway/Dockerfile --no-cache --target api-gateway -t api-gateway:latest .
-
-  types-check:
-    name: Correct typing
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ${{ env.API_GATEWAY_DIR }}
-    steps:
-      - name: "☁️ Checkout repository"
-        uses: actions/checkout@v4
-
-      - uses: ./.github/actions/setup-monorepo
-        with:
-          node_version: ${{ env.NODE_VERSION }}
-
-      - name: "🔍 Check types"
-        run: pnpm run check:types
-
-  lint:
-    name: Code standards
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ${{ env.API_GATEWAY_DIR }}
-    steps:
-      - name: "☁️ Checkout repository"
-        uses: actions/checkout@v4
-
-      - uses: ./.github/actions/setup-monorepo
-        with:
-          node_version: ${{ env.NODE_VERSION }}
-
-      - name: "🔍 Lint code"
-        run: pnpm run check:ci
-
-  test:
-    name: Code reliability
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ${{ env.API_GATEWAY_DIR }}
-    steps:
-      - name: "☁️ Checkout repository"
-        uses: actions/checkout@v4
-
-      - uses: ./.github/actions/setup-monorepo
-        with:
-          node_version: ${{ env.NODE_VERSION }}
-
-      - name: "Test code"
-        run: pnpm run test
+        run: |
+          docker build \
+            -f apps/api-gateway/Dockerfile \
+            --target api-gateway \
+            -t api-gateway:latest .

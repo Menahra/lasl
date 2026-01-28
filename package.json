@@ -8,28 +8,25 @@
   "packageManager": "pnpm@10.28.1",
   "devDependencies": {
     "@biomejs/biome": "2.3.13",
+    "turbo": "^2.7.6",
     "typescript": "^5.9.3"
   },
   "scripts": {
-    "build": "pnpm -r build",
-    "lint": "pnpm -r lint",
-    "lint:fix": "pnpm -r lint:fix",
-    "format": "pnpm -r format",
-    "format:fix": "pnpm -r format:fix",
-    "check:ci": "pnpm -r check:ci",
-    "check:fix": "pnpm -r check:fix",
-    "check:types": "pnpm -r check:types",
-    "test": "pnpm -r test",
-
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
+    "format": "turbo run format",
+    "format:fix": "turbo run format:fix",
+    "check:ci": "turbo run check:ci",
+    "check:fix": "turbo run check:fix",
+    "check:types": "turbo run check:types",
+    "test": "turbo run test",
     "docker:dev": "docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build",
     "docker:dev:down": "docker compose -f docker-compose.yml -f docker-compose.dev.yml down",
-    
     "docker:test": "docker compose -f docker-compose.yml -f docker-compose.test.yml up -d --build",
     "docker:test:down": "docker compose -f docker-compose.yml -f docker-compose.test.yml down",
-    
     "docker:prod": "docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build",
     "docker:prod:down": "docker compose -f docker-compose.yml -f docker-compose.prod.yml down",
-
     "docker:clean": "docker system prune -f",
     "docker:clean:all": "docker system prune -af --volumes",
     "docker:clean:images": "docker image prune -af",

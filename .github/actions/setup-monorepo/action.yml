@@ -1,30 +1,32 @@
 name: "Setup Monorepo"
-description: "Sets up Node.js, pnpm, installs dependencies, and builds all packages"
+description: "Optimized setup using pnpm and Turbo caching"
 inputs:
   node_version:
-    description: "Node.js version to use"
-    required: false
+    description: "Node.js version"
     default: "lts/*"
 
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v4
     - name: Install pnpm
       uses: pnpm/action-setup@v4
-    - name: Use Node.js ${{ inputs.node-version }}
+
+    - name: Use Node.js ${{ inputs.node_version }}
       uses: actions/setup-node@v4
       with:
-        node-version: ${{ inputs.node-version }}
+        node-version: ${{ inputs.node_version }}
         cache: "pnpm"
+
     - name: Install dependencies
       shell: bash
       run: pnpm install --frozen-lockfile
 
-    - name: Build all packages
-      shell: bash
-      run: pnpm build
-
-    - name: Re-install dependencies
-      shell: bash
-      run: pnpm install --frozen-lockfile
+    - name: Turbo Cache
+      uses: actions/cache@v4
+      with:
+        path: .turbo
+        # The key is based on the git commit. 
+        # restore-keys allows us to pull the "closest" previous cache.
+        key: ${{ runner.os }}-turbo-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-turbo-
