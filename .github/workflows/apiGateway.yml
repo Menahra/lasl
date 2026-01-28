@@ -8,6 +8,7 @@ on:
       - "packages/**"
       - "pnpm-lock.yaml"
       - "turbo.json"
+      - ".github/actions/setup-monorepo/**"
   pull_request:
     branches: [main]
     paths:
@@ -15,6 +16,7 @@ on:
       - "packages/**"
       - "pnpm-lock.yaml"
       - "turbo.json"
+      - ".github/actions/setup-monorepo/**"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -48,7 +50,6 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Trigger docker build
-        # Removed --no-cache. Docker's internal caching is good.
         run: |
           docker build \
             -f apps/api-gateway/Dockerfile \
