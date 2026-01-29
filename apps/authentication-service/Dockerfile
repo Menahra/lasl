@@ -11,22 +11,40 @@ RUN apt-get update && apt-get install -y apt-transport-https ca-certificates cur
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# ---------- Build Stage ----------
+# Pruner Stage: Use Turbo to extract the Auth Service graph
+FROM base AS pruner
+WORKDIR /usr/src/app
+RUN pnpm add -g turbo
+COPY . .
+# We use the scoped name here
+RUN turbo prune @lasl/authentication-service --docker
+
+# Build Stage: Install, Copy Configs, and Compile
 FROM base AS build
 WORKDIR /usr/src/app
 
-COPY pnpm-lock.yaml pnpm-workspace.yaml package.json tsconfig.base.json biome.json ./
-COPY apps ./apps
-COPY packages ./packages
-
+# Copy pruned lockfile and package.json files
+COPY --from=pruner /usr/src/app/out/json/ .
 RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store pnpm install --frozen-lockfile
-RUN pnpm --filter authentication-service... run build
+
+# Copy the actual source code
+COPY --from=pruner /usr/src/app/out/full/ .
+
+# Critical: Manually copy root configs for TypeScript inheritance
+COPY tsconfig.base.json biome.json ./
+
+# Run the build for auth and its local workspace dependencies
+RUN pnpm turbo run build --filter=@lasl/authentication-service...
+
+# Isolated production-ready folder (removes devDeps and unnecessary workspace files)
 RUN pnpm deploy --filter=@lasl/authentication-service --prod /prod/authentication-service
 
-# ---------- Runtime Stage ----------
+# Runtime Stage: Final Node execution environment
 FROM base AS authentication-service
 WORKDIR /prod/authentication-service
 
+# Copy only the deployed production folder from the build stage
 COPY --from=build /prod/authentication-service ./
+
 EXPOSE 3000
 CMD [ "pnpm", "start" ]
