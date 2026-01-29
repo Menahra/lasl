@@ -43,7 +43,7 @@ jobs:
       # PLAYWRIGHT BROWSER CACHING
       - name: Get Playwright version
         id: playwright-version
-        run: echo "version=$(pnpm list --filter e2e-tests --json | jq -r '.[0].devDependencies["@playwright/test"].version')" >> $GITHUB_OUTPUT
+        run: echo "version=$(pnpm list --filter @lasl/e2e-tests --json | jq -r '.[0].devDependencies["@playwright/test"].version')" >> $GITHUB_OUTPUT
 
       - name: Cache Playwright Browsers
         uses: actions/cache@v4
@@ -57,9 +57,8 @@ jobs:
         run: pnpm exec playwright install --with-deps chromium
         working-directory: packages/e2e-tests
 
-      # TURBO CHECKS (Lint, Types, and Build all dependencies for E2E)
       - name: 🚀 Turbo Validate
-        run: pnpm turbo run check:ci check:types build --filter=e2e-tests
+        run: pnpm turbo run check:ci check:types build --filter=@lasl/e2e-tests
 
       - name: Install Doppler CLI
         run: (curl -Ls https://cli.doppler.com/install.sh || wget -qO- https://cli.doppler.com/install.sh) | sudo sh
