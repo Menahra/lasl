@@ -14,8 +14,7 @@ services:
       authentication-service-mongodb:
         condition: service_started
     healthcheck:
-      test:
-        ["CMD", "curl", "-f", "http://localhost:3000/auth/api/v1/healthcheck"]
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/v1/healthcheck"]
       interval: 3s
       timeout: 2s
       retries: 5
