@@ -41,6 +41,7 @@ jobs:
         run: |
           docker compose logs
           docker ps -a
+          docker inspect --format='{{json .State.Health}}' frontend
 
       - name: 🧹 Cleanup
         if: always()
