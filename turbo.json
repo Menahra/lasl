@@ -27,6 +27,11 @@
       "dependsOn": ["build"],
       "outputs": [],
       "cache": true
+    },
+    "test:cov": {
+      "dependsOn": ["build"],
+      "outputs": ["coverage/**"],
+      "cache": true
     }
   }
 }
