@@ -28,6 +28,7 @@ RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store pnpm install --frozen-lo
 
 # Copy the actual source code and build
 COPY --from=pruner /usr/src/app/out/full/ .
+COPY tsconfig.base.json biome.json ./
 RUN pnpm turbo run build --filter=@lasl/api-gateway...
 
 # Use pnpm deploy to create a standalone production folder
