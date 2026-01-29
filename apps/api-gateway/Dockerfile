@@ -11,6 +11,13 @@ RUN apt-get update && apt-get install -y apt-transport-https ca-certificates cur
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+FROM base AS pruner
+WORKDIR /usr/src/app
+# We need turbo installed to prune
+RUN pnpm add -g turbo
+COPY . .
+RUN turbo prune @lasl/api-gateway --docker
+
 # ---------- Build Stage ----------
 FROM base AS build
 WORKDIR /usr/src/app
