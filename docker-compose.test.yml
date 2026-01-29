@@ -7,13 +7,6 @@ services:
       - "8025:8025"
     networks:
       - e2e-network
-    healthcheck:
-      test:
-        ["CMD", "wget", "--spider", "-q", "http://localhost:8025/api/v1/info"]
-      interval: 5s
-      timeout: 3s
-      retries: 5
-      start_period: 5s
 
   authentication-service-mongodb:
     container_name: authentication_service_mongodb_e2e
@@ -23,12 +16,6 @@ services:
       - /data/db
     networks:
       - e2e-network
-    healthcheck:
-      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
-      interval: 5s
-      timeout: 3s
-      retries: 10
-      start_period: 10s
 
   authentication-service:
     container_name: authentication_service_e2e
@@ -39,34 +26,14 @@ services:
         condition: service_healthy
     networks:
       - e2e-network
-    healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "curl -fsS http://localhost:3000/api/v1/healthcheck || exit 1",
-        ]
-      interval: 5s
-      timeout: 3s
-      retries: 15
-      start_period: 20s
 
   api-gateway:
     container_name: api_gateway_e2e
     environment:
       NODE_ENV: test
       AUTHENTICATION_SERVICE_URL: http://authentication-service:3000
-    depends_on:
-      authentication-service:
-        condition: service_healthy
     networks:
       - e2e-network
-    healthcheck:
-      test:
-        ["CMD-SHELL", "curl -fsS http://localhost:3000/healthcheck || exit 1"]
-      interval: 5s
-      timeout: 3s
-      retries: 15
-      start_period: 20s
 
   frontend:
     container_name: frontend_e2e
@@ -75,20 +42,6 @@ services:
         condition: service_healthy
     networks:
       - e2e-network
-    healthcheck:
-      test:
-        [
-          "CMD",
-          "wget",
-          "--no-verbose",
-          "--tries=1",
-          "--spider",
-          "http://localhost:80/",
-        ]
-      interval: 5s
-      timeout: 3s
-      retries: 10
-      start_period: 5s
 
 networks:
   e2e-network:

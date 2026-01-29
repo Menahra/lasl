@@ -11,7 +11,15 @@ services:
     entrypoint: ["doppler", "run", "--"]
     command: ["pnpm", "start"]
     depends_on:
-      - authentication-service-mongodb
+      authentication-service-mongodb:
+        condition: service_started
+    healthcheck:
+      test:
+        ["CMD", "curl", "-f", "http://localhost:3000/auth/api/v1/healthcheck"]
+      interval: 3s
+      timeout: 2s
+      retries: 5
+      start_period: 5s
 
   authentication-service-mongodb:
     build:
@@ -20,6 +28,10 @@ services:
     container_name: authentication_service_mongodb_instance
     environment:
       DOPPLER_TOKEN: ${DOPPLER_TOKEN_AUTHENTICATION_SERVICE}
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 5s
+      retries: 3
 
   api-gateway:
     build:
@@ -33,9 +45,16 @@ services:
     entrypoint: ["doppler", "run", "--"]
     command: ["pnpm", "start"]
     depends_on:
-      - authentication-service
+      authentication-service:
+        condition: service_healthy
     ports:
       - "8080:3000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/healthcheck"]
+      interval: 3s
+      timeout: 2s
+      retries: 5
+      start_period: 5s
 
   frontend:
     build:
@@ -48,4 +67,19 @@ services:
     ports:
       - "3000:80"
     depends_on:
-      - api-gateway
+      api-gateway:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "--no-verbose",
+          "--tries=1",
+          "--spider",
+          "http://localhost:80/",
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
