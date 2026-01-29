@@ -15,18 +15,21 @@ RUN apt-get update && apt-get install -y apt-transport-https ca-certificates cur
 FROM base AS build
 WORKDIR /usr/src/app
 
-COPY pnpm-lock.yaml pnpm-workspace.yaml package.json tsconfig.base.json biome.json ./
-COPY apps ./apps
-COPY packages ./packages
-
+# Copy only the lockfile and package.json files to install dependencies first (Cache-friendly)
+COPY --from=pruner /usr/src/app/out/json/ .
 RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store pnpm install --frozen-lockfile
-RUN pnpm --filter api-gateway... run build
-RUN pnpm deploy --filter=@lasl/api-gateway --prod /prod/api-gateway
+
+# Copy the actual source code and build
+COPY --from=pruner /usr/src/app/out/full/ .
+# Use the correct internal name @lasl/...
+RUN pnpm turbo run build --filter=api-gateway...
+
+# Use pnpm deploy to create a standalone production folder
+RUN pnpm deploy --filter=api-gateway --prod /prod/api-gateway
 
 # ---------- Runtime Stage ----------
 FROM base AS api-gateway
 WORKDIR /prod/api-gateway
-
 COPY --from=build /prod/api-gateway ./
 EXPOSE 3000
 CMD [ "pnpm", "start" ]
