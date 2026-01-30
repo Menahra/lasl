@@ -42,20 +42,6 @@ jobs:
           docker compose logs
           echo "==== DOCKER PS STATUS ===="
           docker ps -a
-          echo "=== FRONTEND HEALTH LOGS ==="
-          # This pulls the last 5 logs from the healthcheck itself
-          docker inspect --format='{{range .State.Health.Log}}{{.Output}}{{end}}' frontend || echo "No health logs found"
-
-          echo "=== FRONTEND CONTAINER LOGS ==="
-          docker logs frontend
-
-          echo "=== NGINX CONFIG TEST ==="
-          # This checks if the config is valid and which port it is actually using
-          docker exec frontend nginx -t || true
-
-          echo "=== NETWORK CHECK ==="
-          # See what is actually listening inside the container
-          docker exec frontend netstat -tulpn || true
 
       - name: 🧹 Cleanup
         if: always()
