@@ -37,9 +37,6 @@ services:
 
   frontend:
     container_name: frontend_e2e
-    depends_on:
-      api-gateway:
-        condition: service_healthy
     networks:
       - e2e-network
 

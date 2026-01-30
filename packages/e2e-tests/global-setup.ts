@@ -18,6 +18,14 @@ const globalSetup = async () => {
       });
     } catch (error) {
       console.error("❌ Failed to start Docker containers:", error);
+      try {
+        execSync("docker compose logs authentication_service", {
+          stdio: "inherit",
+          cwd: "../../",
+        });
+      } catch (logError) {
+        console.error("Could not fetch logs", logError);
+      }
       throw error;
     }
   }
