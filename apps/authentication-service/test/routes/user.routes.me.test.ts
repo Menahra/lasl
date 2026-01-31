@@ -117,6 +117,48 @@ describe("user routes me", () => {
     });
   });
 
+  it("should include Swagger doc for rate limiting", () => {
+    checkSwaggerDoc({
+      fastifyInstance: app,
+      endpointMethod: "get",
+      endpointPath: currentUserEndpoint,
+      endpointStatusCode: StatusCodes.TOO_MANY_REQUESTS,
+      endpointContentType: "application/json",
+      endpointResponseType: {
+        message: { type: "string" },
+        error: {
+          enum: ["Too Many Requests"],
+          type: "string",
+        },
+        statusCode: {
+          enum: [StatusCodes.TOO_MANY_REQUESTS],
+          type: "number",
+        },
+      },
+    });
+  });
+
+  it("should include Swagger doc for rate limiting", () => {
+    checkSwaggerDoc({
+      fastifyInstance: app,
+      endpointMethod: "patch",
+      endpointPath: currentUserEndpoint,
+      endpointStatusCode: StatusCodes.TOO_MANY_REQUESTS,
+      endpointContentType: "application/json",
+      endpointResponseType: {
+        message: { type: "string" },
+        error: {
+          enum: ["Too Many Requests"],
+          type: "string",
+        },
+        statusCode: {
+          enum: [StatusCodes.TOO_MANY_REQUESTS],
+          type: "number",
+        },
+      },
+    });
+  });
+
   it("should return the current authenticated user", async () => {
     await UserModel.create({
       ...mockUser,

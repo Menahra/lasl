@@ -119,6 +119,27 @@ describe("auth routes", () => {
       });
     });
 
+    it("should include Swagger doc for rate limiting", () => {
+      checkSwaggerDoc({
+        fastifyInstance: app,
+        endpointMethod: "post",
+        endpointPath: sessionsEndpoint,
+        endpointStatusCode: StatusCodes.TOO_MANY_REQUESTS,
+        endpointContentType: "application/json",
+        endpointResponseType: {
+          message: { type: "string" },
+          error: {
+            enum: ["Too Many Requests"],
+            type: "string",
+          },
+          statusCode: {
+            enum: [StatusCodes.TOO_MANY_REQUESTS],
+            type: "number",
+          },
+        },
+      });
+    });
+
     it.each([
       StatusCodes.FORBIDDEN,
       StatusCodes.CONFLICT,

@@ -91,6 +91,17 @@ describe("user routes", () => {
           },
         },
       },
+      {
+        statusCode: StatusCodes.TOO_MANY_REQUESTS,
+        responseType: {
+          message: { type: "string" as const },
+          error: { enum: ["Too Many Requests"], type: "string" as const },
+          statusCode: {
+            enum: [StatusCodes.TOO_MANY_REQUESTS],
+            type: "number" as const,
+          },
+        },
+      },
     ])(`there there should be a swagger documentation for post ${postUsersEndpointPath} with $statusCode status code`, ({
       statusCode,
       responseType,
@@ -147,6 +158,27 @@ describe("user routes", () => {
         },
       });
     });
+
+    it("should include Swagger doc for rate limiting", () => {
+      checkSwaggerDoc({
+        fastifyInstance: app,
+        endpointMethod: "get",
+        endpointPath: authApiRoutes.user.verify("{id}", "{verificationCode}"),
+        endpointStatusCode: StatusCodes.TOO_MANY_REQUESTS,
+        endpointContentType: "application/json",
+        endpointResponseType: {
+          message: { type: "string" },
+          error: {
+            enum: ["Too Many Requests"],
+            type: "string",
+          },
+          statusCode: {
+            enum: [StatusCodes.TOO_MANY_REQUESTS],
+            type: "number",
+          },
+        },
+      });
+    });
   });
 
   describe("POST resend verification mail", () => {
@@ -184,6 +216,27 @@ describe("user routes", () => {
         },
       });
     });
+
+    it("should include Swagger doc for rate limiting", () => {
+      checkSwaggerDoc({
+        fastifyInstance: app,
+        endpointMethod: "post",
+        endpointPath: resendVerificationMailPath,
+        endpointStatusCode: StatusCodes.TOO_MANY_REQUESTS,
+        endpointContentType: "application/json",
+        endpointResponseType: {
+          message: { type: "string" },
+          error: {
+            enum: ["Too Many Requests"],
+            type: "string",
+          },
+          statusCode: {
+            enum: [StatusCodes.TOO_MANY_REQUESTS],
+            type: "number",
+          },
+        },
+      });
+    });
   });
 
   describe("POST /users/forgotpassword", () => {
@@ -217,6 +270,27 @@ describe("user routes", () => {
         endpointContentType: "application/json",
         endpointResponseType: {
           message: { type: "string", minLength: 1 },
+        },
+      });
+    });
+
+    it("should include Swagger doc for rate limiting", () => {
+      checkSwaggerDoc({
+        fastifyInstance: app,
+        endpointMethod: "post",
+        endpointPath: forgotPasswordPath,
+        endpointStatusCode: StatusCodes.TOO_MANY_REQUESTS,
+        endpointContentType: "application/json",
+        endpointResponseType: {
+          message: { type: "string" },
+          error: {
+            enum: ["Too Many Requests"],
+            type: "string",
+          },
+          statusCode: {
+            enum: [StatusCodes.TOO_MANY_REQUESTS],
+            type: "number",
+          },
         },
       });
     });
@@ -269,6 +343,30 @@ describe("user routes", () => {
         endpointContentType: "application/json",
         endpointResponseType: {
           message: { type: "string", minLength: 1 },
+        },
+      });
+    });
+
+    it("should include Swagger doc for rate limiting", () => {
+      checkSwaggerDoc({
+        fastifyInstance: app,
+        endpointMethod: "post",
+        endpointPath: authApiRoutes.user.resetPassword(
+          "{id}",
+          "{passwordResetCode}",
+        ),
+        endpointStatusCode: StatusCodes.TOO_MANY_REQUESTS,
+        endpointContentType: "application/json",
+        endpointResponseType: {
+          message: { type: "string" },
+          error: {
+            enum: ["Too Many Requests"],
+            type: "string",
+          },
+          statusCode: {
+            enum: [StatusCodes.TOO_MANY_REQUESTS],
+            type: "number",
+          },
         },
       });
     });
