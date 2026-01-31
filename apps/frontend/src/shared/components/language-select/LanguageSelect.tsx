@@ -61,7 +61,6 @@ export const LanguageSelect = ({ className }: LanguageSelectProps) => {
     <Skeleton loading={isLoading} width={180} height={26} alignSelf="center">
       <SelectRoot value={currentLocale} onValueChange={changeLocale}>
         <SelectTrigger
-          // biome-ignore lint/security/noSecrets: classname and not a secret
           className={clsx("LanguageSelectTrigger", className)}
           aria-label={t`Language`}
           data-testid="language-selector"

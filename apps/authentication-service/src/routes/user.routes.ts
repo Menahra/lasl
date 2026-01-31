@@ -81,7 +81,6 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
   );
 
   fastifyInstance.get(
-    // biome-ignore lint/security/noSecrets: this is a route, not a secret
     authApiRoutes.user.verify(":id", ":verificationCode"),
     {
       schema: {
@@ -147,7 +146,6 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
   );
 
   fastifyInstance.post(
-    // biome-ignore lint/security/noSecrets: this is a route, not a secret
     authApiRoutes.user.resetPassword(":id", ":passwordResetCode"),
     {
       schema: {

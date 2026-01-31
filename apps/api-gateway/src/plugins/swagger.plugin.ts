@@ -64,7 +64,6 @@ export const fastifySwaggerPlugin = fastifyPlugin(async (fastifyInstance) => {
         {
           url: microServiceDocumentationProxyConfig.authenticationService
             .proxyUrl,
-          // biome-ignore lint/security/noSecrets: no secret
           name: "Authentication Service",
         },
       ],

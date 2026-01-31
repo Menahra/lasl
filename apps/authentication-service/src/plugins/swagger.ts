@@ -12,7 +12,6 @@ export const fastifySwaggerPlugin = fastifyPlugin(async (fastifyInstance) => {
   const swaggerConfig: FastifyDynamicSwaggerOptions = {
     openapi: {
       info: {
-        // biome-ignore lint/security/noSecrets: doc title, no secret
         title: "Authentication Service API",
         description: "API documentation for the authentication service.",
         version: "1.0.0",

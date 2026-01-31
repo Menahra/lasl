@@ -39,7 +39,6 @@ export const passwordMatchRefinement = <
 ) => {
   if (data.password !== data.passwordConfirmation) {
     ctx.addIssue({
-      // biome-ignore lint/security/noSecrets: property name
       path: ["passwordConfirmation"],
       code: "custom",
       message: USER_ERRORS.passwordMismatch,

@@ -77,7 +77,6 @@ export const I18nProvider = ({ children }: I18nProviderProps) => {
 export const useI18nContext = () => {
   const context = useContext(I18nContext);
   if (!context) {
-    // biome-ignore lint/security/noSecrets: not a secret
     throw new Error("useI18nContext must be used within I18nProvider");
   }
   return context;

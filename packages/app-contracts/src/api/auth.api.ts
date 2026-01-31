@@ -40,7 +40,6 @@ export const authApiRoutes = {
   },
 };
 
-// biome-ignore lint/security/noSecrets: cookie name, not a secret
 export const REFRESH_TOKEN_COOKIE_NAME = "refreshToken";
 export const ACCESS_TOKEN_NAME = "accessToken";
 export const AUTHENTICATION_TYPE = "Bearer";

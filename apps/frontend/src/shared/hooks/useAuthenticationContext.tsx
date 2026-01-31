@@ -57,7 +57,6 @@ export const useAuthenticationContext = () => {
   const authenticationContext = useContext(AuthenticationContext);
   if (!authenticationContext) {
     throw new Error(
-      // biome-ignore lint/security/noSecrets: just error description
       "useAuthenticationContext must be used within AuthenticationProvider",
     );
   }

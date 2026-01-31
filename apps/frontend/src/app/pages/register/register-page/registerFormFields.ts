@@ -39,7 +39,6 @@ export const getRegisterFormFields =
       placeholder: msg`Enter your password`,
     },
     {
-      // biome-ignore lint/security/noSecrets: field name, not a secret
       name: "passwordConfirmation",
       type: "password",
       label: msg`Confirm Password`,

@@ -117,7 +117,6 @@ export const ResetPasswordForm = () => {
           error={translateFormFieldError(errors.password)}
         />
         <FormInputField
-          // biome-ignore lint/security/noSecrets: field name
           {...register("passwordConfirmation")}
           id="passwordConfirmation"
           type="password"

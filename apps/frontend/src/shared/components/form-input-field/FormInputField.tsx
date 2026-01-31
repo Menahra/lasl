@@ -31,10 +31,8 @@ export const FormInputField = forwardRef<HTMLInputElement, FormInputFieldProps>(
             ref={ref}
             id={id}
             className={clsx(
-              // biome-ignore-start lint/security/noSecrets: classnames, no secrets
               "FormInputFieldInput",
               error && "FormInputFieldInputError",
-              // biome-ignore-end lint/security/noSecrets: classnames, no secrets
             )}
             {...props}
           />

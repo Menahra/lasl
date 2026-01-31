@@ -88,7 +88,6 @@ export const RegisterVerifyPage = () => {
       <div className="RegisterVerifyPageContainer">
         <div
           className={clsx(
-            // biome-ignore lint/security/noSecrets: classname, no secret
             "RegisterVerifyPageIconContainer",
             statusMap[currentStatus].iconContainerClass,
           )}
