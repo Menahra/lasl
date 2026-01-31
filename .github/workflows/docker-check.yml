@@ -2,89 +2,47 @@ name: Docker Build and Start Check
 
 on:
   pull_request:
-    branches:
-      - main
+    branches: [main]
   push:
-    branches:
-      - main
+    branches: [main]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  build:
+  smoke-test:
+    name: Build & Verify Stack
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: ☁️ Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Set up Docker Buildx
+      - name: 🏗️ Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Fetch Doppler Secrets
-        uses: dopplerhq/secrets-fetch-action@v1.3.0
-        with:
-          doppler-token: ${{ secrets.DOPPLER_TOKEN }}
-          inject-env-vars: true
-
-      - name: Build authentication service
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./apps/authentication-service/Dockerfile
-          push: false
-          tags: authentication-service:test
-
-      - name: Build API Gateway
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./apps/api-gateway/Dockerfile
-          push: false
-          tags: api-gateway:test
-
-      - name: Start services with Docker Compose & Doppler
+      - name: 🔑 Build and Start Stack
         env:
           DOPPLER_TOKEN_AUTHENTICATION_SERVICE: ${{ secrets.DOPPLER_TOKEN_AUTHENTICATION_SERVICE }}
           DOPPLER_TOKEN_API_GATEWAY: ${{ secrets.DOPPLER_TOKEN_API_GATEWAY }}
           DOPPLER_TOKEN_FRONTEND: ${{ secrets.DOPPLER_TOKEN_FRONTEND }}
         run: |
-          docker compose up -d
-          echo "Waiting for containers to start..."
-          sleep 10
+          docker compose up -d --build --wait --wait-timeout 120
 
-      - name: Show docker status
+      - name: ✅ Verify Stack Health
         run: |
-          docker compose logs 
+          docker ps -a
+          echo "All services are verified healthy via Docker Compose."
+
+      - name: ❌ Dump logs on failure
+        if: failure()
+        run: |
+          docker compose logs
+          echo "==== DOCKER PS STATUS ===="
           docker ps -a
 
-      - name: Verify API Gateway started
-        run: |
-          for i in {1..10}; do
-            if curl -sf http://localhost:8080/healthcheck; then
-              echo "✅ API Gateway is healthy"
-              exit 0
-            fi
-            echo "Waiting for API Gateway..."
-            sleep 3
-          done
-          echo "❌ API Gateway failed health check"
-          exit 1
-
-      - name: Verify authentication service started
-        run: |
-          for i in {1..10}; do
-            if curl -sf http://localhost:8080/auth/api/v1/healthcheck; then
-              echo -e "\n✅ Authentication Service is healthy"
-              exit 0
-            fi
-            echo "Waiting for Authentication service..."
-            sleep 3
-          done
-          echo -e "❌ Authentication Service failed health check"
-          exit 1
-
-      - name: Cleanup
+      - name: 🧹 Cleanup
         if: always()
         run: docker compose down

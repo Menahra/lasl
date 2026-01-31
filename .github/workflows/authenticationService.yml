@@ -7,8 +7,7 @@ on:
       - "apps/authentication-service/**"
       - "packages/**"
       - "pnpm-lock.yaml"
-      - "biome.json"
-      - "package.json"
+      - "turbo.json"
       - ".github/workflows/authenticationService.yml"
       - ".github/actions/setup-monorepo/**"
   pull_request:
@@ -17,8 +16,7 @@ on:
       - "apps/authentication-service/**"
       - "packages/**"
       - "pnpm-lock.yaml"
-      - "biome.json"
-      - "package.json"
+      - "turbo.json"
       - ".github/workflows/authenticationService.yml"
       - ".github/actions/setup-monorepo/**"
 
@@ -26,77 +24,40 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  AUTHENTICATION_SERVICE_DIR: apps/authentication-service
-  NODE_VERSION: lts/*
-
 jobs:
+  validate:
+    name: Validate Auth Service
+    runs-on: ubuntu-latest
+    steps:
+      - name: ☁️ Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🏗️ Setup Monorepo
+        uses: ./.github/actions/setup-monorepo
+
+      - name: 🚀 Turbo Validate (Lint, Type, Test)
+        run: pnpm turbo run check:ci check:types test --filter=@lasl/authentication-service
+
   docker-build:
     name: Build Docker Image
+    needs: validate
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: ☁️ Checkout repository
         uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
       - name: Build Docker image
-        run: |
-          docker build \
-            -f apps/authentication-service/Dockerfile \
-            --no-cache \
-            --target authentication-service \
-            -t authentication-service:latest \
-            .
-
-  types-check:
-    name: Type Check
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ${{ env.AUTHENTICATION_SERVICE_DIR }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup monorepo
-        uses: ./.github/actions/setup-monorepo
+        uses: docker/build-push-action@v5
         with:
-          node_version: ${{ env.NODE_VERSION }}
-
-      - name: Check types
-        run: pnpm run check:types
-
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ${{ env.AUTHENTICATION_SERVICE_DIR }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup monorepo
-        uses: ./.github/actions/setup-monorepo
-        with:
-          node_version: ${{ env.NODE_VERSION }}
-
-      - name: Lint code
-        run: pnpm run check:ci
-
-  test:
-    name: Test
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ${{ env.AUTHENTICATION_SERVICE_DIR }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup monorepo
-        uses: ./.github/actions/setup-monorepo
-        with:
-          node_version: ${{ env.NODE_VERSION }}
-
-      - name: Run tests
-        run: pnpm run test
+          context: .
+          file: apps/authentication-service/Dockerfile
+          target: authentication-service
+          push: false
+          tags: authentication-service:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
