@@ -5,15 +5,20 @@ import {
 } from "@lasl/app-contracts/schemas/session";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useRouter } from "@tanstack/react-router";
-import { isAxiosError } from "axios";
-import { StatusCodes } from "http-status-codes";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { ROUTE_FORGOT_PASSWORD } from "@/src/app/routes/_auth/forgot-password/index.tsx";
 import { ROUTE_SIGN_UP } from "@/src/app/routes/_auth/register/index.tsx";
 import { ROUTE_HOME } from "@/src/app/routes/index.tsx";
+import {
+  type FormSystemError,
+  getFormErrorType,
+} from "@/src/shared/authApiErrors.ts";
+import {
+  type AuthFromErrorCalloutProps,
+  FormErrorCallout,
+} from "@/src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx";
 import { Button } from "@/src/shared/components/button/Button.tsx";
-import { Callout } from "@/src/shared/components/callout/Callout.tsx";
 import { FormInputField } from "@/src/shared/components/form-input-field/FormInputField.tsx";
 import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
 import { TextLink } from "@/src/shared/components/text-link/TextLink.tsx";
@@ -23,30 +28,28 @@ import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
 import { useTranslateFormFieldError } from "@/src/shared/hooks/useTranslateFormFieldError.ts";
 import "./LoginForm.css";
 
-type LoginError = "none" | "unverified" | "unknown";
-
 // biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok here
 export const LoginForm = () => {
-  const [signInError, setSignInError] = useState<LoginError>("none");
+  const [signInError, setSignInError] = useState<{
+    type: FormSystemError;
+    wait?: AuthFromErrorCalloutProps["retryAfter"];
+  }>({ type: "none" });
   const { isLoading } = useI18nContext();
   const { t: linguiTranslator } = useLingui();
   const { navigate } = useRouter();
   const createSessionMutation = usePostLogin();
   const onSubmit = async (data: CreateSessionSchemaType) => {
-    setSignInError("none");
+    setSignInError({ type: "none" });
 
     try {
       await createSessionMutation.mutateAsync(data);
       navigate({ to: ROUTE_HOME });
     } catch (error) {
-      if (
-        isAxiosError(error) &&
-        error.response?.status === StatusCodes.CONFLICT
-      ) {
-        setSignInError("unverified");
-      } else {
-        setSignInError("unknown");
-      }
+      const { type, retryAfter } = getFormErrorType(error);
+      setSignInError({
+        type: type === "unverified" ? "unverified" : type,
+        wait: retryAfter,
+      });
     }
   };
 
@@ -79,21 +82,11 @@ export const LoginForm = () => {
           </p>
         </Skeleton>
       </div>
-      {signInError !== "none" ? (
-        <Skeleton loading={isLoading} width="100%" height={34}>
-          <Callout
-            severity="error"
-            variant="outlined"
-            onClose={() => setSignInError("none")}
-          >
-            {signInError === "unverified" ? (
-              <Trans>Please verify your email first</Trans>
-            ) : (
-              <Trans>Invalid Email or password. Please try again</Trans>
-            )}
-          </Callout>
-        </Skeleton>
-      ) : undefined}
+      <FormErrorCallout
+        error={signInError.type}
+        retryAfter={signInError.wait}
+        onClose={() => setSignInError({ type: "none" })}
+      />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="LoginForm"
