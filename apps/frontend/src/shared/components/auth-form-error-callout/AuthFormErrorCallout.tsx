@@ -25,29 +25,29 @@ export const FormErrorCallout = ({
   return (
     <Skeleton loading={isLoading} width="100%" height={34}>
       <Callout severity="error" variant="outlined" onClose={onClose}>
-        {error === "rate-limited" && (
+        {error === "rate-limited" ? (
           <Trans>
             Too many attempts. Please wait{" "}
             <Plural value={retryAfter ?? 0} one="# second" other="# seconds" />.
           </Trans>
-        )}
-        {error === "unverified" && (
+        ) : undefined}
+        {error === "unverified" ? (
           <Trans>Please verify your email first</Trans>
-        )}
-        {error === "duplicate" && (
+        ) : undefined}
+        {error === "duplicate" ? (
           <Trans>
             Email already registered.{" "}
             <TextLink to={ROUTE_LOGIN} variant="primary">
               Sign in
             </TextLink>
           </Trans>
-        )}
-        {error === "invalid-link" && (
+        ) : undefined}
+        {error === "invalid-link" ? (
           <Trans>This link is invalid or has expired.</Trans>
-        )}
-        {error === "unknown" && (
+        ) : undefined}
+        {error === "unknown" ? (
           <Trans>An unexpected error occurred. Please try again.</Trans>
-        )}
+        ) : undefined}
       </Callout>
     </Skeleton>
   );

@@ -32,7 +32,7 @@ export const Callout = ({
         <Icon />
       </span>
       <div className="CalloutContent">{children}</div>
-      {onClose && (
+      {onClose ? (
         <button
           type="button"
           className="CalloutCloseButton"
@@ -41,7 +41,7 @@ export const Callout = ({
         >
           <Cross2Icon />
         </button>
-      )}
+      ) : undefined}
     </div>
   );
 };

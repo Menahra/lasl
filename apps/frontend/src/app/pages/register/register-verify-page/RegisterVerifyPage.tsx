@@ -109,13 +109,13 @@ export const RegisterVerifyPage = () => {
           </Skeleton>
         </p>
 
-        {statusMap[currentStatus].showRedirectHint && (
+        {statusMap[currentStatus].showRedirectHint ? (
           <p className="RegisterVerifyPageRedirectHint" aria-live="polite">
             <Skeleton loading={isLoading} width={330} height={18}>
               <Trans>Redirecting you to the app in a few seconds...</Trans>
             </Skeleton>
           </p>
-        )}
+        ) : undefined}
 
         <Skeleton loading={isLoading} width="100%" height={40}>
           {statusMap[currentStatus].button}
