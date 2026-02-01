@@ -1,4 +1,4 @@
-import { Trans } from "@lingui/react/macro";
+import { Plural, Trans } from "@lingui/react/macro";
 import { ROUTE_LOGIN } from "@/src/app/routes/_auth/login.tsx";
 import type { FormSystemError } from "@/src/shared/authApiErrors.ts";
 import { Callout } from "@/src/shared/components/callout/Callout.tsx";
@@ -26,7 +26,10 @@ export const FormErrorCallout = ({
     <Skeleton loading={isLoading} width="100%" height={34}>
       <Callout severity="error" variant="outlined" onClose={onClose}>
         {error === "rate-limited" && (
-          <Trans>Too many attempts. Please wait {retryAfter} seconds.</Trans>
+          <Trans>
+            Too many attempts. Please wait{" "}
+            <Plural value={retryAfter ?? 0} one="# second" other="# seconds" />.
+          </Trans>
         )}
         {error === "unverified" && (
           <Trans>Please verify your email first</Trans>

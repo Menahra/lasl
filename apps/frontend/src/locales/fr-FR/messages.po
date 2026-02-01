@@ -86,6 +86,7 @@ msgstr "Une plateforme ouverte et communautaire pour apprendre l'arabe standard 
 #: src/app/pages/register/register-page/RegisterForm.tsx:84
 #: src/app/pages/resend-verification-mail/resend-verification-mail-page/ResendVerificationMailForm.tsx:64
 #: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:81
+#: src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx:49
 msgid "An unexpected error occurred. Please try again."
 msgstr "Une erreur inattendue s'est produite. Veuillez réessayer."
 
@@ -166,13 +167,13 @@ msgstr "Bientôt disponible"
 msgid "Community-Driven Content"
 msgstr "Contenu communautaire"
 
-#: src/app/pages/register/register-page/registerFormFields.ts:45
-#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:125
+#: src/app/pages/register/register-page/registerFormFields.ts:44
+#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:124
 msgid "Confirm Password"
 msgstr "Confirmer le mot de passe"
 
-#: src/app/pages/register/register-page/registerFormFields.ts:46
-#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:124
+#: src/app/pages/register/register-page/registerFormFields.ts:45
+#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:123
 msgid "Confirm your password"
 msgstr "Confirmez votre mot de passe"
 
@@ -249,16 +250,20 @@ msgstr "Vous n'avez pas reçu l'e-mail ? Vérifiez votre dossier spam ou réessa
 msgid "Didn't receive the email? Check your spam folder or try signing up again."
 msgstr "Vous n'avez pas reçu l'e-mail ? Vérifiez votre dossier spam ou réessayez de vous inscrire."
 
-#: src/app/pages/login-page/LoginForm.tsx:144
+#: src/app/pages/login-page/LoginForm.tsx:137
 msgid "Don't have an account yet?"
 msgstr "Vous n'avez pas encore de compte ?"
 
 #: src/app/pages/forgot-password/forgot-password-page/ForgotPasswordForm.tsx:83
-#: src/app/pages/login-page/LoginForm.tsx:107
+#: src/app/pages/login-page/LoginForm.tsx:100
 #: src/app/pages/register/register-page/registerFormFields.ts:32
 #: src/app/pages/resend-verification-mail/resend-verification-mail-page/ResendVerificationMailForm.tsx:78
 msgid "Email"
 msgstr "E-mail"
+
+#: src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx:38
+msgid "Email already registered. <0>Sign in</0>"
+msgstr "Adresse e-mail déjà enregistrée. <0>Se connecter</0>"
 
 #: src/app/pages/register/register-verify-page/RegisterVerifyPage.tsx:18
 msgid "Email Verified!"
@@ -284,7 +289,7 @@ msgstr "Entrez votre prénom"
 msgid "Enter your last name"
 msgstr "Entrez votre nom de famille"
 
-#: src/app/pages/login-page/LoginForm.tsx:116
+#: src/app/pages/login-page/LoginForm.tsx:109
 #: src/app/pages/register/register-page/registerFormFields.ts:39
 #: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:114
 msgid "Enter your password"
@@ -302,7 +307,7 @@ msgstr "Le prénom est requis"
 msgid "Forgot password?"
 msgstr "Mot de passe oublié ?"
 
-#: src/app/pages/login-page/LoginForm.tsx:127
+#: src/app/pages/login-page/LoginForm.tsx:120
 msgid "Forgot Password?"
 msgstr "Mot de passe oublié ?"
 
@@ -356,8 +361,8 @@ msgid "Introduction"
 msgstr "Introduction"
 
 #: src/app/pages/login-page/LoginForm.tsx:92
-msgid "Invalid Email or password. Please try again"
-msgstr "E-mail ou mot de passe invalide. Veuillez réessayer"
+#~ msgid "Invalid Email or password. Please try again"
+#~ msgstr "E-mail ou mot de passe invalide. Veuillez réessayer"
 
 #: src/app/pages/landing-page/LandingPage.tsx:137
 msgid "Join a community of learners and contributors passionate about Arabic."
@@ -367,7 +372,7 @@ msgstr "Rejoignez une communauté d'apprenants et de contributeurs passionnés p
 msgid "Join learners and contributors shaping the future of Arabic language education."
 msgstr "Rejoignez les apprenants et contributeurs qui façonnent l'avenir de l'enseignement de la langue arabe."
 
-#: src/shared/components/language-select/LanguageSelect.tsx:66
+#: src/shared/components/language-select/LanguageSelect.tsx:65
 msgid "Language"
 msgstr "Langue"
 
@@ -469,7 +474,7 @@ msgstr "Ouvrir le menu"
 msgid "Open the GitHub repository in a new browser tab."
 msgstr "Ouvrir le dépôt GitHub dans un nouvel onglet du navigateur."
 
-#: src/app/pages/login-page/LoginForm.tsx:117
+#: src/app/pages/login-page/LoginForm.tsx:110
 #: src/app/pages/register/register-page/registerFormFields.ts:38
 #: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:115
 msgid "Password"
@@ -520,7 +525,7 @@ msgstr "Les données personnelles sont traitées exclusivement au sein de l'Unio
 msgid "Please enter a valid email address"
 msgstr "Veuillez entrer une adresse e-mail valide"
 
-#: src/app/pages/login-page/LoginForm.tsx:90
+#: src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx:35
 msgid "Please verify your email first"
 msgstr "Veuillez d'abord vérifier votre e-mail"
 
@@ -541,7 +546,7 @@ msgstr "Finalités du traitement"
 msgid "Ready to Begin Your Arabic Journey?"
 msgstr "Prêt à commencer votre parcours en arabe ?"
 
-#: src/app/pages/register/register-verify-page/RegisterVerifyPage.tsx:116
+#: src/app/pages/register/register-verify-page/RegisterVerifyPage.tsx:115
 msgid "Redirecting you to the app in a few seconds..."
 msgstr "Redirection vers l'application dans quelques secondes..."
 
@@ -554,7 +559,7 @@ msgstr "Renvoyer l'e-mail de vérification"
 msgid "Resend Verification Email"
 msgstr "Renvoyer l'e-mail de vérification"
 
-#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:135
+#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:134
 msgid "Reset password"
 msgstr "Réinitialiser le mot de passe"
 
@@ -606,11 +611,11 @@ msgid "Set new password"
 msgstr "Définir un nouveau mot de passe"
 
 #: src/app/pages/landing-page/LandingPage.tsx:59
-#: src/app/pages/login-page/LoginForm.tsx:137
+#: src/app/pages/login-page/LoginForm.tsx:130
 msgid "Sign In"
 msgstr "Se connecter"
 
-#: src/app/pages/login-page/LoginForm.tsx:78
+#: src/app/pages/login-page/LoginForm.tsx:81
 msgid "Sign in to enhance your learning"
 msgstr "Connectez-vous pour améliorer votre apprentissage"
 
@@ -618,7 +623,7 @@ msgstr "Connectez-vous pour améliorer votre apprentissage"
 msgid "Sign in with new password"
 msgstr "Se connecter avec le nouveau mot de passe"
 
-#: src/app/pages/login-page/LoginForm.tsx:147
+#: src/app/pages/login-page/LoginForm.tsx:140
 msgid "Sign Up"
 msgstr "S'inscrire"
 
@@ -631,7 +636,7 @@ msgid "Structured Curriculum"
 msgstr "Programme structuré"
 
 #: src/app/pages/forgot-password/forgot-password-page/ForgotPasswordForm.tsx:82
-#: src/app/pages/login-page/LoginForm.tsx:106
+#: src/app/pages/login-page/LoginForm.tsx:99
 #: src/app/pages/register/register-page/registerFormFields.ts:33
 msgid "student@example.com"
 msgstr "etudiant@exemple.com"
@@ -712,6 +717,10 @@ msgstr "Cet e-mail est déjà enregistré. <0>Connectez-vous plutôt</0>"
 msgid "This limitation of liability does not apply in cases of intent, gross negligence, or where liability is mandatory under applicable consumer protection laws."
 msgstr "Cette limitation de responsabilité ne s'applique pas en cas d'intention, de négligence grave ou lorsque la responsabilité est obligatoire en vertu des lois applicables de protection des consommateurs."
 
+#: src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx:46
+msgid "This link is invalid or has expired."
+msgstr "Ce lien n'est pas valide ou a expiré."
+
 #: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:83
 msgid "This password reset link is invalid or has expired."
 msgstr "Ce lien de réinitialisation du mot de passe est invalide ou a expiré."
@@ -743,6 +752,11 @@ msgstr "Ce site Web peut contenir des liens vers des sites Web tiers externes. N
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:125
 msgid "To the extent permitted by applicable law, {0} shall not be liable for any indirect, incidental, special, or consequential damages arising out of or in connection with the use or inability to use the service."
 msgstr "Dans la mesure permise par la loi applicable, {0} ne sera pas responsable de tout dommage indirect, accessoire, spécial ou consécutif découlant de ou en relation avec l'utilisation ou l'impossibilité d'utiliser le service."
+
+#. placeholder {0}: retryAfter ?? 0
+#: src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx:29
+msgid "Too many attempts. Please wait {0, plural, one {# second} other {# seconds}}."
+msgstr "Trop de tentatives. Veuillez patienter {0, plural, one {# seconde} other {# secondes}}."
 
 #: src/app/pages/register/register-verify-page/RegisterVerifyPage.tsx:44
 msgid "Try again"
@@ -815,7 +829,7 @@ msgstr "Nous conservons les données personnelles uniquement aussi longtemps que
 msgid "We've sent a verification link to your email address. Please click the link to verify your account."
 msgstr "Nous avons envoyé un lien de vérification à votre adresse e-mail. Veuillez cliquer sur le lien pour vérifier votre compte."
 
-#: src/app/pages/login-page/LoginForm.tsx:73
+#: src/app/pages/login-page/LoginForm.tsx:76
 msgid "Welcome back"
 msgstr "Bienvenue"
 
