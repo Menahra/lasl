@@ -1,7 +1,7 @@
 import { isAxiosError } from "axios";
 import { StatusCodes } from "http-status-codes";
 
-export type FormSystemError =
+export type AuthFormSystemError =
   | "none"
   | "unverified"
   | "duplicate"
@@ -9,9 +9,9 @@ export type FormSystemError =
   | "invalid-link"
   | "unknown";
 
-export const getFormErrorType = (
+export const getAuthFormErrorType = (
   error: unknown,
-): { type: FormSystemError; retryAfter?: number } => {
+): { type: AuthFormSystemError; retryAfter?: number } => {
   if (!isAxiosError(error)) {
     return { type: "unknown" };
   }

@@ -1,7 +1,7 @@
 import { AxiosError, type AxiosHeaders, type AxiosResponse } from "axios";
 import { StatusCodes } from "http-status-codes";
 import { describe, expect, it } from "vitest";
-import { getFormErrorType } from "@/src/shared/authApiErrors.ts";
+import { getAuthFormErrorType } from "@/src/shared/authApiErrors.ts";
 
 describe("getFormErrorType", () => {
   const createAxiosError = (status: number, headers = {}) => {
@@ -23,7 +23,7 @@ describe("getFormErrorType", () => {
   };
 
   it("returns 'unknown' if error is not an Axios error", () => {
-    expect(getFormErrorType(new Error("Normal error"))).toEqual({
+    expect(getAuthFormErrorType(new Error("Normal error"))).toEqual({
       type: "unknown",
     });
   });
@@ -32,7 +32,7 @@ describe("getFormErrorType", () => {
     const error = createAxiosError(StatusCodes.TOO_MANY_REQUESTS, {
       "retry-after": "120",
     });
-    expect(getFormErrorType(error)).toEqual({
+    expect(getAuthFormErrorType(error)).toEqual({
       type: "rate-limited",
       retryAfter: 120,
     });
@@ -40,7 +40,7 @@ describe("getFormErrorType", () => {
 
   it("returns 'rate-limited' with default 60s if header is missing", () => {
     const error = createAxiosError(StatusCodes.TOO_MANY_REQUESTS);
-    expect(getFormErrorType(error)).toEqual({
+    expect(getAuthFormErrorType(error)).toEqual({
       type: "rate-limited",
       retryAfter: 60,
     });
@@ -48,14 +48,14 @@ describe("getFormErrorType", () => {
 
   it("returns 'unverified' for CONFLICT status", () => {
     const error = createAxiosError(StatusCodes.CONFLICT);
-    expect(getFormErrorType(error)).toEqual({ type: "unverified" });
+    expect(getAuthFormErrorType(error)).toEqual({ type: "unverified" });
   });
 
   it("returns 'invalid-link' for BAD_REQUEST or GONE", () => {
-    expect(getFormErrorType(createAxiosError(StatusCodes.BAD_REQUEST))).toEqual(
-      { type: "invalid-link" },
-    );
-    expect(getFormErrorType(createAxiosError(StatusCodes.GONE))).toEqual({
+    expect(
+      getAuthFormErrorType(createAxiosError(StatusCodes.BAD_REQUEST)),
+    ).toEqual({ type: "invalid-link" });
+    expect(getAuthFormErrorType(createAxiosError(StatusCodes.GONE))).toEqual({
       type: "invalid-link",
     });
   });

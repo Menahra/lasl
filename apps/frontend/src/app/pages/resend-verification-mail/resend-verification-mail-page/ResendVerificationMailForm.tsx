@@ -6,8 +6,15 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 import { ROUTE_RESEND_VERIFICATION_MAIL_SENT } from "@/src/app/routes/_auth/resend-verification-mail/sent.tsx";
+import {
+  type AuthFormSystemError,
+  getAuthFormErrorType,
+} from "@/src/shared/authApiErrors.ts";
+import {
+  AuthFormErrorCallout,
+  type AuthFromErrorCalloutProps,
+} from "@/src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx";
 import { Button } from "@/src/shared/components/button/Button.tsx";
-import { Callout } from "@/src/shared/components/callout/Callout.tsx";
 import { FormInputField } from "@/src/shared/components/form-input-field/FormInputField.tsx";
 import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
 import { userErrorMessages } from "@/src/shared/formErrors.ts";
@@ -23,7 +30,10 @@ type ResendVerificationMailFormValues = z.infer<
 
 export const ResendVerificationMailForm = () => {
   const [resendVerificationMailError, setResendVerificationMailError] =
-    useState(false);
+    useState<{
+      type: AuthFormSystemError;
+      wait?: AuthFromErrorCalloutProps["retryAfter"];
+    }>({ type: "none" });
   const { isLoading } = useI18nContext();
   const { t: linguiTranslator } = useLingui();
   const { navigate } = useRouter();
@@ -39,7 +49,7 @@ export const ResendVerificationMailForm = () => {
   const resendVerificationMailMutation = usePostResendVerificationMail();
 
   const onSubmit = async (data: ResendVerificationMailFormValues) => {
-    setResendVerificationMailError(false);
+    setResendVerificationMailError({ type: "none" });
 
     try {
       await resendVerificationMailMutation.mutateAsync(data.email);
@@ -47,24 +57,18 @@ export const ResendVerificationMailForm = () => {
         to: ROUTE_RESEND_VERIFICATION_MAIL_SENT,
         state: { email: data.email },
       } as NavigateOptions);
-    } catch (_error) {
-      setResendVerificationMailError(true);
+    } catch (error) {
+      setResendVerificationMailError(getAuthFormErrorType(error));
     }
   };
 
   return (
     <div className="ResendVerificationMailForm">
-      {resendVerificationMailError ? (
-        <Skeleton loading={isLoading} width="100%" height={34}>
-          <Callout
-            severity="error"
-            variant="outlined"
-            onClose={() => setResendVerificationMailError(false)}
-          >
-            <Trans>An unexpected error occurred. Please try again.</Trans>
-          </Callout>
-        </Skeleton>
-      ) : undefined}
+      <AuthFormErrorCallout
+        error={resendVerificationMailError.type}
+        retryAfter={resendVerificationMailError.wait}
+        onClose={() => setResendVerificationMailError({ type: "none" })}
+      />
 
       <form
         className="ResendVerificationMailFormWrapper"

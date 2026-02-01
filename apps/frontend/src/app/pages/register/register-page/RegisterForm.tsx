@@ -3,20 +3,24 @@ import { createUserSchema } from "@lasl/app-contracts/schemas/user";
 import { useLingui as useRuntimeLingui } from "@lingui/react";
 import { Trans } from "@lingui/react/macro";
 import { useRouter } from "@tanstack/react-router";
-import { isAxiosError } from "axios";
-import { StatusCodes } from "http-status-codes";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   getRegisterFormFields,
   type RegisterFormValues,
 } from "@/src/app/pages/register/register-page/registerFormFields.ts";
-import { ROUTE_LOGIN } from "@/src/app/routes/_auth/login.tsx";
 import { ROUTE_SIGN_UP_SUCCESS } from "@/src/app/routes/_auth/register/success.tsx";
 import { ROUTE_PRIVACY_POLICY } from "@/src/app/routes/privacy.tsx";
 import { ROUTE_TERMS_OF_SERVICE } from "@/src/app/routes/terms.tsx";
+import {
+  type AuthFormSystemError,
+  getAuthFormErrorType,
+} from "@/src/shared/authApiErrors.ts";
+import {
+  AuthFormErrorCallout,
+  type AuthFromErrorCalloutProps,
+} from "@/src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx";
 import { Button } from "@/src/shared/components/button/Button.tsx";
-import { Callout } from "@/src/shared/components/callout/Callout.tsx";
 import { FormInputField } from "@/src/shared/components/form-input-field/FormInputField.tsx";
 import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
 import { TextLink } from "@/src/shared/components/text-link/TextLink.tsx";
@@ -26,12 +30,12 @@ import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
 import { useTranslateFormFieldError } from "@/src/shared/hooks/useTranslateFormFieldError.ts";
 import "./RegisterForm.css";
 
-type RegistrationError = "none" | "duplicate" | "unknown";
-
 // biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok here
 export const RegisterForm = () => {
-  const [registrationError, setRegistrationError] =
-    useState<RegistrationError>("none");
+  const [registrationError, setRegistrationError] = useState<{
+    type: AuthFormSystemError;
+    wait?: AuthFromErrorCalloutProps["retryAfter"];
+  }>({ type: "none" });
   const { isLoading } = useI18nContext();
   const { i18n } = useRuntimeLingui();
   const { navigate } = useRouter();
@@ -47,45 +51,28 @@ export const RegisterForm = () => {
   const translateFormFieldError = useTranslateFormFieldError(userErrorMessages);
 
   const onSubmit = async (data: RegisterFormValues) => {
-    setRegistrationError("none");
+    setRegistrationError({ type: "none" });
 
     try {
       await createUserMutation.mutateAsync(data);
       navigate({ to: ROUTE_SIGN_UP_SUCCESS });
     } catch (error) {
-      if (
-        isAxiosError(error) &&
-        error.response?.status === StatusCodes.CONFLICT
-      ) {
-        setRegistrationError("duplicate");
-      } else {
-        setRegistrationError("unknown");
-      }
+      const errorDetail = getAuthFormErrorType(error);
+      setRegistrationError({
+        ...errorDetail,
+        type:
+          errorDetail.type === "unverified" ? "duplicate" : errorDetail.type,
+      });
     }
   };
 
   return (
     <div className="RegisterForm">
-      {registrationError !== "none" ? (
-        <Skeleton loading={isLoading} width="100%" height={34}>
-          <Callout
-            severity="error"
-            variant="outlined"
-            onClose={() => setRegistrationError("none")}
-          >
-            {registrationError === "duplicate" ? (
-              <Trans>
-                This email is already registered.{" "}
-                <TextLink variant="primary" to={ROUTE_LOGIN}>
-                  Sign in instead
-                </TextLink>
-              </Trans>
-            ) : (
-              <Trans>An unexpected error occurred. Please try again.</Trans>
-            )}
-          </Callout>
-        </Skeleton>
-      ) : undefined}
+      <AuthFormErrorCallout
+        error={registrationError.type}
+        retryAfter={registrationError.wait}
+        onClose={() => setRegistrationError({ type: "none" })}
+      />
       <form
         className="RegisterFormWrapper"
         onSubmit={handleSubmit(onSubmit)}

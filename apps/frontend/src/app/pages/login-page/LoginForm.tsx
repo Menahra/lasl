@@ -11,8 +11,8 @@ import { ROUTE_FORGOT_PASSWORD } from "@/src/app/routes/_auth/forgot-password/in
 import { ROUTE_SIGN_UP } from "@/src/app/routes/_auth/register/index.tsx";
 import { ROUTE_HOME } from "@/src/app/routes/index.tsx";
 import {
-  type FormSystemError,
-  getFormErrorType,
+  type AuthFormSystemError,
+  getAuthFormErrorType,
 } from "@/src/shared/authApiErrors.ts";
 import {
   AuthFormErrorCallout,
@@ -31,7 +31,7 @@ import "./LoginForm.css";
 // biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok here
 export const LoginForm = () => {
   const [signInError, setSignInError] = useState<{
-    type: FormSystemError;
+    type: AuthFormSystemError;
     wait?: AuthFromErrorCalloutProps["retryAfter"];
   }>({ type: "none" });
   const { isLoading } = useI18nContext();
@@ -45,7 +45,7 @@ export const LoginForm = () => {
       await createSessionMutation.mutateAsync(data);
       navigate({ to: ROUTE_HOME });
     } catch (error) {
-      const { type, retryAfter } = getFormErrorType(error);
+      const { type, retryAfter } = getAuthFormErrorType(error);
       setSignInError({
         type: type === "unverified" ? "unverified" : type,
         wait: retryAfter,
