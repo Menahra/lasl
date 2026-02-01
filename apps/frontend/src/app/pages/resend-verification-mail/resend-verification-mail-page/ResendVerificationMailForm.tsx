@@ -87,7 +87,7 @@ export const ResendVerificationMailForm = () => {
             disabled={isRateLimited}
           >
             {isRateLimited ? (
-              <Trans> Retry in {retryAfter}s</Trans>
+              <Trans>Retry in {retryAfter}s</Trans>
             ) : (
               <Trans>Resend verification Email</Trans>
             )}

@@ -118,7 +118,7 @@ export const LoginForm = () => {
             disabled={isRateLimited}
           >
             {isRateLimited ? (
-              <Trans> Retry in {retryAfter}s</Trans>
+              <Trans>Retry in {retryAfter}s</Trans>
             ) : (
               <Trans>Sign In</Trans>
             )}

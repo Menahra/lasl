@@ -106,7 +106,7 @@ export const RegisterForm = () => {
             disabled={isRateLimited}
           >
             {isRateLimited ? (
-              <Trans> Retry in {retryAfter}s</Trans>
+              <Trans>Retry in {retryAfter}s</Trans>
             ) : (
               <Trans>Create Account</Trans>
             )}

@@ -113,7 +113,7 @@ export const ResetPasswordForm = () => {
             disabled={isRateLimited}
           >
             {isRateLimited ? (
-              <Trans> Retry in {retryAfter}s</Trans>
+              <Trans>Retry in {retryAfter}s</Trans>
             ) : (
               <Trans>Reset password</Trans>
             )}

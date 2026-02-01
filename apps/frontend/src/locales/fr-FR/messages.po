@@ -83,9 +83,6 @@ msgstr "Vous avez déjà un compte ? <0>Se connecter</0>"
 msgid "An open, community-driven platform for learning Modern Standard Arabic. Explore Nahw, Sarf, Balagha, and more — with content you can help improve."
 msgstr "Une plateforme ouverte et communautaire pour apprendre l'arabe standard moderne. Explorez Nahw, Sarf, Balagha, et plus encore — avec du contenu que vous pouvez aider à améliorer."
 
-#: src/app/pages/register/register-page/RegisterForm.tsx:84
-#: src/app/pages/resend-verification-mail/resend-verification-mail-page/ResendVerificationMailForm.tsx:64
-#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:81
 #: src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx:49
 msgid "An unexpected error occurred. Please try again."
 msgstr "Une erreur inattendue s'est produite. Veuillez réessayer."
@@ -130,7 +127,7 @@ msgstr "En accédant ou en utilisant {0}, vous acceptez d'être lié par ces Con
 msgid "By continuing, you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>."
 msgstr "En continuant, vous acceptez nos <0>Conditions d'utilisation</0> et notre <1>Politique de confidentialité</1>."
 
-#: src/app/pages/register/register-page/RegisterForm.tsx:109
+#: src/app/pages/register/register-page/RegisterForm.tsx:87
 msgid "By signing up, you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>."
 msgstr "En vous inscrivant, vous acceptez nos <0>Conditions d'utilisation</0> et notre <1>Politique de confidentialité</1>."
 
@@ -147,7 +144,7 @@ msgstr "Vérifiez vos e-mails"
 msgid "Check Your Email"
 msgstr "Vérifiez vos e-mails"
 
-#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:101
+#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:81
 msgid "Choose a strong password for your account"
 msgstr "Choisissez un mot de passe fort pour votre compte"
 
@@ -168,12 +165,12 @@ msgid "Community-Driven Content"
 msgstr "Contenu communautaire"
 
 #: src/app/pages/register/register-page/registerFormFields.ts:44
-#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:124
+#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:104
 msgid "Confirm Password"
 msgstr "Confirmer le mot de passe"
 
 #: src/app/pages/register/register-page/registerFormFields.ts:45
-#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:123
+#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:103
 msgid "Confirm your password"
 msgstr "Confirmez votre mot de passe"
 
@@ -206,7 +203,7 @@ msgstr "Continuer vers l'application"
 msgid "Copyright"
 msgstr "Droits d'auteur"
 
-#: src/app/pages/register/register-page/RegisterForm.tsx:129
+#: src/app/pages/register/register-page/RegisterForm.tsx:111
 msgid "Create Account"
 msgstr "Créer un compte"
 
@@ -250,14 +247,14 @@ msgstr "Vous n'avez pas reçu l'e-mail ? Vérifiez votre dossier spam ou réessa
 msgid "Didn't receive the email? Check your spam folder or try signing up again."
 msgstr "Vous n'avez pas reçu l'e-mail ? Vérifiez votre dossier spam ou réessayez de vous inscrire."
 
-#: src/app/pages/login-page/LoginForm.tsx:137
+#: src/app/pages/login-page/LoginForm.tsx:131
 msgid "Don't have an account yet?"
 msgstr "Vous n'avez pas encore de compte ?"
 
 #: src/app/pages/forgot-password/forgot-password-page/ForgotPasswordForm.tsx:83
-#: src/app/pages/login-page/LoginForm.tsx:100
+#: src/app/pages/login-page/LoginForm.tsx:89
 #: src/app/pages/register/register-page/registerFormFields.ts:32
-#: src/app/pages/resend-verification-mail/resend-verification-mail-page/ResendVerificationMailForm.tsx:78
+#: src/app/pages/resend-verification-mail/resend-verification-mail-page/ResendVerificationMailForm.tsx:75
 msgid "Email"
 msgstr "E-mail"
 
@@ -269,7 +266,7 @@ msgstr "Adresse e-mail déjà enregistrée. <0>Se connecter</0>"
 msgid "Email Verified!"
 msgstr "E-mail vérifié !"
 
-#: src/app/pages/resend-verification-mail/resend-verification-mail-page/ResendVerificationMailForm.tsx:79
+#: src/app/pages/resend-verification-mail/resend-verification-mail-page/ResendVerificationMailForm.tsx:76
 msgid "Enter your email"
 msgstr "Entrez votre adresse e-mail"
 
@@ -289,9 +286,9 @@ msgstr "Entrez votre prénom"
 msgid "Enter your last name"
 msgstr "Entrez votre nom de famille"
 
-#: src/app/pages/login-page/LoginForm.tsx:109
+#: src/app/pages/login-page/LoginForm.tsx:98
 #: src/app/pages/register/register-page/registerFormFields.ts:39
-#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:114
+#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:94
 msgid "Enter your password"
 msgstr "Entrez votre mot de passe"
 
@@ -307,7 +304,7 @@ msgstr "Le prénom est requis"
 msgid "Forgot password?"
 msgstr "Mot de passe oublié ?"
 
-#: src/app/pages/login-page/LoginForm.tsx:120
+#: src/app/pages/login-page/LoginForm.tsx:109
 msgid "Forgot Password?"
 msgstr "Mot de passe oublié ?"
 
@@ -474,9 +471,9 @@ msgstr "Ouvrir le menu"
 msgid "Open the GitHub repository in a new browser tab."
 msgstr "Ouvrir le dépôt GitHub dans un nouvel onglet du navigateur."
 
-#: src/app/pages/login-page/LoginForm.tsx:110
+#: src/app/pages/login-page/LoginForm.tsx:99
 #: src/app/pages/register/register-page/registerFormFields.ts:38
-#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:115
+#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:95
 msgid "Password"
 msgstr "Mot de passe"
 
@@ -551,7 +548,7 @@ msgid "Redirecting you to the app in a few seconds..."
 msgstr "Redirection vers l'application dans quelques secondes..."
 
 #: src/app/pages/register/register-success-page/RegisterSuccessPage.tsx:51
-#: src/app/pages/resend-verification-mail/resend-verification-mail-page/ResendVerificationMailForm.tsx:91
+#: src/app/pages/resend-verification-mail/resend-verification-mail-page/ResendVerificationMailForm.tsx:92
 msgid "Resend verification Email"
 msgstr "Renvoyer l'e-mail de vérification"
 
@@ -559,7 +556,7 @@ msgstr "Renvoyer l'e-mail de vérification"
 msgid "Resend Verification Email"
 msgstr "Renvoyer l'e-mail de vérification"
 
-#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:134
+#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:118
 msgid "Reset password"
 msgstr "Réinitialiser le mot de passe"
 
@@ -578,6 +575,13 @@ msgstr "Responsable du contenu"
 #: src/app/pages/imprint-page/ImprintPage.tsx:39
 msgid "Responsible for content according to § 55 Abs. 2 RStV:"
 msgstr "Responsable du contenu selon § 55 Abs. 2 RStV :"
+
+#: src/app/pages/login-page/LoginForm.tsx:121
+#: src/app/pages/register/register-page/RegisterForm.tsx:109
+#: src/app/pages/resend-verification-mail/resend-verification-mail-page/ResendVerificationMailForm.tsx:90
+#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:116
+msgid "Retry in {retryAfter}s"
+msgstr "Réessayer dans {retryAfter}s"
 
 #: src/app/pages/landing-page/LandingPage.tsx:82
 msgid "Rhetoric & Eloquence"
@@ -606,16 +610,16 @@ msgstr "Envoyer à une autre adresse e-mail"
 msgid "Service Provider"
 msgstr "Fournisseur de services"
 
-#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:96
+#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:76
 msgid "Set new password"
 msgstr "Définir un nouveau mot de passe"
 
 #: src/app/pages/landing-page/LandingPage.tsx:59
-#: src/app/pages/login-page/LoginForm.tsx:130
+#: src/app/pages/login-page/LoginForm.tsx:123
 msgid "Sign In"
 msgstr "Se connecter"
 
-#: src/app/pages/login-page/LoginForm.tsx:81
+#: src/app/pages/login-page/LoginForm.tsx:70
 msgid "Sign in to enhance your learning"
 msgstr "Connectez-vous pour améliorer votre apprentissage"
 
@@ -623,7 +627,7 @@ msgstr "Connectez-vous pour améliorer votre apprentissage"
 msgid "Sign in with new password"
 msgstr "Se connecter avec le nouveau mot de passe"
 
-#: src/app/pages/login-page/LoginForm.tsx:140
+#: src/app/pages/login-page/LoginForm.tsx:134
 msgid "Sign Up"
 msgstr "S'inscrire"
 
@@ -636,7 +640,7 @@ msgid "Structured Curriculum"
 msgstr "Programme structuré"
 
 #: src/app/pages/forgot-password/forgot-password-page/ForgotPasswordForm.tsx:82
-#: src/app/pages/login-page/LoginForm.tsx:99
+#: src/app/pages/login-page/LoginForm.tsx:88
 #: src/app/pages/register/register-page/registerFormFields.ts:33
 msgid "student@example.com"
 msgstr "etudiant@exemple.com"
@@ -710,8 +714,8 @@ msgid "These Terms shall be governed by the laws of Germany, excluding its confl
 msgstr "Ces Conditions sont régies par les lois allemandes, à l'exclusion de ses dispositions relatives aux conflits de lois."
 
 #: src/app/pages/register/register-page/RegisterForm.tsx:77
-msgid "This email is already registered. <0>Sign in instead</0>"
-msgstr "Cet e-mail est déjà enregistré. <0>Connectez-vous plutôt</0>"
+#~ msgid "This email is already registered. <0>Sign in instead</0>"
+#~ msgstr "Cet e-mail est déjà enregistré. <0>Connectez-vous plutôt</0>"
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:133
 msgid "This limitation of liability does not apply in cases of intent, gross negligence, or where liability is mandatory under applicable consumer protection laws."
@@ -722,8 +726,8 @@ msgid "This link is invalid or has expired."
 msgstr "Ce lien n'est pas valide ou a expiré."
 
 #: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:83
-msgid "This password reset link is invalid or has expired."
-msgstr "Ce lien de réinitialisation du mot de passe est invalide ou a expiré."
+#~ msgid "This password reset link is invalid or has expired."
+#~ msgstr "Ce lien de réinitialisation du mot de passe est invalide ou a expiré."
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:26
 msgid "This project is operated as a non-commercial, experimental hobby project."
@@ -829,7 +833,7 @@ msgstr "Nous conservons les données personnelles uniquement aussi longtemps que
 msgid "We've sent a verification link to your email address. Please click the link to verify your account."
 msgstr "Nous avons envoyé un lien de vérification à votre adresse e-mail. Veuillez cliquer sur le lien pour vérifier votre compte."
 
-#: src/app/pages/login-page/LoginForm.tsx:76
+#: src/app/pages/login-page/LoginForm.tsx:65
 msgid "Welcome back"
 msgstr "Bienvenue"
 
