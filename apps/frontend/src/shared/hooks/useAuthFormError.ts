@@ -36,14 +36,19 @@ export const useAuthFormError = (
     }
 
     const timer = setInterval(() => {
-      setAuthFormErrorState((prev) => ({
-        ...prev,
-        retryAfter: prev.retryAfter ? prev.retryAfter - 1 : 0,
-      }));
+      setAuthFormErrorState((prev) => {
+        if (prev.type === "rate-limited" && prev.retryAfter !== undefined) {
+          if (prev.retryAfter <= 1) {
+            return { type: "none" };
+          }
+          return { ...prev, retryAfter: prev.retryAfter - 1 };
+        }
+        return prev;
+      });
     }, ONE_SECOND);
 
     return () => clearInterval(timer);
-  }, [authFormErrorState.type, authFormErrorState.retryAfter, clearError]);
+  }, [authFormErrorState.type, clearError]);
 
   return {
     errorType: authFormErrorState.type,
