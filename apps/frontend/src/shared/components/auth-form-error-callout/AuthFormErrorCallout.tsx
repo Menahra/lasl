@@ -12,7 +12,7 @@ export type AuthFromErrorCalloutProps = {
   onClose: () => void;
 };
 
-export const FormErrorCallout = ({
+export const AuthFormErrorCallout = ({
   error,
   retryAfter,
   onClose,

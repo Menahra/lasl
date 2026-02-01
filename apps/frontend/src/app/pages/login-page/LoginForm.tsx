@@ -15,8 +15,8 @@ import {
   getFormErrorType,
 } from "@/src/shared/authApiErrors.ts";
 import {
+  AuthFormErrorCallout,
   type AuthFromErrorCalloutProps,
-  FormErrorCallout,
 } from "@/src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx";
 import { Button } from "@/src/shared/components/button/Button.tsx";
 import { FormInputField } from "@/src/shared/components/form-input-field/FormInputField.tsx";
@@ -82,7 +82,7 @@ export const LoginForm = () => {
           </p>
         </Skeleton>
       </div>
-      <FormErrorCallout
+      <AuthFormErrorCallout
         error={signInError.type}
         retryAfter={signInError.wait}
         onClose={() => setSignInError({ type: "none" })}
