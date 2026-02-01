@@ -21,6 +21,7 @@ export type ButtonProps = PropsWithChildren<{
   fullWidth?: boolean;
   type?: HTMLButtonElement["type"];
   loading?: boolean;
+  disabled?: HTMLButtonElement["disabled"];
   onClick?: () => void;
 }>;
 
@@ -33,6 +34,7 @@ export const Button = ({
   children,
   type = "button",
   loading = false,
+  disabled = false,
   onClick,
 }: ButtonProps) => {
   return (
@@ -47,7 +49,7 @@ export const Button = ({
         loading && ButtonAlignments.center,
       )}
       onClick={loading ? undefined : onClick}
-      disabled={loading}
+      disabled={loading || disabled}
       aria-busy={loading}
     >
       {loading ? (

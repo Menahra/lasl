@@ -3,7 +3,6 @@ import { createUserSchema } from "@lasl/app-contracts/schemas/user";
 import { useLingui as useRuntimeLingui } from "@lingui/react";
 import { Trans } from "@lingui/react/macro";
 import { useRouter } from "@tanstack/react-router";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   getRegisterFormFields,
@@ -12,30 +11,23 @@ import {
 import { ROUTE_SIGN_UP_SUCCESS } from "@/src/app/routes/_auth/register/success.tsx";
 import { ROUTE_PRIVACY_POLICY } from "@/src/app/routes/privacy.tsx";
 import { ROUTE_TERMS_OF_SERVICE } from "@/src/app/routes/terms.tsx";
-import {
-  type AuthFormSystemError,
-  getAuthFormErrorType,
-} from "@/src/shared/authApiErrors.ts";
-import {
-  AuthFormErrorCallout,
-  type AuthFromErrorCalloutProps,
-} from "@/src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx";
+import { getAuthFormErrorType } from "@/src/shared/authApiErrors.ts";
+import { AuthFormErrorCallout } from "@/src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx";
 import { Button } from "@/src/shared/components/button/Button.tsx";
 import { FormInputField } from "@/src/shared/components/form-input-field/FormInputField.tsx";
 import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
 import { TextLink } from "@/src/shared/components/text-link/TextLink.tsx";
 import { userErrorMessages } from "@/src/shared/formErrors.ts";
 import { useCreateUser } from "@/src/shared/hooks/api/useCreateUser.ts";
+import { useAuthFormError } from "@/src/shared/hooks/useAuthFormError.ts";
 import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
 import { useTranslateFormFieldError } from "@/src/shared/hooks/useTranslateFormFieldError.ts";
 import "./RegisterForm.css";
 
 // biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok here
 export const RegisterForm = () => {
-  const [registrationError, setRegistrationError] = useState<{
-    type: AuthFormSystemError;
-    wait?: AuthFromErrorCalloutProps["retryAfter"];
-  }>({ type: "none" });
+  const { errorType, retryAfter, setAuthFormError, clearError, isRateLimited } =
+    useAuthFormError();
   const { isLoading } = useI18nContext();
   const { i18n } = useRuntimeLingui();
   const { navigate } = useRouter();
@@ -51,27 +43,26 @@ export const RegisterForm = () => {
   const translateFormFieldError = useTranslateFormFieldError(userErrorMessages);
 
   const onSubmit = async (data: RegisterFormValues) => {
-    setRegistrationError({ type: "none" });
+    clearError();
 
     try {
       await createUserMutation.mutateAsync(data);
       navigate({ to: ROUTE_SIGN_UP_SUCCESS });
     } catch (error) {
       const errorDetail = getAuthFormErrorType(error);
-      setRegistrationError({
-        ...errorDetail,
-        type:
-          errorDetail.type === "unverified" ? "duplicate" : errorDetail.type,
-      });
+      setAuthFormError(
+        errorDetail.type === "unverified" ? "duplicate" : errorDetail.type,
+        errorDetail.retryAfter,
+      );
     }
   };
 
   return (
     <div className="RegisterForm">
       <AuthFormErrorCallout
-        error={registrationError.type}
-        retryAfter={registrationError.wait}
-        onClose={() => setRegistrationError({ type: "none" })}
+        error={errorType}
+        retryAfter={retryAfter}
+        onClose={clearError}
       />
       <form
         className="RegisterFormWrapper"
@@ -112,8 +103,13 @@ export const RegisterForm = () => {
             type="submit"
             align="center"
             loading={createUserMutation.isPending}
+            disabled={isRateLimited}
           >
-            <Trans>Create Account</Trans>
+            {isRateLimited ? (
+              <Trans> Retry in {retryAfter}s</Trans>
+            ) : (
+              <Trans>Create Account</Trans>
+            )}
           </Button>
         </Skeleton>
       </form>

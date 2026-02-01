@@ -105,4 +105,19 @@ describe("Button", () => {
 
     expect(screen.getByRole("button")).toHaveAttribute("aria-busy", "true");
   });
+
+  it("disables button when prop is set", async () => {
+    const onClick = vi.fn();
+    render(
+      <Button disabled={true} onClick={onClick}>
+        Click
+      </Button>,
+    );
+
+    const button = screen.getByRole("button");
+    expect(button).toBeDisabled();
+
+    await user.click(button);
+    expect(onClick).not.toHaveBeenCalled();
+  });
 });

@@ -1,13 +1,13 @@
 import { Plural, Trans } from "@lingui/react/macro";
 import { ROUTE_LOGIN } from "@/src/app/routes/_auth/login.tsx";
-import type { FormSystemError } from "@/src/shared/authApiErrors.ts";
+import type { AuthFormSystemError } from "@/src/shared/authApiErrors.ts";
 import { Callout } from "@/src/shared/components/callout/Callout.tsx";
 import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
 import { TextLink } from "@/src/shared/components/text-link/TextLink.tsx";
 import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
 
 export type AuthFromErrorCalloutProps = {
-  error: FormSystemError;
+  error: AuthFormSystemError;
   retryAfter?: number | undefined;
   onClose: () => void;
 };

@@ -5,51 +5,40 @@ import {
 } from "@lasl/app-contracts/schemas/session";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useRouter } from "@tanstack/react-router";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { ROUTE_FORGOT_PASSWORD } from "@/src/app/routes/_auth/forgot-password/index.tsx";
 import { ROUTE_SIGN_UP } from "@/src/app/routes/_auth/register/index.tsx";
 import { ROUTE_HOME } from "@/src/app/routes/index.tsx";
-import {
-  type AuthFormSystemError,
-  getAuthFormErrorType,
-} from "@/src/shared/authApiErrors.ts";
-import {
-  AuthFormErrorCallout,
-  type AuthFromErrorCalloutProps,
-} from "@/src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx";
+import { getAuthFormErrorType } from "@/src/shared/authApiErrors.ts";
+import { AuthFormErrorCallout } from "@/src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx";
 import { Button } from "@/src/shared/components/button/Button.tsx";
 import { FormInputField } from "@/src/shared/components/form-input-field/FormInputField.tsx";
 import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
 import { TextLink } from "@/src/shared/components/text-link/TextLink.tsx";
 import { userErrorMessages } from "@/src/shared/formErrors.ts";
 import { usePostLogin } from "@/src/shared/hooks/api/useAuthentication.ts";
+import { useAuthFormError } from "@/src/shared/hooks/useAuthFormError.ts";
 import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
 import { useTranslateFormFieldError } from "@/src/shared/hooks/useTranslateFormFieldError.ts";
 import "./LoginForm.css";
 
 // biome-ignore lint/complexity/noExcessiveLinesPerFunction: ok here
 export const LoginForm = () => {
-  const [signInError, setSignInError] = useState<{
-    type: AuthFormSystemError;
-    wait?: AuthFromErrorCalloutProps["retryAfter"];
-  }>({ type: "none" });
+  const { errorType, retryAfter, setAuthFormError, clearError, isRateLimited } =
+    useAuthFormError();
   const { isLoading } = useI18nContext();
   const { t: linguiTranslator } = useLingui();
   const { navigate } = useRouter();
   const createSessionMutation = usePostLogin();
   const onSubmit = async (data: CreateSessionSchemaType) => {
-    setSignInError({ type: "none" });
+    clearError();
 
     try {
       await createSessionMutation.mutateAsync(data);
       navigate({ to: ROUTE_HOME });
     } catch (error) {
       const { type, retryAfter } = getAuthFormErrorType(error);
-      setSignInError({
-        type: type === "unverified" ? "unverified" : type,
-        wait: retryAfter,
-      });
+      setAuthFormError(type, retryAfter);
     }
   };
 
@@ -83,9 +72,9 @@ export const LoginForm = () => {
         </Skeleton>
       </div>
       <AuthFormErrorCallout
-        error={signInError.type}
-        retryAfter={signInError.wait}
-        onClose={() => setSignInError({ type: "none" })}
+        error={errorType}
+        retryAfter={retryAfter}
+        onClose={clearError}
       />
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -126,8 +115,13 @@ export const LoginForm = () => {
             type="submit"
             align="center"
             loading={createSessionMutation.isPending}
+            disabled={isRateLimited}
           >
-            <Trans>Sign In</Trans>
+            {isRateLimited ? (
+              <Trans> Retry in {retryAfter}s</Trans>
+            ) : (
+              <Trans>Sign In</Trans>
+            )}
           </Button>
         </Skeleton>
       </form>
