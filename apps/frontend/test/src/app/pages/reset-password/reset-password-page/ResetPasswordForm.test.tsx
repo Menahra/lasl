@@ -152,10 +152,10 @@ describe("ResetPasswordForm", () => {
     await user.type(screen.getByLabelText(/confirm password/i), "Password123!");
 
     expect(
-      screen.queryByText(/password reset link is invalid/i),
+      screen.queryByText(/link is invalid or has expired/i),
     ).not.toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: /reset password/i }));
-    expect(screen.getByText(/password reset link is invalid/i)).toBeVisible();
+    expect(screen.getByText(/link is invalid or has expired/i)).toBeVisible();
   });
 });
