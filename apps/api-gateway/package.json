@@ -34,7 +34,7 @@
     "@fastify/swagger-ui": "^5.2.5",
     "@lasl/test-utils-fastify": "workspace:*",
     "axios": "^1.13.4",
-    "fastify": "^5.7.2",
+    "fastify": "^5.7.3",
     "fastify-plugin": "^5.1.0",
     "http-status-codes": "^2.3.0",
     "vitest": "^4.0.18",
