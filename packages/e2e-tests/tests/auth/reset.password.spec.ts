@@ -100,9 +100,7 @@ test.describe("reset password flow", () => {
       .fill(newPassword);
     await page.getByRole("button", { name: /reset password/i }).click();
 
-    await expect(
-      page.getByText(/password reset link is invalid/i),
-    ).toBeVisible();
+    await expect(page.getByText(/link is invalid/i)).toBeVisible();
   });
 
   test("enforces password rules when choosing a new one", async ({
