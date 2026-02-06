@@ -11,7 +11,6 @@ const globalSetup = async () => {
   } else {
     console.log("🐳 Starting Docker containers for e2e tests...");
     try {
-      // Use the npm script from root package.json
       execSync("pnpm docker:test", {
         stdio: "inherit",
         cwd: "../../", // Run from monorepo root
