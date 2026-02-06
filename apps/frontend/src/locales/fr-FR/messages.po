@@ -258,10 +258,6 @@ msgstr "Vous n'avez pas encore de compte ?"
 msgid "Email"
 msgstr "E-mail"
 
-#: src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx:38
-msgid "Email already registered. <0>Sign in</0>"
-msgstr "Adresse e-mail déjà enregistrée. <0>Se connecter</0>"
-
 #: src/app/pages/register/register-verify-page/RegisterVerifyPage.tsx:18
 msgid "Email Verified!"
 msgstr "E-mail vérifié !"
@@ -356,10 +352,6 @@ msgstr "Transferts internationaux de données"
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:14
 msgid "Introduction"
 msgstr "Introduction"
-
-#: src/app/pages/login-page/LoginForm.tsx:92
-#~ msgid "Invalid Email or password. Please try again"
-#~ msgstr "E-mail ou mot de passe invalide. Veuillez réessayer"
 
 #: src/app/pages/landing-page/LandingPage.tsx:137
 msgid "Join a community of learners and contributors passionate about Arabic."
@@ -713,9 +705,9 @@ msgstr "Ces Conditions s'appliquent lors de l'inscription et de l'utilisation co
 msgid "These Terms shall be governed by the laws of Germany, excluding its conflict-of-law provisions."
 msgstr "Ces Conditions sont régies par les lois allemandes, à l'exclusion de ses dispositions relatives aux conflits de lois."
 
-#: src/app/pages/register/register-page/RegisterForm.tsx:77
-#~ msgid "This email is already registered. <0>Sign in instead</0>"
-#~ msgstr "Cet e-mail est déjà enregistré. <0>Connectez-vous plutôt</0>"
+#: src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx:38
+msgid "This email is already registered. <0>Sign in instead</0>"
+msgstr "Cet e-mail est déjà enregistré. <0>Connectez-vous plutôt</0>"
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:133
 msgid "This limitation of liability does not apply in cases of intent, gross negligence, or where liability is mandatory under applicable consumer protection laws."
@@ -724,10 +716,6 @@ msgstr "Cette limitation de responsabilité ne s'applique pas en cas d'intention
 #: src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx:46
 msgid "This link is invalid or has expired."
 msgstr "Ce lien n'est pas valide ou a expiré."
-
-#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:83
-#~ msgid "This password reset link is invalid or has expired."
-#~ msgstr "Ce lien de réinitialisation du mot de passe est invalide ou a expiré."
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:26
 msgid "This project is operated as a non-commercial, experimental hobby project."

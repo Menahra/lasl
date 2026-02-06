@@ -258,10 +258,6 @@ msgstr "Don't have an account yet?"
 msgid "Email"
 msgstr "Email"
 
-#: src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx:38
-msgid "Email already registered. <0>Sign in</0>"
-msgstr "Email already registered. <0>Sign in</0>"
-
 #: src/app/pages/register/register-verify-page/RegisterVerifyPage.tsx:18
 msgid "Email Verified!"
 msgstr "Email Verified!"
@@ -356,10 +352,6 @@ msgstr "International Data Transfers"
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:14
 msgid "Introduction"
 msgstr "Introduction"
-
-#: src/app/pages/login-page/LoginForm.tsx:92
-#~ msgid "Invalid Email or password. Please try again"
-#~ msgstr "Invalid Email or password. Please try again"
 
 #: src/app/pages/landing-page/LandingPage.tsx:137
 msgid "Join a community of learners and contributors passionate about Arabic."
@@ -713,9 +705,9 @@ msgstr "These Terms apply upon registration and continued use of the service."
 msgid "These Terms shall be governed by the laws of Germany, excluding its conflict-of-law provisions."
 msgstr "These Terms shall be governed by the laws of Germany, excluding its conflict-of-law provisions."
 
-#: src/app/pages/register/register-page/RegisterForm.tsx:77
-#~ msgid "This email is already registered. <0>Sign in instead</0>"
-#~ msgstr "This email is already registered. <0>Sign in instead</0>"
+#: src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx:38
+msgid "This email is already registered. <0>Sign in instead</0>"
+msgstr "This email is already registered. <0>Sign in instead</0>"
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:133
 msgid "This limitation of liability does not apply in cases of intent, gross negligence, or where liability is mandatory under applicable consumer protection laws."
@@ -724,10 +716,6 @@ msgstr "This limitation of liability does not apply in cases of intent, gross ne
 #: src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx:46
 msgid "This link is invalid or has expired."
 msgstr "This link is invalid or has expired."
-
-#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:83
-#~ msgid "This password reset link is invalid or has expired."
-#~ msgstr "This password reset link is invalid or has expired."
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:26
 msgid "This project is operated as a non-commercial, experimental hobby project."
@@ -761,10 +749,6 @@ msgstr "To the extent permitted by applicable law, {0} shall not be liable for a
 #: src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx:29
 msgid "Too many attempts. Please wait {0, plural, one {# second} other {# seconds}}."
 msgstr "Too many attempts. Please wait {0, plural, one {# second} other {# seconds}}."
-
-#: src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx:29
-#~ msgid "Too many attempts. Please wait {retryAfter} seconds."
-#~ msgstr "Too many attempts. Please wait {retryAfter} seconds."
 
 #: src/app/pages/register/register-verify-page/RegisterVerifyPage.tsx:44
 msgid "Try again"

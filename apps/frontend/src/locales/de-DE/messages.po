@@ -258,10 +258,6 @@ msgstr "Noch kein Konto verhanden?"
 msgid "Email"
 msgstr "E-Mail-Adresse"
 
-#: src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx:38
-msgid "Email already registered. <0>Sign in</0>"
-msgstr "E-Mail bereits registriert. <0>Anmelden</0>"
-
 #: src/app/pages/register/register-verify-page/RegisterVerifyPage.tsx:18
 msgid "Email Verified!"
 msgstr "E-Mail-Adresse bestätigt!"
@@ -356,10 +352,6 @@ msgstr "Internationale Datenübermittlungen"
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:14
 msgid "Introduction"
 msgstr "Einleitung"
-
-#: src/app/pages/login-page/LoginForm.tsx:92
-#~ msgid "Invalid Email or password. Please try again"
-#~ msgstr "Ungültige E-Mail-Adresse oder Passwort. Bitte versuchen Sie es erneut."
 
 #: src/app/pages/landing-page/LandingPage.tsx:137
 msgid "Join a community of learners and contributors passionate about Arabic."
@@ -713,9 +705,9 @@ msgstr "Diese Nutzungsbedingungen gelten ab der Registrierung und für die fortg
 msgid "These Terms shall be governed by the laws of Germany, excluding its conflict-of-law provisions."
 msgstr "Diese Nutzungsbedingungen unterliegen dem Recht der Bundesrepublik Deutschland unter Ausschluss des Kollisionsrechts."
 
-#: src/app/pages/register/register-page/RegisterForm.tsx:77
-#~ msgid "This email is already registered. <0>Sign in instead</0>"
-#~ msgstr "Diese E-Mail-Adresse ist bereits registriert. <0>Stattdessen anmelden</0>"
+#: src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx:38
+msgid "This email is already registered. <0>Sign in instead</0>"
+msgstr "Diese E-Mail-Adresse ist bereits registriert. <0>Stattdessen anmelden</0>"
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:133
 msgid "This limitation of liability does not apply in cases of intent, gross negligence, or where liability is mandatory under applicable consumer protection laws."
@@ -724,10 +716,6 @@ msgstr "Diese Haftungsbeschränkung gilt nicht bei Vorsatz, grober Fahrlässigke
 #: src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx:46
 msgid "This link is invalid or has expired."
 msgstr "Dieser Link ist ungültig oder abgelaufen."
-
-#: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:83
-#~ msgid "This password reset link is invalid or has expired."
-#~ msgstr "Dieser Link zum Zurücksetzen des Passworts ist ungültig oder abgelaufen."
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:26
 msgid "This project is operated as a non-commercial, experimental hobby project."

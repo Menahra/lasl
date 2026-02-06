@@ -36,9 +36,9 @@ export const AuthFormErrorCallout = ({
         ) : undefined}
         {error === "duplicate" ? (
           <Trans>
-            Email already registered.{" "}
+            This email is already registered.{" "}
             <TextLink to={ROUTE_LOGIN} variant="primary">
-              Sign in
+              Sign in instead
             </TextLink>
           </Trans>
         ) : undefined}
