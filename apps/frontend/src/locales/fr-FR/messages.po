@@ -83,7 +83,7 @@ msgstr "Vous avez déjà un compte ? <0>Se connecter</0>"
 msgid "An open, community-driven platform for learning Modern Standard Arabic. Explore Nahw, Sarf, Balagha, and more — with content you can help improve."
 msgstr "Une plateforme ouverte et communautaire pour apprendre l'arabe standard moderne. Explorez Nahw, Sarf, Balagha, et plus encore — avec du contenu que vous pouvez aider à améliorer."
 
-#: src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx:49
+#: src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx:47
 msgid "An unexpected error occurred. Please try again."
 msgstr "Une erreur inattendue s'est produite. Veuillez réessayer."
 
@@ -247,12 +247,12 @@ msgstr "Vous n'avez pas reçu l'e-mail ? Vérifiez votre dossier spam ou réessa
 msgid "Didn't receive the email? Check your spam folder or try signing up again."
 msgstr "Vous n'avez pas reçu l'e-mail ? Vérifiez votre dossier spam ou réessayez de vous inscrire."
 
-#: src/app/pages/login-page/LoginForm.tsx:131
+#: src/app/pages/login-page/LoginForm.tsx:134
 msgid "Don't have an account yet?"
 msgstr "Vous n'avez pas encore de compte ?"
 
 #: src/app/pages/forgot-password/forgot-password-page/ForgotPasswordForm.tsx:83
-#: src/app/pages/login-page/LoginForm.tsx:89
+#: src/app/pages/login-page/LoginForm.tsx:92
 #: src/app/pages/register/register-page/registerFormFields.ts:32
 #: src/app/pages/resend-verification-mail/resend-verification-mail-page/ResendVerificationMailForm.tsx:75
 msgid "Email"
@@ -282,7 +282,7 @@ msgstr "Entrez votre prénom"
 msgid "Enter your last name"
 msgstr "Entrez votre nom de famille"
 
-#: src/app/pages/login-page/LoginForm.tsx:98
+#: src/app/pages/login-page/LoginForm.tsx:101
 #: src/app/pages/register/register-page/registerFormFields.ts:39
 #: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:94
 msgid "Enter your password"
@@ -300,7 +300,7 @@ msgstr "Le prénom est requis"
 msgid "Forgot password?"
 msgstr "Mot de passe oublié ?"
 
-#: src/app/pages/login-page/LoginForm.tsx:109
+#: src/app/pages/login-page/LoginForm.tsx:112
 msgid "Forgot Password?"
 msgstr "Mot de passe oublié ?"
 
@@ -352,6 +352,10 @@ msgstr "Transferts internationaux de données"
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:14
 msgid "Introduction"
 msgstr "Introduction"
+
+#: src/app/pages/login-page/LoginForm.tsx:79
+msgid "Invalid email or password"
+msgstr "Adresse e-mail ou mot de passe invalide"
 
 #: src/app/pages/landing-page/LandingPage.tsx:137
 msgid "Join a community of learners and contributors passionate about Arabic."
@@ -463,7 +467,7 @@ msgstr "Ouvrir le menu"
 msgid "Open the GitHub repository in a new browser tab."
 msgstr "Ouvrir le dépôt GitHub dans un nouvel onglet du navigateur."
 
-#: src/app/pages/login-page/LoginForm.tsx:99
+#: src/app/pages/login-page/LoginForm.tsx:102
 #: src/app/pages/register/register-page/registerFormFields.ts:38
 #: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:95
 msgid "Password"
@@ -514,7 +518,7 @@ msgstr "Les données personnelles sont traitées exclusivement au sein de l'Unio
 msgid "Please enter a valid email address"
 msgstr "Veuillez entrer une adresse e-mail valide"
 
-#: src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx:35
+#: src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx:36
 msgid "Please verify your email first"
 msgstr "Veuillez d'abord vérifier votre e-mail"
 
@@ -568,7 +572,7 @@ msgstr "Responsable du contenu"
 msgid "Responsible for content according to § 55 Abs. 2 RStV:"
 msgstr "Responsable du contenu selon § 55 Abs. 2 RStV :"
 
-#: src/app/pages/login-page/LoginForm.tsx:121
+#: src/app/pages/login-page/LoginForm.tsx:124
 #: src/app/pages/register/register-page/RegisterForm.tsx:109
 #: src/app/pages/resend-verification-mail/resend-verification-mail-page/ResendVerificationMailForm.tsx:90
 #: src/app/pages/reset-password/reset-password-page/ResetPasswordForm.tsx:116
@@ -607,7 +611,7 @@ msgid "Set new password"
 msgstr "Définir un nouveau mot de passe"
 
 #: src/app/pages/landing-page/LandingPage.tsx:59
-#: src/app/pages/login-page/LoginForm.tsx:123
+#: src/app/pages/login-page/LoginForm.tsx:126
 msgid "Sign In"
 msgstr "Se connecter"
 
@@ -619,7 +623,7 @@ msgstr "Connectez-vous pour améliorer votre apprentissage"
 msgid "Sign in with new password"
 msgstr "Se connecter avec le nouveau mot de passe"
 
-#: src/app/pages/login-page/LoginForm.tsx:134
+#: src/app/pages/login-page/LoginForm.tsx:137
 msgid "Sign Up"
 msgstr "S'inscrire"
 
@@ -632,7 +636,7 @@ msgid "Structured Curriculum"
 msgstr "Programme structuré"
 
 #: src/app/pages/forgot-password/forgot-password-page/ForgotPasswordForm.tsx:82
-#: src/app/pages/login-page/LoginForm.tsx:88
+#: src/app/pages/login-page/LoginForm.tsx:91
 #: src/app/pages/register/register-page/registerFormFields.ts:33
 msgid "student@example.com"
 msgstr "etudiant@exemple.com"
@@ -713,7 +717,7 @@ msgstr "Cet e-mail est déjà enregistré. <0>Connectez-vous plutôt</0>"
 msgid "This limitation of liability does not apply in cases of intent, gross negligence, or where liability is mandatory under applicable consumer protection laws."
 msgstr "Cette limitation de responsabilité ne s'applique pas en cas d'intention, de négligence grave ou lorsque la responsabilité est obligatoire en vertu des lois applicables de protection des consommateurs."
 
-#: src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx:46
+#: src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx:45
 msgid "This link is invalid or has expired."
 msgstr "Ce lien n'est pas valide ou a expiré."
 
@@ -746,7 +750,7 @@ msgid "To the extent permitted by applicable law, {0} shall not be liable for an
 msgstr "Dans la mesure permise par la loi applicable, {0} ne sera pas responsable de tout dommage indirect, accessoire, spécial ou consécutif découlant de ou en relation avec l'utilisation ou l'impossibilité d'utiliser le service."
 
 #. placeholder {0}: retryAfter ?? 0
-#: src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx:29
+#: src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx:31
 msgid "Too many attempts. Please wait {0, plural, one {# second} other {# seconds}}."
 msgstr "Trop de tentatives. Veuillez patienter {0, plural, one {# seconde} other {# secondes}}."
 
@@ -845,6 +849,10 @@ msgstr "Pourquoi {0} ?"
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:85
 msgid "You are responsible for safeguarding the password that you use to access the platform and for any activities or actions under your password."
 msgstr "Vous êtes responsable de la protection du mot de passe que vous utilisez pour accéder à la plateforme et de toutes les activités ou actions effectuées sous votre mot de passe."
+
+#: src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx:46
+msgid "You do not have permission to access this."
+msgstr "Vous n'avez pas l'autorisation d'y accéder."
 
 #: src/app/pages/forgot-password/forgot-password-sent-page/ForgotPasswordSentPage.tsx:21
 msgid "your email"

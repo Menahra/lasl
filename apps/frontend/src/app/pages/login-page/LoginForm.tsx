@@ -75,6 +75,9 @@ export const LoginForm = () => {
         error={errorType}
         retryAfter={retryAfter}
         onClose={clearError}
+        overrideMessages={{
+          forbidden: <Trans>Invalid email or password</Trans>,
+        }}
       />
       <form
         onSubmit={handleSubmit(onSubmit)}
