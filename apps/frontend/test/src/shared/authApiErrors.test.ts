@@ -51,6 +51,11 @@ describe("getFormErrorType", () => {
     expect(getAuthFormErrorType(error)).toEqual({ type: "unverified" });
   });
 
+  it("returns 'forbidden' for FORBIDDEN status", () => {
+    const error = createAxiosError(StatusCodes.FORBIDDEN);
+    expect(getAuthFormErrorType(error)).toEqual({ type: "forbidden" });
+  });
+
   it("returns 'invalid-link' for BAD_REQUEST or GONE", () => {
     expect(
       getAuthFormErrorType(createAxiosError(StatusCodes.BAD_REQUEST)),

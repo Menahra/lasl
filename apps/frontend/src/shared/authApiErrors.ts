@@ -7,6 +7,7 @@ export type AuthFormSystemError =
   | "duplicate"
   | "rate-limited"
   | "invalid-link"
+  | "forbidden"
   | "unknown";
 
 export const getAuthFormErrorType = (
@@ -28,6 +29,11 @@ export const getAuthFormErrorType = (
   if (status === StatusCodes.CONFLICT) {
     return { type: "unverified" };
   }
+
+  if (status === StatusCodes.FORBIDDEN) {
+    return { type: "forbidden" };
+  }
+
   if (status === StatusCodes.BAD_REQUEST || status === StatusCodes.GONE) {
     return { type: "invalid-link" };
   }

@@ -58,7 +58,7 @@ describe("FormErrorCallout", () => {
       error: "duplicate",
       onClose: onCloseMock,
     });
-    expect(screen.getByText(/Email already registered/i)).toBeDefined();
+    expect(screen.getByText(/this email is already registered/i)).toBeDefined();
     expect(screen.getByRole("link", { name: /Sign in/i })).toBeDefined();
   });
 
