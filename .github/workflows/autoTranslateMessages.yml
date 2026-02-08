@@ -35,7 +35,7 @@ jobs:
           for file in $(git diff --name-only HEAD^ HEAD | grep '\.po$'); do
             if [ -f "$file" ]; then
               echo "Processing $file"
-              gh copilot -p "Translate missing strings (msgstr \"\") in $file using gettext format, keeping msgid intact. Update the file in place."
+              GH_TOKEN=${{ secrets.GITHUB_TOKEN }} gh copilot -p "Translate missing strings (msgstr \"\") in $file using gettext format, keeping msgid intact. Update the file in place."
             fi
           done
         env:
