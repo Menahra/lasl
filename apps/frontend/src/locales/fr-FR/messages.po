@@ -367,7 +367,7 @@ msgstr "Rejoignez les apprenants et contributeurs qui façonnent l'avenir de l'e
 
 #: src/shared/components/language-select/LanguageSelect.tsx:65
 msgid "Language"
-msgstr ""
+msgstr " "
 
 #: src/app/pages/register/register-page/registerFormFields.ts:26
 msgid "Last Name"
