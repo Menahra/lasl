@@ -371,7 +371,7 @@ msgstr "Langue"
 
 #: src/app/pages/register/register-page/registerFormFields.ts:26
 msgid "Last Name"
-msgstr "Nom de "
+msgstr "Nom de"
 
 #: src/shared/formErrors.ts:12
 msgid "Last name is required"
