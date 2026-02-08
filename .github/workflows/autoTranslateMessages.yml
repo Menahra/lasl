@@ -26,18 +26,16 @@ jobs:
         with:
           node-version: "lts/*"
 
-      - name: Install Copilot Extension
-        run: |
-          gh extension install github/gh-copilot
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # Call Copilot to translate (requires logic to iterate over files)
       - name: Translate Missing Strings
         run: |
-          # Pseudocode: loop through .po files and call Copilot
-          # gh copilot -p "Translate missing strings in this PO file: $file"
-          echo "Calling Copilot CLI to translate..."
+          # Iterate over .po files changed in the PR
+          for file in $(git diff --name-only HEAD^ HEAD | grep '\.po$'); do
+            if [ -f "$file" ]; then
+              echo "Processing $file"
+              # Use gh copilot directly
+              gh copilot explain "Translate missing strings (msgstr \"\") in $file using gettext format, keeping msgid intact. Update the file in place."
+            fi
+          done
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -46,4 +44,5 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "chore: update translations via Copilot"
+          title: "Update translations"
           branch: "copilot-translation-updates"
