@@ -26,12 +26,6 @@ jobs:
         with:
           node-version: "lts/*"
 
-      - name: Setup GitHub CLI
-        uses: github/setup-gh-cli@v3
-        with:
-          # This automatically handles installation and authentication
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Install Copilot Extension
         run: |
           gh extension install github/gh-copilot

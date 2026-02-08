@@ -77,7 +77,7 @@ msgstr "Alle Inhalte, Funktionen und Bestandteile auf {0}, einschließlich, aber
 
 #: src/app/pages/register/register-page/RegisterPage.tsx:40
 msgid "Already have an Account? <0>Sign In</0>"
-msgstr "Sie haben bereits ein Konto? <0>Anmelden</0>"
+msgstr "Sie haben bereits ein Konto?"
 
 #: src/app/pages/landing-page/LandingPage.tsx:41
 msgid "An open, community-driven platform for learning Modern Standard Arabic. Explore Nahw, Sarf, Balagha, and more — with content you can help improve."
