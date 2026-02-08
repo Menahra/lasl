@@ -42,8 +42,7 @@ jobs:
           for file in $(git diff --name-only HEAD^ HEAD | grep '\.po$'); do
             if [ -f "$file" ]; then
               echo "Processing $file"
-              gh copilot suggest "Translate missing strings (msgstr \"\") in $file using gettext format, keeping msgid intact. Update the file in place."
-              # Note: You may need to manually apply suggestions as copilot CLI is interactive
+              gh copilot -p "Translate missing strings (msgstr \"\") in $file using gettext format, keeping msgid intact. Update the file in place."
             fi
           done
         env:
