@@ -1,0 +1,55 @@
+name: "Auto Translate via Copilot CLI"
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/frontend/**/*.po"
+  pull_request:
+    branches: [main]
+    paths:
+      - "apps/frontend/**/*.po"
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+
+      # Install GitHub CLI and Copilot Extension
+      - name: Install GitHub CLI
+        run: |
+          type -p curl >/dev/null || sudo apt install curl -y
+          curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages/stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+          sudo apt update
+          sudo apt install gh -y
+          gh extension install github/gh-copilot
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Call Copilot to translate (requires logic to iterate over files)
+      - name: Translate Missing Strings
+        run: |
+          # Pseudocode: loop through .po files and call Copilot
+          # gh copilot -p "Translate missing strings in this PO file: $file"
+          echo "Calling Copilot CLI to translate..."
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: update translations via Copilot"
+          branch: "copilot-translation-updates"
