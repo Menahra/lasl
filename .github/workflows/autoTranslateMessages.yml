@@ -35,11 +35,11 @@ jobs:
           for file in $(git diff --name-only HEAD^ HEAD | grep '\.po$'); do
             if [ -f "$file" ]; then
               echo "Processing $file"
-              echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
               gh copilot -p "Translate missing strings (msgstr \"\") in $file using gettext format, keeping msgid intact. Update the file in place."
             fi
           done
         env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Pull Request
