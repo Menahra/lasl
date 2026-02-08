@@ -29,18 +29,24 @@ jobs:
         with:
           node-version: "lts/*"
 
+      - name: Authenticate with GitHub Copilot
+        run: |
+          echo "${{ secrets.COPILOT_TOKEN }}" | gh auth login --with-token
+        env:
+          GH_TOKEN: ${{ secrets.COPILOT_TOKEN }}
+
       - name: Translate Missing Strings
         run: |
-          # Iterate over .po files changed in the PR
+          # Iterate over .po files changed in the commit
           for file in $(git diff --name-only HEAD^ HEAD | grep '\.po$'); do
             if [ -f "$file" ]; then
               echo "Processing $file"
-              GH_TOKEN=${{ secrets.GITHUB_TOKEN }} gh copilot -p "Translate missing strings (msgstr \"\") in $file using gettext format, keeping msgid intact. Update the file in place."
+              gh copilot suggest "Translate missing strings (msgstr \"\") in $file using gettext format, keeping msgid intact. Update the file in place."
+              # Note: You may need to manually apply suggestions as copilot CLI is interactive
             fi
           done
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.COPILOT_TOKEN }}
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
