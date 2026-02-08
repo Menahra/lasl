@@ -34,7 +34,7 @@ msgstr "{0} kann diese Nutzungsbedingungen jederzeit ohne vorherige Ankündigung
 #. placeholder {0}: PROJECT_INFORMATION.name
 #: src/app/layouts/main-layout/footer/Footer.tsx:83
 msgid "© {currentYear} {0}. All rights reserved."
-msgstr "© {currentYear} {0}. Alle Rechte vorbehalten."
+msgstr ""
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:116
 msgid "<0>Account data is retained for the duration of the account</0><1>Learning progress data is deleted when the account is deleted</1><2>Technical and log data is retained for a limited period for security purposes</2>"
