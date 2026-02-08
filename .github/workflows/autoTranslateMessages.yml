@@ -31,9 +31,10 @@ jobs:
 
       - name: Authenticate with GitHub Copilot
         run: |
+          # Remove GH_TOKEN from environment temporarily for login
+          unset GH_TOKEN
+          unset GITHUB_TOKEN
           echo "${{ secrets.COPILOT_TOKEN }}" | gh auth login --with-token
-        env:
-          GH_TOKEN: ${{ secrets.COPILOT_TOKEN }}
 
       - name: Translate Missing Strings
         run: |
