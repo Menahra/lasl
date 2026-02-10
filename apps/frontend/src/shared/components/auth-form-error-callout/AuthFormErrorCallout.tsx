@@ -44,7 +44,9 @@ export const AuthFormErrorCallout = ({
     ),
     "invalid-link": <Trans>This link is invalid or has expired.</Trans>,
     forbidden: <Trans>You do not have permission to access this.</Trans>,
-    unknown: <Trans>An unexpected error occurred. Please try again.</Trans>,
+    unknown: (
+      <Trans>Testing a wrong translation to see whether workflow works</Trans>
+    ),
   };
 
   const messageContent = overrideMessages?.[error] ?? defaultMessages[error];

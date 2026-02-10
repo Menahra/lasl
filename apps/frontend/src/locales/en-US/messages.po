@@ -84,8 +84,8 @@ msgid "An open, community-driven platform for learning Modern Standard Arabic. E
 msgstr "An open, community-driven platform for learning Modern Standard Arabic. Explore Nahw, Sarf, Balagha, and more — with content you can help improve."
 
 #: src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx:47
-msgid "An unexpected error occurred. Please try again."
-msgstr "An unexpected error occurred. Please try again."
+#~ msgid "An unexpected error occurred. Please try again."
+#~ msgstr "An unexpected error occurred. Please try again."
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:151
 msgid "Appropriate technical and organizational measures are implemented to protect personal data against accidental or unlawful loss, alteration, or unauthorized access."
@@ -667,6 +667,10 @@ msgstr "Termination"
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:12
 msgid "Terms of Service"
 msgstr "Terms of Service"
+
+#: src/shared/components/auth-form-error-callout/AuthFormErrorCallout.tsx:48
+msgid "Testing a wrong translation to see whether workflow works"
+msgstr "Testing a wrong translation to see whether workflow works"
 
 #: src/app/pages/imprint-page/ImprintPage.tsx:90
 msgid "The contents of this website have been created with the greatest possible care. However, no guarantee is given for the accuracy, completeness, or timeliness of the content."
