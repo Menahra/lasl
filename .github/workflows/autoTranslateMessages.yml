@@ -1,4 +1,4 @@
-name: "Auto Translate via Copilot CLI"
+name: "Auto Translate via Argos"
 
 on:
   push:
@@ -18,40 +18,27 @@ jobs:
       pull-requests: write
 
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          fetch-depth: 2
-          token: ${{ secrets.GITHUB_TOKEN }}
+          python-version: "3.10"
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "lts/*"
-
-      - name: Authenticate with GitHub Copilot
+      - name: Install Dependencies
         run: |
-          # Remove GH_TOKEN from environment temporarily for login
-          unset GH_TOKEN
-          unset GITHUB_TOKEN
-          echo "${{ secrets.COPILOT_TOKEN }}" | gh auth login --with-token
+          pip install polib argostranslate gitpython
 
-      - name: Translate Missing Strings
+      - name: Run Free Translation
         run: |
-          # Iterate over .po files changed in the commit
-          for file in $(git diff --name-only HEAD^ HEAD | grep '\.po$'); do
-            if [ -f "$file" ]; then
-              echo "Processing $file"
-              gh copilot --no-input -p "Translate missing strings (msgstr \"\") in $file using gettext format, keeping msgid intact. Update the file in place." 2>&1
-            fi
-          done
-        env:
-          GH_TOKEN: ${{ secrets.COPILOT_TOKEN }}
+          python apps/frontend/scripts/translate.script.py
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "chore: update translations via Copilot"
-          title: "Update translations"
-          branch: "copilot-translation-updates"
+          commit-message: "chore: update translations using Argos Translate"
+          title: "Update Translations (Free)"
+          body: "Automated translation updates using local open-source models."
+          branch: "translate-bot-free"
+          delete-branch: true
