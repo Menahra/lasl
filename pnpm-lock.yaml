@@ -32,10 +32,10 @@ importers:
         version: 5.2.5
       '@lasl/test-utils-fastify':
         specifier: workspace:*
-        version: link:../../packages/test-utils-fastify
+        version: file:packages/test-utils-fastify(fastify@5.7.4)(mongodb-memory-server@11.0.1)(mongoose@9.2.0)(vitest@4.0.18(@types/node@25.2.1)(happy-dom@20.5.0)(jiti@2.6.1)(msw@2.12.9(@types/node@25.2.1)(typescript@5.9.3))(tsx@4.21.0)(yaml@2.8.2))
       axios:
-        specifier: ^1.13.4
-        version: 1.13.4
+        specifier: ^1.13.5
+        version: 1.13.5
       fastify:
         specifier: ^5.7.4
         version: 5.7.4
@@ -189,8 +189,8 @@ importers:
         specifier: ^1.158.1
         version: 1.158.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       axios:
-        specifier: ^1.13.4
-        version: 1.13.4
+        specifier: ^1.13.5
+        version: 1.13.5
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -215,7 +215,7 @@ importers:
     devDependencies:
       '@lasl/authentication-service':
         specifier: workspace:*
-        version: link:../authentication-service
+        version: file:apps/authentication-service(mongodb-memory-server@11.0.1)(vitest@4.0.18(@types/node@25.2.1)(happy-dom@20.5.0)(jiti@2.6.1)(msw@2.12.9(@types/node@25.2.1)(typescript@5.9.3))(tsx@4.21.0)(yaml@2.8.2))
       '@lingui/babel-plugin-lingui-macro':
         specifier: ^5.9.0
         version: 5.9.0(typescript@5.9.3)
@@ -868,6 +868,9 @@ packages:
   '@fastify/swagger@9.6.1':
     resolution: {integrity: sha512-fKlpJqFMWoi4H3EdUkDaMteEYRCfQMEkK0HJJ0eaf4aRlKd8cbq0pVkOfXDXmtvMTXYcnx3E+l023eFDBsA1HA==}
 
+  '@fastify/swagger@9.7.0':
+    resolution: {integrity: sha512-Vp1SC1GC2Hrkd3faFILv86BzUNyFz5N4/xdExqtCgkGASOzn/x+eMe4qXIGq7cdT6wif/P/oa6r1Ruqx19paZA==}
+
   '@floating-ui/core@1.7.4':
     resolution: {integrity: sha512-C3HlIdsBxszvm5McXlB8PeOEWfBhcGBTZGkGlWc2U0KFY5IwG5OQEuQ8rq52DZmcHDlPLd+YFBK+cZcytwIFWg==}
 
@@ -962,6 +965,22 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
+
+  '@lasl/app-contracts@file:packages/app-contracts':
+    resolution: {directory: packages/app-contracts, type: directory}
+    peerDependencies:
+      zod: ^4.3.5
+
+  '@lasl/authentication-service@file:apps/authentication-service':
+    resolution: {directory: apps/authentication-service, type: directory}
+
+  '@lasl/test-utils-fastify@file:packages/test-utils-fastify':
+    resolution: {directory: packages/test-utils-fastify, type: directory}
+    peerDependencies:
+      fastify: ^5.7.1
+      mongodb-memory-server: ^11.0.1
+      mongoose: ^9.0.1
+      vitest: ^4.0.17
 
   '@lingui/babel-plugin-extract-messages@5.9.0':
     resolution: {integrity: sha512-1uLhq9u6zUoTMsNzaoHKi+PnySdeLMaxOHC9L5dbXotJim7eiUH5d3OiuXajN4sDW+xKSMg0/KE9Oo8ge6gzpA==}
@@ -2021,8 +2040,8 @@ packages:
   avvio@9.1.0:
     resolution: {integrity: sha512-fYASnYi600CsH/j9EQov7lECAniYiBFiiAtBNuZYLA2leLe9qOvZzqYHFjtIj6gD2VMoMLP14834LFWvr4IfDw==}
 
-  axios@1.13.4:
-    resolution: {integrity: sha512-1wVkUaAO6WyaYtCkcYCOx12ZgpGf9Zif+qXa4n+oYzK558YryKqiL6UWwd5DqiH3VRW0GYhTZQ/vlgJrCoNQlg==}
+  axios@1.13.5:
+    resolution: {integrity: sha512-cz4ur7Vb0xS4/KUN0tPWe44eqxrIu31me+fbang3ijiNscE129POzipJJA6zniq2C/Z6sJCjMimjS8Lc/GAs8Q==}
 
   b4a@1.7.3:
     resolution: {integrity: sha512-5Q2mfq2WfGuFp3uS//0s6baOJLMoVduPYVeNmDYxu5OUA1/cBfvr2RIS7vi62LdNj/urk1hfmj867I3qt6uZ7Q==}
@@ -2963,6 +2982,10 @@ packages:
     resolution: {integrity: sha512-RKhaOBSPN8L7y4yAgNhDT2602G5FD6QbOIISbjN9D6mjHPeqeg7K+EB5IGSU5o81/X2Gzm3ICnAvQW3x3OP8HA==}
     engines: {node: '>=18.0.0'}
 
+  kareem@3.2.0:
+    resolution: {integrity: sha512-VS8MWZz/cT+SqBCpVfNN4zoVz5VskR3N4+sTmUXme55e9avQHntpwpNq0yjnosISXqwJ3AQVjlbI4Dyzv//JtA==}
+    engines: {node: '>=18.0.0'}
+
   kind-of@6.0.3:
     resolution: {integrity: sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==}
     engines: {node: '>=0.10.0'}
@@ -3227,6 +3250,10 @@ packages:
 
   mongoose@9.1.6:
     resolution: {integrity: sha512-ZrtgRsJKtW3od36TVXtAnrNHOO3rqhsqfVut6IzyWyJeLLeLTqW66qej/0qB37GZd5jL06nHfAceTikkfnSqbA==}
+    engines: {node: '>=20.19.0'}
+
+  mongoose@9.2.0:
+    resolution: {integrity: sha512-lc1uFbtZHp1FqP8UCzRs9JZLhbBEmDt1l6B2MYmbD07Lp99yppQUwg2yPPyB3NO18EE5nQAoGCRiTf5v6vuJBQ==}
     engines: {node: '>=20.19.0'}
 
   moo@0.5.2:
@@ -4800,6 +4827,16 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@fastify/swagger@9.7.0':
+    dependencies:
+      fastify-plugin: 5.1.0
+      json-schema-resolver: 3.0.0
+      openapi-types: 12.1.3
+      rfdc: 1.4.1
+      yaml: 2.8.2
+    transitivePeerDependencies:
+      - supports-color
+
   '@floating-ui/core@1.7.4':
     dependencies:
       '@floating-ui/utils': 0.2.10
@@ -4891,6 +4928,50 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
+
+  '@lasl/app-contracts@file:packages/app-contracts(zod@4.3.6)':
+    dependencies:
+      zod: 4.3.6
+
+  '@lasl/authentication-service@file:apps/authentication-service(mongodb-memory-server@11.0.1)(vitest@4.0.18(@types/node@25.2.1)(happy-dom@20.5.0)(jiti@2.6.1)(msw@2.12.9(@types/node@25.2.1)(typescript@5.9.3))(tsx@4.21.0)(yaml@2.8.2))':
+    dependencies:
+      '@fastify/cookie': 11.0.2
+      '@fastify/env': 5.0.3
+      '@fastify/rate-limit': 10.3.0
+      '@fastify/swagger': 9.7.0
+      '@fastify/swagger-ui': 5.2.5
+      '@lasl/app-contracts': file:packages/app-contracts(zod@4.3.6)
+      '@lasl/test-utils-fastify': file:packages/test-utils-fastify(fastify@5.7.4)(mongodb-memory-server@11.0.1)(mongoose@9.2.0)(vitest@4.0.18(@types/node@25.2.1)(happy-dom@20.5.0)(jiti@2.6.1)(msw@2.12.9(@types/node@25.2.1)(typescript@5.9.3))(tsx@4.21.0)(yaml@2.8.2))
+      '@typegoose/typegoose': 13.1.0(mongoose@9.2.0)
+      argon2: 0.44.0
+      fastify: 5.7.4
+      fastify-plugin: 5.1.0
+      http-status-codes: 2.3.0
+      jsonwebtoken: 9.0.3
+      mongoose: 9.2.0
+      nanoid: 5.1.6
+      nodemailer: 7.0.13
+      resend: 6.9.1
+      zod: 4.3.6
+    transitivePeerDependencies:
+      - '@aws-sdk/credential-providers'
+      - '@mongodb-js/zstd'
+      - '@react-email/render'
+      - gcp-metadata
+      - kerberos
+      - mongodb-client-encryption
+      - mongodb-memory-server
+      - snappy
+      - socks
+      - supports-color
+      - vitest
+
+  '@lasl/test-utils-fastify@file:packages/test-utils-fastify(fastify@5.7.4)(mongodb-memory-server@11.0.1)(mongoose@9.2.0)(vitest@4.0.18(@types/node@25.2.1)(happy-dom@20.5.0)(jiti@2.6.1)(msw@2.12.9(@types/node@25.2.1)(typescript@5.9.3))(tsx@4.21.0)(yaml@2.8.2))':
+    dependencies:
+      fastify: 5.7.4
+      mongodb-memory-server: 11.0.1
+      mongoose: 9.2.0
+      vitest: 4.0.18(@types/node@25.2.1)(happy-dom@20.5.0)(jiti@2.6.1)(msw@2.12.9(@types/node@25.2.1)(typescript@5.9.3))(tsx@4.21.0)(yaml@2.8.2)
 
   '@lingui/babel-plugin-extract-messages@5.9.0': {}
 
@@ -5676,6 +5757,15 @@ snapshots:
       semver: 7.7.4
       tslib: 2.8.1
 
+  '@typegoose/typegoose@13.1.0(mongoose@9.2.0)':
+    dependencies:
+      lodash: 4.17.23
+      loglevel: 1.9.2
+      mongoose: 9.2.0
+      reflect-metadata: 0.2.2
+      semver: 7.7.4
+      tslib: 2.8.1
+
   '@types/aria-query@5.0.4': {}
 
   '@types/babel__core@7.20.5':
@@ -5932,7 +6022,7 @@ snapshots:
       '@fastify/error': 4.2.0
       fastq: 1.20.1
 
-  axios@1.13.4:
+  axios@1.13.5:
     dependencies:
       follow-redirects: 1.15.11(debug@4.4.3)
       form-data: 4.0.5
@@ -6937,6 +7027,8 @@ snapshots:
 
   kareem@3.0.0: {}
 
+  kareem@3.2.0: {}
+
   kind-of@6.0.3: {}
 
   leac@0.6.0: {}
@@ -7195,6 +7287,23 @@ snapshots:
   mongoose@9.1.6:
     dependencies:
       kareem: 3.0.0
+      mongodb: 7.0.0
+      mpath: 0.9.0
+      mquery: 6.0.0
+      ms: 2.1.3
+      sift: 17.1.3
+    transitivePeerDependencies:
+      - '@aws-sdk/credential-providers'
+      - '@mongodb-js/zstd'
+      - gcp-metadata
+      - kerberos
+      - mongodb-client-encryption
+      - snappy
+      - socks
+
+  mongoose@9.2.0:
+    dependencies:
+      kareem: 3.2.0
       mongodb: 7.0.0
       mpath: 0.9.0
       mquery: 6.0.0
