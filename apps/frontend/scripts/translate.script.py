@@ -83,7 +83,7 @@ def update_po_files():
                 updated = True
         
         if updated:
-            target_po.save()
+            target_po.save(target_path, wrapwidth=0)
             print(f"Saved {target_path}")
 
 if __name__ == "__main__":
