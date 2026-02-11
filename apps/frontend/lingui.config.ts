@@ -3,7 +3,7 @@ import { defineConfig } from "@lingui/cli";
 
 // biome-ignore lint/style/noDefaultExport: needed for lingui config
 export default defineConfig({
-  locales: SUPPORTED_LOCALES,
+  locales: [...SUPPORTED_LOCALES],
   sourceLocale: DEFAULT_LOCALE,
   catalogs: [
     {
