@@ -59,7 +59,7 @@ msgstr "<0>Bereitstellung und Betrieb der Plattform</0><1>Erfassung des Lernfort
 
 #: src/app/pages/landing-page/LandingPage.tsx:145
 msgid "Accessible Everywhere"
-msgstr "Überall "
+msgstr "Überall"
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:32
 msgid "Agreement to Terms"
