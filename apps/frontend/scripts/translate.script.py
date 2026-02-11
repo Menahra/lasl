@@ -52,7 +52,7 @@ def update_po_files():
         print(f"Source file not found at {source_po_path}")
         return
 
-    source_po = polib.pofile(source_po_path)
+    source_po = polib.pofile(source_po_path, wrapwidth=0)
 
     for target_bcp47 in target_bcp47_list:
         target_path = os.path.join(base_path, target_bcp47, 'messages.po')
@@ -83,7 +83,7 @@ def update_po_files():
                 updated = True
         
         if updated:
-            target_po.save(target_path, wrapwidth=0)
+            target_po.save()
             print(f"Saved {target_path}")
 
 if __name__ == "__main__":
