@@ -52,7 +52,7 @@ def update_po_files():
         print(f"Source file not found at {source_po_path}")
         return
 
-    source_po = polib.pofile(source_po_path, wrapwidth=99999999)
+    source_po = polib.pofile(source_po_path)
 
     for target_bcp47 in target_bcp47_list:
         target_path = os.path.join(base_path, target_bcp47, 'messages.po')
@@ -61,7 +61,7 @@ def update_po_files():
             continue
             
         print(f"Processing {target_path}...")
-        target_po = polib.pofile(target_path)
+        target_po = polib.pofile(target_path, wrapwidth=0)
         
         argos_from = LOCALE_MAP.get(source_bcp47, source_bcp47)
         argos_to = LOCALE_MAP.get(target_bcp47, target_bcp47)

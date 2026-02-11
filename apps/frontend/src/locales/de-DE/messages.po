@@ -63,7 +63,7 @@ msgstr "Überall"
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:32
 msgid "Agreement to Terms"
-msgstr "Zustimmung zu den Nutzungsbedingungen"
+msgstr "Zustimmung z den Nutzungsbedingungen"
 
 #: src/app/pages/landing-page/LandingPage.tsx:105
 msgid "All content is stored as JSON documents that contributors can edit and improve."
