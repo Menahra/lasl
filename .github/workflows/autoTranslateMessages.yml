@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main
-    paths:
-      - "apps/frontend/src/locales/en-US/messages.po"
+    #paths:
+    #  - "apps/frontend/src/locales/en-US/messages.po"
 
 jobs:
   translate:
