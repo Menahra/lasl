@@ -16,9 +16,10 @@ import * as path from "path";
 
 const LIBRETRANSLATE_URL =
   process.env.LIBRETRANSLATE_URL ?? "http://localhost:5000/translate";
-const SOURCE_LOCALE = process.env.SOURCE_LOCALE ?? "en-US";
+const SOURCE_LOCALE = process.env.SOURCE_LOCALE ?? "en";
 const TARGET_LOCALES = ["de", "fr"]; // de-DE and fr-FR folders use short codes for LibreTranslate
 const LOCALE_FOLDERS = {
+  en: "en-US",
   de: "de-DE",
   fr: "fr-FR",
 };
