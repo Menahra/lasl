@@ -147,7 +147,7 @@ async function translateText(
 
 async function processLocale(shortCode) {
   const folderName = LOCALE_FOLDERS[shortCode];
-  const sourcePath = path.join(LOCALES_DIR, SOURCE_LOCALE, "messages.po");
+  const sourcePath = path.join(LOCALES_DIR, LOCALE_FOLDERS[SOURCE_LOCALE], "messages.po");
   const targetPath = path.join(LOCALES_DIR, folderName, "messages.po");
 
   if (!fs.existsSync(sourcePath)) {
