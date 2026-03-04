@@ -23,7 +23,7 @@ const LOCALE_FOLDERS = {
   de: "de-DE",
   fr: "fr-FR",
 };
-const LOCALES_DIR = path.join("src", "locales");
+const LOCALES_DIR = path.resolve(process.cwd(), "src", "locales");
 
 // ---------------------------------------------------------------------------
 // PO file parser / serialiser
