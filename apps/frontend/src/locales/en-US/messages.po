@@ -872,7 +872,7 @@ msgstr "Your email has been successfully verified."
 
 #: src/app/pages/reset-password/reset-password-sent-page/ResetPasswordSentPage.tsx:37
 msgid "Your password has been successfully updated."
-msgstr "Your password has been successfully updated."
+msgstr "Your password has been successfully updated. "
 
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:66
 msgid "Your personal data is used for the following purposes:"
