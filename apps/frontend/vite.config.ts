@@ -8,6 +8,7 @@ import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { defineConfig } from "vitest/config";
+import babel from "@rolldown/plugin-babel";
 
 // biome-ignore lint/style/noDefaultExport: needed for vite(st) to work
 export default defineConfig(() => {
@@ -18,10 +19,10 @@ export default defineConfig(() => {
         autoCodeSplitting: true,
         routesDirectory: "src/app/routes",
       }),
-      react({
-        babel: {
-          plugins: ["@lingui/babel-plugin-lingui-macro"],
-        },
+      react(),
+      //@ts-expect-error silencing this one for now
+      babel({
+        plugins: ["@lingui/babel-plugin-lingui-macro"],
       }),
       lingui(),
       tsconfigPaths(),
@@ -29,7 +30,7 @@ export default defineConfig(() => {
     ],
     build: {
       sourcemap: true,
-      rollupOptions: {
+      rolldownOptions: {
         external: ["test/**/*"],
       },
     },
