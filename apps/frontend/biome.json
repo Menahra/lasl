@@ -55,12 +55,14 @@
         "noImplicitBoolean": "error",
         "useComponentExportOnlyModules": "error",
         "useConsistentCurlyBraces": "error",
-        "useFragmentSyntax": "error"
+        "useFragmentSyntax": "error",
+        "noJsxLiterals": "error"
       },
       "suspicious": {
         "noArrayIndexKey": "error",
         "noCommentText": "error",
         "noDuplicateJsxProps": "error",
+        "noReactForwardRef": "error",
         "noSuspiciousSemicolonInJsx": "error"
       }
     }
