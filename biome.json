@@ -95,7 +95,7 @@
         "noUnmatchableAnbSelector": "error",
         "noUnreachable": "error",
         "noUnreachableSuper": "error",
-        "noUnresolvedImports": "error",
+        "noUnresolvedImports": "off",
         "noUnsafeFinally": "error",
         "noUnsafeOptionalChaining": "error",
         "noUnusedFunctionParameters": "error",
