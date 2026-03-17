@@ -46,7 +46,8 @@ jobs:
         uses: ./.github/actions/setup-monorepo
 
       - name: Run auto-translate script
-        run: node apps/frontend/scripts/auto-translate.js
+        working-directory: apps/frontend
+        run: node scripts/auto-translate.js
         env:
           LIBRETRANSLATE_URL: http://localhost:5000/translate
           SOURCE_LOCALE: en
