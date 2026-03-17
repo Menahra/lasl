@@ -53,8 +53,7 @@ jobs:
           SOURCE_LOCALE: en
 
       - name: Compile Lingui catalogs
-        working-directory: apps/frontend
-        run: pnpm compile:messages
+        run: pnpm turbo run compile:messages --filter=frontend
 
       - name: Create or update translation PR
         uses: peter-evans/create-pull-request@v6
