@@ -12,7 +12,7 @@ runs:
       uses: pnpm/action-setup@v4
 
     - name: Use Node.js ${{ inputs.node_version }}
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
         node-version: ${{ inputs.node_version }}
         cache: "pnpm"
@@ -22,7 +22,7 @@ runs:
       run: pnpm install --frozen-lockfile
 
     - name: Turbo Cache
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: .turbo
         # The key is based on the git commit. 
