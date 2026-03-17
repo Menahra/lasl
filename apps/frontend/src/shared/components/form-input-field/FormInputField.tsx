@@ -5,10 +5,9 @@ import {
 } from "@/src/shared/components/skeleton/Skeleton.tsx";
 import "./FormInputField.css";
 import clsx from "clsx";
-import type { RefObject } from "react";
+import type { ComponentProps } from "react";
 
 type FormInputFieldProps = {
-  ref?: RefObject<HTMLInputElement>;
   /** This id is used as id for the input and as htmlFor for the label */
   id: string;
   /** The text on the label */
@@ -16,7 +15,8 @@ type FormInputFieldProps = {
   /** an optional error string which indicates that this field is erroneous */
   error?: string | undefined;
 } & Pick<HTMLInputElement, "placeholder" | "type" | "name"> &
-  Pick<SkeletonProps, "loading">;
+  Pick<SkeletonProps, "loading"> &
+  ComponentProps<"input">;
 
 export const FormInputField = ({
   id,
