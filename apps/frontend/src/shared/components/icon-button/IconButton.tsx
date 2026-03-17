@@ -23,17 +23,15 @@ export const IconButton = ({
   icon,
   onClick,
   ...tooltipProps
-}: IconButtonProps) => {
-  return (
-    <Tooltip {...tooltipProps}>
-      <button
-        type="button"
-        onClick={onClick}
-        className={clsx("IconButton", className)}
-        aria-label={description}
-      >
-        {icon}
-      </button>
-    </Tooltip>
-  );
-};
+}: IconButtonProps) => (
+  <Tooltip {...tooltipProps}>
+    <button
+      type="button"
+      onClick={onClick}
+      className={clsx("IconButton", className)}
+      aria-label={description}
+    >
+      {icon}
+    </button>
+  </Tooltip>
+);

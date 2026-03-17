@@ -20,16 +20,14 @@ import { setI18nLoading } from "@/test/__mocks__/i18nContextMock.ts";
 import { renderWithProviders } from "@/test/__wrappers__/renderWithProviders.tsx";
 
 const navigateMock = vi.fn();
-vi.mock("@tanstack/react-router", async (importOriginalTanstackRouter) => {
-  return {
-    ...(await importOriginalTanstackRouter<
-      typeof import("@tanstack/react-router")
-    >()),
-    useRouter: () => ({
-      navigate: navigateMock,
-    }),
-  };
-});
+vi.mock("@tanstack/react-router", async (importOriginalTanstackRouter) => ({
+  ...(await importOriginalTanstackRouter<
+    typeof import("@tanstack/react-router")
+  >()),
+  useRouter: () => ({
+    navigate: navigateMock,
+  }),
+}));
 
 vi.mock("@/src/shared/hooks/api/useCreateUser.ts", () => ({
   useCreateUser: vi.fn(),

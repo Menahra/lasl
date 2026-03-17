@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 import { userApi } from "@/src/api/userApi.ts";
 
-export const useVerifyUser = () => {
-  return useMutation({
+export const useVerifyUser = () =>
+  useMutation({
     mutationFn: ({
       id,
       verificationCode,
@@ -11,4 +11,3 @@ export const useVerifyUser = () => {
       verificationCode: Parameters<typeof userApi.verifyUser>[1];
     }) => userApi.verifyUser(id, verificationCode),
   });
-};

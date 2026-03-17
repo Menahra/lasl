@@ -17,13 +17,13 @@ export const mockAuthenticationHandlers = [
   }),
 
   // Token refresh endpoint
-  http.post(`${API_BASE_URL}/${AUTH_API_URL}/sessions/refresh`, () => {
-    return HttpResponse.json(
+  http.post(`${API_BASE_URL}/${AUTH_API_URL}/sessions/refresh`, () =>
+    HttpResponse.json(
       {
         accessToken: mockPostRefreshNewAccessToken,
         refreshToken: mockPostRefreshNewRefreshToken,
       },
       { status: 200 },
-    );
-  }),
+    ),
+  ),
 ];

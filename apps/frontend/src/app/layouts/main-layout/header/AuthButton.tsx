@@ -28,7 +28,7 @@ export const AuthButton = (props: AuthButtonProps) => {
     try {
       await mutateAsync();
       navigate({ to: ROUTE_HOME });
-    } catch (_error) {
+    } catch {
       console.error("An error occured during logout");
     }
   };

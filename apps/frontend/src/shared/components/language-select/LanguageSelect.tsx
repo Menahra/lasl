@@ -19,7 +19,7 @@ import {
   Viewport as SelectViewport,
 } from "@radix-ui/react-select";
 import clsx from "clsx";
-import { forwardRef } from "react";
+import type { RefObject } from "react";
 import { Skeleton } from "@/src/shared/components/skeleton/Skeleton.tsx";
 import { useI18nContext } from "@/src/shared/hooks/useI18nContext.tsx";
 import "./LanguageSelect.css";
@@ -40,17 +40,20 @@ const languageOptions: LanguageOption[] = SUPPORTED_LOCALES.map(
   }),
 );
 
-const LanguageSelectItem = forwardRef<HTMLDivElement, SelectItemProps>(
-  ({ children, ...props }, forwardedRef) => {
-    return (
-      <SelectItem {...props} className="LanguageSelectItem" ref={forwardedRef}>
-        <SelectItemIndicator className="LanguageSelectItemIndicator">
-          <CheckIcon />
-        </SelectItemIndicator>
-        <SelectItemText>{children}</SelectItemText>
-      </SelectItem>
-    );
-  },
+type LanguageSelectItemProps = SelectItemProps & {
+  ref?: RefObject<HTMLDivElement>;
+};
+
+const LanguageSelectItem = ({
+  children,
+  ...props
+}: LanguageSelectItemProps) => (
+  <SelectItem {...props} className="LanguageSelectItem">
+    <SelectItemIndicator className="LanguageSelectItemIndicator">
+      <CheckIcon />
+    </SelectItemIndicator>
+    <SelectItemText>{children}</SelectItemText>
+  </SelectItem>
 );
 
 export const LanguageSelect = ({ className }: LanguageSelectProps) => {

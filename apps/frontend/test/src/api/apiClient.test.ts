@@ -49,11 +49,11 @@ describe("apiClient integration with cookie-based refresh token", () => {
         return HttpResponse.json({ message: "Unauthorized" }, { status: 401 });
       }),
 
-      http.post(`${API_BASE_URL}${AUTH_API_URL}/sessions/refresh`, () => {
-        return HttpResponse.json({
+      http.post(`${API_BASE_URL}${AUTH_API_URL}/sessions/refresh`, () =>
+        HttpResponse.json({
           accessToken: mockPostRefreshNewAccessToken,
-        });
-      }),
+        }),
+      ),
     );
 
     const res = await apiClient.get("/protected");
@@ -65,12 +65,12 @@ describe("apiClient integration with cookie-based refresh token", () => {
     localStorage.setItem(ACCESS_TOKEN_NAME, "expired-token");
 
     server.use(
-      http.get(`${API_BASE_URL}/protected`, () => {
-        return HttpResponse.json({ message: "Unauthorized" }, { status: 401 });
-      }),
-      http.post(`${API_BASE_URL}${AUTH_API_URL}/sessions/refresh`, () => {
-        return HttpResponse.json({ message: "Unauthorized" }, { status: 401 });
-      }),
+      http.get(`${API_BASE_URL}/protected`, () =>
+        HttpResponse.json({ message: "Unauthorized" }, { status: 401 }),
+      ),
+      http.post(`${API_BASE_URL}${AUTH_API_URL}/sessions/refresh`, () =>
+        HttpResponse.json({ message: "Unauthorized" }, { status: 401 }),
+      ),
     );
 
     await expect(apiClient.get("/protected")).rejects.toThrow();
@@ -90,11 +90,11 @@ describe("apiClient integration with cookie-based refresh token", () => {
         }
         return HttpResponse.json({ message: "Unauthorized" }, { status: 401 });
       }),
-      http.post(`${API_BASE_URL}${AUTH_API_URL}/sessions/refresh`, () => {
-        return HttpResponse.json({
+      http.post(`${API_BASE_URL}${AUTH_API_URL}/sessions/refresh`, () =>
+        HttpResponse.json({
           accessToken: mockPostRefreshNewAccessToken,
-        });
-      }),
+        }),
+      ),
     );
 
     const [res1, res2] = await Promise.all([

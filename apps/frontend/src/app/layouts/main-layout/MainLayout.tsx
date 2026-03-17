@@ -5,12 +5,10 @@ import "./MainLayout.css";
 
 type MainLayoutProps = PropsWithChildren;
 
-export const MainLayout = ({ children }: MainLayoutProps) => {
-  return (
-    <div className="MainLayout">
-      <Header />
-      <main className="MainLayoutContent">{children}</main>
-      <Footer />
-    </div>
-  );
-};
+export const MainLayout = ({ children }: MainLayoutProps) => (
+  <div className="MainLayout">
+    <Header />
+    <main className="MainLayoutContent">{children}</main>
+    <Footer />
+  </div>
+);

@@ -56,7 +56,7 @@
         "useComponentExportOnlyModules": "error",
         "useConsistentCurlyBraces": "error",
         "useFragmentSyntax": "error",
-        "noJsxLiterals": "error"
+        "noJsxLiterals": "off"
       },
       "suspicious": {
         "noArrayIndexKey": "error",

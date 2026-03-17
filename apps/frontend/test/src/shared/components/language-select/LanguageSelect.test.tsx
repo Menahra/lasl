@@ -38,10 +38,10 @@ describe("LanguageSelect", () => {
     await user.click(screen.getByRole("combobox", { name: "Language" }));
 
     for (const localeLabel of Object.values(SUPPORTED_LOCALES_LABELS)) {
-      if (localeLabel !== SUPPORTED_LOCALES_LABELS[DEFAULT_LOCALE]) {
-        expect(screen.getByText(localeLabel)).toBeVisible();
-      } else {
+      if (localeLabel === SUPPORTED_LOCALES_LABELS[DEFAULT_LOCALE]) {
         expect(screen.getAllByText(localeLabel)).toHaveLength(2);
+      } else {
+        expect(screen.getByText(localeLabel)).toBeVisible();
       }
     }
   });

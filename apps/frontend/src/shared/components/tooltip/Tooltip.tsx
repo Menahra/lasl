@@ -35,24 +35,22 @@ export const Tooltip = ({
   sideOffset = 8,
   collisionPadding = 8,
   title,
-}: TooltipProps) => {
-  return (
-    <RadixProvider delayDuration={delayDuration}>
-      <RadixRoot>
-        <RadixTrigger asChild={asChild}>{children}</RadixTrigger>
-        <RadixPortal>
-          {title ? (
-            <RadixContent
-              className="TooltipContent"
-              sideOffset={sideOffset}
-              collisionPadding={collisionPadding}
-            >
-              {title}
-              <RadixArrow className="TooltipArrow" />
-            </RadixContent>
-          ) : undefined}
-        </RadixPortal>
-      </RadixRoot>
-    </RadixProvider>
-  );
-};
+}: TooltipProps) => (
+  <RadixProvider delayDuration={delayDuration}>
+    <RadixRoot>
+      <RadixTrigger asChild={asChild}>{children}</RadixTrigger>
+      <RadixPortal>
+        {title ? (
+          <RadixContent
+            className="TooltipContent"
+            sideOffset={sideOffset}
+            collisionPadding={collisionPadding}
+          >
+            {title}
+            <RadixArrow className="TooltipArrow" />
+          </RadixContent>
+        ) : undefined}
+      </RadixPortal>
+    </RadixRoot>
+  </RadixProvider>
+);

@@ -23,12 +23,11 @@ export const switchI18nLocale = async (newLocale: SupportedLocale) => {
   } catch (error) {
     console.error(`Failed to load locale ${newLocale}: `, error);
 
-    if (newLocale !== DEFAULT_LOCALE) {
-      console.warn(`Falling back to default locale: ${DEFAULT_LOCALE}`);
-      await switchI18nLocale(DEFAULT_LOCALE);
-    } else {
+    if (newLocale === DEFAULT_LOCALE) {
       throw new Error(`Failed to load default locale ${DEFAULT_LOCALE}`);
     }
+    console.warn(`Falling back to default locale: ${DEFAULT_LOCALE}`);
+    await switchI18nLocale(DEFAULT_LOCALE);
   }
 };
 

@@ -11,7 +11,7 @@ export const useTranslateFormFieldError = <T extends ErrorKeyMap>(
 
   return (error?: FieldError): string | undefined => {
     if (!error?.message) {
-      return undefined;
+      return;
     }
 
     const messageDescriptor = errorMap[error.message as keyof T];

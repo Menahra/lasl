@@ -19,13 +19,11 @@ export const TextLink = ({
   variant,
   to,
   children,
-}: TextLinkProps) => {
-  return (
-    <TanstackRouterLink
-      className={clsx("TextLink", TextLinkVariants[variant], className)}
-      to={to}
-    >
-      {children}
-    </TanstackRouterLink>
-  );
-};
+}: TextLinkProps) => (
+  <TanstackRouterLink
+    className={clsx("TextLink", TextLinkVariants[variant], className)}
+    to={to}
+  >
+    {children}
+  </TanstackRouterLink>
+);

@@ -5,9 +5,10 @@ import {
 } from "@/src/shared/components/skeleton/Skeleton.tsx";
 import "./FormInputField.css";
 import clsx from "clsx";
-import { forwardRef } from "react";
+import type { RefObject } from "react";
 
 type FormInputFieldProps = {
+  ref?: RefObject<HTMLInputElement>;
   /** This id is used as id for the input and as htmlFor for the label */
   id: string;
   /** The text on the label */
@@ -17,30 +18,29 @@ type FormInputFieldProps = {
 } & Pick<HTMLInputElement, "placeholder" | "type" | "name"> &
   Pick<SkeletonProps, "loading">;
 
-export const FormInputField = forwardRef<HTMLInputElement, FormInputFieldProps>(
-  ({ id, label, loading, error, ...props }, ref) => {
-    return (
-      <div className="FormInputField">
-        <Skeleton loading={loading} width={60} height={16}>
-          <Label htmlFor={id} className="FormInputFieldLabel">
-            {label}
-          </Label>
-        </Skeleton>
-        <Skeleton loading={loading} width="100%" height={25}>
-          <input
-            ref={ref}
-            id={id}
-            className={clsx(
-              "FormInputFieldInput",
-              error && "FormInputFieldInputError",
-            )}
-            {...props}
-          />
-        </Skeleton>
-        {error ? (
-          <span className="FormInputFieldError">{error}</span>
-        ) : undefined}
-      </div>
-    );
-  },
+export const FormInputField = ({
+  id,
+  label,
+  loading,
+  error,
+  ...props
+}: FormInputFieldProps) => (
+  <div className="FormInputField">
+    <Skeleton loading={loading} width={60} height={16}>
+      <Label htmlFor={id} className="FormInputFieldLabel">
+        {label}
+      </Label>
+    </Skeleton>
+    <Skeleton loading={loading} width="100%" height={25}>
+      <input
+        id={id}
+        className={clsx(
+          "FormInputFieldInput",
+          error && "FormInputFieldInputError",
+        )}
+        {...props}
+      />
+    </Skeleton>
+    {error ? <span className="FormInputFieldError">{error}</span> : undefined}
+  </div>
 );

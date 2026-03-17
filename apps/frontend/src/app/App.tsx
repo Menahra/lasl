@@ -31,16 +31,14 @@ const RouterProviderWithContext = () => {
   return <RouterProvider router={router} />;
 };
 
-export const App = () => {
-  return (
-    <Suspense fallback="is loading">
-      <QueryClientProvider client={tanstackQueryClient}>
-        <AuthenticationProvider>
-          <I18nProvider>
-            <RouterProviderWithContext />
-          </I18nProvider>
-        </AuthenticationProvider>
-      </QueryClientProvider>
-    </Suspense>
-  );
-};
+export const App = () => (
+  <Suspense fallback="is loading">
+    <QueryClientProvider client={tanstackQueryClient}>
+      <AuthenticationProvider>
+        <I18nProvider>
+          <RouterProviderWithContext />
+        </I18nProvider>
+      </AuthenticationProvider>
+    </QueryClientProvider>
+  </Suspense>
+);

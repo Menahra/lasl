@@ -36,32 +36,30 @@ export const Button = ({
   loading = false,
   disabled = false,
   onClick,
-}: ButtonProps) => {
-  return (
-    <button
-      type={type}
-      className={clsx(
-        "Button",
-        ButtonVariants[variant],
-        !loading && ButtonAlignments[align],
-        fullWidth && "Button--fullWidth",
-        loading && "Button--loading",
-        loading && ButtonAlignments.center,
-      )}
-      onClick={loading ? undefined : onClick}
-      disabled={loading || disabled}
-      aria-busy={loading}
-    >
-      {loading ? (
-        <span className="ButtonSpinner" aria-hidden="true" />
-      ) : undefined}
-      {!loading && startIcon ? (
-        <span className="ButtonIcon">{startIcon}</span>
-      ) : undefined}
-      {children}
-      {!loading && endIcon ? (
-        <span className="ButtonIcon">{endIcon}</span>
-      ) : undefined}
-    </button>
-  );
-};
+}: ButtonProps) => (
+  <button
+    type={type}
+    className={clsx(
+      "Button",
+      ButtonVariants[variant],
+      !loading && ButtonAlignments[align],
+      fullWidth && "Button--fullWidth",
+      loading && "Button--loading",
+      loading && ButtonAlignments.center,
+    )}
+    onClick={loading ? undefined : onClick}
+    disabled={loading || disabled}
+    aria-busy={loading}
+  >
+    {loading ? (
+      <span className="ButtonSpinner" aria-hidden="true" />
+    ) : undefined}
+    {!loading && startIcon ? (
+      <span className="ButtonIcon">{startIcon}</span>
+    ) : undefined}
+    {children}
+    {!loading && endIcon ? (
+      <span className="ButtonIcon">{endIcon}</span>
+    ) : undefined}
+  </button>
+);
