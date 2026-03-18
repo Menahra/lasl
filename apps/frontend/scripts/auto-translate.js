@@ -58,14 +58,16 @@ function parsePo(content) {
 
   for (const line of lines) {
     if (line.startsWith("#")) {
-      // Do NOT flush here — comments belong to the NEXT entry
       comments.push(line);
     } else if (line.startsWith("msgid_plural ")) {
       msgidPlural = unquote(line.slice("msgid_plural ".length));
       currentKey = "msgid_plural";
       isPlural = true;
     } else if (line.startsWith("msgid ")) {
-      flush(); // Only flush when a new msgid starts
+      const pendingComments = [...comments];  // comments belong to the new entry
+      comments = [];
+      flush();                                // flush old entry (with empty comments)
+      comments = pendingComments;             // attach to new entry
       msgid = unquote(line.slice("msgid ".length));
       currentKey = "msgid";
     } else if (/^msgstr\[\d+\]/.test(line)) {
@@ -83,7 +85,7 @@ function parsePo(content) {
       else if (currentKey === "msgstr") msgstr[msgstr.length - 1] += val;
     }
   }
-  flush(); // flush the last entry
+  flush();
 
   return entries;
 }
