@@ -58,14 +58,14 @@ function parsePo(content) {
 
   for (const line of lines) {
     if (line.startsWith("#")) {
-      if (currentKey !== null) flush();
+      // Do NOT flush here — comments belong to the NEXT entry
       comments.push(line);
     } else if (line.startsWith("msgid_plural ")) {
       msgidPlural = unquote(line.slice("msgid_plural ".length));
       currentKey = "msgid_plural";
       isPlural = true;
     } else if (line.startsWith("msgid ")) {
-      flush();
+      flush(); // Only flush when a new msgid starts
       msgid = unquote(line.slice("msgid ".length));
       currentKey = "msgid";
     } else if (/^msgstr\[\d+\]/.test(line)) {
@@ -81,18 +81,26 @@ function parsePo(content) {
       if (currentKey === "msgid") msgid = (msgid ?? "") + val;
       else if (currentKey === "msgid_plural") msgidPlural = (msgidPlural ?? "") + val;
       else if (currentKey === "msgstr") msgstr[msgstr.length - 1] += val;
-    } else if (line.trim() === "") {
-      // blank line = block separator
     }
   }
-  flush();
+  flush(); // flush the last entry
 
   return entries;
 }
 
 function serialisePo(entries) {
-  const escape = (s) =>
-    s.replace(/"/g, '\\"').replace(/\n/g, "\\n");
+  const escape = (s) => s.replace(/"/g, '\\"');
+
+  const formatMsgstr = (value) => {
+    // Multi-line values (the PO header) must be serialised as separate quoted lines
+    const lines = value.split("\n");
+    if (lines.length <= 1) return `"${escape(value)}"`;
+    // PO convention: first line is empty "", then each field on its own line
+    return `""\n` + lines
+      .filter((l) => l !== "")
+      .map((l) => `"${escape(l)}\\n"`)
+      .join("\n");
+  };
 
   return entries
     .map((e) => {
@@ -103,7 +111,7 @@ function serialisePo(entries) {
         parts.push(`msgid_plural "${escape(e.msgidPlural)}"`);
         e.msgstr.forEach((s, i) => parts.push(`msgstr[${i}] "${escape(s)}"`));
       } else {
-        parts.push(`msgstr "${escape(e.msgstr[0] ?? "")}"`);
+        parts.push(`msgstr ${formatMsgstr(e.msgstr[0] ?? "")}`);
       }
       return parts.join("\n");
     })
