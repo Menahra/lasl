@@ -185,9 +185,7 @@ async function processLocale(shortCode) {
   for (const srcEntry of sourceEntries) {
     // Skip the PO header block (empty msgid)
     if (srcEntry.msgid === "") {
-      updatedEntries.push(
-        existingEntries.get("") ?? { ...srcEntry, msgstr: [srcEntry.msgstr[0] ?? ""] }
-      );
+      updatedEntries.push(existingEntries.get("") ?? { ...srcEntry });
       continue;
     }
 
@@ -199,8 +197,8 @@ async function processLocale(shortCode) {
         existing.msgstr.length === 0;
 
       if (!isMissingTranslation) {
-        // Already translated — keep as-is
-        updatedEntries.push(existing);
+        // Already translated — keep msgstr but take comments from source
+        updatedEntries.push({ ...existing, comments: srcEntry.comments });
         continue;
       }
     }
