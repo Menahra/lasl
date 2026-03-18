@@ -57,17 +57,18 @@ function parsePo(content) {
   };
 
   for (const line of lines) {
-    if (line.startsWith("#")) {
+    if (line.trim() === "") {
+      // Blank line = entry separator, but only flush if current entry is complete
+      if (msgid !== null && msgstr.length > 0) {
+        flush();
+      }
+    } else if (line.startsWith("#")) {
       comments.push(line);
     } else if (line.startsWith("msgid_plural ")) {
       msgidPlural = unquote(line.slice("msgid_plural ".length));
       currentKey = "msgid_plural";
       isPlural = true;
     } else if (line.startsWith("msgid ")) {
-      const pendingComments = [...comments];  // comments belong to the new entry
-      comments = [];
-      flush();                                // flush old entry (with empty comments)
-      comments = pendingComments;             // attach to new entry
       msgid = unquote(line.slice("msgid ".length));
       currentKey = "msgid";
     } else if (/^msgstr\[\d+\]/.test(line)) {
@@ -85,7 +86,7 @@ function parsePo(content) {
       else if (currentKey === "msgstr") msgstr[msgstr.length - 1] += val;
     }
   }
-  flush();
+  flush(); // flush the last entry
 
   return entries;
 }
