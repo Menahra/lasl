@@ -52,7 +52,7 @@ export class SmtpProvider implements EmailProvider {
     try {
       await this.transporter.verify();
       return true;
-    } catch (_error) {
+    } catch {
       return false;
     }
   }

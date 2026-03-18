@@ -20,9 +20,7 @@ const mockedEnvironmentConfig = {
 };
 
 vi.mock("@/src/config/environment.ts", () => ({
-  getEnvironmentConfig: () => {
-    return mockedEnvironmentConfig;
-  },
+  getEnvironmentConfig: () => mockedEnvironmentConfig,
 }));
 
 const mockLogger: FastifyBaseLogger = {
