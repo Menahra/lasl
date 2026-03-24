@@ -198,7 +198,6 @@ async function processLocale(shortCode) {
         existing.msgstr.length === 0;
 
       if (!isMissingTranslation) {
-        console.log(`  🔍  [${folderName}] "${srcEntry.msgid.slice(0, 40)}" — srcEntry.comments:`, srcEntry.comments);
         updatedEntries.push({ ...existing, comments: srcEntry.comments });
         continue;
       }

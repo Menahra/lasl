@@ -371,11 +371,11 @@ msgstr "Langue"
 
 #: src/app/pages/register/register-page/registerFormFields.ts:26
 msgid "Last Name"
-msgstr "Nom de "
+msgstr ""
 
 #: src/shared/formErrors.ts:12
 msgid "Last name is required"
-msgstr "Le nom de famille n'est pas requis"
+msgstr ""
 
 #. placeholder {0}: i18n.date(lastUpdate)
 #: src/app/layouts/legal-document-layout/LegalDocumentLayout.tsx:36
