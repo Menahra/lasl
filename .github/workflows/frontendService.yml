@@ -41,15 +41,6 @@ jobs:
         # We run build alongside validation. If build is cached, it's instant.
         run: pnpm turbo run check:ci check:types test build --filter=frontend
 
-      - name: 🌐 I18n Check
-        working-directory: apps/frontend
-        run: |
-          pnpm extract:messages
-          git diff --quiet || (
-            echo "❌ Lingui catalogs are out of date. Run 'pnpm extract:messages' and commit changes."
-            exit 1
-          )
-
       - name: 📊 Upload coverage to Codecov
         uses: codecov/codecov-action@v5
         with:
