@@ -167,7 +167,6 @@ async function processLocale(shortCode) {
   }
 
   const sourceEntries = parsePo(fs.readFileSync(sourcePath, "utf-8"));
-  console.log("First 3 source entries:", JSON.stringify(sourceEntries.slice(0, 3), null, 2));
 
   // Load existing target entries (keyed by msgid)
   let existingEntries = new Map();
