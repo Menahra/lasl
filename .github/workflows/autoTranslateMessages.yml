@@ -59,6 +59,9 @@ jobs:
         working-directory: apps/frontend
         run: pnpm compile:messages
 
+      - name: Show changed files
+        run: git -C apps/frontend status --short -- src/locales/
+
       - name: Create or update translation PR
         uses: peter-evans/create-pull-request@v8
         with:
