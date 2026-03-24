@@ -63,13 +63,7 @@ function parsePo(content) {
         flush();
       }
     } else if (line.startsWith("#")) {
-      // Split multi-reference #: lines into individual lines for consistent formatting
-      if (line.startsWith("#:") && line.includes(" ", 3)) {
-        const refs = line.slice(3).trim().split(" ");
-        refs.forEach(ref => comments.push(`#: ${ref}`));
-      } else {
-        comments.push(line);
-      }
+      comments.push(line);
     } else if (line.startsWith("msgid_plural ")) {
       msgidPlural = unquote(line.slice("msgid_plural ".length));
       currentKey = "msgid_plural";
