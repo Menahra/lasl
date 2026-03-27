@@ -8,7 +8,7 @@
   "packageManager": "pnpm@10.28.1",
   "devDependencies": {
     "@biomejs/biome": "2.4.7",
-    "turbo": "^2.8.17",
+    "turbo": "^2.8.20",
     "typescript": "^5.9.3"
   },
   "scripts": {
