@@ -1,0 +1,134 @@
+name: "Agent — PR Revision from Review Comment"
+
+# Triggers when you post a review comment on any agent PR.
+# Passes your comment to Gemini, which revises the relevant file and pushes a commit.
+#
+# Works for all stages: PO, Architect, Engineer, DevOps, QA.
+# You can also push directly to the branch instead — both paths work fine.
+
+on:
+  pull_request_review_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  revise:
+    name: Revise based on review comment
+    # Only run for human comments on agent-managed branches
+    if: >
+      github.actor != 'github-actions[bot]' &&
+      (
+        startsWith(github.event.pull_request.head.ref, 'po/')   ||
+        startsWith(github.event.pull_request.head.ref, 'arch/') ||
+        startsWith(github.event.pull_request.head.ref, 'feat/') ||
+        startsWith(github.event.pull_request.head.ref, 'infra/')||
+        startsWith(github.event.pull_request.head.ref, 'qa/')
+      )
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ☁️ Checkout PR branch
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: 🏗️ Setup Monorepo
+        uses: ./.github/actions/setup-monorepo
+        with:
+          node_version: "22"
+
+      - name: 🔍 Identify file to revise and agent role
+        id: meta
+        run: |
+          BRANCH="${{ github.event.pull_request.head.ref }}"
+
+          if [[ "$BRANCH" == po/* ]]; then
+            REST="${BRANCH#po/}"
+            FEATURE_ID=$(echo "$REST" | cut -d'-' -f1)
+            FEATURE_SLUG=$(echo "$REST" | cut -d'-' -f2-)
+            TARGET_FILE="features/${FEATURE_ID}_${FEATURE_SLUG}/01_po-spec.md"
+            ROLE_FILE=".github/agents/product-owner.md"
+
+          elif [[ "$BRANCH" == arch/* ]]; then
+            REST="${BRANCH#arch/}"
+            FEATURE_ID=$(echo "$REST" | cut -d'-' -f1)
+            FEATURE_SLUG=$(echo "$REST" | cut -d'-' -f2-)
+            TARGET_FILE="features/${FEATURE_ID}_${FEATURE_SLUG}/02_arch-design.md"
+            ROLE_FILE=".github/agents/software-architect.md"
+
+          elif [[ "$BRANCH" == infra/* ]]; then
+            REST="${BRANCH#infra/}"
+            FEATURE_ID=$(echo "$REST" | cut -d'-' -f1)
+            FEATURE_SLUG=$(echo "$REST" | cut -d'-' -f2-)
+            TARGET_FILE="features/${FEATURE_ID}_${FEATURE_SLUG}/03_infra-notes.md"
+            ROLE_FILE=".github/agents/devops-engineer.md"
+
+          elif [[ "$BRANCH" == feat/* ]] || [[ "$BRANCH" == qa/* ]]; then
+            COMMENT_PATH="${{ github.event.comment.path }}"
+            if [ -n "$COMMENT_PATH" ] && [ -f "$COMMENT_PATH" ]; then
+              TARGET_FILE="$COMMENT_PATH"
+            else
+              echo "Comment is not on a specific file — skipping revision."
+              exit 0
+            fi
+            if [[ "$BRANCH" == feat/* ]]; then
+              ROLE_FILE=".github/agents/software-engineer.md"
+            else
+              ROLE_FILE=".github/agents/qa-engineer.md"
+            fi
+          fi
+
+          echo "target_file=$TARGET_FILE" >> $GITHUB_OUTPUT
+          echo "role_file=$ROLE_FILE"     >> $GITHUB_OUTPUT
+
+      - name: 📥 Collect all review comments on this PR
+        id: comments
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const comments = await github.rest.pulls.listReviewComments({
+              owner: context.repo.owner,
+              repo:  context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              per_page: 100,
+            });
+            const filtered = comments.data
+              .filter(c => c.user.login !== 'github-actions[bot]')
+              .map(c => ({
+                author: c.user.login,
+                body:   c.body,
+                path:   c.path || null,
+                line:   c.line || null,
+              }));
+            return JSON.stringify(filtered);
+          result-encoding: string
+
+      - name: 🤖 Run revision agent
+        env:
+          GEMINI_API_KEY:  ${{ secrets.GEMINI_API_KEY }}
+          CURRENT_FILE:    ${{ steps.meta.outputs.target_file }}
+          AGENT_ROLE_FILE: ${{ steps.meta.outputs.role_file }}
+          COMMENTS_JSON:   ${{ steps.comments.outputs.result }}
+        run: node .github/scripts/revise-from-comments.mjs
+
+      - name: 📬 Commit revision
+        env:
+          COMMENTER:   ${{ github.actor }}
+          TARGET_FILE: ${{ steps.meta.outputs.target_file }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add "$TARGET_FILE"
+
+          if git diff --cached --quiet; then
+            echo "No changes after revision — skipping commit."
+            exit 0
+          fi
+
+          git commit -m "fix: revise ${TARGET_FILE} based on @${COMMENTER}'s feedback"
+          git push origin HEAD
+          echo "✅ Revision committed and pushed."

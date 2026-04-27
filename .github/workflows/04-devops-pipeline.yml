@@ -1,0 +1,105 @@
+name: "Agent — Stage 4: DevOps Engineer"
+
+# Triggers when the Engineer PR (label: stage:eng-review) is merged.
+# Calls Gemini as the DevOps agent, commits 03_infra-notes.md + any infra changes, opens a PR.
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - 'feature/**'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  run-devops-agent:
+    name: Run DevOps Engineer Agent
+    if: >
+      github.event.pull_request.merged == true &&
+      contains(github.event.pull_request.labels.*.name, 'stage:eng-review') &&
+      startsWith(github.event.pull_request.head.ref, 'feat/')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ☁️ Checkout repository
+        uses: actions/checkout@v5
+
+      - name: 🏗️ Setup Monorepo
+        uses: ./.github/actions/setup-monorepo
+        with:
+          node_version: "22"
+
+      - name: 🔍 Extract feature metadata
+        id: meta
+        run: |
+          BRANCH="${{ github.event.pull_request.head.ref }}"
+          REST="${BRANCH#feat/}"
+          FEATURE_ID=$(echo "$REST" | cut -d'-' -f1)
+          FEATURE_SLUG=$(echo "$REST" | cut -d'-' -f2-)
+          FEATURE_DIR="features/${FEATURE_ID}_${FEATURE_SLUG}"
+          NEW_BRANCH="infra/${FEATURE_ID}-${FEATURE_SLUG}"
+          OUTPUT_FILE="${FEATURE_DIR}/03_infra-notes.md"
+          BASE_BRANCH="${{ github.event.pull_request.base.ref }}"
+          echo "feature_id=$FEATURE_ID"     >> $GITHUB_OUTPUT
+          echo "feature_slug=$FEATURE_SLUG" >> $GITHUB_OUTPUT
+          echo "feature_dir=$FEATURE_DIR"   >> $GITHUB_OUTPUT
+          echo "branch=$NEW_BRANCH"         >> $GITHUB_OUTPUT
+          echo "output_file=$OUTPUT_FILE"   >> $GITHUB_OUTPUT
+          echo "base_branch=$BASE_BRANCH"   >> $GITHUB_OUTPUT
+
+      - name: 🤖 Run DevOps agent
+        env:
+          GEMINI_API_KEY:  ${{ secrets.GEMINI_API_KEY }}
+          AGENT_ROLE_FILE: .github/agents/devops-engineer.md
+          INPUT_FILES:     "${{ steps.meta.outputs.feature_dir }}/01_po-spec.md,${{ steps.meta.outputs.feature_dir }}/02_arch-design.md"
+          OUTPUT_FILE:     ${{ steps.meta.outputs.output_file }}
+          FEATURE_ID:      ${{ steps.meta.outputs.feature_id }}
+          FEATURE_SLUG:    ${{ steps.meta.outputs.feature_slug }}
+        run: node .github/scripts/run-agent.mjs
+
+      - name: 📬 Commit and open PR
+        env:
+          GH_TOKEN:     ${{ secrets.GITHUB_TOKEN }}
+          BRANCH:       ${{ steps.meta.outputs.branch }}
+          OUTPUT_FILE:  ${{ steps.meta.outputs.output_file }}
+          FEATURE_ID:   ${{ steps.meta.outputs.feature_id }}
+          FEATURE_SLUG: ${{ steps.meta.outputs.feature_slug }}
+          FEATURE_DIR:  ${{ steps.meta.outputs.feature_dir }}
+          ENG_PR:       ${{ github.event.pull_request.number }}
+          BASE_BRANCH:  ${{ steps.meta.outputs.base_branch }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git checkout -b "$BRANCH"
+          git add "$OUTPUT_FILE"
+          # Stage any docker-compose changes the agent may have written
+          git add docker-compose*.yml 2>/dev/null || true
+
+          git commit -m "feat(infra): add infra notes for ${FEATURE_ID}_${FEATURE_SLUG}"
+          git push origin "$BRANCH"
+
+          TITLE="[Infra] Infrastructure: ${FEATURE_SLUG//-/ } (#${FEATURE_ID})"
+          BODY="## Infrastructure Assessment
+
+Feature: \`${FEATURE_DIR}\`
+Implementation PR: #${ENG_PR}
+
+The DevOps agent has assessed the infrastructure impact of this feature.
+
+> **Secrets:** If new environment variables are listed in the infra notes, add them to Doppler before merging.
+
+Post a review comment to revise, or push your own changes directly.
+Merge when ready — the QA agent triggers automatically.
+
+### Files
+- \`${OUTPUT_FILE}\`"
+
+          gh pr create \
+            --title "$TITLE" \
+            --body  "$BODY" \
+            --base  "$BASE_BRANCH" \
+            --head  "$BRANCH" \
+            --label "stage:devops-review"

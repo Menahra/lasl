@@ -1,0 +1,102 @@
+name: "Agent — Stage 2: Software Architect"
+
+# Triggers when the PO spec PR (label: stage:po-review) is merged.
+# Calls Gemini as the Architect, commits 02_arch-design.md, opens a PR.
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - 'feature/**'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  run-arch-agent:
+    name: Run Software Architect Agent
+    if: >
+      github.event.pull_request.merged == true &&
+      contains(github.event.pull_request.labels.*.name, 'stage:po-review') &&
+      startsWith(github.event.pull_request.head.ref, 'po/')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ☁️ Checkout repository
+        uses: actions/checkout@v5
+
+      - name: 🏗️ Setup Monorepo
+        uses: ./.github/actions/setup-monorepo
+        with:
+          node_version: "22"
+
+      - name: 🔍 Extract feature metadata
+        id: meta
+        run: |
+          BRANCH="${{ github.event.pull_request.head.ref }}"
+          REST="${BRANCH#po/}"
+          FEATURE_ID=$(echo "$REST" | cut -d'-' -f1)
+          FEATURE_SLUG=$(echo "$REST" | cut -d'-' -f2-)
+          FEATURE_DIR="features/${FEATURE_ID}_${FEATURE_SLUG}"
+          NEW_BRANCH="arch/${FEATURE_ID}-${FEATURE_SLUG}"
+          OUTPUT_FILE="${FEATURE_DIR}/02_arch-design.md"
+          BASE_BRANCH="${{ github.event.pull_request.base.ref }}"
+          echo "feature_id=$FEATURE_ID"     >> $GITHUB_OUTPUT
+          echo "feature_slug=$FEATURE_SLUG" >> $GITHUB_OUTPUT
+          echo "feature_dir=$FEATURE_DIR"   >> $GITHUB_OUTPUT
+          echo "branch=$NEW_BRANCH"         >> $GITHUB_OUTPUT
+          echo "output_file=$OUTPUT_FILE"   >> $GITHUB_OUTPUT
+          echo "base_branch=$BASE_BRANCH"   >> $GITHUB_OUTPUT
+
+      - name: 🤖 Run Architect agent
+        env:
+          GEMINI_API_KEY:  ${{ secrets.GEMINI_API_KEY }}
+          AGENT_ROLE_FILE: .github/agents/software-architect.md
+          INPUT_FILES:     "${{ steps.meta.outputs.feature_dir }}/00_request.md,${{ steps.meta.outputs.feature_dir }}/01_po-spec.md"
+          OUTPUT_FILE:     ${{ steps.meta.outputs.output_file }}
+          FEATURE_ID:      ${{ steps.meta.outputs.feature_id }}
+          FEATURE_SLUG:    ${{ steps.meta.outputs.feature_slug }}
+        run: node .github/scripts/run-agent.mjs
+
+      - name: 📬 Commit and open PR
+        env:
+          GH_TOKEN:     ${{ secrets.GITHUB_TOKEN }}
+          BRANCH:       ${{ steps.meta.outputs.branch }}
+          OUTPUT_FILE:  ${{ steps.meta.outputs.output_file }}
+          FEATURE_ID:   ${{ steps.meta.outputs.feature_id }}
+          FEATURE_SLUG: ${{ steps.meta.outputs.feature_slug }}
+          FEATURE_DIR:  ${{ steps.meta.outputs.feature_dir }}
+          PO_PR:        ${{ github.event.pull_request.number }}
+          BASE_BRANCH:  ${{ steps.meta.outputs.base_branch }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git checkout -b "$BRANCH"
+          git add "$OUTPUT_FILE"
+          git commit -m "feat(arch): add design for ${FEATURE_ID}_${FEATURE_SLUG}"
+          git push origin "$BRANCH"
+
+          TITLE="[Arch] Design: ${FEATURE_SLUG//-/ } (#${FEATURE_ID})"
+          BODY="## Architecture Design
+
+Feature: \`${FEATURE_DIR}\`
+PO Spec PR: #${PO_PR}
+
+The Architect agent has produced a technical design based on the approved spec.
+
+Review the design carefully — check that affected files are correctly identified, decisions are justified, and the testing strategy is adequate.
+
+Post a review comment to trigger a revision, or push your own edits directly.
+Merge when ready — the Engineer agent triggers automatically.
+
+### Files
+- \`${OUTPUT_FILE}\`"
+
+          gh pr create \
+            --title "$TITLE" \
+            --body  "$BODY" \
+            --base  "$BASE_BRANCH" \
+            --head  "$BRANCH" \
+            --label "stage:arch-review"
