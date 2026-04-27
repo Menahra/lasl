@@ -20,7 +20,6 @@ export default defineConfig(() => {
         routesDirectory: "src/app/routes",
       }),
       react(),
-      //@ts-expect-error silencing this one for now
       babel({
         plugins: ["@lingui/babel-plugin-lingui-macro"],
       }),
