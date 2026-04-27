@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delete Account Modal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Base sizing */
+      --size-unit: 0.25rem;
+      --size-4: calc(var(--size-unit) * 4); /* 16px */
+      --size-5: calc(var(--size-unit) * 5); /* 20px */
+      --size-6: calc(var(--size-unit) * 6); /* 24px */
+      --size-8: calc(var(--size-unit) * 8); /* 32px */
+      --size-10: calc(var(--size-unit) * 10); /* 40px */
+      --size-12: calc(var(--size-unit) * 12); /* 48px */
+
+      --space-sm: calc(var(--size-unit) * 2); /* 8px */
+      --space-md: calc(var(--size-unit) * 4); /* 16px */
+      --space-lg: calc(var(--size-unit) * 6); /* 24px */
+      --space-xl: calc(var(--size-unit) * 8); /* 32px */
+
+      --radius-md: 0.375rem; /* 6px */
+      --radius-lg: 0.5rem; /* 8px */
+      --radius-xl: 0.75rem; /* 12px */
+
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+      /* Colors */
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-300: #cbd5e1;
+      --gray-400: #94a3b8;
+      --gray-500: #64748b;
+      --gray-700: #334155;
+      --gray-800: #1e293b;
+      --gray-900: #0f172a;
+
+      --primary-600: #2563eb;
+
+      --error-50: #fef2f2;
+      --error-500: #ef4444;
+      --error-600: #dc2626;
+      --error-700: #b91c1c;
+
+      --color-background: var(--gray-50);
+      --color-surface: #ffffff;
+      --color-overlay: rgba(15, 23, 42, 0.5); /* 50% gray-900 */
+
+      --color-text-primary: var(--gray-900);
+      --color-text-secondary: var(--gray-700);
+      --color-text-inverse: #ffffff;
+
+      --color-border: var(--gray-300);
+      --color-border-light: var(--gray-200);
+      --color-border-strong: var(--gray-400);
+      --color-border-focus: var(--primary-600);
+
+      /* Typography */
+      --font-serif: "Crimson Text", Georgia, serif;
+      --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+      --font-size-sm: 0.875rem;
+      --font-size-md: 1rem;
+      --font-size-lg: 1.125rem;
+      --font-size-xl: 1.25rem;
+
+      --font-weight-regular: 400;
+      --font-weight-medium: 500;
+      --font-weight-semibold: 600;
+      --font-weight-bold: 700;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--color-background);
+      color: var(--color-text-primary);
+      min-width: 1440px;
+      min-height: 100vh;
+      overflow: hidden; /* prevent scrolling when modal is open */
+    }
+
+    /* Modal Overlay */
+    .ModalOverlay {
+      position: fixed;
+      inset: 0;
+      background-color: var(--color-overlay);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+      padding: var(--space-lg);
+    }
+
+    /* Modal Content Box */
+    .Modal {
+      background-color: var(--color-surface);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-xl);
+      width: 100%;
+      max-width: 480px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .Modal__header {
+      padding: var(--space-xl) var(--space-xl) 0;
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-md);
+    }
+
+    .Modal__icon {
+      flex-shrink: 0;
+      width: var(--size-12);
+      height: var(--size-12);
+      border-radius: 50%;
+      background-color: var(--error-50);
+      color: var(--error-600);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .Modal__title {
+      font-family: var(--font-serif);
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+      margin-top: calc(var(--space-sm) / 2);
+    }
+
+    .Modal__body {
+      padding: var(--space-md) var(--space-xl) var(--space-xl);
+    }
+
+    .Modal__text {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+      margin-bottom: var(--space-lg);
+    }
+
+    .FormGroup {
+      margin-bottom: var(--space-lg);
+    }
+
+    .FormLabel {
+      display: block;
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      margin-bottom: var(--space-sm);
+    }
+
+    .InputField__input {
+      width: 100%;
+      height: var(--size-10);
+      padding: 0 var(--space-md);
+      font-family: var(--font-sans);
+      font-size: var(--font-size-md);
+      color: var(--color-text-primary);
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      transition: border-color 0.2s, outline 0.2s;
+    }
+
+    .InputField__input:hover {
+      border-color: var(--color-border-strong);
+    }
+
+    .InputField__input:focus {
+      outline: 2px solid var(--color-border-focus);
+      outline-offset: -1px;
+      border-color: var(--color-border-focus);
+    }
+
+    .Modal__footer {
+      padding: var(--space-md) var(--space-xl);
+      background-color: var(--gray-50);
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--space-md);
+    }
+
+    .Button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: var(--size-10);
+      padding: 0 var(--space-md);
+      font-family: var(--font-sans);
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: background-color 0.2s, color 0.2s;
+      border: none;
+    }
+
+    .Button--secondary {
+      background-color: var(--color-surface);
+      color: var(--color-text-primary);
+      border: 1px solid var(--color-border);
+    }
+
+    .Button--secondary:hover {
+      background-color: var(--gray-50);
+      border-color: var(--gray-400);
+    }
+
+    .Button--danger {
+      background-color: var(--error-600);
+      color: var(--color-text-inverse);
+    }
+
+    .Button--danger:hover {
+      background-color: var(--error-700);
+    }
+
+    /* SVG Icon Placeholder Styling */
+    .Modal__icon svg {
+      width: var(--size-6);
+      height: var(--size-6);
+    }
+
+    /* Page Content Background (blurred/faded behind modal) */
+    .PageContent {
+      padding: var(--space-lg);
+      filter: blur(2px);
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Background page content to show context -->
+  <main class="PageContent">
+    <div style="max-width: 800px; margin: 0 auto; height: 100vh;">
+      <h1 style="font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: 24px;">Profile Settings</h1>
+      <!-- Simplified background elements -->
+      <div style="background: white; border: 1px solid #cbd5e1; border-radius: 8px; padding: 24px; margin-bottom: 24px; height: 300px;"></div>
+      <div style="background: white; border: 1px solid #ef4444; border-radius: 8px; padding: 24px; height: 150px;"></div>
+    </div>
+  </main>
+
+  <!-- The Modal Overlay -->
+  <div class="ModalOverlay">
+    <div class="Modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+
+      <div class="Modal__header">
+        <div class="Modal__icon">
+          <!-- Warning Icon -->
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+        </div>
+        <h2 class="Modal__title" id="modal-title">Delete Account</h2>
+      </div>
+
+      <div class="Modal__body">
+        <p class="Modal__text">
+          Are you sure you want to delete your account? This action is permanent and cannot be undone. Please enter your password to confirm.
+        </p>
+
+        <div class="FormGroup">
+          <label for="password-confirm" class="FormLabel">Current Password</label>
+          <input type="password" id="password-confirm" class="InputField__input" placeholder="Enter your password to confirm" />
+        </div>
+      </div>
+
+      <div class="Modal__footer">
+        <button type="button" class="Button Button--secondary">Cancel</button>
+        <button type="button" class="Button Button--danger">Confirm Deletion</button>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>
