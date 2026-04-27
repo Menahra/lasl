@@ -89,9 +89,7 @@ describe("InputField", () => {
     expect(input).toHaveValue(`${firstInputText}${moreInput}`);
 
     await user.type(input, "{BackSpace}");
-    expect(input).toHaveValue(
-      `${firstInputText}${moreInput.substring(0, moreInput.length - 1)}`,
-    );
+    expect(input).toHaveValue(`${firstInputText}${moreInput.slice(0, -1)}`);
 
     await user.clear(input);
     expect(input).toHaveValue("");
@@ -124,7 +122,7 @@ describe("InputField", () => {
     expect(testOnChangeFn).toHaveBeenCalledTimes(testingInput.length);
     Array.from(testingInput).forEach((_, testingInputIndex) => {
       expect(testOnChangeFn).toHaveBeenCalledWith(
-        testingInput.substring(0, testingInputIndex + 1),
+        testingInput.slice(0, testingInputIndex + 1),
       );
     });
   });

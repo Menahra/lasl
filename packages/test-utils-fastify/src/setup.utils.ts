@@ -25,7 +25,7 @@ export const setupFastifyTestEnvironment = async (
     if (baseMongoUri) {
       // Create a unique DB name using random string + timestamp
       // biome-ignore lint/style/noMagicNumbers: ok here
-      const uniqueId = Math.random().toString(36).substring(2, 7);
+      const uniqueId = Math.random().toString(36).slice(2, 7);
       const timestamp = Date.now();
       const dbName = `test-${timestamp}-${uniqueId}`;
 
