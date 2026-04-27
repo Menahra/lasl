@@ -1,90 +1,100 @@
 name: "Agent — PR Revision from Review Comment"
 
-# Triggers when you post a review comment on any agent PR.
-# Passes your comment to Gemini, which revises the relevant file and pushes a commit.
+# Triggers when you post a review comment on any Jules-created PR targeting a feature branch.
+# Jules re-runs with your feedback included in the prompt, opens a fresh PR,
+# and the old PR is closed automatically.
 #
 # Works for all stages: PO, Architect, Engineer, DevOps, QA.
-# You can also push directly to the branch instead — both paths work fine.
+# You can also push directly to the Jules branch instead — both paths work.
 
 on:
   pull_request_review_comment:
     types: [created]
 
 permissions:
-  contents: write
-  pull-requests: read
+  contents: read
+  pull-requests: write
 
 jobs:
   revise:
     name: Revise based on review comment
-    # Only run for human comments on agent-managed branches
     if: >
+      !endsWith(github.actor, '[bot]') &&
       github.actor != 'github-actions[bot]' &&
-      (
-        startsWith(github.event.pull_request.head.ref, 'po/')   ||
-        startsWith(github.event.pull_request.head.ref, 'arch/') ||
-        startsWith(github.event.pull_request.head.ref, 'feat/') ||
-        startsWith(github.event.pull_request.head.ref, 'infra/')||
-        startsWith(github.event.pull_request.head.ref, 'qa/')
-      )
+      startsWith(github.event.pull_request.base.ref, 'feature/')
     runs-on: ubuntu-latest
 
     steps:
-      - name: ☁️ Checkout PR branch
+      # Checkout the feature branch so invoke-jules.sh and agent files are available
+      - name: ☁️ Checkout feature branch
         uses: actions/checkout@v5
         with:
-          ref: ${{ github.event.pull_request.head.ref }}
+          ref: ${{ github.event.pull_request.base.ref }}
 
-      - name: 🏗️ Setup Monorepo
-        uses: ./.github/actions/setup-monorepo
-        with:
-          node_version: "22"
-
-      - name: 🔍 Identify file to revise and agent role
+      - name: 🔍 Extract feature and stage metadata
         id: meta
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          BRANCH="${{ github.event.pull_request.head.ref }}"
+          BASE="${{ github.event.pull_request.base.ref }}"
+          REST="${BASE#feature/}"
+          FEATURE_ID=$(echo "$REST"   | cut -d'-' -f1)
+          FEATURE_SLUG=$(echo "$REST" | cut -d'-' -f2-)
+          FEATURE_DIR="features/${FEATURE_ID}_${FEATURE_SLUG}"
+          OLD_PR="${{ github.event.pull_request.number }}"
 
-          if [[ "$BRANCH" == po/* ]]; then
-            REST="${BRANCH#po/}"
-            FEATURE_ID=$(echo "$REST" | cut -d'-' -f1)
-            FEATURE_SLUG=$(echo "$REST" | cut -d'-' -f2-)
-            TARGET_FILE="features/${FEATURE_ID}_${FEATURE_SLUG}/01_po-spec.md"
-            ROLE_FILE=".github/agents/product-owner.md"
+          # Determine stage from the PR labels
+          STAGE_LABEL=$(gh pr view "$OLD_PR" \
+            --json labels \
+            --jq '.labels[].name | select(startswith("stage:"))' \
+            --repo "${{ github.repository }}" | head -1)
 
-          elif [[ "$BRANCH" == arch/* ]]; then
-            REST="${BRANCH#arch/}"
-            FEATURE_ID=$(echo "$REST" | cut -d'-' -f1)
-            FEATURE_SLUG=$(echo "$REST" | cut -d'-' -f2-)
-            TARGET_FILE="features/${FEATURE_ID}_${FEATURE_SLUG}/02_arch-design.md"
-            ROLE_FILE=".github/agents/software-architect.md"
-
-          elif [[ "$BRANCH" == infra/* ]]; then
-            REST="${BRANCH#infra/}"
-            FEATURE_ID=$(echo "$REST" | cut -d'-' -f1)
-            FEATURE_SLUG=$(echo "$REST" | cut -d'-' -f2-)
-            TARGET_FILE="features/${FEATURE_ID}_${FEATURE_SLUG}/03_infra-notes.md"
-            ROLE_FILE=".github/agents/devops-engineer.md"
-
-          elif [[ "$BRANCH" == feat/* ]] || [[ "$BRANCH" == qa/* ]]; then
-            COMMENT_PATH="${{ github.event.comment.path }}"
-            if [ -n "$COMMENT_PATH" ] && [ -f "$COMMENT_PATH" ]; then
-              TARGET_FILE="$COMMENT_PATH"
-            else
-              echo "Comment is not on a specific file — skipping revision."
-              exit 0
-            fi
-            if [[ "$BRANCH" == feat/* ]]; then
-              ROLE_FILE=".github/agents/software-engineer.md"
-            else
-              ROLE_FILE=".github/agents/qa-engineer.md"
-            fi
+          if [ -z "$STAGE_LABEL" ]; then
+            echo "No stage label found on PR — skipping."
+            exit 0
           fi
 
-          echo "target_file=$TARGET_FILE" >> $GITHUB_OUTPUT
-          echo "role_file=$ROLE_FILE"     >> $GITHUB_OUTPUT
+          case "$STAGE_LABEL" in
+            stage:po-review)
+              AGENT_FILE=".github/agents/product-owner.md"
+              CONTEXT_HINT="${FEATURE_DIR}/01_po-spec.md"
+              ;;
+            stage:ui-review)
+              AGENT_FILE=".github/agents/ui-ux-designer.md"
+              CONTEXT_HINT="the mockups and design notes in ${FEATURE_DIR}/design/"
+              ;;
+            stage:arch-review)
+              AGENT_FILE=".github/agents/software-architect.md"
+              CONTEXT_HINT="${FEATURE_DIR}/02_arch-design.md"
+              ;;
+            stage:eng-review)
+              AGENT_FILE=".github/agents/software-engineer.md"
+              CONTEXT_HINT="the implementation in PR #${OLD_PR}"
+              ;;
+            stage:devops-review)
+              AGENT_FILE=".github/agents/devops-engineer.md"
+              CONTEXT_HINT="${FEATURE_DIR}/03_infra-notes.md"
+              ;;
+            stage:qa-review)
+              AGENT_FILE=".github/agents/qa-engineer.md"
+              CONTEXT_HINT="the E2E tests in packages/e2e-tests/tests/ added in PR #${OLD_PR}"
+              ;;
+            *)
+              echo "Unrecognised stage label '${STAGE_LABEL}' — skipping."
+              exit 0
+              ;;
+          esac
 
-      - name: 📥 Collect all review comments on this PR
+          echo "feature_id=$FEATURE_ID"     >> $GITHUB_OUTPUT
+          echo "feature_slug=$FEATURE_SLUG" >> $GITHUB_OUTPUT
+          echo "feature_dir=$FEATURE_DIR"   >> $GITHUB_OUTPUT
+          echo "base_branch=$BASE"          >> $GITHUB_OUTPUT
+          echo "old_pr=$OLD_PR"             >> $GITHUB_OUTPUT
+          echo "stage_label=$STAGE_LABEL"   >> $GITHUB_OUTPUT
+          echo "agent_file=$AGENT_FILE"     >> $GITHUB_OUTPUT
+          echo "context_hint=$CONTEXT_HINT" >> $GITHUB_OUTPUT
+
+      - name: 📥 Collect all reviewer comments
         id: comments
         uses: actions/github-script@v7
         with:
@@ -95,40 +105,75 @@ jobs:
               pull_number: context.payload.pull_request.number,
               per_page: 100,
             });
-            const filtered = comments.data
-              .filter(c => c.user.login !== 'github-actions[bot]')
-              .map(c => ({
-                author: c.user.login,
-                body:   c.body,
-                path:   c.path || null,
-                line:   c.line || null,
-              }));
-            return JSON.stringify(filtered);
+            const human = comments.data
+              .filter(c => !c.user.login.endsWith('[bot]') && c.user.type !== 'Bot')
+              .map(c => {
+                const loc = c.path ? ` (${c.path}${c.line ? ':' + c.line : ''})` : '';
+                return `- @${c.user.login}${loc}: ${c.body}`;
+              })
+              .join('\n');
+            return human || '(no human comments found)';
           result-encoding: string
 
-      - name: 🤖 Run revision agent
+      - name: 🤖 Invoke Jules — Revision
+        id: jules
         env:
-          GEMINI_API_KEY:  ${{ secrets.GEMINI_API_KEY }}
-          CURRENT_FILE:    ${{ steps.meta.outputs.target_file }}
-          AGENT_ROLE_FILE: ${{ steps.meta.outputs.role_file }}
-          COMMENTS_JSON:   ${{ steps.comments.outputs.result }}
-        run: node .github/scripts/revise-from-comments.mjs
-
-      - name: 📬 Commit revision
-        env:
-          COMMENTER:   ${{ github.actor }}
-          TARGET_FILE: ${{ steps.meta.outputs.target_file }}
+          JULES_API_KEY:     ${{ secrets.JULES_API_KEY }}
+          STARTING_BRANCH:   ${{ steps.meta.outputs.base_branch }}
+          FEATURE_ID:        ${{ steps.meta.outputs.feature_id }}
+          FEATURE_SLUG:      ${{ steps.meta.outputs.feature_slug }}
+          FEATURE_DIR:       ${{ steps.meta.outputs.feature_dir }}
+          AGENT_FILE:        ${{ steps.meta.outputs.agent_file }}
+          CONTEXT_HINT:      ${{ steps.meta.outputs.context_hint }}
+          OLD_PR:            ${{ steps.meta.outputs.old_pr }}
+          REVIEWER_COMMENTS: ${{ steps.comments.outputs.result }}
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          cat > /tmp/jules-prompt.txt << 'HEREDOC'
+          Your role and full instructions are in `AGENT_FILE_PH` — read it first.
+          Your project context is in `PROJECT_CONTEXT.md` — read it carefully.
+          HEREDOC
 
-          git add "$TARGET_FILE"
+          # Replace placeholder with actual value (safe: no newlines in path)
+          sed -i "s|AGENT_FILE_PH|${AGENT_FILE}|g" /tmp/jules-prompt.txt
 
-          if git diff --cached --quiet; then
-            echo "No changes after revision — skipping commit."
-            exit 0
-          fi
+          cat >> /tmp/jules-prompt.txt << HEREDOC
 
-          git commit -m "fix: revise ${TARGET_FILE} based on @${COMMENTER}'s feedback"
-          git push origin HEAD
-          echo "✅ Revision committed and pushed."
+          Feature ID:        ${FEATURE_ID}
+          Feature slug:      ${FEATURE_SLUG}
+          Feature directory: ${FEATURE_DIR}
+
+          Your previous work is in: ${CONTEXT_HINT}
+          (It was submitted as PR #${OLD_PR}, which is being replaced by this revision.)
+
+          A reviewer has requested the following changes:
+          HEREDOC
+
+          # Append comments safely (may contain special chars / newlines)
+          echo "$REVIEWER_COMMENTS" >> /tmp/jules-prompt.txt
+
+          cat >> /tmp/jules-prompt.txt << HEREDOC
+
+          Please revise your work to address all feedback above.
+          Apply the same quality standards as in your original role instructions.
+          HEREDOC
+
+          export JULES_PROMPT="$(cat /tmp/jules-prompt.txt)"
+          export GITHUB_REPOSITORY="${{ github.repository }}"
+          bash .github/scripts/invoke-jules.sh
+
+      - name: 🔒 Close superseded PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OLD_PR:   ${{ steps.meta.outputs.old_pr }}
+          NEW_PR:   ${{ steps.jules.outputs.pr_url }}
+        run: |
+          gh pr close "$OLD_PR" \
+            --comment "Superseded by a revised Jules PR: ${NEW_PR}" \
+            --repo "${{ github.repository }}"
+
+      - name: 🏷️ Label Jules' revised PR
+        env:
+          GH_TOKEN:    ${{ secrets.GITHUB_TOKEN }}
+          PR_URL:      ${{ steps.jules.outputs.pr_url }}
+          STAGE_LABEL: ${{ steps.meta.outputs.stage_label }}
+        run: gh pr edit "$PR_URL" --add-label "$STAGE_LABEL"

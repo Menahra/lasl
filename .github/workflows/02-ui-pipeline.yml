@@ -1,0 +1,95 @@
+name: "Agent — Stage 2: UI/UX Designer"
+
+# Triggers when the PO spec PR (label: stage:po-review) is merged into the feature branch.
+# Invokes Jules as the UI/UX Designer; Jules reads the design tokens and existing components,
+# produces HTML mockups, screenshots them with Playwright, and opens a PR labelled
+# stage:ui-review. The Architect stage triggers when this PR is merged.
+#
+# If the feature needs no UI changes, Jules writes only a design-notes.md saying so.
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - 'feature/**'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  run-ui-agent:
+    name: Run UI/UX Designer Agent
+    if: >
+      github.event.pull_request.merged == true &&
+      contains(github.event.pull_request.labels.*.name, 'stage:po-review') &&
+      startsWith(github.event.pull_request.base.ref, 'feature/')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ☁️ Checkout repository
+        uses: actions/checkout@v5
+
+      - name: 🔍 Extract feature metadata
+        id: meta
+        run: |
+          BASE="${{ github.event.pull_request.base.ref }}"
+          REST="${BASE#feature/}"
+          FEATURE_ID=$(echo "$REST"   | cut -d'-' -f1)
+          FEATURE_SLUG=$(echo "$REST" | cut -d'-' -f2-)
+          FEATURE_DIR="features/${FEATURE_ID}_${FEATURE_SLUG}"
+          echo "feature_id=$FEATURE_ID"     >> $GITHUB_OUTPUT
+          echo "feature_slug=$FEATURE_SLUG" >> $GITHUB_OUTPUT
+          echo "feature_dir=$FEATURE_DIR"   >> $GITHUB_OUTPUT
+          echo "base_branch=$BASE"          >> $GITHUB_OUTPUT
+
+      - name: 🤖 Invoke Jules — UI/UX Designer
+        id: jules
+        env:
+          JULES_API_KEY:   ${{ secrets.JULES_API_KEY }}
+          STARTING_BRANCH: ${{ steps.meta.outputs.base_branch }}
+          FEATURE_ID:      ${{ steps.meta.outputs.feature_id }}
+          FEATURE_SLUG:    ${{ steps.meta.outputs.feature_slug }}
+          FEATURE_DIR:     ${{ steps.meta.outputs.feature_dir }}
+          PO_PR:           ${{ github.event.pull_request.number }}
+        run: |
+          cat > /tmp/jules-prompt.txt << 'HEREDOC'
+          Your role and full instructions are in `.github/agents/ui-ux-designer.md` — read it first.
+          Your project context is in `PROJECT_CONTEXT.md` — read it carefully before proceeding.
+          HEREDOC
+
+          cat >> /tmp/jules-prompt.txt << HEREDOC
+
+          Feature ID:        ${FEATURE_ID}
+          Feature slug:      ${FEATURE_SLUG}
+          Feature directory: ${FEATURE_DIR}
+          PO Spec PR:        #${PO_PR}
+
+          Input file (already merged into this branch):
+            \`${FEATURE_DIR}/01_po-spec.md\` — the approved product spec (your primary input)
+
+          Design system files to read before starting:
+            \`apps/frontend/src/styles/tokens/\` (all .css files)
+            \`apps/frontend/src/styles/index.css\`
+            \`apps/frontend/src/app/pages/login-page/\` (reference)
+            \`apps/frontend/src/shared/components/button/\` (reference)
+            \`apps/frontend/src/shared/components/input-field/\` (reference)
+
+          Output directory: \`${FEATURE_DIR}/design/\`
+
+          Follow your role instructions exactly — read the spec, determine which screens
+          need designing, produce the HTML mockups, screenshot each one with Playwright,
+          and write the design notes.
+
+          Only create files inside \`${FEATURE_DIR}/design/\`.
+          HEREDOC
+
+          export JULES_PROMPT="$(cat /tmp/jules-prompt.txt)"
+          export GITHUB_REPOSITORY="${{ github.repository }}"
+          bash .github/scripts/invoke-jules.sh
+
+      - name: 🏷️ Label Jules' PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL:   ${{ steps.jules.outputs.pr_url }}
+        run: gh pr edit "$PR_URL" --add-label "stage:ui-review"

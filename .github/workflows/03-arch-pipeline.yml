@@ -1,0 +1,88 @@
+name: "Agent — Stage 3: Software Architect"
+
+# Triggers when the UI/UX Designer PR (label: stage:ui-review) is merged into the feature branch.
+# Invokes Jules as the Architect; Jules reads the PO spec + approved mockups, writes
+# 02_arch-design.md, and opens a PR labelled stage:arch-review.
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - 'feature/**'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  run-arch-agent:
+    name: Run Software Architect Agent
+    if: >
+      github.event.pull_request.merged == true &&
+      contains(github.event.pull_request.labels.*.name, 'stage:ui-review') &&
+      startsWith(github.event.pull_request.base.ref, 'feature/')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ☁️ Checkout repository
+        uses: actions/checkout@v5
+
+      - name: 🔍 Extract feature metadata
+        id: meta
+        run: |
+          BASE="${{ github.event.pull_request.base.ref }}"
+          REST="${BASE#feature/}"
+          FEATURE_ID=$(echo "$REST"   | cut -d'-' -f1)
+          FEATURE_SLUG=$(echo "$REST" | cut -d'-' -f2-)
+          FEATURE_DIR="features/${FEATURE_ID}_${FEATURE_SLUG}"
+          echo "feature_id=$FEATURE_ID"     >> $GITHUB_OUTPUT
+          echo "feature_slug=$FEATURE_SLUG" >> $GITHUB_OUTPUT
+          echo "feature_dir=$FEATURE_DIR"   >> $GITHUB_OUTPUT
+          echo "base_branch=$BASE"          >> $GITHUB_OUTPUT
+
+      - name: 🤖 Invoke Jules — Software Architect
+        id: jules
+        env:
+          JULES_API_KEY:   ${{ secrets.JULES_API_KEY }}
+          STARTING_BRANCH: ${{ steps.meta.outputs.base_branch }}
+          FEATURE_ID:      ${{ steps.meta.outputs.feature_id }}
+          FEATURE_SLUG:    ${{ steps.meta.outputs.feature_slug }}
+          FEATURE_DIR:     ${{ steps.meta.outputs.feature_dir }}
+          UI_PR:           ${{ github.event.pull_request.number }}
+        run: |
+          cat > /tmp/jules-prompt.txt << 'HEREDOC'
+          Your role and full instructions are in `.github/agents/software-architect.md` — read it first.
+          Your project context is in `PROJECT_CONTEXT.md` — read it carefully before proceeding.
+          HEREDOC
+
+          cat >> /tmp/jules-prompt.txt << HEREDOC
+
+          Feature ID:        ${FEATURE_ID}
+          Feature slug:      ${FEATURE_SLUG}
+          Feature directory: ${FEATURE_DIR}
+          UI Design PR:      #${UI_PR}
+
+          Input files (all already merged into this branch):
+            \`${FEATURE_DIR}/01_po-spec.md\`       — approved product spec
+            \`${FEATURE_DIR}/design/\`             — UI/UX mockups and design notes (if any)
+              Read \`${FEATURE_DIR}/design/00_design-notes.md\` for the screen inventory
+              and list of new components the engineer will need to build.
+
+          Output: \`${FEATURE_DIR}/02_arch-design.md\` — produce this file per your instructions
+
+          Your architecture must account for any new screens and components identified in the
+          design notes. Ensure your affected-files list covers both backend and frontend work.
+
+          Only create or modify \`${FEATURE_DIR}/02_arch-design.md\`.
+          Do not touch any other file in the repository.
+          HEREDOC
+
+          export JULES_PROMPT="$(cat /tmp/jules-prompt.txt)"
+          export GITHUB_REPOSITORY="${{ github.repository }}"
+          bash .github/scripts/invoke-jules.sh
+
+      - name: 🏷️ Label Jules' PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL:   ${{ steps.jules.outputs.pr_url }}
+        run: gh pr edit "$PR_URL" --add-label "stage:arch-review"

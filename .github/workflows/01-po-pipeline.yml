@@ -1,8 +1,8 @@
 name: "Agent — Stage 1: Product Owner"
 
 # Triggers when a new 00_request.md is pushed to a feature/* branch.
-# Calls Gemini as the PO agent, commits 01_po-spec.md, opens a PR back into the feature branch.
-# All agent PRs target the feature branch. Only one final PR goes to main at the very end.
+# Invokes Jules as the PO agent; Jules writes 01_po-spec.md and opens a PR
+# back into the feature branch, which we then label stage:po-review.
 
 on:
   push:
@@ -12,7 +12,7 @@ on:
       - "features/*/00_request.md"
 
 permissions:
-  contents: write
+  contents: read
   pull-requests: write
 
 jobs:
@@ -26,11 +26,6 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: 🏗️ Setup Monorepo
-        uses: ./.github/actions/setup-monorepo
-        with:
-          node_version: "22"
-
       - name: 🔍 Identify changed feature
         id: meta
         run: |
@@ -41,65 +36,47 @@ jobs:
           fi
           FEATURE_DIR=$(dirname "$CHANGED")
           DIRNAME=$(basename "$FEATURE_DIR")
-          FEATURE_ID=$(echo "$DIRNAME" | cut -d'_' -f1)
+          FEATURE_ID=$(echo "$DIRNAME"   | cut -d'_' -f1)
           FEATURE_SLUG=$(echo "$DIRNAME" | cut -d'_' -f2-)
-          BRANCH="po/${FEATURE_ID}-${FEATURE_SLUG}"
-          OUTPUT_FILE="${FEATURE_DIR}/01_po-spec.md"
           FEATURE_BRANCH="${{ github.ref_name }}"
-          echo "feature_dir=$FEATURE_DIR"       >> $GITHUB_OUTPUT
           echo "feature_id=$FEATURE_ID"         >> $GITHUB_OUTPUT
           echo "feature_slug=$FEATURE_SLUG"     >> $GITHUB_OUTPUT
-          echo "branch=$BRANCH"                 >> $GITHUB_OUTPUT
-          echo "output_file=$OUTPUT_FILE"       >> $GITHUB_OUTPUT
+          echo "feature_dir=$FEATURE_DIR"       >> $GITHUB_OUTPUT
           echo "feature_branch=$FEATURE_BRANCH" >> $GITHUB_OUTPUT
 
-      - name: 🤖 Run Product Owner agent
+      - name: 🤖 Invoke Jules — Product Owner
+        id: jules
         env:
-          GEMINI_API_KEY:  ${{ secrets.GEMINI_API_KEY }}
-          AGENT_ROLE_FILE: .github/agents/product-owner.md
-          INPUT_FILES:     ${{ steps.meta.outputs.feature_dir }}/00_request.md
-          OUTPUT_FILE:     ${{ steps.meta.outputs.output_file }}
-          FEATURE_ID:      ${{ steps.meta.outputs.feature_id }}
-          FEATURE_SLUG:    ${{ steps.meta.outputs.feature_slug }}
-        run: node .github/scripts/run-agent.mjs
-
-      - name: 📬 Commit and open PR
-        env:
-          GH_TOKEN:        ${{ secrets.GITHUB_TOKEN }}
-          BRANCH:          ${{ steps.meta.outputs.branch }}
-          OUTPUT_FILE:     ${{ steps.meta.outputs.output_file }}
+          JULES_API_KEY:   ${{ secrets.JULES_API_KEY }}
+          STARTING_BRANCH: ${{ steps.meta.outputs.feature_branch }}
           FEATURE_ID:      ${{ steps.meta.outputs.feature_id }}
           FEATURE_SLUG:    ${{ steps.meta.outputs.feature_slug }}
           FEATURE_DIR:     ${{ steps.meta.outputs.feature_dir }}
-          FEATURE_BRANCH:  ${{ steps.meta.outputs.feature_branch }}
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          cat > /tmp/jules-prompt.txt << 'HEREDOC'
+          Your role and full instructions are in `.github/agents/product-owner.md` — read it first.
+          Your project context is in `PROJECT_CONTEXT.md` — read it carefully before proceeding.
+          HEREDOC
 
-          git checkout -b "$BRANCH"
-          git add "$OUTPUT_FILE"
-          git commit -m "feat(po): add spec for ${FEATURE_ID}_${FEATURE_SLUG}"
-          git push origin "$BRANCH"
+          cat >> /tmp/jules-prompt.txt << HEREDOC
 
-          TITLE="[PO] Spec: ${FEATURE_SLUG//-/ } (#${FEATURE_ID})"
-          BODY="## Product Owner Spec
+          Feature ID:        ${FEATURE_ID}
+          Feature slug:      ${FEATURE_SLUG}
+          Feature directory: ${FEATURE_DIR}
 
-Feature: \`${FEATURE_DIR}\`
+          Input:  \`${FEATURE_DIR}/00_request.md\`  — the raw feature request
+          Output: \`${FEATURE_DIR}/01_po-spec.md\`  — produce this file per your instructions
 
-The Product Owner agent has written a spec based on your feature request.
+          Only create or modify \`${FEATURE_DIR}/01_po-spec.md\`.
+          Do not touch any other file in the repository.
+          HEREDOC
 
-**Review the spec.** If anything is unclear or incomplete:
-- Post a review comment → the agent will revise and push a new commit automatically
-- Or push your own edits directly to this branch
+          export JULES_PROMPT="$(cat /tmp/jules-prompt.txt)"
+          export GITHUB_REPOSITORY="${{ github.repository }}"
+          bash .github/scripts/invoke-jules.sh
 
-Merge when satisfied — the Architect agent triggers automatically.
-
-### Files
-- \`${OUTPUT_FILE}\`"
-
-          gh pr create \
-            --title "$TITLE" \
-            --body  "$BODY" \
-            --base  "$FEATURE_BRANCH" \
-            --head  "$BRANCH" \
-            --label "stage:po-review"
+      - name: 🏷️ Label Jules' PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL:   ${{ steps.jules.outputs.pr_url }}
+        run: gh pr edit "$PR_URL" --add-label "stage:po-review"

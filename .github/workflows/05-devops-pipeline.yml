@@ -1,0 +1,87 @@
+name: "Agent — Stage 5: DevOps Engineer"
+
+# Triggers when the Engineer PR (label: stage:eng-review) is merged into the feature branch.
+# Invokes Jules as the DevOps agent; Jules writes 03_infra-notes.md and any docker-compose
+# changes, then opens a PR back into the feature branch labelled stage:devops-review.
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - 'feature/**'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  run-devops-agent:
+    name: Run DevOps Engineer Agent
+    if: >
+      github.event.pull_request.merged == true &&
+      contains(github.event.pull_request.labels.*.name, 'stage:eng-review') &&
+      startsWith(github.event.pull_request.base.ref, 'feature/')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ☁️ Checkout repository
+        uses: actions/checkout@v5
+
+      - name: 🔍 Extract feature metadata
+        id: meta
+        run: |
+          BASE="${{ github.event.pull_request.base.ref }}"
+          REST="${BASE#feature/}"
+          FEATURE_ID=$(echo "$REST"   | cut -d'-' -f1)
+          FEATURE_SLUG=$(echo "$REST" | cut -d'-' -f2-)
+          FEATURE_DIR="features/${FEATURE_ID}_${FEATURE_SLUG}"
+          echo "feature_id=$FEATURE_ID"     >> $GITHUB_OUTPUT
+          echo "feature_slug=$FEATURE_SLUG" >> $GITHUB_OUTPUT
+          echo "feature_dir=$FEATURE_DIR"   >> $GITHUB_OUTPUT
+          echo "base_branch=$BASE"          >> $GITHUB_OUTPUT
+
+      - name: 🤖 Invoke Jules — DevOps Engineer
+        id: jules
+        env:
+          JULES_API_KEY:   ${{ secrets.JULES_API_KEY }}
+          STARTING_BRANCH: ${{ steps.meta.outputs.base_branch }}
+          FEATURE_ID:      ${{ steps.meta.outputs.feature_id }}
+          FEATURE_SLUG:    ${{ steps.meta.outputs.feature_slug }}
+          FEATURE_DIR:     ${{ steps.meta.outputs.feature_dir }}
+          ENG_PR:          ${{ github.event.pull_request.number }}
+        run: |
+          cat > /tmp/jules-prompt.txt << 'HEREDOC'
+          Your role and full instructions are in `.github/agents/devops-engineer.md` — read it first.
+          Your project context is in `PROJECT_CONTEXT.md` — read it carefully before proceeding.
+          HEREDOC
+
+          cat >> /tmp/jules-prompt.txt << HEREDOC
+
+          Feature ID:        ${FEATURE_ID}
+          Feature slug:      ${FEATURE_SLUG}
+          Feature directory: ${FEATURE_DIR}
+          Implementation PR: #${ENG_PR}
+
+          Input files (all already merged into this branch):
+            \`${FEATURE_DIR}/01_po-spec.md\`     — product spec
+            \`${FEATURE_DIR}/02_arch-design.md\` — architecture design (primary input)
+
+          Output: \`${FEATURE_DIR}/03_infra-notes.md\` — produce this file per your instructions
+          Also update any docker-compose files that require changes for this feature.
+
+          Only create or modify \`${FEATURE_DIR}/03_infra-notes.md\` and docker-compose files.
+          Do not touch application source files.
+          HEREDOC
+
+          export JULES_PROMPT="$(cat /tmp/jules-prompt.txt)"
+          export GITHUB_REPOSITORY="${{ github.repository }}"
+          bash .github/scripts/invoke-jules.sh
+
+      - name: 🏷️ Label Jules' PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL:   ${{ steps.jules.outputs.pr_url }}
+        run: |
+          gh pr edit "$PR_URL" --add-label "stage:devops-review"
+          echo ""
+          echo "⚠️  If Jules identified new environment variables, add them to Doppler before merging."
