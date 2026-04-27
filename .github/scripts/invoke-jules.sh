@@ -38,16 +38,24 @@ jq -n \
     automationMode: "AUTO_CREATE_PR"
   }' > /tmp/jules-payload.json
 
-CREATE_RESPONSE=$(curl -sf 'https://jules.googleapis.com/v1alpha/sessions' \
+HTTP_STATUS=$(curl -s -o /tmp/jules-response.json -w "%{http_code}" \
+  'https://jules.googleapis.com/v1alpha/sessions' \
   -X POST \
   -H "Content-Type: application/json" \
   -H "X-Goog-Api-Key: ${JULES_API_KEY}" \
   -d @/tmp/jules-payload.json)
 
+if [ "$HTTP_STATUS" -lt 200 ] || [ "$HTTP_STATUS" -ge 300 ]; then
+  echo "❌ Jules API returned HTTP ${HTTP_STATUS}:"
+  cat /tmp/jules-response.json
+  exit 1
+fi
+
+CREATE_RESPONSE=$(cat /tmp/jules-response.json)
 SESSION_ID=$(echo "$CREATE_RESPONSE" | jq -r '.id')
 
 if [ -z "$SESSION_ID" ] || [ "$SESSION_ID" = "null" ]; then
-  echo "❌ Failed to create Jules session. Response:"
+  echo "❌ Session created but no ID in response:"
   echo "$CREATE_RESPONSE" | jq .
   exit 1
 fi
