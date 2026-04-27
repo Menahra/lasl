@@ -59,11 +59,11 @@ msgstr "<0>Bereitstellung und Betrieb der Plattform</0><1>Erfassung des Lernfort
 
 #: src/app/pages/landing-page/LandingPage.tsx:145
 msgid "Accessible Everywhere"
-msgstr ""
+msgstr "Überall zugänglich"
 
 #: src/app/pages/terms-of-service-page/TermsOfServicePage.tsx:32
 msgid "Agreement to Terms"
-msgstr ""
+msgstr "Vereinbarung über die Bedingungen"
 
 #: src/app/pages/landing-page/LandingPage.tsx:105
 msgid "All content is stored as JSON documents that contributors can edit and improve."
@@ -249,7 +249,7 @@ msgstr "Keine E-Mail erhalten? Überprüfe den Spamordner oder versuche es erneu
 
 #: src/app/pages/login-page/LoginForm.tsx:134
 msgid "Don't have an account yet?"
-msgstr ""
+msgstr "Haben Sie noch kein Konto?"
 
 #: src/app/pages/forgot-password/forgot-password-page/ForgotPasswordForm.tsx:83
 #: src/app/pages/login-page/LoginForm.tsx:92
@@ -359,7 +359,7 @@ msgstr "Ungültige E-Mail-Adresse oder Passwort"
 
 #: src/app/pages/landing-page/LandingPage.tsx:137
 msgid "Join a community of learners and contributors passionate about Arabic."
-msgstr ""
+msgstr "Begleiten Sie eine Community von Lernenden und Mitwirkenden leidenschaftlich über Arabisch."
 
 #: src/app/pages/landing-page/LandingPage.tsx:163
 msgid "Join learners and contributors shaping the future of Arabic language education."

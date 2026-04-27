@@ -359,7 +359,7 @@ msgstr "Adresse e-mail ou mot de passe invalide"
 
 #: src/app/pages/landing-page/LandingPage.tsx:137
 msgid "Join a community of learners and contributors passionate about Arabic."
-msgstr ""
+msgstr "Rejoignez une communauté d'apprenants et de contributeurs passionnés par l'arabe."
 
 #: src/app/pages/landing-page/LandingPage.tsx:163
 msgid "Join learners and contributors shaping the future of Arabic language education."
@@ -371,11 +371,11 @@ msgstr "Langue"
 
 #: src/app/pages/register/register-page/registerFormFields.ts:26
 msgid "Last Name"
-msgstr ""
+msgstr "Nom"
 
 #: src/shared/formErrors.ts:12
 msgid "Last name is required"
-msgstr ""
+msgstr "Nom de famille requis"
 
 #. placeholder {0}: i18n.date(lastUpdate)
 #: src/app/layouts/legal-document-layout/LegalDocumentLayout.tsx:36
