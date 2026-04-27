@@ -18,7 +18,7 @@
 set -euo pipefail
 
 POLL_INTERVAL="${POLL_INTERVAL:-30}"
-POLL_MAX_ATTEMPTS="${POLL_MAX_ATTEMPTS:-60}"
+POLL_MAX_ATTEMPTS="${POLL_MAX_ATTEMPTS:-120}"
 
 # ── Create session ─────────────────────────────────────────────────────────────
 
@@ -79,8 +79,16 @@ for i in $(seq 1 "$POLL_MAX_ATTEMPTS"); do
     | jq -r '(.outputs // []) | .[] | select(.pullRequest != null) | .pullRequest.url' \
     2>/dev/null | head -1 || true)
 
+  # Check for terminal failure states
+  SESSION_STATE=$(echo "$STATUS" | jq -r '.state // ""' 2>/dev/null || true)
+  if [[ "$SESSION_STATE" == *"FAIL"* ]] || [[ "$SESSION_STATE" == *"ERROR"* ]] || [[ "$SESSION_STATE" == *"CANCELLED"* ]]; then
+    echo "❌ Jules session ended with state: ${SESSION_STATE}"
+    echo "$STATUS" | jq '{state, outputs}' 2>/dev/null || true
+    exit 1
+  fi
+
   ELAPSED=$(( i * POLL_INTERVAL ))
-  echo "[${ELAPSED}s] ${PR_URL:-waiting...}"
+  echo "[${ELAPSED}s] state=${SESSION_STATE:-unknown} ${PR_URL:+PR: $PR_URL}"
 
   [ -n "$PR_URL" ] && break
 done
