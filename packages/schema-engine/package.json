@@ -16,11 +16,11 @@
     "check:types": "tsc --noEmit"
   },
   "dependencies": {
-    "ajv": "^8.18.0"
+    "ajv": "^8.20.0"
   },
   "devDependencies": {
-    "@vitest/coverage-v8": "^4.1.2",
+    "@vitest/coverage-v8": "^4.1.5",
     "tsup": "^8.5.1",
-    "vitest": "^4.1.2"
+    "vitest": "^4.1.5"
   }
 }

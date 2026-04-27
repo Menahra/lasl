@@ -25,19 +25,19 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@types/node": "^25.5.0",
+    "@types/node": "^25.6.0",
     "tsup": "^8.5.1"
   },
   "dependencies": {
-    "@fastify/http-proxy": "^11.4.3",
+    "@fastify/http-proxy": "^11.4.4",
     "@fastify/swagger": "^9.7.0",
-    "@fastify/swagger-ui": "^5.2.5",
+    "@fastify/swagger-ui": "^5.2.6",
     "@lasl/test-utils-fastify": "workspace:*",
-    "axios": "^1.13.6",
-    "fastify": "^5.8.4",
+    "axios": "^1.15.2",
+    "fastify": "^5.8.5",
     "fastify-plugin": "^5.1.0",
     "http-status-codes": "^2.3.0",
-    "vitest": "^4.1.2",
+    "vitest": "^4.1.5",
     "zod": "^4.3.6"
   }
 }
