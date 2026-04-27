@@ -35,7 +35,7 @@
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-hook-form": "^7.74.0",
-    "uuid": "^13.0.0",
+    "uuid": "^14.0.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
@@ -56,7 +56,7 @@
     "happy-dom": "^20.9.0",
     "msw": "^2.13.6",
     "vite": "^8.0.10",
-    "vite-plugin-svgr": "^4.5.0",
+    "vite-plugin-svgr": "^5.2.0",
     "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.1.5"
   }
