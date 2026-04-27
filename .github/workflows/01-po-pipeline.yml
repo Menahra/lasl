@@ -69,6 +69,10 @@ jobs:
 
           Only create or modify \`${FEATURE_DIR}/01_po-spec.md\`.
           Do not touch any other file in the repository.
+
+          IMPORTANT: this is a documentation-only task.
+          Do NOT run pnpm install, do NOT run type checks, do NOT run tests, do NOT run linting.
+          Just read the input files and write the output file.
           HEREDOC
 
           export JULES_PROMPT="$(cat /tmp/jules-prompt.txt)"

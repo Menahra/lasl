@@ -45,9 +45,11 @@ You push features/0001_my-feature/00_request.md to a feature/* branch
 
 ### On every PR you can
 
-- **Post a review comment** → Jules re-runs with your feedback, opens a fresh revised PR, and closes the old one automatically
-- **Push directly to the Jules branch** → edit files yourself, no workflow fires, merge when ready
+- **Post a review comment** → Jules reads it and pushes a revision commit to the same branch automatically
+- **Push directly to the Jules branch** → edit files yourself, merge when ready
 - **Mix both** → use whichever is faster for each change
+
+Jules listens for comments natively via the Jules GitHub App. By default it reacts to all review comments. If you want it to only act when you explicitly write `@jules`, switch it to **Reactive Mode** in your [Jules UI settings](https://jules.google.com) under Pull Request.
 
 ---
 

@@ -82,6 +82,9 @@ jobs:
           and write the design notes.
 
           Only create files inside \`${FEATURE_DIR}/design/\`.
+
+          IMPORTANT: do NOT run pnpm install, type checks, tests, or linting.
+          The only permitted commands are reading files and running a Playwright screenshot script.
           HEREDOC
 
           export JULES_PROMPT="$(cat /tmp/jules-prompt.txt)"
