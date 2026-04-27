@@ -1,17 +1,21 @@
 name: "Agent — Stage 6: QA Engineer"
 
-# Triggers when the DevOps PR (label: stage:devops-review) is merged into the feature branch.
-# Invokes Jules as the QA agent; Jules writes Playwright E2E tests and opens a PR
-# back into the feature branch, which we then label stage:qa-review.
+# Triggers when 05_infra-notes.md is newly added to the feature branch
+# (i.e. when the DevOps Engineer's PR is merged).
+# Invokes Jules as the QA agent; Jules writes Playwright E2E tests and opens
+# a PR back into the feature branch.
+# Once that final PR is merged, open one last PR: feature/* → main to ship.
 #
 # Note: E2E tests are NOT run here — they require the full Docker stack.
-# The existing e2e-test.yml workflow validates them once this PR is merged to main.
+# The existing e2e-test.yml workflow validates them once merged to main.
 
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches:
       - 'feature/**'
+    paths:
+      - 'features/*/05_infra-notes.md'
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -20,20 +24,18 @@ permissions:
 jobs:
   run-qa-agent:
     name: Run QA Engineer Agent
-    if: >
-      github.event.pull_request.merged == true &&
-      contains(github.event.pull_request.labels.*.name, 'stage:devops-review') &&
-      startsWith(github.event.pull_request.base.ref, 'feature/')
     runs-on: ubuntu-latest
 
     steps:
       - name: ☁️ Checkout repository
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 2
 
       - name: 🔍 Extract feature metadata
         id: meta
         run: |
-          BASE="${{ github.event.pull_request.base.ref }}"
+          BASE="${{ github.ref_name }}"
           REST="${BASE#feature/}"
           FEATURE_ID=$(echo "$REST"   | cut -d'-' -f1)
           FEATURE_SLUG=$(echo "$REST" | cut -d'-' -f2-)
@@ -43,15 +45,28 @@ jobs:
           echo "feature_dir=$FEATURE_DIR"   >> $GITHUB_OUTPUT
           echo "base_branch=$BASE"          >> $GITHUB_OUTPUT
 
+          # Guard: only fire when infra notes were newly created, not revised.
+          if [ "${{ github.event_name }}" = "push" ]; then
+            ADDED=$(git diff --name-only --diff-filter=A HEAD~1 HEAD 2>/dev/null \
+              | grep -E 'features/[^/]+/05_infra-notes\.md' | head -1 || true)
+            if [ -z "$ADDED" ]; then
+              echo "⏭️  Infra notes were revised, not newly created — skipping."
+              echo "skip=true" >> $GITHUB_OUTPUT
+            else
+              echo "skip=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: 🤖 Invoke Jules — QA Engineer
-        id: jules
+        if: steps.meta.outputs.skip != 'true'
         env:
           JULES_API_KEY:   ${{ secrets.JULES_API_KEY }}
           STARTING_BRANCH: ${{ steps.meta.outputs.base_branch }}
           FEATURE_ID:      ${{ steps.meta.outputs.feature_id }}
           FEATURE_SLUG:    ${{ steps.meta.outputs.feature_slug }}
           FEATURE_DIR:     ${{ steps.meta.outputs.feature_dir }}
-          DEVOPS_PR:       ${{ github.event.pull_request.number }}
         run: |
           cat > /tmp/jules-prompt.txt << 'HEREDOC'
           Your role and full instructions are in `.github/agents/qa-engineer.md` — read it first.
@@ -63,11 +78,11 @@ jobs:
           Feature ID:        ${FEATURE_ID}
           Feature slug:      ${FEATURE_SLUG}
           Feature directory: ${FEATURE_DIR}
-          DevOps PR:         #${DEVOPS_PR}
 
-          Input files (all already merged into this branch):
+          Input files (all on this branch):
             \`${FEATURE_DIR}/01_po-spec.md\`     — product spec and acceptance criteria (primary input)
-            \`${FEATURE_DIR}/02_arch-design.md\` — architecture design
+            \`${FEATURE_DIR}/03_arch-design.md\` — architecture design
+            \`${FEATURE_DIR}/05_infra-notes.md\` — infra notes (check for test environment changes)
 
           Write Playwright E2E tests in \`packages/e2e-tests/tests/\` per your role instructions.
 
@@ -81,12 +96,10 @@ jobs:
           export GITHUB_REPOSITORY="${{ github.repository }}"
           bash .github/scripts/invoke-jules.sh
 
-      - name: 🏷️ Label Jules' PR
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_URL:   ${{ steps.jules.outputs.pr_url }}
+      - name: 🏁 Pipeline complete
+        if: steps.meta.outputs.skip != 'true'
         run: |
-          gh pr edit "$PR_URL" --add-label "stage:qa-review"
           echo ""
-          echo "✅ Pipeline complete. Once this PR is merged into its feature branch,"
-          echo "   open one final PR: feature branch → main to ship the feature."
+          echo "✅ All 6 pipeline stages have been invoked."
+          echo "   Once Jules' QA PR is merged into the feature branch,"
+          echo "   open one final PR: feature/* → main to ship the feature."

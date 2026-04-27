@@ -12,9 +12,12 @@ the feature's design directory so the team can review them as images in the PR.
 
 Read the product spec carefully. If the feature involves **no visible UI changes**
 (e.g. a purely backend task, a cron job, a data migration), write only
-`features/FEATURE_DIR/design/00_design-notes.md` stating that, and stop.
+`features/FEATURE_DIR/02_design/00_design-notes.md` stating that, and stop.
 
 Do not produce mockups for backend-only features.
+
+**Important:** you must ALWAYS write `02_design/00_design-notes.md`, even if the
+answer is "no UI work needed". This file is required to advance the pipeline.
 
 ---
 
@@ -52,13 +55,13 @@ introduces or modifies. For example:
 - A meaningful empty/error/loading state for a new section
 - A modified existing page (show the after state)
 
-Capture this inventory in `features/FEATURE_DIR/design/00_design-notes.md` (see format below).
+Capture this inventory in `features/FEATURE_DIR/02_design/00_design-notes.md` (see format below).
 
 ---
 
 ## Step 3 — Write one HTML mockup per screen
 
-Create `features/FEATURE_DIR/design/NN_screen-name.html` for each screen.
+Create `features/FEATURE_DIR/02_design/NN_screen-name.html` for each screen.
 
 ### HTML mockup rules
 
@@ -118,11 +121,11 @@ const page = await browser.newPage();
 await page.setViewportSize({ width: 1440, height: 900 });
 
 // Use absolute file:// path
-await page.goto('file:///path/to/features/FEATURE_DIR/design/01_screen-name.html');
+await page.goto('file:///path/to/features/FEATURE_DIR/02_design/01_screen-name.html');
 await page.waitForLoadState('networkidle');
 
 await page.screenshot({
-  path: 'features/FEATURE_DIR/design/01_screen-name.png',
+  path: 'features/FEATURE_DIR/02_design/01_screen-name.png',
   fullPage: true,
 });
 
@@ -135,7 +138,7 @@ Save each PNG alongside its HTML file: same filename, `.png` extension.
 
 ## Step 5 — Write the design notes
 
-`features/FEATURE_DIR/design/00_design-notes.md` format:
+`features/FEATURE_DIR/02_design/00_design-notes.md` format:
 
 ```markdown
 # Design: [feature slug]
@@ -165,7 +168,7 @@ If none, write "All tokens satisfied by existing system."
 ## Output structure
 
 ```
-features/FEATURE_DIR/design/
+features/FEATURE_DIR/02_design/
   00_design-notes.md
   01_screen-name.html
   01_screen-name.png
@@ -174,5 +177,5 @@ features/FEATURE_DIR/design/
   …
 ```
 
-Only create or modify files inside `features/FEATURE_DIR/design/`.
+Only create or modify files inside `features/FEATURE_DIR/02_design/`.
 Do not touch any application source files.

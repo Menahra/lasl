@@ -9,32 +9,32 @@ An automated, file-driven development pipeline for Lughat Al-Asl, powered by Jul
 ```
 You push features/0001_my-feature/00_request.md to a feature/* branch
             │
-            ▼ (automatic)
+            ▼ (automatic — push trigger on 00_request.md)
     ┌────────────────────┐
     │   Product Owner    │  writes 01_po-spec.md → opens PR
     └────────────────────┘
             │ you review & merge
-            ▼ (automatic)
+            ▼ (automatic — 01_po-spec.md appears on branch)
     ┌────────────────────┐
-    │  UI/UX Designer    │  writes HTML mockups → screenshots with Playwright → opens PR
+    │  UI/UX Designer    │  writes HTML mockups + screenshots → opens PR
     └────────────────────┘
             │ you review & merge
-            ▼ (automatic)
+            ▼ (automatic — 02_design/00_design-notes.md appears on branch)
     ┌────────────────────┐
-    │ Software Architect │  reads spec + mockups → writes 02_arch-design.md → opens PR
+    │ Software Architect │  reads spec + mockups → writes 03_arch-design.md → opens PR
     └────────────────────┘
             │ you review & merge
-            ▼ (automatic)
+            ▼ (automatic — 03_arch-design.md appears on branch)
     ┌────────────────────┐
-    │ Software Engineer  │  implements feature → runs type check + tests → opens PR
+    │ Software Engineer  │  implements feature → runs checks → writes 04_eng-notes.md → opens PR
     └────────────────────┘
             │ you review & merge
-            ▼ (automatic)
+            ▼ (automatic — 04_eng-notes.md appears on branch)
     ┌────────────────────┐
-    │  DevOps Engineer   │  writes 03_infra-notes.md → opens PR
+    │  DevOps Engineer   │  writes 05_infra-notes.md → opens PR
     └────────────────────┘
             │ you review & merge
-            ▼ (automatic)
+            ▼ (automatic — 05_infra-notes.md appears on branch)
     ┌────────────────────┐
     │   QA Engineer      │  writes Playwright .spec.ts files → opens PR
     └────────────────────┘
@@ -43,6 +43,24 @@ You push features/0001_my-feature/00_request.md to a feature/* branch
     Open final PR: feature/* → main ✅
 ```
 
+### How the chain advances
+
+Each stage triggers the next by file presence — no labels needed. When you merge a Jules PR
+into the feature branch, the output file lands on the branch and GitHub fires a push event,
+which triggers the next stage automatically.
+
+| Stage | Watches for | Produces |
+|-------|-------------|----------|
+| 1 PO | `features/*/00_request.md` (you push) | `01_po-spec.md` |
+| 2 UI/UX | `features/*/01_po-spec.md` | `02_design/00_design-notes.md` |
+| 3 Architect | `features/*/02_design/00_design-notes.md` | `03_arch-design.md` |
+| 4 Engineer | `features/*/03_arch-design.md` | code + `04_eng-notes.md` |
+| 5 DevOps | `features/*/04_eng-notes.md` | `05_infra-notes.md` |
+| 6 QA | `features/*/05_infra-notes.md` | `packages/e2e-tests/tests/…` |
+
+Each workflow run completes in under 10 seconds — it fires Jules and exits immediately.
+Jules takes however long it needs and opens a PR when done. There is no polling or timeout.
+
 ### On every PR you can
 
 - **Post a review comment** → Jules reads it and pushes a revision commit to the same branch automatically
@@ -50,6 +68,15 @@ You push features/0001_my-feature/00_request.md to a feature/* branch
 - **Mix both** → use whichever is faster for each change
 
 Jules listens for comments natively via the Jules GitHub App. By default it reacts to all review comments. If you want it to only act when you explicitly write `@jules`, switch it to **Reactive Mode** in your [Jules UI settings](https://jules.google.com) under Pull Request.
+
+### If a stage is skipped
+
+If a stage fails to trigger automatically (e.g. you pushed a revision to a trigger file rather
+than creating it fresh), use the manual fallback:
+
+1. Go to **Actions → [the stage's workflow] → Run workflow**
+2. Select your feature branch from the dropdown
+3. Click **Run workflow** — no inputs needed
 
 ---
 
@@ -74,15 +101,16 @@ features/
 
 ```
 features/0001_example-feature/
-  00_request.md           ← your input (never modified by agents)
-  01_po-spec.md           ← Product Owner output
-  design/
-    00_design-notes.md    ← UI/UX Designer: screen inventory and decisions
-    01_screen-name.html   ← mockup
-    01_screen-name.png    ← screenshot (visible inline on the PR)
+  00_request.md              ← your input (never modified by agents)
+  01_po-spec.md              ← Product Owner output
+  02_design/
+    00_design-notes.md       ← UI/UX Designer: screen inventory and decisions
+    01_screen-name.html      ← mockup
+    01_screen-name.png       ← screenshot (visible inline on the PR)
     …
-  02_arch-design.md       ← Architect output
-  03_infra-notes.md       ← DevOps output
+  03_arch-design.md          ← Architect output
+  04_eng-notes.md            ← Engineer: implementation summary (pipeline sentinel)
+  05_infra-notes.md          ← DevOps output (pipeline sentinel)
 ```
 
 Actual code and Playwright tests are written to `apps/`, `packages/`, and `packages/e2e-tests/` as normal.
@@ -102,23 +130,15 @@ Value: your-key-here
 Get a key at [jules.google.com → Settings → API](https://jules.google.com/settings#api).
 Requires a Jules Pro plan (Google AI Pro via [one.google.com/ai](https://one.google.com/ai)) — currently only available on personal @gmail.com accounts.
 
-### 2. Set workflow permissions
+### 2. Install the Jules GitHub App
+
+Go to [jules.google.com](https://jules.google.com) and install the GitHub App on your repository.
+Without this step, Jules cannot clone your repo or open PRs.
+
+### 3. Set workflow permissions
 
 Go to **Settings → Actions → General → Workflow permissions**
 Select: **Read and write permissions** ✓
-
-### 3. Create the pipeline labels
-
-Run once from the repo root (requires `gh` CLI):
-
-```bash
-gh label create "stage:po-review"     --color "0075ca" --description "PO spec awaiting review"
-gh label create "stage:ui-review"     --color "f9d0c4" --description "UI mockups awaiting review"
-gh label create "stage:arch-review"   --color "e4e669" --description "Arch design awaiting review"
-gh label create "stage:eng-review"    --color "d93f0b" --description "Implementation awaiting review"
-gh label create "stage:devops-review" --color "0e8a16" --description "Infra notes awaiting review"
-gh label create "stage:qa-review"     --color "5319e7" --description "E2E tests awaiting review"
-```
 
 ---
 

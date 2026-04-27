@@ -2,14 +2,17 @@ name: "Agent — Stage 1: Product Owner"
 
 # Triggers when a new 00_request.md is pushed to a feature/* branch.
 # Invokes Jules as the PO agent; Jules writes 01_po-spec.md and opens a PR
-# back into the feature branch, which we then label stage:po-review.
+# back into the feature branch.
+# When that PR is merged, 01_po-spec.md lands on the feature branch and
+# automatically triggers Stage 2 (UI/UX Designer).
 
 on:
   push:
     branches:
       - 'feature/**'
     paths:
-      - "features/*/00_request.md"
+      - 'features/*/00_request.md'
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -29,23 +32,31 @@ jobs:
       - name: 🔍 Identify changed feature
         id: meta
         run: |
-          CHANGED=$(git diff --name-only HEAD~1 HEAD | grep '00_request.md' | head -1)
-          if [ -z "$CHANGED" ]; then
-            echo "No 00_request.md found in diff — skipping."
-            exit 0
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            BASE="${{ github.ref_name }}"
+            REST="${BASE#feature/}"
+            FEATURE_ID=$(echo "$REST"   | cut -d'-' -f1)
+            FEATURE_SLUG=$(echo "$REST" | cut -d'-' -f2-)
+            FEATURE_DIR="features/${FEATURE_ID}_${FEATURE_SLUG}"
+            FEATURE_BRANCH="$BASE"
+          else
+            CHANGED=$(git diff --name-only HEAD~1 HEAD | grep '00_request.md' | head -1)
+            if [ -z "$CHANGED" ]; then
+              echo "No 00_request.md found in diff — skipping."
+              exit 0
+            fi
+            FEATURE_DIR=$(dirname "$CHANGED")
+            DIRNAME=$(basename "$FEATURE_DIR")
+            FEATURE_ID=$(echo "$DIRNAME"   | cut -d'_' -f1)
+            FEATURE_SLUG=$(echo "$DIRNAME" | cut -d'_' -f2-)
+            FEATURE_BRANCH="${{ github.ref_name }}"
           fi
-          FEATURE_DIR=$(dirname "$CHANGED")
-          DIRNAME=$(basename "$FEATURE_DIR")
-          FEATURE_ID=$(echo "$DIRNAME"   | cut -d'_' -f1)
-          FEATURE_SLUG=$(echo "$DIRNAME" | cut -d'_' -f2-)
-          FEATURE_BRANCH="${{ github.ref_name }}"
           echo "feature_id=$FEATURE_ID"         >> $GITHUB_OUTPUT
           echo "feature_slug=$FEATURE_SLUG"     >> $GITHUB_OUTPUT
           echo "feature_dir=$FEATURE_DIR"       >> $GITHUB_OUTPUT
           echo "feature_branch=$FEATURE_BRANCH" >> $GITHUB_OUTPUT
 
       - name: 🤖 Invoke Jules — Product Owner
-        id: jules
         env:
           JULES_API_KEY:   ${{ secrets.JULES_API_KEY }}
           STARTING_BRANCH: ${{ steps.meta.outputs.feature_branch }}
@@ -78,9 +89,3 @@ jobs:
           export JULES_PROMPT="$(cat /tmp/jules-prompt.txt)"
           export GITHUB_REPOSITORY="${{ github.repository }}"
           bash .github/scripts/invoke-jules.sh
-
-      - name: 🏷️ Label Jules' PR
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_URL:   ${{ steps.jules.outputs.pr_url }}
-        run: gh pr edit "$PR_URL" --add-label "stage:po-review"

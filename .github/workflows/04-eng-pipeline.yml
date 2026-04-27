@@ -1,14 +1,19 @@
 name: "Agent — Stage 4: Software Engineer"
 
-# Triggers when the Architect PR (label: stage:arch-review) is merged into the feature branch.
-# Invokes Jules as the Engineer; Jules implements the feature, runs type check + tests,
-# and opens a PR back into the feature branch, which we then label stage:eng-review.
+# Triggers when 03_arch-design.md is newly added to the feature branch
+# (i.e. when the Architect's PR is merged).
+# Invokes Jules as the Engineer; Jules implements the feature, runs all checks,
+# writes 04_eng-notes.md, and opens a PR back into the feature branch.
+# When that PR is merged, 04_eng-notes.md lands on the branch and
+# automatically triggers Stage 5 (DevOps Engineer).
 
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches:
       - 'feature/**'
+    paths:
+      - 'features/*/03_arch-design.md'
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -17,20 +22,18 @@ permissions:
 jobs:
   run-eng-agent:
     name: Run Software Engineer Agent
-    if: >
-      github.event.pull_request.merged == true &&
-      contains(github.event.pull_request.labels.*.name, 'stage:arch-review') &&
-      startsWith(github.event.pull_request.base.ref, 'feature/')
     runs-on: ubuntu-latest
 
     steps:
       - name: ☁️ Checkout repository
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 2
 
       - name: 🔍 Extract feature metadata
         id: meta
         run: |
-          BASE="${{ github.event.pull_request.base.ref }}"
+          BASE="${{ github.ref_name }}"
           REST="${BASE#feature/}"
           FEATURE_ID=$(echo "$REST"   | cut -d'-' -f1)
           FEATURE_SLUG=$(echo "$REST" | cut -d'-' -f2-)
@@ -40,15 +43,28 @@ jobs:
           echo "feature_dir=$FEATURE_DIR"   >> $GITHUB_OUTPUT
           echo "base_branch=$BASE"          >> $GITHUB_OUTPUT
 
+          # Guard: only fire when arch design was newly created, not revised.
+          if [ "${{ github.event_name }}" = "push" ]; then
+            ADDED=$(git diff --name-only --diff-filter=A HEAD~1 HEAD 2>/dev/null \
+              | grep -E 'features/[^/]+/03_arch-design\.md' | head -1 || true)
+            if [ -z "$ADDED" ]; then
+              echo "⏭️  Arch design was revised, not newly created — skipping."
+              echo "skip=true" >> $GITHUB_OUTPUT
+            else
+              echo "skip=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: 🤖 Invoke Jules — Software Engineer
-        id: jules
+        if: steps.meta.outputs.skip != 'true'
         env:
           JULES_API_KEY:   ${{ secrets.JULES_API_KEY }}
           STARTING_BRANCH: ${{ steps.meta.outputs.base_branch }}
           FEATURE_ID:      ${{ steps.meta.outputs.feature_id }}
           FEATURE_SLUG:    ${{ steps.meta.outputs.feature_slug }}
           FEATURE_DIR:     ${{ steps.meta.outputs.feature_dir }}
-          ARCH_PR:         ${{ github.event.pull_request.number }}
         run: |
           cat > /tmp/jules-prompt.txt << 'HEREDOC'
           Your role and full instructions are in `.github/agents/software-engineer.md` — read it first.
@@ -60,12 +76,11 @@ jobs:
           Feature ID:        ${FEATURE_ID}
           Feature slug:      ${FEATURE_SLUG}
           Feature directory: ${FEATURE_DIR}
-          Architecture PR:   #${ARCH_PR}
 
-          Input files (all already merged into this branch):
+          Input files (all on this branch):
             \`${FEATURE_DIR}/01_po-spec.md\`       — product spec and acceptance criteria
-            \`${FEATURE_DIR}/02_arch-design.md\`   — architecture design (your primary guide)
-            \`${FEATURE_DIR}/design/\`             — UI mockups for visual reference (if present)
+            \`${FEATURE_DIR}/03_arch-design.md\`   — architecture design (your primary guide)
+            \`${FEATURE_DIR}/02_design/\`          — UI mockups for visual reference (if present)
 
           Implement the feature exactly as described in the architecture design.
           Use the UI mockups as the visual reference for any frontend work.
@@ -77,14 +92,11 @@ jobs:
             4. Run \`pnpm check:ci\` — fix every lint/format issue before submitting
 
           Only submit when all four checks pass with zero errors.
+
+          Finally, write \`${FEATURE_DIR}/04_eng-notes.md\` per your role instructions.
+          This file is REQUIRED — it signals the pipeline to advance to the DevOps stage.
           HEREDOC
 
           export JULES_PROMPT="$(cat /tmp/jules-prompt.txt)"
           export GITHUB_REPOSITORY="${{ github.repository }}"
           bash .github/scripts/invoke-jules.sh
-
-      - name: 🏷️ Label Jules' PR
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_URL:   ${{ steps.jules.outputs.pr_url }}
-        run: gh pr edit "$PR_URL" --add-label "stage:eng-review"

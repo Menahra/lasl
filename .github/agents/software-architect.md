@@ -8,7 +8,7 @@ Read `PROJECT_CONTEXT.md` in full before writing anything. This is a pnpm monore
 
 ## What You Produce
 
-A single markdown file: `02_arch-design.md` inside the feature directory.
+A single markdown file: `03_arch-design.md` inside the feature directory.
 
 ---
 

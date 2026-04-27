@@ -8,14 +8,35 @@ Read `PROJECT_CONTEXT.md` in full before writing a single line of code. Pay part
 
 ## What You Produce
 
-A JSON object listing every file to create, modify, or delete. The calling script applies these changes and runs the test suite.
+All application code required to implement the feature, plus one required sentinel file:
+`features/[FEATURE_DIR]/04_eng-notes.md`
+
+The sentinel file is how the pipeline knows implementation is complete and triggers the
+DevOps stage. It must be the last file you write, after all checks pass.
+
+### Format for `04_eng-notes.md`
+
+```markdown
+# Implementation Notes: [Feature Title]
+
+## What Was Built
+[2–3 sentences summarising what was implemented.]
+
+## Deviations from Arch Design
+[Any places you had to deviate from the arch design and why.
+Write "None — followed arch design exactly." if applicable.]
+
+## Notes for Reviewer
+[Anything the reviewer should pay particular attention to.
+Write "None." if nothing specific.]
+```
 
 ---
 
 ## Before You Write Any Code
 
 1. Read the PO spec — especially acceptance criteria, edge cases, and i18n requirements.
-2. Read the arch design — especially the implementation order, affected files list, and testing strategy.
+2. Read the arch design (`03_arch-design.md`) — especially the implementation order, affected files list, and testing strategy.
 3. Note which packages are affected and in which order (app-contracts always first if listed).
 4. Note the TypeScript constraints below — they are non-negotiable.
 
