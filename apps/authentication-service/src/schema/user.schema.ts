@@ -1,7 +1,6 @@
 import { SUPPORTED_LOCALES } from "@lasl/app-contracts/locales";
 import {
   createUserSchema,
-  createUserSchemaBase,
   passwordMatchRefinement,
   resetPasswordParamsSchema,
   userEmailSchema,
@@ -11,22 +10,24 @@ import { z } from "zod";
 
 const ZOD_JSON_SCHEMA_TARGET = "draft-7";
 
+const MIN_NAME_LENGTH = 2;
+const MAX_NAME_LENGTH = 50;
+
 export const createUserInputSchema = z.object({
   body: createUserSchema,
 });
 export const updateUserInputSchema = z.object({
-  body: createUserSchemaBase
-    .pick({ firstName: true, lastName: true })
-    .partial()
-    .extend({
-      settings: z
-        .strictObject({
-          darkMode: z.boolean().optional(),
-          uiLanguage: z.enum(SUPPORTED_LOCALES).optional(),
-          contentLanguage: z.enum(SUPPORTED_LOCALES).optional(),
-        })
-        .optional(),
-    }),
+  body: z.object({
+    firstName: z.string().min(MIN_NAME_LENGTH).max(MAX_NAME_LENGTH).optional(),
+    lastName: z.string().min(MIN_NAME_LENGTH).max(MAX_NAME_LENGTH).optional(),
+    settings: z
+      .strictObject({
+        darkMode: z.boolean().optional(),
+        uiLanguage: z.enum(SUPPORTED_LOCALES).optional(),
+        contentLanguage: z.enum(SUPPORTED_LOCALES).optional(),
+      })
+      .optional(),
+  }),
 });
 export const verifyUserInputSchema = z.object({
   params: z.object({
