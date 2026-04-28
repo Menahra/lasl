@@ -65,3 +65,21 @@ export const resetPasswordParamsSchema = z.object({
   id: z.string(),
   passwordResetCode: z.string(),
 });
+
+export const updatePasswordSchema = z
+  .object({
+    currentPassword: z
+      .string()
+      .nonempty({ error: USER_ERRORS.passwordRequired }),
+    password: userPasswordSchema,
+    passwordConfirmation: userPasswordConfirmationSchema,
+  })
+  .superRefine(passwordMatchRefinement);
+
+export type UpdatePasswordInput = z.infer<typeof updatePasswordSchema>;
+
+export const deleteUserSchema = z.object({
+  password: z.string().nonempty({ error: USER_ERRORS.passwordRequired }),
+});
+
+export type DeleteUserInput = z.infer<typeof deleteUserSchema>;
