@@ -2,8 +2,9 @@ name: "Agent — Stage 4: Contracts Engineer"
 
 # Triggers when 03_arch-design.md is newly added to the feature branch
 # (i.e. when the Architect's PR is merged).
-# Invokes Jules as the Contracts Engineer; Jules updates packages/app-contracts/,
-# rebuilds the package, and opens a PR back into the feature branch.
+# Invokes Jules as the Contracts Engineer; Jules updates all shared packages/
+# the feature requires (app-contracts, schema-engine, etc.), rebuilds them,
+# and opens a PR back into the feature branch.
 # When that PR is merged, 04_contracts-notes.md lands on the branch and
 # automatically triggers Stage 5 (Backend Engineer).
 
@@ -80,7 +81,8 @@ jobs:
           Input files (all on this branch):
             \`${FEATURE_DIR}/01_po-spec.md\`       — product spec
             \`${FEATURE_DIR}/03_arch-design.md\`   — architecture design (primary input)
-              Pay particular attention to the "app-contracts Changes" section.
+              Read the "Stage A — Contracts Engineer" section carefully to identify
+              every shared package that needs changes for this feature.
 
           Your task: update all shared packages/ that the arch design requires.
           This includes packages/app-contracts/ (API contracts), packages/schema-engine/
