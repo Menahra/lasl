@@ -9,6 +9,18 @@ export const userEmailSchema = z.email({
   error: USER_ERRORS.emailInvalid,
 });
 
+export const USER_DISPLAY_NAME_MIN_LENGTH = 2;
+export const USER_DISPLAY_NAME_MAX_LENGTH = 50;
+
+export const userDisplayNameSchema = z
+  .string()
+  .min(USER_DISPLAY_NAME_MIN_LENGTH, {
+    error: USER_ERRORS.displayNameMinLength,
+  })
+  .max(USER_DISPLAY_NAME_MAX_LENGTH, {
+    error: USER_ERRORS.displayNameMaxLength,
+  });
+
 export const USER_PASSWORD_MIN_LENGTH = 8;
 export const userPasswordSchema = z
   .string()
@@ -65,3 +77,21 @@ export const resetPasswordParamsSchema = z.object({
   id: z.string(),
   passwordResetCode: z.string(),
 });
+
+export const updatePasswordSchema = z
+  .object({
+    currentPassword: z
+      .string()
+      .nonempty({ error: USER_ERRORS.passwordRequired }),
+    password: userPasswordSchema,
+    passwordConfirmation: userPasswordConfirmationSchema,
+  })
+  .superRefine(passwordMatchRefinement);
+
+export type UpdatePasswordInput = z.infer<typeof updatePasswordSchema>;
+
+export const deleteUserSchema = z.object({
+  password: z.string().nonempty({ error: USER_ERRORS.passwordRequired }),
+});
+
+export type DeleteUserInput = z.infer<typeof deleteUserSchema>;

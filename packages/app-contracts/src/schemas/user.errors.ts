@@ -9,6 +9,9 @@ export const USER_ERRORS = {
   passwordLowercase: "errors.user.password.lowercase",
   passwordNumber: "errors.user.password.number",
   passwordMismatch: "errors.user.password.mismatch",
+  passwordIncorrect: "errors.user.password.incorrect",
+  displayNameMinLength: "errors.user.displayName.minLength",
+  displayNameMaxLength: "errors.user.displayName.maxLength",
 } as const;
 
 export type UserErrorKey = (typeof USER_ERRORS)[keyof typeof USER_ERRORS];
