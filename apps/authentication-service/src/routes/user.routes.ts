@@ -5,7 +5,9 @@ import {
 import type { FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import { z } from "zod";
+import { deleteUserHandler } from "@/src/controller/delete.user.controller.ts";
 import { resendVerificationMailHandler } from "@/src/controller/resend.verification.mail.controller.ts";
+import { updatePasswordHandler } from "@/src/controller/update.password.controller.ts";
 import { updateUserHandler } from "@/src/controller/update.user.controller.ts";
 import {
   createUserBadRequestResponseSchema,
@@ -13,6 +15,9 @@ import {
   createUserInternalServerErrorResponseSchema,
   createUserSuccessResponseSchema,
   createUserUnprocessableEntityResponseSchema,
+  deleteUserBadRequestResponseSchema,
+  deleteUserForbiddenResponseSchema,
+  deleteUserSuccessResponseSchema,
   forgotPasswordSuccessResponseSchema,
   getCurrentAuthenticatedUserForbiddenResponseSchema,
   getCurrentAuthenticatedUserSuccessResponseSchema,
@@ -24,6 +29,9 @@ import {
   updateCurrentAuthenticatedUserBadRequestResponseSchema,
   updateCurrentAuthenticatedUserForbiddenResponseSchema,
   updateCurrentAuthenticatedUserSuccessResponseSchema,
+  updatePasswordBadRequestResponseSchema,
+  updatePasswordForbiddenResponseSchema,
+  updatePasswordSuccessResponseSchema,
   verifyUserBadRequestResponseSchema,
   verifyUserConflictResponseSchema,
   verifyUserInternalServerErrorResponseSchema,
@@ -36,6 +44,14 @@ import { getUserHandler } from "../controller/get.user.controller.ts";
 import { resetPasswordHandler } from "../controller/reset.password.controller.ts";
 import { verifyUserHandler } from "../controller/verify.user.controller.ts";
 import { deserializeUser } from "../middleware/authentication.hook.ts";
+import {
+  type DeleteUserInputSchemaType,
+  deleteUserInputJsonSchema,
+} from "../schema/delete.user.schema.ts";
+import {
+  type UpdatePasswordInputSchemaType,
+  updatePasswordInputJsonSchema,
+} from "../schema/update.password.schema.ts";
 import {
   createUserInputJsonSchema,
   forgotPasswordInputJsonSchema,
@@ -229,5 +245,67 @@ export const userRoutes = (fastifyInstance: FastifyInstance) => {
       },
     },
     updateUserHandler,
+  );
+
+  fastifyInstance.post(
+    authApiRoutes.user.updatePassword(),
+    {
+      preHandler: deserializeUser<{
+        // biome-ignore lint/style/useNamingConvention: property name comes from fastify
+        Body: UpdatePasswordInputSchemaType["body"];
+      }>,
+      schema: {
+        summary: "Update the user's password",
+        tags: [UserSwaggerTag],
+        description: `Send the authorization header in ${AUTHENTICATION_TYPE} format along with the current password and the new password`,
+        headers: {
+          type: "object",
+          properties: { authorization: { type: "string" } },
+          required: ["authorization"],
+        },
+        body: updatePasswordInputJsonSchema,
+        response: {
+          [StatusCodes.OK]: z.toJSONSchema(updatePasswordSuccessResponseSchema),
+          [StatusCodes.BAD_REQUEST]: z.toJSONSchema(
+            updatePasswordBadRequestResponseSchema,
+          ),
+          [StatusCodes.FORBIDDEN]: z.toJSONSchema(
+            updatePasswordForbiddenResponseSchema,
+          ),
+        },
+      },
+    },
+    updatePasswordHandler,
+  );
+
+  fastifyInstance.delete(
+    authApiRoutes.user.delete(),
+    {
+      preHandler: deserializeUser<{
+        // biome-ignore lint/style/useNamingConvention: property name comes from fastify
+        Body: DeleteUserInputSchemaType["body"];
+      }>,
+      schema: {
+        summary: "Delete the current authenticated user account",
+        tags: [UserSwaggerTag],
+        description: `Send the authorization header in ${AUTHENTICATION_TYPE} format along with the current password to delete the account permanently`,
+        headers: {
+          type: "object",
+          properties: { authorization: { type: "string" } },
+          required: ["authorization"],
+        },
+        body: deleteUserInputJsonSchema,
+        response: {
+          [StatusCodes.OK]: z.toJSONSchema(deleteUserSuccessResponseSchema),
+          [StatusCodes.BAD_REQUEST]: z.toJSONSchema(
+            deleteUserBadRequestResponseSchema,
+          ),
+          [StatusCodes.FORBIDDEN]: z.toJSONSchema(
+            deleteUserForbiddenResponseSchema,
+          ),
+        },
+      },
+    },
+    deleteUserHandler,
   );
 };
