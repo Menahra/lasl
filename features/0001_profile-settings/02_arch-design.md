@@ -96,8 +96,7 @@ export type DeleteUserInput = z.infer<typeof deleteUserSchema>;
    - **Status Codes**: 200 OK, 400 Bad Request, 401 Unauthorized, 403 Forbidden (if password wrong)
    - **Auth Required?**: Yes
 
-*Note*: Updating the display name will use the existing `PATCH authApiRoutes.user.me()` endpoint. Since the DB uses `firstName` and `lastName`, the frontend will split the "Display Name" field on the first space to update both fields. To support single-word Display Names, if there is no space, `firstName` gets the whole name and `lastName` gets a placeholder space `" "` (since `lastName` is `required: true` in `User` model, but `lastNameRequired` validation might complain on empty. Or better, update `updateUserInputSchema` and `UserModel` to allow empty string for `lastName`).
-*Decision*: Modify `updateUserInputSchema` in `apps/authentication-service/src/schema/user.schema.ts` to allow empty string `""` for `lastName` if the user submits a single-word name, but the PO spec explicitly mentions "Display Name" must be between 2 and 50 characters.
+*Note*: Updating the display name will use the existing `PATCH authApiRoutes.user.me()` endpoint.
 
 ## app-contracts Changes
 - **`src/api/auth.api.ts`**: Add `updatePassword` and `delete` to `authApiRoutes.user`.
@@ -113,10 +112,6 @@ export type DeleteUserInput = z.infer<typeof deleteUserSchema>;
 | `@radix-ui/react-avatar` | `@lasl/frontend` | Accessible avatar component. | Custom `div`. Radix handles image fallbacks cleanly. |
 
 ## Architecture Decisions
-### Split "Display Name" into `firstName` and `lastName` on frontend
-- **Choice**: The frontend will take the single "Display Name" input, and split it on the first space to send `firstName` and `lastName` to the existing `PATCH /api/v1/users/me` endpoint.
-- **Rationale**: The database currently requires `firstName` and `lastName`. Updating the DB schema to a single `displayName` would require migrations and broad changes across the auth service. The PO spec mentions "Display Name" as a single field, so the frontend abstraction handles this mismatch gracefully.
-- **Alternatives rejected**: Changing the DB schema to `displayName` (too much scope for this feature), or having two separate inputs for First and Last name on the UI (violates PO spec AC-6).
 
 ### Delete Account Session Invalidation
 - **Choice**: After successful deletion in the backend, the backend will clear the refresh token cookie (similar to logout) and delete the user document. The frontend will then redirect to the home page or login page and clear its state.
@@ -177,6 +172,3 @@ New LinguiJS strings needed in `apps/frontend`. Use `<Trans>` and `t()` as appro
 9. Write frontend Vitest tests.
 10. Extract messages: `pnpm extract:messages`.
 11. Run `pnpm check:ci`, `pnpm check:types`, `pnpm test`.
-
-## Notes for the Engineer
-- When splitting the "Display Name" into `firstName` and `lastName`, handle cases where there is no space (e.g. single word name -> `firstName` = the word, `lastName` = empty string). Since the DB `lastName` field is required, the best approach is to store the whole name in `firstName` and a space `" "` or `.` in `lastName` if it's missing, OR better, adjust `lastName` in `user.model.ts` to allow empty strings or use `default: ""` if the framework complains. The latter is safer to avoid breaking other validations.
