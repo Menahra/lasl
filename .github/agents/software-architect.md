@@ -27,6 +27,8 @@ This is a multi-package monorepo. Every design decision must specify WHICH app o
 
 **Rule:** If a feature needs a new API endpoint, always add its path to `packages/app-contracts/api/` and its Zod request/response schemas to `packages/app-contracts/schemas/`. The frontend and backend both import from app-contracts — this prevents drift.
 
+**Rule:** If a feature requires new or modified content document schemas (new schema depths, new document types, new fields on existing schemas), document those changes under `packages/schema-engine/` in the Affected Files table. The Contracts Engineer handles all `packages/` changes before the backend starts.
+
 ---
 
 ## How to Think About the Design
@@ -125,16 +127,33 @@ Tests live in `test/` mirroring the source path.]
 Write "None needed beyond existing patterns." if applicable.]
 
 ## Implementation Order
-Steps for the engineer. Each step should be completable and testable independently.
 
-1. Update `packages/app-contracts/` — add schemas, path constants, error constants
-2. Rebuild app-contracts: `pnpm turbo run build --filter=@lasl/app-contracts`
-3. [Backend step]
-4. [Frontend step]
-5. Write Vitest tests
-6. Run `pnpm check:ci` — fix any Biome issues
-7. Run `pnpm check:types` — fix any TypeScript errors
-8. Run `pnpm test` — all tests pass
+The implementation is carried out by three specialized engineers in sequence.
+Structure your steps to match this split exactly.
+
+### Stage A — Contracts Engineer (all packages/ this feature requires)
+List every shared package that needs changes (e.g. `packages/app-contracts/`,
+`packages/schema-engine/`, or any new package). For each:
+1. [What to add or change in this package]
+2. Build: `pnpm turbo run build --filter=@lasl/<package>`
+If one package depends on another, list the dependency first.
+
+### Stage B — Backend Engineer (all backend apps/ this feature requires)
+List every backend service that needs changes (e.g. `apps/authentication-service/`,
+`apps/api-gateway/`, or any new service). For each:
+3. [Controllers, services, routes, models to add or change]
+4. Write Vitest tests for new backend code
+5. `pnpm turbo run check:types --filter=@lasl/<each-modified-service>`
+6. `pnpm turbo run test --filter=@lasl/<each-modified-service>`
+
+### Stage C — Frontend Engineer (apps/frontend/ only)
+7. [API calls, hooks, components, pages, routes to add or change]
+8. Write Vitest tests for new frontend code
+9. `pnpm turbo run check:types --filter=@lasl/frontend`
+10. `pnpm turbo run test --filter=@lasl/frontend`
+
+Keep each stage's steps self-contained. The Backend Engineer must not need to touch
+the frontend, and the Frontend Engineer must not need to touch the backend or packages/.
 
 ## Notes for the Engineer
 [Judgement calls left to the engineer, known caveats in the codebase, warnings about existing complexity.]
@@ -145,7 +164,7 @@ Steps for the engineer. Each step should be completable and testable independent
 ## Rules
 
 - Every file in "Affected Files" must have a clear description of what changes.
-- app-contracts must always be step 1 if shared types are needed.
+- All `packages/` changes must come in Stage A. The backend and frontend engineers depend on those packages being built first.
 - If the feature requires breaking changes to existing API contracts, flag this at the top.
 - Do not leave major decisions open — pick one approach and justify it.
 - If you identify scope missed by the PO, note it as an Open Question comment — do not silently expand scope.

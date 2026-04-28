@@ -21,20 +21,30 @@ You push features/0001_my-feature/00_request.md to a feature/* branch
             │ you review & merge
             ▼ (automatic — 02_design/00_design-notes.md appears on branch)
     ┌────────────────────┐
-    │ Software Architect │  reads spec + mockups → writes 03_arch-design.md → opens PR
+    │ Software Architect │  writes 03_arch-design.md → opens PR
     └────────────────────┘
             │ you review & merge
             ▼ (automatic — 03_arch-design.md appears on branch)
+    ┌─────────────────────────┐
+    │  Contracts Engineer     │  updates packages/app-contracts/ → builds → opens PR
+    └─────────────────────────┘
+            │ you review & merge
+            ▼ (automatic — 04_contracts-notes.md appears on branch)
+    ┌─────────────────────────┐
+    │  Backend Engineer       │  implements authentication-service → tests → opens PR
+    └─────────────────────────┘
+            │ you review & merge
+            ▼ (automatic — 05_backend-notes.md appears on branch)
+    ┌─────────────────────────┐
+    │  Frontend Engineer      │  implements apps/frontend/ → tests → opens PR
+    └─────────────────────────┘
+            │ you review & merge
+            ▼ (automatic — 06_frontend-notes.md appears on branch)
     ┌────────────────────┐
-    │ Software Engineer  │  implements feature → runs checks → writes 04_eng-notes.md → opens PR
+    │  DevOps Engineer   │  writes 07_infra-notes.md → opens PR
     └────────────────────┘
             │ you review & merge
-            ▼ (automatic — 04_eng-notes.md appears on branch)
-    ┌────────────────────┐
-    │  DevOps Engineer   │  writes 05_infra-notes.md → opens PR
-    └────────────────────┘
-            │ you review & merge
-            ▼ (automatic — 05_infra-notes.md appears on branch)
+            ▼ (automatic — 07_infra-notes.md appears on branch)
     ┌────────────────────┐
     │   QA Engineer      │  writes Playwright .spec.ts files → opens PR
     └────────────────────┘
@@ -46,37 +56,48 @@ You push features/0001_my-feature/00_request.md to a feature/* branch
 ### How the chain advances
 
 Each stage triggers the next by file presence — no labels needed. When you merge a Jules PR
-into the feature branch, the output file lands on the branch and GitHub fires a push event,
-which triggers the next stage automatically.
+into the feature branch, the output file lands on the branch and GitHub fires a push event
+that triggers the next stage automatically.
 
 | Stage | Watches for | Produces |
 |-------|-------------|----------|
-| 1 PO | `features/*/00_request.md` (you push) | `01_po-spec.md` |
+| 1 PO | `features/*/00_request.md` | `01_po-spec.md` |
 | 2 UI/UX | `features/*/01_po-spec.md` | `02_design/00_design-notes.md` |
 | 3 Architect | `features/*/02_design/00_design-notes.md` | `03_arch-design.md` |
-| 4 Engineer | `features/*/03_arch-design.md` | code + `04_eng-notes.md` |
-| 5 DevOps | `features/*/04_eng-notes.md` | `05_infra-notes.md` |
-| 6 QA | `features/*/05_infra-notes.md` | `packages/e2e-tests/tests/…` |
+| 4 Contracts | `features/*/03_arch-design.md` | `packages/app-contracts/` + `04_contracts-notes.md` |
+| 5 Backend | `features/*/04_contracts-notes.md` | backend code + `05_backend-notes.md` |
+| 6 Frontend | `features/*/05_backend-notes.md` | frontend code + `06_frontend-notes.md` |
+| 7 DevOps | `features/*/06_frontend-notes.md` | `07_infra-notes.md` |
+| 8 QA | `features/*/07_infra-notes.md` | `packages/e2e-tests/tests/…` |
 
 Each workflow run completes in under 10 seconds — it fires Jules and exits immediately.
-Jules takes however long it needs and opens a PR when done. There is no polling or timeout.
+Jules takes however long it needs and opens a PR when done.
+
+### Why three engineer stages?
+
+The single Software Engineer stage was too broad — it required Jules to update shared
+types, backend services, and the full frontend in one session, which regularly ran for
+14+ hours and failed. Splitting by layer solves this:
+
+- **Contracts** has no app dependencies — it's pure types and constants. Usually done in 20 min.
+- **Backend** has no frontend dependencies. Scoped to one service, tests pass quickly.
+- **Frontend** can import fully-built contracts and assume a working API. Focused on UI only.
+
+Each agent also runs `pnpm turbo run check:types --filter=@lasl/<package>` instead of the
+root-level `pnpm check:types`, which prevented errors in unrelated packages from causing loops.
 
 ### On every PR you can
 
-- **Post a review comment** → Jules reads it and pushes a revision commit to the same branch automatically
+- **Post a review comment** → Jules reads it and pushes a revision commit automatically
 - **Push directly to the Jules branch** → edit files yourself, merge when ready
-- **Mix both** → use whichever is faster for each change
 
-Jules listens for comments natively via the Jules GitHub App. By default it reacts to all review comments. If you want it to only act when you explicitly write `@jules`, switch it to **Reactive Mode** in your [Jules UI settings](https://jules.google.com) under Pull Request.
+Jules listens for comments natively via the Jules GitHub App. Switch to **Reactive Mode**
+in [Jules UI settings](https://jules.google.com) if you only want it to respond to `@jules`.
 
 ### If a stage is skipped
 
-If a stage fails to trigger automatically (e.g. you pushed a revision to a trigger file rather
-than creating it fresh), use the manual fallback:
-
-1. Go to **Actions → [the stage's workflow] → Run workflow**
-2. Select your feature branch from the dropdown
-3. Click **Run workflow** — no inputs needed
+Go to **Actions → [stage workflow] → Run workflow**, select your feature branch, click Run.
+No inputs needed — the branch name is all the workflow requires.
 
 ---
 
@@ -93,8 +114,6 @@ features/
 
 **Naming convention:** `NNNN_kebab-case-description` — use the next sequential 4-digit number.
 
-**What to write in `00_request.md`:** Anything. A rough paragraph, bullet points, user stories. The PO agent will refine it into a proper spec.
-
 ---
 
 ## Feature Directory After the Pipeline
@@ -102,18 +121,20 @@ features/
 ```
 features/0001_example-feature/
   00_request.md              ← your input (never modified by agents)
-  01_po-spec.md              ← Product Owner output
+  01_po-spec.md              ← Product Owner
   02_design/
     00_design-notes.md       ← UI/UX Designer: screen inventory and decisions
     01_screen-name.html      ← mockup
-    01_screen-name.png       ← screenshot (visible inline on the PR)
+    01_screen-name.png       ← screenshot
     …
-  03_arch-design.md          ← Architect output
-  04_eng-notes.md            ← Engineer: implementation summary (pipeline sentinel)
-  05_infra-notes.md          ← DevOps output (pipeline sentinel)
+  03_arch-design.md          ← Architect
+  04_contracts-notes.md      ← Contracts Engineer (pipeline sentinel)
+  05_backend-notes.md        ← Backend Engineer (pipeline sentinel)
+  06_frontend-notes.md       ← Frontend Engineer (pipeline sentinel)
+  07_infra-notes.md          ← DevOps Engineer (pipeline sentinel)
 ```
 
-Actual code and Playwright tests are written to `apps/`, `packages/`, and `packages/e2e-tests/` as normal.
+Actual code is written to `apps/`, `packages/`, and `packages/e2e-tests/` as normal.
 
 ---
 
@@ -144,15 +165,17 @@ Select: **Read and write permissions** ✓
 
 ## Tuning Agent Behaviour
 
-Each agent's instructions are in `.github/agents/`. Edit these files to adjust how an agent behaves.
+Each agent's instructions are in `.github/agents/`. Edit these files to adjust behaviour.
 
 | File | Agent | Stage |
 |------|-------|-------|
 | `.github/agents/product-owner.md` | Product Owner | 1 |
 | `.github/agents/ui-ux-designer.md` | UI/UX Designer | 2 |
 | `.github/agents/software-architect.md` | Software Architect | 3 |
-| `.github/agents/software-engineer.md` | Software Engineer | 4 |
-| `.github/agents/devops-engineer.md` | DevOps Engineer | 5 |
-| `.github/agents/qa-engineer.md` | QA Engineer | 6 |
+| `.github/agents/contracts-engineer.md` | Contracts Engineer | 4 |
+| `.github/agents/backend-engineer.md` | Backend Engineer | 5 |
+| `.github/agents/frontend-engineer.md` | Frontend Engineer | 6 |
+| `.github/agents/devops-engineer.md` | DevOps Engineer | 7 |
+| `.github/agents/qa-engineer.md` | QA Engineer | 8 |
 
 Every agent also reads `PROJECT_CONTEXT.md` — keep it up to date.

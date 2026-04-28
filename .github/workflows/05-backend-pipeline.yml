@@ -1,0 +1,108 @@
+name: "Agent — Stage 5: Backend Engineer"
+
+# Triggers when 04_contracts-notes.md is newly added to the feature branch
+# (i.e. when the Contracts Engineer's PR is merged).
+# Invokes Jules as the Backend Engineer; Jules implements the backend
+# (authentication-service and/or api-gateway) and opens a PR.
+# When that PR is merged, 05_backend-notes.md triggers Stage 6 (Frontend Engineer).
+
+on:
+  push:
+    branches:
+      - 'feature/**'
+    paths:
+      - 'features/*/04_contracts-notes.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  run-backend-agent:
+    name: Run Backend Engineer Agent
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ☁️ Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 2
+
+      - name: 🔍 Extract feature metadata
+        id: meta
+        run: |
+          BASE="${{ github.ref_name }}"
+          REST="${BASE#feature/}"
+          FEATURE_ID=$(echo "$REST"   | cut -d'-' -f1)
+          FEATURE_SLUG=$(echo "$REST" | cut -d'-' -f2-)
+          FEATURE_DIR="features/${FEATURE_ID}_${FEATURE_SLUG}"
+          echo "feature_id=$FEATURE_ID"     >> $GITHUB_OUTPUT
+          echo "feature_slug=$FEATURE_SLUG" >> $GITHUB_OUTPUT
+          echo "feature_dir=$FEATURE_DIR"   >> $GITHUB_OUTPUT
+          echo "base_branch=$BASE"          >> $GITHUB_OUTPUT
+
+          # Guard: only fire when contracts notes were newly created, not revised.
+          if [ "${{ github.event_name }}" = "push" ]; then
+            ADDED=$(git diff --name-only --diff-filter=A HEAD~1 HEAD 2>/dev/null \
+              | grep -E 'features/[^/]+/04_contracts-notes\.md' | head -1 || true)
+            if [ -z "$ADDED" ]; then
+              echo "⏭️  Contracts notes were revised, not newly created — skipping."
+              echo "skip=true" >> $GITHUB_OUTPUT
+            else
+              echo "skip=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: 🤖 Invoke Jules — Backend Engineer
+        if: steps.meta.outputs.skip != 'true'
+        env:
+          JULES_API_KEY:   ${{ secrets.JULES_API_KEY }}
+          STARTING_BRANCH: ${{ steps.meta.outputs.base_branch }}
+          FEATURE_ID:      ${{ steps.meta.outputs.feature_id }}
+          FEATURE_SLUG:    ${{ steps.meta.outputs.feature_slug }}
+          FEATURE_DIR:     ${{ steps.meta.outputs.feature_dir }}
+        run: |
+          cat > /tmp/jules-prompt.txt << 'HEREDOC'
+          Your role and full instructions are in `.github/agents/backend-engineer.md` — read it first.
+          Your project context is in `PROJECT_CONTEXT.md` — every constraint listed there is mandatory.
+          HEREDOC
+
+          cat >> /tmp/jules-prompt.txt << HEREDOC
+
+          Feature ID:        ${FEATURE_ID}
+          Feature slug:      ${FEATURE_SLUG}
+          Feature directory: ${FEATURE_DIR}
+
+          Input files (all on this branch):
+            \`${FEATURE_DIR}/01_po-spec.md\`           — product spec and acceptance criteria
+            \`${FEATURE_DIR}/03_arch-design.md\`       — architecture design (primary guide)
+            \`${FEATURE_DIR}/04_contracts-notes.md\`   — what the Contracts Engineer added to app-contracts
+
+          packages/app-contracts/ has already been updated and built.
+          Import from @lasl/app-contracts as normal. Do NOT rebuild or modify it.
+
+          Your task: implement the backend changes described in the arch design.
+          Output sentinel: \`${FEATURE_DIR}/05_backend-notes.md\`
+
+          Before running any checks, read 03_arch-design.md to identify every backend
+          package you modified (e.g. @lasl/authentication-service, @lasl/api-gateway,
+          or any new service). Then run checks for EACH package you touched:
+
+            pnpm turbo run check:types --filter=@lasl/<each-modified-package>
+            pnpm turbo run test        --filter=@lasl/<each-modified-package>
+            pnpm exec biome check --write apps/<each-modified-service>/src/
+
+          If you modified multiple packages, add each with its own --filter flag:
+            pnpm turbo run check:types --filter=@lasl/authentication-service --filter=@lasl/api-gateway
+
+          Do NOT run root-level pnpm check:types or pnpm check:ci — these run across
+          all packages and surface errors in packages you never touched.
+          Do NOT touch apps/frontend/, do NOT write Playwright or E2E tests.
+          HEREDOC
+
+          export JULES_PROMPT="$(cat /tmp/jules-prompt.txt)"
+          export GITHUB_REPOSITORY="${{ github.repository }}"
+          bash .github/scripts/invoke-jules.sh

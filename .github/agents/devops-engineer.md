@@ -10,10 +10,10 @@ Many features require no infrastructure changes. That is a perfectly valid outco
 
 ## What You Produce
 
-A single markdown file: `05_infra-notes.md` inside the feature directory.
+A single markdown file: `07_infra-notes.md` inside the feature directory.
 Additionally, any modified infrastructure files (docker-compose files, workflow files, etc.) are included in your JSON output.
 
-**Important:** you must ALWAYS write `05_infra-notes.md`, even if the answer is
+**Important:** you must ALWAYS write `07_infra-notes.md`, even if the answer is
 "no infrastructure changes required". This file is required to advance the pipeline.
 
 ---
@@ -79,7 +79,7 @@ If a new package was added to `packages/`, check whether it needs its own CI wor
 
 ---
 
-## Output Format for `05_infra-notes.md`
+## Output Format for `07_infra-notes.md`
 
 ```
 # Infrastructure Notes: [Feature Title]

@@ -1,11 +1,11 @@
-name: "Agent — Stage 4: Software Engineer"
+name: "Agent — Stage 4: Contracts Engineer"
 
 # Triggers when 03_arch-design.md is newly added to the feature branch
 # (i.e. when the Architect's PR is merged).
-# Invokes Jules as the Engineer; Jules implements the feature, runs all checks,
-# writes 04_eng-notes.md, and opens a PR back into the feature branch.
-# When that PR is merged, 04_eng-notes.md lands on the branch and
-# automatically triggers Stage 5 (DevOps Engineer).
+# Invokes Jules as the Contracts Engineer; Jules updates packages/app-contracts/,
+# rebuilds the package, and opens a PR back into the feature branch.
+# When that PR is merged, 04_contracts-notes.md lands on the branch and
+# automatically triggers Stage 5 (Backend Engineer).
 
 on:
   push:
@@ -20,8 +20,8 @@ permissions:
   pull-requests: write
 
 jobs:
-  run-eng-agent:
-    name: Run Software Engineer Agent
+  run-contracts-agent:
+    name: Run Contracts Engineer Agent
     runs-on: ubuntu-latest
 
     steps:
@@ -57,7 +57,7 @@ jobs:
             echo "skip=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: 🤖 Invoke Jules — Software Engineer
+      - name: 🤖 Invoke Jules — Contracts Engineer
         if: steps.meta.outputs.skip != 'true'
         env:
           JULES_API_KEY:   ${{ secrets.JULES_API_KEY }}
@@ -67,8 +67,8 @@ jobs:
           FEATURE_DIR:     ${{ steps.meta.outputs.feature_dir }}
         run: |
           cat > /tmp/jules-prompt.txt << 'HEREDOC'
-          Your role and full instructions are in `.github/agents/software-engineer.md` — read it first.
-          Your project context is in `PROJECT_CONTEXT.md` — every constraint listed there is mandatory.
+          Your role and full instructions are in `.github/agents/contracts-engineer.md` — read it first.
+          Your project context is in `PROJECT_CONTEXT.md` — read it carefully before proceeding.
           HEREDOC
 
           cat >> /tmp/jules-prompt.txt << HEREDOC
@@ -78,23 +78,24 @@ jobs:
           Feature directory: ${FEATURE_DIR}
 
           Input files (all on this branch):
-            \`${FEATURE_DIR}/01_po-spec.md\`       — product spec and acceptance criteria
-            \`${FEATURE_DIR}/03_arch-design.md\`   — architecture design (your primary guide)
-            \`${FEATURE_DIR}/02_design/\`          — UI mockups for visual reference (if present)
+            \`${FEATURE_DIR}/01_po-spec.md\`       — product spec
+            \`${FEATURE_DIR}/03_arch-design.md\`   — architecture design (primary input)
+              Pay particular attention to the "app-contracts Changes" section.
 
-          Implement the feature exactly as described in the architecture design.
-          Use the UI mockups as the visual reference for any frontend work.
+          Your task: update all shared packages/ that the arch design requires.
+          This includes packages/app-contracts/ (API contracts), packages/schema-engine/
+          (content document schemas), and any other packages/ listed in the arch design.
+          Read 03_arch-design.md carefully to determine which packages need changes.
 
-          After implementing, verify your work in this order:
-            1. Run \`pnpm install --frozen-lockfile || pnpm install\` if you added packages
-            2. Run \`pnpm check:types\` — fix every type error before submitting
-            3. Run \`pnpm turbo run test\` — fix every failing test before submitting
-            4. Run \`pnpm check:ci\` — fix every lint/format issue before submitting
+          Output sentinel: \`${FEATURE_DIR}/04_contracts-notes.md\`
 
-          Only submit when all four checks pass with zero errors.
+          For each package you modify, run its build and checks before moving on:
+            pnpm turbo run build --filter=@lasl/<package>
+            pnpm turbo run check:types --filter=@lasl/<package>
+            pnpm exec biome check --write packages/<package>/src/
 
-          Finally, write \`${FEATURE_DIR}/04_eng-notes.md\` per your role instructions.
-          This file is REQUIRED — it signals the pipeline to advance to the DevOps stage.
+          If one package depends on another, build the dependency first.
+          Do NOT touch apps/, do NOT run root-level pnpm check:types.
           HEREDOC
 
           export JULES_PROMPT="$(cat /tmp/jules-prompt.txt)"

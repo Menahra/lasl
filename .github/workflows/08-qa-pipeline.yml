@@ -1,6 +1,6 @@
-name: "Agent — Stage 6: QA Engineer"
+name: "Agent — Stage 8: QA Engineer"
 
-# Triggers when 05_infra-notes.md is newly added to the feature branch
+# Triggers when 07_infra-notes.md is newly added to the feature branch
 # (i.e. when the DevOps Engineer's PR is merged).
 # Invokes Jules as the QA agent; Jules writes Playwright E2E tests and opens
 # a PR back into the feature branch.
@@ -14,7 +14,7 @@ on:
     branches:
       - 'feature/**'
     paths:
-      - 'features/*/05_infra-notes.md'
+      - 'features/*/07_infra-notes.md'
   workflow_dispatch:
 
 permissions:
@@ -48,7 +48,7 @@ jobs:
           # Guard: only fire when infra notes were newly created, not revised.
           if [ "${{ github.event_name }}" = "push" ]; then
             ADDED=$(git diff --name-only --diff-filter=A HEAD~1 HEAD 2>/dev/null \
-              | grep -E 'features/[^/]+/05_infra-notes\.md' | head -1 || true)
+              | grep -E 'features/[^/]+/07_infra-notes\.md' | head -1 || true)
             if [ -z "$ADDED" ]; then
               echo "⏭️  Infra notes were revised, not newly created — skipping."
               echo "skip=true" >> $GITHUB_OUTPUT
@@ -80,9 +80,9 @@ jobs:
           Feature directory: ${FEATURE_DIR}
 
           Input files (all on this branch):
-            \`${FEATURE_DIR}/01_po-spec.md\`     — product spec and acceptance criteria (primary input)
-            \`${FEATURE_DIR}/03_arch-design.md\` — architecture design
-            \`${FEATURE_DIR}/05_infra-notes.md\` — infra notes (check for test environment changes)
+            \`${FEATURE_DIR}/01_po-spec.md\`         — product spec and acceptance criteria (primary input)
+            \`${FEATURE_DIR}/03_arch-design.md\`     — architecture design
+            \`${FEATURE_DIR}/07_infra-notes.md\`     — infra notes (check for test environment changes)
 
           Write Playwright E2E tests in \`packages/e2e-tests/tests/\` per your role instructions.
 
@@ -100,6 +100,6 @@ jobs:
         if: steps.meta.outputs.skip != 'true'
         run: |
           echo ""
-          echo "✅ All 6 pipeline stages have been invoked."
+          echo "✅ All 8 pipeline stages have been invoked."
           echo "   Once Jules' QA PR is merged into the feature branch,"
           echo "   open one final PR: feature/* → main to ship the feature."

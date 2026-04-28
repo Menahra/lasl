@@ -1,18 +1,17 @@
-name: "Agent — Stage 5: DevOps Engineer"
+name: "Agent — Stage 7: DevOps Engineer"
 
-# Triggers when 04_eng-notes.md is newly added to the feature branch
-# (i.e. when the Engineer's PR is merged).
-# Invokes Jules as the DevOps agent; Jules writes 05_infra-notes.md and any
+# Triggers when 06_frontend-notes.md is newly added to the feature branch
+# (i.e. when the Frontend Engineer's PR is merged).
+# Invokes Jules as the DevOps agent; Jules writes 07_infra-notes.md and any
 # docker-compose changes, then opens a PR back into the feature branch.
-# When that PR is merged, 05_infra-notes.md lands on the branch and
-# automatically triggers Stage 6 (QA Engineer).
+# When that PR is merged, 07_infra-notes.md triggers Stage 8 (QA Engineer).
 
 on:
   push:
     branches:
       - 'feature/**'
     paths:
-      - 'features/*/04_eng-notes.md'
+      - 'features/*/06_frontend-notes.md'
   workflow_dispatch:
 
 permissions:
@@ -43,12 +42,12 @@ jobs:
           echo "feature_dir=$FEATURE_DIR"   >> $GITHUB_OUTPUT
           echo "base_branch=$BASE"          >> $GITHUB_OUTPUT
 
-          # Guard: only fire when eng notes were newly created, not revised.
+          # Guard: only fire when frontend notes were newly created, not revised.
           if [ "${{ github.event_name }}" = "push" ]; then
             ADDED=$(git diff --name-only --diff-filter=A HEAD~1 HEAD 2>/dev/null \
-              | grep -E 'features/[^/]+/04_eng-notes\.md' | head -1 || true)
+              | grep -E 'features/[^/]+/06_frontend-notes\.md' | head -1 || true)
             if [ -z "$ADDED" ]; then
-              echo "⏭️  Eng notes were revised, not newly created — skipping."
+              echo "⏭️  Frontend notes were revised, not newly created — skipping."
               echo "skip=true" >> $GITHUB_OUTPUT
             else
               echo "skip=false" >> $GITHUB_OUTPUT
@@ -78,23 +77,24 @@ jobs:
           Feature directory: ${FEATURE_DIR}
 
           Input files (all on this branch):
-            \`${FEATURE_DIR}/01_po-spec.md\`     — product spec
-            \`${FEATURE_DIR}/03_arch-design.md\` — architecture design (primary input)
-            \`${FEATURE_DIR}/04_eng-notes.md\`   — engineer's implementation notes
+            \`${FEATURE_DIR}/01_po-spec.md\`         — product spec
+            \`${FEATURE_DIR}/03_arch-design.md\`     — architecture design (primary input)
+            \`${FEATURE_DIR}/04_contracts-notes.md\` — contracts changes
+            \`${FEATURE_DIR}/05_backend-notes.md\`   — backend implementation notes
+            \`${FEATURE_DIR}/06_frontend-notes.md\`  — frontend implementation notes
 
-          Output: \`${FEATURE_DIR}/05_infra-notes.md\` — produce this file per your instructions
+          Output: \`${FEATURE_DIR}/07_infra-notes.md\` — produce this file per your instructions
           Also update any docker-compose files that require changes for this feature.
 
           Even if no infrastructure changes are needed, you MUST still write
-          \`${FEATURE_DIR}/05_infra-notes.md\` explaining that.
+          \`${FEATURE_DIR}/07_infra-notes.md\` explaining that.
           This file is REQUIRED — it signals the pipeline to advance to the QA stage.
 
-          Only create or modify \`${FEATURE_DIR}/05_infra-notes.md\` and docker-compose files.
+          Only create or modify \`${FEATURE_DIR}/07_infra-notes.md\` and docker-compose files.
           Do not touch application source files.
 
           IMPORTANT: this is a documentation-only task.
-          Do NOT run pnpm install, do NOT run type checks, do NOT run tests, do NOT run linting.
-          Just read the input files and write the output file.
+          Do NOT run pnpm install, type checks, tests, or linting.
           HEREDOC
 
           export JULES_PROMPT="$(cat /tmp/jules-prompt.txt)"
