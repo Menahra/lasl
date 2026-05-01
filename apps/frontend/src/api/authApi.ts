@@ -1,6 +1,8 @@
 import type { createSessionSchema } from "@lasl/app-contracts/schemas/session";
 import type {
+  deleteUserSchema,
   resetPasswordParamsSchema,
+  updatePasswordSchema,
   userPasswordWithConfirmationAndRefinementSchema,
 } from "@lasl/app-contracts/schemas/user";
 import type {
@@ -106,6 +108,23 @@ export const authApi = {
         `${AUTH_API_URL}/users/me`,
       );
 
+    return data;
+  },
+
+  updatePassword: async (input: z.infer<typeof updatePasswordSchema>) => {
+    const { data } = await apiClient.post(
+      `${AUTH_API_URL}/users/me/password`,
+      input,
+      { withCredentials: true },
+    );
+    return data;
+  },
+
+  deleteAccount: async (input: z.infer<typeof deleteUserSchema>) => {
+    const { data } = await apiClient.delete(`${AUTH_API_URL}/users/me`, {
+      data: input,
+      withCredentials: true,
+    });
     return data;
   },
 };
