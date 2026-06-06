@@ -1,0 +1,22 @@
+name: "DEPRECATED — Stage 4: Contracts Engineer (replaced by reviewer)"
+
+# This workflow has been replaced by 04-contracts-reviewer-pipeline.yml.
+# The Contracts Engineer role is now performed by the human developer.
+# Jules acts as a reviewer, not an implementer, for the three engineer stages.
+#
+# See AGENTS.md for the updated pipeline design.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deprecated-notice:
+    name: Deprecated
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⚠️ Deprecated
+        run: |
+          echo "This workflow is deprecated."
+          echo "The Contracts Engineer stage is now performed by the human developer."
+          echo "Jules reviews the PR via 04-contracts-reviewer-pipeline.yml."
+          echo "See AGENTS.md for details."

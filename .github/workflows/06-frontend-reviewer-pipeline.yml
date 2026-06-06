@@ -1,0 +1,127 @@
+name: "Agent — Stage 6: Frontend Reviewer"
+
+# Triggers when a PR targeting a feature/* branch is opened or updated
+# from a branch named frontend/*. Jules reviews the frontend apps/ changes
+# against the arch design and mockups, runs scoped type checks and tests,
+# and opens a PR with 06_frontend-notes.md back into the frontend branch.
+#
+# When the user merges Jules' reviewer PR (and then their own frontend PR),
+# 06_frontend-notes.md lands on the feature branch and triggers Stage 7.
+#
+# Branch naming convention for your PR:
+#   frontend/<feature-id>-<slug>  →  e.g. frontend/0001-profile-settings
+#
+# Note: 05_backend-notes.md must already be on the feature branch
+# (i.e. the backend PR must have been merged) before you open this PR.
+
+on:
+  pull_request:
+    branches:
+      - 'feature/**'
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  run-frontend-reviewer:
+    name: Run Frontend Reviewer Agent
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || startsWith(github.head_ref, 'frontend/') }}
+
+    steps:
+      - name: ☁️ Checkout repository
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+          fetch-depth: 0
+
+      - name: 🔍 Extract feature metadata
+        id: meta
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE="${{ github.base_ref }}"   # e.g. feature/0001-profile-settings
+            HEAD="${{ github.head_ref }}"   # e.g. frontend/0001-profile-settings
+          else
+            BASE="${{ github.ref_name }}"
+            HEAD="${{ github.ref_name }}"
+          fi
+
+          REST="${BASE#feature/}"
+          FEATURE_ID=$(echo "$REST"   | cut -d'-' -f1)
+          FEATURE_SLUG=$(echo "$REST" | cut -d'-' -f2-)
+          FEATURE_DIR="features/${FEATURE_ID}_${FEATURE_SLUG}"
+
+          echo "feature_id=$FEATURE_ID"     >> $GITHUB_OUTPUT
+          echo "feature_slug=$FEATURE_SLUG" >> $GITHUB_OUTPUT
+          echo "feature_dir=$FEATURE_DIR"   >> $GITHUB_OUTPUT
+          echo "base_branch=$BASE"          >> $GITHUB_OUTPUT
+          echo "head_branch=$HEAD"          >> $GITHUB_OUTPUT
+
+      - name: 🔒 Guard — require backend sentinel on feature branch
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          BASE="${{ github.base_ref }}"
+          git fetch origin "$BASE" --quiet
+          REST="${BASE#feature/}"
+          FEATURE_ID=$(echo "$REST" | cut -d'-' -f1)
+          FEATURE_SLUG=$(echo "$REST" | cut -d'-' -f2-)
+          FEATURE_DIR="features/${FEATURE_ID}_${FEATURE_SLUG}"
+
+          if ! git ls-tree -r "origin/$BASE" --name-only | grep -q "${FEATURE_DIR}/05_backend-notes.md"; then
+            echo "::error::${FEATURE_DIR}/05_backend-notes.md not found on $BASE."
+            echo "::error::Merge the backend PR before opening a frontend PR."
+            exit 1
+          fi
+
+      - name: 🤖 Invoke Jules — Frontend Reviewer
+        env:
+          JULES_API_KEY:    ${{ secrets.JULES_API_KEY }}
+          STARTING_BRANCH:  ${{ steps.meta.outputs.head_branch }}
+          FEATURE_ID:       ${{ steps.meta.outputs.feature_id }}
+          FEATURE_SLUG:     ${{ steps.meta.outputs.feature_slug }}
+          FEATURE_DIR:      ${{ steps.meta.outputs.feature_dir }}
+        run: |
+          cat > /tmp/jules-prompt.txt << 'HEREDOC'
+          Your role and full instructions are in `.github/agents/frontend-reviewer.md` — read it first.
+          Your project context is in `PROJECT_CONTEXT.md` — read it carefully before proceeding.
+          HEREDOC
+
+          cat >> /tmp/jules-prompt.txt << HEREDOC
+
+          Feature ID:        ${FEATURE_ID}
+          Feature slug:      ${FEATURE_SLUG}
+          Feature directory: ${FEATURE_DIR}
+
+          You are reviewing code that has already been written on this branch.
+          Do NOT implement anything. Your job is to review and document.
+
+          Input files to review against:
+            \`${FEATURE_DIR}/01_po-spec.md\`         — product spec and acceptance criteria (primary)
+            \`${FEATURE_DIR}/03_arch-design.md\`     — architecture design
+            \`${FEATURE_DIR}/02_design/\`             — UI mockups for visual reference
+            \`${FEATURE_DIR}/04_contracts-notes.md\` — what was added to app-contracts
+            \`${FEATURE_DIR}/05_backend-notes.md\`   — backend implementation notes
+
+          Code to review:
+            All files in \`apps/frontend/src/\` on this branch that differ from the base feature branch.
+
+          Your task:
+          1. Read the arch design's Stage C section and the PO spec acceptance criteria.
+          2. Read the actual implementation in apps/frontend/ on this branch.
+          3. Run scoped checks for the frontend:
+               pnpm turbo run check:types --filter=@lasl/frontend
+               pnpm turbo run test        --filter=@lasl/frontend
+               pnpm exec biome check apps/frontend/src/
+          4. Write \`${FEATURE_DIR}/06_frontend-notes.md\` with your review findings.
+
+          Do NOT run root-level pnpm check:types or pnpm check:ci.
+          Do NOT modify any source files — only write the review sentinel.
+          Do NOT touch apps/authentication-service/, packages/, or routeTree.gen.ts.
+          HEREDOC
+
+          export JULES_PROMPT="$(cat /tmp/jules-prompt.txt)"
+          export GITHUB_REPOSITORY="${{ github.repository }}"
+          bash .github/scripts/invoke-jules.sh

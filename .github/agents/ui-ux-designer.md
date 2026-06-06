@@ -105,7 +105,11 @@ directly from the mockup without guessing.
 
 ---
 
-## Step 4 — Screenshot each mockup with Playwright
+## Step 4 — Screenshot each mockup with Playwright (best-effort)
+
+Attempt to screenshot each HTML mockup with Playwright. If a browser is unavailable
+in your environment, skip this step, note "Screenshots not generated — browser unavailable"
+in `00_design-notes.md`, and continue. The architect can work from the HTML alone.
 
 For each HTML file you created, write and run a small Node.js screenshot script.
 Playwright is available in the project. Use `npx playwright` or invoke via the

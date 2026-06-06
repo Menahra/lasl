@@ -91,7 +91,7 @@ export type FeatureInput = z.infer<typeof featureSchema>;
 [For each new endpoint: method, path constant location, request schema, response schema, status codes, auth required?]
 
 ## app-contracts Changes
-[List every addition to packages/app-contracts/ and why. This is the first thing the engineer builds.]
+[List every addition to packages/app-contracts/ and why. This is the first thing implemented in Stage A.]
 
 ## New npm Dependencies
 | Package | Workspace | Justification | Alternatives rejected |
@@ -128,17 +128,22 @@ Write "None needed beyond existing patterns." if applicable.]
 
 ## Implementation Order
 
-The implementation is carried out by three specialized engineers in sequence.
-Structure your steps to match this split exactly.
+The implementation is carried out by the human developer in three stages. Jules reviews
+each stage via a PR review before the pipeline advances. Structure your steps to match
+this split exactly — each stage should be self-contained and independently reviewable.
 
-### Stage A — Contracts Engineer (all packages/ this feature requires)
+### Stage A — Contracts (human implements, Jules reviews)
+Branch: `contracts/<feature-id>-<slug>` → PR targets `feature/<feature-id>-<slug>`
+
 List every shared package that needs changes (e.g. `packages/app-contracts/`,
 `packages/schema-engine/`, or any new package). For each:
 1. [What to add or change in this package]
 2. Build: `pnpm turbo run build --filter=@lasl/<package>`
 If one package depends on another, list the dependency first.
 
-### Stage B — Backend Engineer (all backend apps/ this feature requires)
+### Stage B — Backend (human implements, Jules reviews)
+Branch: `backend/<feature-id>-<slug>` → PR targets `feature/<feature-id>-<slug>`
+
 List every backend service that needs changes (e.g. `apps/authentication-service/`,
 `apps/api-gateway/`, or any new service). For each:
 3. [Controllers, services, routes, models to add or change]
@@ -146,17 +151,19 @@ List every backend service that needs changes (e.g. `apps/authentication-service
 5. `pnpm turbo run check:types --filter=@lasl/<each-modified-service>`
 6. `pnpm turbo run test --filter=@lasl/<each-modified-service>`
 
-### Stage C — Frontend Engineer (apps/frontend/ only)
+### Stage C — Frontend (human implements, Jules reviews)
+Branch: `frontend/<feature-id>-<slug>` → PR targets `feature/<feature-id>-<slug>`
+
 7. [API calls, hooks, components, pages, routes to add or change]
 8. Write Vitest tests for new frontend code
 9. `pnpm turbo run check:types --filter=@lasl/frontend`
 10. `pnpm turbo run test --filter=@lasl/frontend`
 
-Keep each stage's steps self-contained. The Backend Engineer must not need to touch
-the frontend, and the Frontend Engineer must not need to touch the backend or packages/.
+Keep each stage's steps self-contained. The backend implementer must not need to touch
+the frontend, and the frontend implementer must not need to touch the backend or packages/.
 
-## Notes for the Engineer
-[Judgement calls left to the engineer, known caveats in the codebase, warnings about existing complexity.]
+## Notes for the Implementer
+[Judgement calls, known caveats in the codebase, warnings about existing complexity.]
 ```
 
 ---

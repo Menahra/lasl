@@ -1,0 +1,106 @@
+name: "Agent — Stage 4: Contracts Reviewer"
+
+# Triggers when a PR targeting a feature/* branch is opened or updated
+# from a branch named contracts/*. Jules reviews the packages/ changes
+# against the arch design, runs scoped builds and type checks, and opens
+# a PR with 04_contracts-notes.md back into the contracts branch.
+#
+# When the user merges Jules' reviewer PR (and then their own contracts PR),
+# 04_contracts-notes.md lands on the feature branch and triggers Stage 5.
+#
+# Branch naming convention for your PR:
+#   contracts/<feature-id>-<slug>  →  e.g. contracts/0001-profile-settings
+
+on:
+  pull_request:
+    branches:
+      - 'feature/**'
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  run-contracts-reviewer:
+    name: Run Contracts Reviewer Agent
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || startsWith(github.head_ref, 'contracts/') }}
+
+    steps:
+      - name: ☁️ Checkout repository
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+          fetch-depth: 0
+
+      - name: 🔍 Extract feature metadata
+        id: meta
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE="${{ github.base_ref }}"   # e.g. feature/0001-profile-settings
+            HEAD="${{ github.head_ref }}"   # e.g. contracts/0001-profile-settings
+          else
+            # workflow_dispatch: derive from current branch, assume feature/* base
+            BASE="${{ github.ref_name }}"
+            HEAD="${{ github.ref_name }}"
+          fi
+
+          REST="${BASE#feature/}"
+          FEATURE_ID=$(echo "$REST"   | cut -d'-' -f1)
+          FEATURE_SLUG=$(echo "$REST" | cut -d'-' -f2-)
+          FEATURE_DIR="features/${FEATURE_ID}_${FEATURE_SLUG}"
+
+          echo "feature_id=$FEATURE_ID"     >> $GITHUB_OUTPUT
+          echo "feature_slug=$FEATURE_SLUG" >> $GITHUB_OUTPUT
+          echo "feature_dir=$FEATURE_DIR"   >> $GITHUB_OUTPUT
+          echo "base_branch=$BASE"          >> $GITHUB_OUTPUT
+          echo "head_branch=$HEAD"          >> $GITHUB_OUTPUT
+
+      - name: 🤖 Invoke Jules — Contracts Reviewer
+        env:
+          JULES_API_KEY:    ${{ secrets.JULES_API_KEY }}
+          STARTING_BRANCH:  ${{ steps.meta.outputs.head_branch }}
+          FEATURE_ID:       ${{ steps.meta.outputs.feature_id }}
+          FEATURE_SLUG:     ${{ steps.meta.outputs.feature_slug }}
+          FEATURE_DIR:      ${{ steps.meta.outputs.feature_dir }}
+        run: |
+          cat > /tmp/jules-prompt.txt << 'HEREDOC'
+          Your role and full instructions are in `.github/agents/contracts-reviewer.md` — read it first.
+          Your project context is in `PROJECT_CONTEXT.md` — read it carefully before proceeding.
+          HEREDOC
+
+          cat >> /tmp/jules-prompt.txt << HEREDOC
+
+          Feature ID:        ${FEATURE_ID}
+          Feature slug:      ${FEATURE_SLUG}
+          Feature directory: ${FEATURE_DIR}
+
+          You are reviewing code that has already been written on this branch.
+          Do NOT implement anything. Your job is to review and document.
+
+          Input files to review against:
+            \`${FEATURE_DIR}/01_po-spec.md\`     — product spec
+            \`${FEATURE_DIR}/03_arch-design.md\` — architecture design (primary reference)
+              Pay particular attention to the "Stage A — Contracts Engineer" section.
+
+          Code to review:
+            All files in \`packages/\` on this branch that differ from the base feature branch.
+
+          Your task:
+          1. Read the arch design's Stage A section to understand what was required.
+          2. Read the actual implementation in packages/ on this branch.
+          3. Run scoped checks for every package that was modified:
+               pnpm turbo run build      --filter=@lasl/<package>
+               pnpm turbo run check:types --filter=@lasl/<package>
+               pnpm exec biome check packages/<package>/src/
+          4. Write \`${FEATURE_DIR}/04_contracts-notes.md\` with your review findings.
+
+          Do NOT run root-level pnpm check:types.
+          Do NOT modify any source files — only write the review sentinel.
+          HEREDOC
+
+          export JULES_PROMPT="$(cat /tmp/jules-prompt.txt)"
+          export GITHUB_REPOSITORY="${{ github.repository }}"
+          bash .github/scripts/invoke-jules.sh

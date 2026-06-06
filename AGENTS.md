@@ -24,27 +24,30 @@ You push features/0001_my-feature/00_request.md to a feature/* branch
     │ Software Architect │  writes 03_arch-design.md → opens PR
     └────────────────────┘
             │ you review & merge
-            ▼ (automatic — 03_arch-design.md appears on branch)
+            ▼ (you open a contracts/* PR)
     ┌─────────────────────────┐
-    │  Contracts Engineer     │  updates packages/app-contracts/ → builds → opens PR
+    │  You: Contracts work    │  update packages/ → open PR: contracts/* → feature/*
+    │  Jules: Reviews it      │  runs checks, writes 04_contracts-notes.md → opens PR
     └─────────────────────────┘
-            │ you review & merge
-            ▼ (automatic — 04_contracts-notes.md appears on branch)
+            │ you merge Jules' reviewer PR, then your contracts PR
+            ▼ (04_contracts-notes.md appears on feature branch)
     ┌─────────────────────────┐
-    │  Backend Engineer       │  implements authentication-service → tests → opens PR
+    │  You: Backend work      │  implement backend apps/ → open PR: backend/* → feature/*
+    │  Jules: Reviews it      │  runs checks + tests, writes 05_backend-notes.md → opens PR
     └─────────────────────────┘
-            │ you review & merge
-            ▼ (automatic — 05_backend-notes.md appears on branch)
+            │ you merge Jules' reviewer PR, then your backend PR
+            ▼ (05_backend-notes.md appears on feature branch)
     ┌─────────────────────────┐
-    │  Frontend Engineer      │  implements apps/frontend/ → tests → opens PR
+    │  You: Frontend work     │  implement apps/frontend/ → open PR: frontend/* → feature/*
+    │  Jules: Reviews it      │  runs checks + tests, writes 06_frontend-notes.md → opens PR
     └─────────────────────────┘
-            │ you review & merge
-            ▼ (automatic — 06_frontend-notes.md appears on branch)
+            │ you merge Jules' reviewer PR, then your frontend PR
+            ▼ (automatic — 06_frontend-notes.md appears on feature branch)
     ┌────────────────────┐
     │  DevOps Engineer   │  writes 07_infra-notes.md → opens PR
     └────────────────────┘
             │ you review & merge
-            ▼ (automatic — 07_infra-notes.md appears on branch)
+            ▼ (automatic — 07_infra-notes.md appears on feature branch)
     ┌────────────────────┐
     │   QA Engineer      │  writes Playwright .spec.ts files → opens PR
     └────────────────────┘
@@ -53,88 +56,104 @@ You push features/0001_my-feature/00_request.md to a feature/* branch
     Open final PR: feature/* → main ✅
 ```
 
-### How the chain advances
+---
 
-Each stage triggers the next by file presence — no labels needed. When you merge a Jules PR
-into the feature branch, the output file lands on the branch and GitHub fires a push event
-that triggers the next stage automatically.
+## Stage Overview
 
-| Stage | Watches for | Produces |
-|-------|-------------|----------|
-| 1 PO | `features/*/00_request.md` | `01_po-spec.md` |
-| 2 UI/UX | `features/*/01_po-spec.md` | `02_design/00_design-notes.md` |
-| 3 Architect | `features/*/02_design/00_design-notes.md` | `03_arch-design.md` |
-| 4 Contracts | `features/*/03_arch-design.md` | `packages/app-contracts/` + `04_contracts-notes.md` |
-| 5 Backend | `features/*/04_contracts-notes.md` | backend code + `05_backend-notes.md` |
-| 6 Frontend | `features/*/05_backend-notes.md` | frontend code + `06_frontend-notes.md` |
-| 7 DevOps | `features/*/06_frontend-notes.md` | `07_infra-notes.md` |
-| 8 QA | `features/*/07_infra-notes.md` | `packages/e2e-tests/tests/…` |
+| Stage | Who | Trigger | Produces |
+|-------|-----|---------|----------|
+| 1 PO | Jules | `features/*/00_request.md` pushed | `01_po-spec.md` |
+| 2 UI/UX | Jules | `features/*/01_po-spec.md` on branch | `02_design/00_design-notes.md` + mockups |
+| 3 Architect | Jules | `features/*/02_design/00_design-notes.md` on branch | `03_arch-design.md` |
+| 4 Contracts | **You** + Jules reviewer | You open `contracts/*` → `feature/*` PR | `packages/` changes + `04_contracts-notes.md` |
+| 5 Backend | **You** + Jules reviewer | You open `backend/*` → `feature/*` PR | backend code + `05_backend-notes.md` |
+| 6 Frontend | **You** + Jules reviewer | You open `frontend/*` → `feature/*` PR | frontend code + `06_frontend-notes.md` |
+| 7 DevOps | Jules | `features/*/06_frontend-notes.md` on branch | `07_infra-notes.md` |
+| 8 QA | Jules | `features/*/07_infra-notes.md` on branch | `packages/e2e-tests/tests/…` + `08_qa-notes.md` |
 
-Each workflow run completes in under 10 seconds — it fires Jules and exits immediately.
-Jules takes however long it needs and opens a PR when done.
+---
 
-### Why three engineer stages?
+## How the Reviewer Stages Work (4, 5, 6)
 
-The single Software Engineer stage was too broad — it required Jules to update shared
-types, backend services, and the full frontend in one session, which regularly ran for
-14+ hours and failed. Splitting by layer solves this:
+For the three implementation stages, you write the code and Jules reviews it:
 
-- **Contracts** has no app dependencies — it's pure types and constants. Usually done in 20 min.
-- **Backend** has no frontend dependencies. Scoped to one service, tests pass quickly.
-- **Frontend** can import fully-built contracts and assume a working API. Focused on UI only.
+1. **Create your branch** using the naming convention:
+   - Contracts work: `contracts/<feature-id>-<slug>` (e.g. `contracts/0001-profile-settings`)
+   - Backend work: `backend/<feature-id>-<slug>` (e.g. `backend/0001-profile-settings`)
+   - Frontend work: `frontend/<feature-id>-<slug>` (e.g. `frontend/0001-profile-settings`)
 
-Each agent also runs `pnpm turbo run check:types --filter=@lasl/<package>` instead of the
-root-level `pnpm check:types`, which prevented errors in unrelated packages from causing loops.
+2. **Write your code** on that branch and **open a PR** targeting the `feature/*` branch.
 
-### On every PR you can
+3. **Jules fires automatically** when the PR is opened (or when you push new commits). Jules:
+   - Reads the arch design to understand what was required
+   - Reviews your implementation against the spec
+   - Runs scoped builds, type checks, and tests
+   - Commits a review sentinel file to your branch via its own PR
 
-- **Post a review comment** → Jules reads it and pushes a revision commit automatically
-- **Push directly to the Jules branch** → edit files yourself, merge when ready
+4. **Merge Jules' reviewer PR** into your branch. This adds the sentinel file (e.g. `04_contracts-notes.md`) to your branch.
 
-Jules listens for comments natively via the Jules GitHub App. Switch to **Reactive Mode**
-in [Jules UI settings](https://jules.google.com) if you only want it to respond to `@jules`.
+5. **Merge your PR** (`contracts/*` → `feature/*`). The sentinel lands on the feature branch and automatically triggers the next stage.
 
-### If a stage is skipped
+The sentinel file is Jules' sign-off — it documents what was reviewed, what checks ran, and any issues found. If Jules flagged issues, address them before merging.
 
-Go to **Actions → [stage workflow] → Run workflow**, select your feature branch, click Run.
-No inputs needed — the branch name is all the workflow requires.
+---
+
+## Branch Naming Convention
+
+| Stage | Your branch | PR target |
+|-------|-------------|-----------|
+| Contracts | `contracts/NNNN-slug` | `feature/NNNN-slug` |
+| Backend | `backend/NNNN-slug` | `feature/NNNN-slug` |
+| Frontend | `frontend/NNNN-slug` | `feature/NNNN-slug` |
+
+The branch prefix is how the reviewer workflow knows which agent to invoke.
 
 ---
 
 ## Starting a Feature
 
-1. Create a `feature/*` branch: `git checkout -b feature/0002-content-delivery`
+1. Create a `feature/*` branch: `git checkout -b feature/0002-content-service`
 2. Create the feature directory and write your request:
 
 ```
 features/
-  0002_content-delivery/
+  0002_content-service/
     00_request.md   ← you write this and push to the feature branch
 ```
 
-**Naming convention:** `NNNN_kebab-case-description` — use the next sequential 4-digit number.
+**Naming convention:** `NNNN_kebab-case-description` (directory) / `NNNN-kebab-case-description` (branch). Use the next sequential 4-digit number.
 
 ---
 
 ## Feature Directory After the Pipeline
 
 ```
-features/0001_example-feature/
+features/0001_profile-settings/
   00_request.md              ← your input (never modified by agents)
-  01_po-spec.md              ← Product Owner
+  01_po-spec.md              ← Product Owner (Jules)
   02_design/
-    00_design-notes.md       ← UI/UX Designer: screen inventory and decisions
+    00_design-notes.md       ← UI/UX Designer (Jules)
     01_screen-name.html      ← mockup
     01_screen-name.png       ← screenshot
     …
-  03_arch-design.md          ← Architect
-  04_contracts-notes.md      ← Contracts Engineer (pipeline sentinel)
-  05_backend-notes.md        ← Backend Engineer (pipeline sentinel)
-  06_frontend-notes.md       ← Frontend Engineer (pipeline sentinel)
-  07_infra-notes.md          ← DevOps Engineer (pipeline sentinel)
+  03_arch-design.md          ← Architect (Jules)
+  04_contracts-notes.md      ← Contracts Reviewer (Jules) — pipeline sentinel
+  05_backend-notes.md        ← Backend Reviewer (Jules) — pipeline sentinel
+  06_frontend-notes.md       ← Frontend Reviewer (Jules) — pipeline sentinel
+  07_infra-notes.md          ← DevOps Engineer (Jules) — pipeline sentinel
+  08_qa-notes.md             ← QA Engineer (Jules) — test coverage summary
 ```
 
-Actual code is written to `apps/`, `packages/`, and `packages/e2e-tests/` as normal.
+Actual implementation code is written to `apps/` and `packages/` as normal.
+QA test files are written to `packages/e2e-tests/tests/<feature-area>/` — not inside the feature directory.
+
+---
+
+## If a Stage Needs to Be Re-run
+
+Go to **Actions → [stage workflow] → Run workflow**, select your branch, click Run.
+
+For reviewer stages (4–6): re-running fires Jules against whatever is currently on your branch. You can also just push a new commit to the PR — the `synchronize` event re-triggers Jules automatically.
 
 ---
 
@@ -172,9 +191,9 @@ Each agent's instructions are in `.github/agents/`. Edit these files to adjust b
 | `.github/agents/product-owner.md` | Product Owner | 1 |
 | `.github/agents/ui-ux-designer.md` | UI/UX Designer | 2 |
 | `.github/agents/software-architect.md` | Software Architect | 3 |
-| `.github/agents/contracts-engineer.md` | Contracts Engineer | 4 |
-| `.github/agents/backend-engineer.md` | Backend Engineer | 5 |
-| `.github/agents/frontend-engineer.md` | Frontend Engineer | 6 |
+| `.github/agents/contracts-reviewer.md` | Contracts Reviewer | 4 |
+| `.github/agents/backend-reviewer.md` | Backend Reviewer | 5 |
+| `.github/agents/frontend-reviewer.md` | Frontend Reviewer | 6 |
 | `.github/agents/devops-engineer.md` | DevOps Engineer | 7 |
 | `.github/agents/qa-engineer.md` | QA Engineer | 8 |
 
