@@ -129,7 +129,7 @@ describe("update password controller", () => {
     });
 
     const updatedUser = await UserModel.findById(user._id);
-    const isValid = await updatedUser!.validatePassword("NewSecurePassword123");
+    const isValid = await updatedUser?.validatePassword("NewSecurePassword123");
     expect(isValid).toBe(true);
   });
 });

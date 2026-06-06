@@ -215,6 +215,10 @@ msgstr "Erstellen Sie Ihr Konto"
 msgid "Create Your Free Account"
 msgstr "Erstellen Sie Ihr kostenloses Konto"
 
+#: src/shared/formErrors.ts:19
+msgid "Current password is incorrect"
+msgstr ""
+
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:26
 msgid "Data Controller"
 msgstr "Verantwortlicher"
@@ -493,7 +497,7 @@ msgstr "Das Passwort muss mindestens einen Kleinbuchstaben enthalten"
 msgid "Password must contain at least one number"
 msgstr "Das Passwort muss mindestens eine Zahl enthalten"
 
-#: src/shared/formErrors.ts:19
+#: src/shared/formErrors.ts:20
 msgid "Password must contain at least one uppercase letter"
 msgstr "Das Passwort muss mindestens einen Großbuchstaben enthalten"
 

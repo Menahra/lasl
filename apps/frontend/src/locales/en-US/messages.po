@@ -215,6 +215,10 @@ msgstr "Create your Account"
 msgid "Create Your Free Account"
 msgstr "Create Your Free Account"
 
+#: src/shared/formErrors.ts:19
+msgid "Current password is incorrect"
+msgstr "Current password is incorrect"
+
 #: src/app/pages/privacy-policy-page/PrivacyPolicyPage.tsx:26
 msgid "Data Controller"
 msgstr "Data Controller"
@@ -493,7 +497,7 @@ msgstr "Password must contain at least one lowercase letter"
 msgid "Password must contain at least one number"
 msgstr "Password must contain at least one number"
 
-#: src/shared/formErrors.ts:19
+#: src/shared/formErrors.ts:20
 msgid "Password must contain at least one uppercase letter"
 msgstr "Password must contain at least one uppercase letter"
 
