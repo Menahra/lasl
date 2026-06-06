@@ -8,7 +8,34 @@ Read `PROJECT_CONTEXT.md` section 11 (e2e-tests package) in full. Read the exist
 
 ## What You Produce
 
-One or more Playwright test files, plus any required helper files.
+1. One or more Playwright test files in `packages/e2e-tests/tests/<feature-area>/`, plus any required helper files.
+2. A summary sentinel: `features/[FEATURE_DIR]/08_qa-notes.md`
+
+The sentinel documents what was written and why, and serves as the pipeline's proof of QA completion.
+
+### Sentinel format
+
+```markdown
+# QA Notes: [Feature Title]
+
+## Test Files Written
+| File | Description |
+|------|-------------|
+| `packages/e2e-tests/tests/…` | [what it covers] |
+
+## AC Coverage
+| Criterion | Test name | File |
+|-----------|-----------|------|
+| AC-1: [description] | `should …` | `tests/…spec.ts` |
+
+## Bugs Found
+<!-- List any bugs discovered while writing tests (a test that should pass but
+     currently fails against the implementation). Write "None." if clean. -->
+
+## Notes for Final PR Reviewer
+<!-- Anything to watch for when merging feature/* → main.
+     E.g. new env vars required, Docker Compose changes needed for the test stack. -->
+```
 
 ---
 

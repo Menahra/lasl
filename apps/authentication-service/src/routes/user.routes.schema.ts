@@ -147,3 +147,37 @@ export const updateCurrentAuthenticatedUserForbiddenResponseSchema =
 export type UpdateCurrentAuthenticatedUserForbiddenResponse = z.infer<
   typeof updateCurrentAuthenticatedUserForbiddenResponseSchema
 >;
+
+// Update Password Response
+export const updatePasswordSuccessResponseSchema = genericMessageResponseSchema;
+export type UpdatePasswordSuccessResponse = z.infer<
+  typeof updatePasswordSuccessResponseSchema
+>;
+
+export const updatePasswordBadRequestResponseSchema =
+  genericMessageResponseSchema;
+export type UpdatePasswordBadRequestResponse = z.infer<
+  typeof updatePasswordBadRequestResponseSchema
+>;
+
+export const updatePasswordForbiddenResponseSchema =
+  genericMessageResponseSchema;
+export type UpdatePasswordForbiddenResponse = z.infer<
+  typeof updatePasswordForbiddenResponseSchema
+>;
+
+// Delete User Response
+export const deleteUserSuccessResponseSchema = genericMessageResponseSchema;
+export type DeleteUserSuccessResponse = z.infer<
+  typeof deleteUserSuccessResponseSchema
+>;
+
+export const deleteUserBadRequestResponseSchema = genericMessageResponseSchema;
+export type DeleteUserBadRequestResponse = z.infer<
+  typeof deleteUserBadRequestResponseSchema
+>;
+
+export const deleteUserForbiddenResponseSchema = genericMessageResponseSchema;
+export type DeleteUserForbiddenResponse = z.infer<
+  typeof deleteUserForbiddenResponseSchema
+>;

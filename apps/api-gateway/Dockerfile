@@ -1,6 +1,6 @@
 FROM node:22-slim AS base
 ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
+ENV PATH="$PNPM_HOME/bin:$PATH"
 RUN corepack enable
 
 RUN apt-get update && apt-get install -y apt-transport-https ca-certificates curl gnupg && \
@@ -39,4 +39,4 @@ FROM base AS api-gateway
 WORKDIR /prod/api-gateway
 COPY --from=build /prod/api-gateway ./
 EXPOSE 3000
-CMD [ "pnpm", "start" ]
+CMD [ "node", "dist/server.js" ]

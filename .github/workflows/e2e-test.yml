@@ -8,7 +8,7 @@ on:
       - "packages/**"
       - "pnpm-lock.yaml"
       - "turbo.json"
-      - "docker-compose.e2e.yml"
+      - "docker-compose.test.yml"
       - ".github/workflows/e2e-test.yml"
       - ".github/actions/setup-monorepo/**"
   pull_request:
@@ -18,7 +18,7 @@ on:
       - "packages/**"
       - "pnpm-lock.yaml"
       - "turbo.json"
-      - "docker-compose.e2e.yml"
+      - "docker-compose.test.yml"
       - ".github/workflows/e2e-test.yml"
       - ".github/actions/setup-monorepo/**"
 
@@ -40,47 +40,49 @@ jobs:
       - name: 🏗️ Setup Monorepo
         uses: ./.github/actions/setup-monorepo
 
-      # PLAYWRIGHT BROWSER CACHING
-      - name: Get Playwright version
-        id: playwright-version
-        run: echo "version=$(pnpm list --filter @lasl/e2e-tests --json | jq -r '.[0].devDependencies["@playwright/test"].version')" >> $GITHUB_OUTPUT
-
-      - name: Cache Playwright Browsers
-        uses: actions/cache@v5
-        id: playwright-cache
-        with:
-          path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}
+      - name: Install Doppler CLI
+        run: |
+          curl -sLf --retry 3 --tlsv1.2 --proto "=https" \
+            'https://packages.doppler.com/public/cli/gpg.DE2A7741A397C129.key' \
+            | sudo gpg --dearmor -o /usr/share/keyrings/doppler-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/doppler-archive-keyring.gpg] \
+            https://packages.doppler.com/public/cli/deb/debian any-version main" \
+            | sudo tee /etc/apt/sources.list.d/doppler-cli.list
+          sudo apt-get update && sudo apt-get install -y doppler
 
       - name: Install Playwright Browsers
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: pnpm exec playwright install --with-deps chromium
         working-directory: packages/e2e-tests
 
       - name: 🚀 Turbo Validate
         run: pnpm turbo run check:ci check:types build --filter=@lasl/e2e-tests
 
-      - name: Install Doppler CLI
-        run: (curl -Ls https://cli.doppler.com/install.sh || wget -qO- https://cli.doppler.com/install.sh) | sudo sh
-
       - name: Create environment file
         run: |
-          cat > .env << EOF
-          DOPPLER_TOKEN_AUTHENTICATION_SERVICE=${{ secrets.DOPPLER_TOKEN_AUTHENTICATION_SERVICE }}
-          DOPPLER_TOKEN_API_GATEWAY=${{ secrets.DOPPLER_TOKEN_API_GATEWAY }}
-          DOPPLER_TOKEN_FRONTEND=${{ secrets.DOPPLER_TOKEN_FRONTEND }}
-          EOF
+          {
+            echo "DOPPLER_TOKEN_AUTHENTICATION_SERVICE=${{ secrets.DOPPLER_TOKEN_AUTHENTICATION_SERVICE }}"
+            echo "DOPPLER_TOKEN_API_GATEWAY=${{ secrets.DOPPLER_TOKEN_API_GATEWAY }}"
+            echo "DOPPLER_TOKEN_FRONTEND=${{ secrets.DOPPLER_TOKEN_FRONTEND }}"
+          } > .env
 
-      - name: Run E2E tests
+      - name: 🐳 Start Docker stack
+        run: docker compose -f docker-compose.yml -f docker-compose.test.yml up -d --build --wait --wait-timeout 120
+
+      - name: 🧪 Run E2E tests
         working-directory: packages/e2e-tests
         run: pnpm test
         env:
           DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN_E2E_TEST_DEV }}
           CI: true
+          REUSE_CONTAINERS: "true"
+
+      - name: 🧹 Tear down Docker stack
+        if: always()
+        run: docker compose -f docker-compose.yml -f docker-compose.test.yml down
 
       - name: Upload Artifacts
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: e2e-results
           path: |

@@ -1,0 +1,142 @@
+name: "Watchdog — Pipeline Stall Detection"
+
+# Runs every 4 hours and scans feature/* branches for stalled pipelines.
+# A pipeline is considered stalled when the most recent sentinel file was
+# committed more than STALL_THRESHOLD_HOURS ago but the next expected
+# sentinel has not yet appeared.
+#
+# When a stall is detected, a GitHub issue is opened (deduplicated by title).
+# Re-trigger the stalled stage via the Actions tab → select the workflow → Run workflow.
+
+on:
+  schedule:
+    - cron: '0 */4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+env:
+  STALL_THRESHOLD_HOURS: 6
+
+jobs:
+  detect-stalls:
+    name: Detect stalled feature pipelines
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ☁️ Checkout with full history
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: 🔍 Scan feature branches
+        id: scan
+        run: |
+          git fetch --all --quiet
+
+          THRESHOLD=$((STALL_THRESHOLD_HOURS * 3600))
+          NOW=$(date +%s)
+
+          # Ordered list of sentinels: index N = "stage N+1 complete"
+          SENTINELS=(
+            "01_po-spec.md"
+            "02_design/00_design-notes.md"
+            "03_arch-design.md"
+            "04_contracts-notes.md"
+            "05_backend-notes.md"
+            "06_frontend-notes.md"
+            "07_infra-notes.md"
+          )
+          STAGE_NAMES=(
+            "Stage 1 (PO)"
+            "Stage 2 (Designer)"
+            "Stage 3 (Architect)"
+            "Stage 4 (Contracts review)"
+            "Stage 5 (Backend review)"
+            "Stage 6 (Frontend review)"
+            "Stage 7 (DevOps)"
+          )
+
+          STALL_LINES=""
+
+          for REMOTE_BRANCH in $(git branch -r | grep 'origin/feature/' | tr -d ' '); do
+            BRANCH="${REMOTE_BRANCH#origin/}"
+            REST="${BRANCH#feature/}"
+            FEATURE_ID=$(echo "$REST"   | cut -d'-' -f1)
+            FEATURE_SLUG=$(echo "$REST" | cut -d'-' -f2-)
+            FEATURE_DIR="features/${FEATURE_ID}_${FEATURE_SLUG}"
+
+            # Find the highest-numbered sentinel that exists on this branch
+            LAST_PRESENT=-1
+            for i in "${!SENTINELS[@]}"; do
+              if git ls-tree -r "$REMOTE_BRANCH" --name-only 2>/dev/null \
+                  | grep -qF "${FEATURE_DIR}/${SENTINELS[$i]}"; then
+                LAST_PRESENT=$i
+              fi
+            done
+
+            # All sentinels present → pipeline complete, skip
+            MAX_IDX=$(( ${#SENTINELS[@]} - 1 ))
+            if [ "$LAST_PRESENT" -eq "$MAX_IDX" ]; then
+              continue
+            fi
+
+            # Determine age of the most recent commit on this branch
+            if [ "$LAST_PRESENT" -ge 0 ]; then
+              SENTINEL_PATH="${FEATURE_DIR}/${SENTINELS[$LAST_PRESENT]}"
+              COMMIT_TIME=$(git log "$REMOTE_BRANCH" -- "$SENTINEL_PATH" \
+                --format="%ct" -1 2>/dev/null || echo "0")
+            else
+              # No sentinel at all: measure from the branch creation (first commit)
+              COMMIT_TIME=$(git log "$REMOTE_BRANCH" --format="%ct" --reverse -1 2>/dev/null || echo "0")
+            fi
+
+            if [ "$COMMIT_TIME" -eq 0 ]; then
+              continue
+            fi
+
+            AGE=$(( NOW - COMMIT_TIME ))
+            if [ "$AGE" -gt "$THRESHOLD" ]; then
+              NEXT_IDX=$(( LAST_PRESENT + 1 ))
+              NEXT_STAGE="${STAGE_NAMES[$NEXT_IDX]:-Stage unknown}"
+              AGE_H=$(( AGE / 3600 ))
+              STALL_LINES="${STALL_LINES}\n- \`${BRANCH}\` — waiting for **${NEXT_STAGE}** (${AGE_H}h since last sentinel)"
+            fi
+          done
+
+          if [ -n "$STALL_LINES" ]; then
+            echo "stalls<<EOF" >> $GITHUB_OUTPUT
+            echo -e "$STALL_LINES" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          else
+            echo "stalls=" >> $GITHUB_OUTPUT
+          fi
+
+      - name: 🚨 Open stall issue
+        if: steps.scan.outputs.stalls != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TITLE="⚠️ Pipeline stall detected"
+
+          # Skip if an open issue with this title already exists
+          EXISTING=$(gh issue list --state open --search "$TITLE" --json number --jq '.[0].number')
+          if [ -n "$EXISTING" ]; then
+            echo "Issue #$EXISTING already open — skipping duplicate."
+            exit 0
+          fi
+
+          BODY="## ⚠️ Stalled Feature Pipelines
+
+The following feature branches appear stalled (no new sentinel in ${STALL_THRESHOLD_HOURS}+ hours):
+
+${{ steps.scan.outputs.stalls }}
+
+**To re-trigger:** go to the Actions tab, select the appropriate stage workflow, and click **Run workflow** on the stalled feature branch."
+
+          gh issue create \
+            --title "$TITLE" \
+            --body "$BODY" \
+            --label "pipeline"

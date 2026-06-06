@@ -1,0 +1,95 @@
+name: "Gate — Reviewer Verdict Check"
+
+# Posts a commit status (pipeline/<stage>-review) on every contracts/*, backend/*,
+# and frontend/* PR targeting a feature/* branch.
+#
+# Status logic:
+#   • Sentinel not yet present → pending  (Jules review hasn't landed yet)
+#   • Sentinel present, verdict = APPROVED → success
+#   • Sentinel present, verdict ≠ APPROVED → failure  (blocks merge)
+#
+# To enforce this gate: add a required status check named
+#   pipeline/contracts-review  (or backend-review / frontend-review)
+# to your feature/** branch protection rules in GitHub settings.
+
+on:
+  pull_request:
+    branches:
+      - 'feature/**'
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+  verdict-check:
+    name: Check reviewer verdict
+    runs-on: ubuntu-latest
+    if: |
+      startsWith(github.head_ref, 'frontend/') ||
+      startsWith(github.head_ref, 'backend/')  ||
+      startsWith(github.head_ref, 'contracts/')
+
+    steps:
+      - name: ☁️ Checkout HEAD branch
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 1
+
+      - name: 🔍 Resolve sentinel path
+        id: resolve
+        run: |
+          BASE="${{ github.base_ref }}"   # e.g. feature/0001-profile-settings
+          HEAD="${{ github.head_ref }}"   # e.g. frontend/0001-profile-settings
+
+          REST="${BASE#feature/}"
+          FEATURE_ID=$(echo "$REST"   | cut -d'-' -f1)
+          FEATURE_SLUG=$(echo "$REST" | cut -d'-' -f2-)
+          FEATURE_DIR="features/${FEATURE_ID}_${FEATURE_SLUG}"
+
+          if [[ "$HEAD" == frontend/* ]]; then
+            SENTINEL="${FEATURE_DIR}/06_frontend-notes.md"
+            STAGE="frontend"
+          elif [[ "$HEAD" == backend/* ]]; then
+            SENTINEL="${FEATURE_DIR}/05_backend-notes.md"
+            STAGE="backend"
+          else
+            SENTINEL="${FEATURE_DIR}/04_contracts-notes.md"
+            STAGE="contracts"
+          fi
+
+          echo "sentinel=$SENTINEL" >> $GITHUB_OUTPUT
+          echo "stage=$STAGE"       >> $GITHUB_OUTPUT
+
+      - name: ✅ Post verdict status
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          SENTINEL="${{ steps.resolve.outputs.sentinel }}"
+          STAGE="${{ steps.resolve.outputs.stage }}"
+          CONTEXT="pipeline/${STAGE}-review"
+          SHA="${{ github.event.pull_request.head.sha }}"
+          REPO="${{ github.repository }}"
+
+          post_status() {
+            gh api "repos/${REPO}/statuses/${SHA}" \
+              -f state="$1" \
+              -f context="$CONTEXT" \
+              -f description="$2"
+          }
+
+          if [ ! -f "$SENTINEL" ]; then
+            post_status "pending" "Waiting for Jules ${STAGE} review sentinel…"
+            exit 0
+          fi
+
+          # Extract the line immediately following "## Review Verdict"
+          VERDICT=$(awk '/^## Review Verdict/{found=1; next} found && /[^[:space:]]/{print; exit}' "$SENTINEL" | xargs)
+
+          if [ "$VERDICT" = "APPROVED" ]; then
+            post_status "success" "Jules reviewer: APPROVED"
+          else
+            post_status "failure" "Jules reviewer: ${VERDICT:-ISSUES FOUND} — fix issues before merging"
+          fi
