@@ -40,20 +40,7 @@ jobs:
       - name: 🏗️ Setup Monorepo
         uses: ./.github/actions/setup-monorepo
 
-      # PLAYWRIGHT BROWSER CACHING
-      - name: Get Playwright version
-        id: playwright-version
-        run: echo "version=$(pnpm list --filter @lasl/e2e-tests --json | jq -r '.[0].devDependencies["@playwright/test"].version')" >> $GITHUB_OUTPUT
-
-      - name: Cache Playwright Browsers
-        uses: actions/cache@v5
-        id: playwright-cache
-        with:
-          path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}
-
       - name: Install Playwright Browsers
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: pnpm exec playwright install --with-deps chromium
         working-directory: packages/e2e-tests
 
