@@ -74,6 +74,7 @@ jobs:
         env:
           DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN_E2E_TEST_DEV }}
           CI: true
+          REUSE_CONTAINERS: "true"
 
       - name: 🧹 Tear down Docker stack
         if: always()
