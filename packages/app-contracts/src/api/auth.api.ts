@@ -24,6 +24,10 @@ export const authApiRoutes = {
       `${versionPrefix(version)}/users/forgotpassword`,
     resetPassword: (id: string, code: string, version: AuthApiVersion = "v1") =>
       `${versionPrefix(version)}/users/resetpassword/${id}/${code}`,
+    updatePassword: (version: AuthApiVersion = "v1") =>
+      `${versionPrefix(version)}/users/me/password`,
+    delete: (version: AuthApiVersion = "v1") =>
+      `${versionPrefix(version)}/users/me`,
   },
   session: {
     create: (version: AuthApiVersion = "v1") =>
