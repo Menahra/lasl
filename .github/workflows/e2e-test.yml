@@ -40,6 +40,16 @@ jobs:
       - name: 🏗️ Setup Monorepo
         uses: ./.github/actions/setup-monorepo
 
+      - name: Install Doppler CLI
+        run: |
+          curl -sLf --retry 3 --tlsv1.2 --proto "=https" \
+            'https://packages.doppler.com/public/cli/gpg.DE2A7741A397C129.key' \
+            | sudo gpg --dearmor -o /usr/share/keyrings/doppler-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/doppler-archive-keyring.gpg] \
+            https://packages.doppler.com/public/cli/deb/debian any-version main" \
+            | sudo tee /etc/apt/sources.list.d/doppler-cli.list
+          sudo apt-get update && sudo apt-get install -y doppler
+
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps chromium
         working-directory: packages/e2e-tests
