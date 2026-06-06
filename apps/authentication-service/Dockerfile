@@ -47,4 +47,4 @@ WORKDIR /prod/authentication-service
 COPY --from=build /prod/authentication-service ./
 
 EXPOSE 3000
-CMD [ "pnpm", "start" ]
+CMD [ "node", "dist/server.js" ]

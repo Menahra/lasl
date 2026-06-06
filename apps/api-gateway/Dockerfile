@@ -39,4 +39,4 @@ FROM base AS api-gateway
 WORKDIR /prod/api-gateway
 COPY --from=build /prod/api-gateway ./
 EXPOSE 3000
-CMD [ "pnpm", "start" ]
+CMD [ "node", "dist/server.js" ]
