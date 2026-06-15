@@ -6,6 +6,7 @@ const ButtonVariants = {
   primary: "Button--primary",
   secondary: "Button--secondary",
   text: "Button--text",
+  danger: "Button--danger",
 } as const;
 const ButtonAlignments = {
   start: "Button--alignStart",

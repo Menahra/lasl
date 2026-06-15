@@ -18,4 +18,5 @@ export const userErrorMessages: Record<UserErrorKey, MessageDescriptor> = {
   [USER_ERRORS.passwordRequired]: msg`Password is required`,
   [USER_ERRORS.passwordIncorrect]: msg`Current password is incorrect`,
   [USER_ERRORS.passwordUppercase]: msg`Password must contain at least one uppercase letter`,
+  [USER_ERRORS.passwordIncorrect]: msg`Incorrect password`,
 };
